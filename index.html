@@ -1,0 +1,209 @@
+index.html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planes de Salud Colmena - Asesoría Profesional</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #0a1a2a; color: white; margin: 0; padding: 0; }
+    header { background: linear-gradient(90deg, #0a1a2a, #12375a); padding: 40px; text-align: center; }
+    h1 { color: #d4af37; font-size: 2.5rem; margin: 0; }
+    section { padding: 40px 20px; max-width: 900px; margin: auto; }
+    .gold { color: #d4af37; }
+    .card { background: #112233; border: 1px solid #d4af37; padding: 20px; border-radius: 15px; margin-bottom: 25px; }
+    button { background: #d4af37; color: #0a1a2a; padding: 15px 25px; border: none; border-radius: 10px; font-size: 1.1rem; cursor: pointer; }
+    button:hover { opacity: 0.85; }
+    form input, form select, form textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: none; }
+    .whatsapp { display: block; background: #25D366; text-align: center; padding: 15px; color: white; text-decoration: none; border-radius: 10px; font-size: 1.2rem; font-weight: bold; margin-top: 20px; max-width: 300px; margin-left: auto; margin-right: auto; }
+    .small { font-size: 0.9rem; color: #ccc; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Asesoría en Planes de Salud Colmena</h1>
+    <p class="gold">Atención premium para clientes exigentes</p>
+    <p>Para comenzar, debes llenar el formulario con todos los datos solicitados. Esto permitirá calcular correctamente tu plan y enviarte la información completa.</p>
+  </header>
+
+  <section id="quien-soy" class="card">
+    <h2 class="gold">Quién soy</h2>
+    <p><strong>Mi nombre es José Mora González, Ejecutivo y Asesor en Planes de Salud.</strong></p>
+    <img src="tu-foto-aqui.jpg" alt="Foto personal" style="width:180px;border-radius:10px;margin-top:15px;display:block;" />
+  </section>
+
+  <section id="beneficios" class="card">
+    <h2 class="gold">Beneficios de Colmena</h2>
+    <ul>
+      <li>Planes preferentes con amplia cobertura.</li>
+      <li>Acceso a prestadores premium.</li>
+      <li>Atención personalizada.</li>
+      <li>Programa GES garantizado.</li>
+      <li>Óptimo para rentas altas sin carga familiar.</li>
+    </ul>
+  </section>
+
+  <!-- Formulario para Cálculo del Plan de Salud -->
+  <section id="formulario-calculo" class="card">
+    <h2 class="gold">Formulario para Cálculo del Plan de Salud</h2>
+    <p>Completa los datos para calcular tu plan, incluyendo edades de las cargas (una por línea). Cuando envíes este formulario, la información llegará directamente a mi Google Sheet y recibirás un correo de confirmación.</p>
+
+    <form id="mainForm" action="https://script.google.com/macros/s/AKfycby3Yqo8apovgk94lzM9JJRrwocJ1JEs8F8_SEAWnDbaC4q9PEHnVPCsAgZQkssYCAujVQ/exec" method="POST" onsubmit="handleSubmit(event)">
+      <input type="text" name="nombre" placeholder="Nombre completo" required />
+      <input type="email" name="correo" placeholder="Correo electrónico" required />
+      <input type="tel" name="telefono" placeholder="Teléfono" required />
+      <input type="number" name="edad" placeholder="Edad titular" required />
+      <input type="text" name="rut" placeholder="RUT (12345678-9 o 12.345.678-9)" pattern="^[0-9.]{7,11}-[0-9Kk]$" required />
+
+      <select name="isapre" required>
+        <option value="">Isapre actual</option>
+        <option>FONASA</option>
+        <option>Colmena</option>
+        <option>Cruz Blanca</option>
+        <option>Consalud</option>
+        <option>Banmédica</option>
+        <option>Vida Tres</option>
+      </select>
+
+      <input type="number" id="renta" name="renta" placeholder="Renta imponible mensual (CLP)" required />
+
+      <label class="small">Edad de sus cargas (ingresa cada edad en una línea nueva)</label>
+      <textarea name="cargas" id="cargas" placeholder="Ej: 5&#10;12&#10;34"></textarea>
+
+      <select name="region" required>
+        <option value="">Región</option>
+        <option>Valparaíso</option>
+        <option>Metropolitana</option>
+        <option>Biobío</option>
+      </select>
+
+      <textarea name="mensaje" placeholder="Mensaje adicional (opcional)"></textarea>
+
+      <!-- Valores internos (puedes ajustar valorBasePlan y valorGes según Colmena) -->
+      <input type="hidden" name="valorBasePlan" id="valorBasePlan" value="35000">
+      <input type="hidden" name="valorGes" id="valorGes" value="8200">
+      <input type="hidden" name="valorFinalEnvio" id="valorFinalEnvio" value="">
+
+      <button type="submit">Cotizar Ahora</button>
+    </form>
+  </section>
+
+  <!-- Resultado preliminar (se mostrará después de enviar el formulario) -->
+  <section id="resultado-preliminar" class="card" style="display:none">
+    <h2 class="gold">Resultado preliminar de la cotización</h2>
+    <div id="resultadoDetalle" style="font-size:16px; line-height:1.6; color:#fff"></div>
+  </section>
+
+  <a class="whatsapp" href="https://wa.me/56990701837" target="_blank">Contactar por WhatsApp</a>
+
+  <script>
+    // Factores etarios (reemplazar con referencia oficial de Colmena si la tienes)
+    function obtenerFactor(edad) {
+      if (edad <= 18) return 0.6;
+      if (edad <= 35) return 1.0;
+      if (edad <= 45) return 1.5;
+      if (edad <= 59) return 2.0;
+      return 2.4; // 60+
+    }
+
+    function calcularEdadDesdeFecha(fechaNacimiento) {
+      if (!fechaNacimiento) return 0;
+      const hoy = new Date();
+      const nacimiento = new Date(fechaNacimiento);
+      let edad = hoy.getFullYear() - nacimiento.getFullYear();
+      const m = hoy.getMonth() - nacimiento.getMonth();
+      if (m < 0 || (m === 0 && hoy.getDate() < nacimiento.getDate())) {
+        edad--;
+      }
+      return edad;
+    }
+
+    function formatearCLP(v) {
+      return v.toLocaleString('es-CL');
+    }
+
+    function calcularCotizacion(obj) {
+      // obj: { renta, edadTitular (number), edadesCargas: [numbers], valorBasePlan, valorGes }
+      const personas = 1 + (obj.edadesCargas ? obj.edadesCargas.length : 0);
+      // costo factorizado: valorBasePlan * sum(factor de cada persona)
+      let sumaFactores = 0;
+      sumaFactores += obtenerFactor(obj.edadTitular);
+      if (obj.edadesCargas) {
+        obj.edadesCargas.forEach(e => { sumaFactores += obtenerFactor(e); });
+      }
+      const costoFactorizado = obj.valorBasePlan * sumaFactores;
+      const totalGes = obj.valorGes * personas;
+      const valorFinal = Math.round(costoFactorizado + totalGes);
+      const siete = Math.round(obj.renta * 0.07);
+      const adicional = valorFinal > siete ? valorFinal - siete : 0;
+
+      return { personas, sumaFactores, costoFactorizado, totalGes, valorFinal, siete, adicional };
+    }
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const form = document.getElementById('mainForm');
+
+      // obtener datos del formulario
+      const formData = new FormData(form);
+      const nombre = formData.get('nombre');
+      const correo = formData.get('correo');
+      const telefono = formData.get('telefono');
+      const edadTitular = parseInt(formData.get('edad')) || 0;
+      const rut = formData.get('rut');
+      const isapre = formData.get('isapre');
+      const renta = Number(formData.get('renta')) || 0;
+      const cargasText = formData.get('cargas') || ''; // edades por línea
+      const edadesCargas = cargasText.split(/\n/).map(s => s.trim()).filter(s => s!="").map(s => parseInt(s));
+      const region = formData.get('region');
+      const mensaje = formData.get('mensaje');
+
+      const valorBasePlan = Number(document.getElementById('valorBasePlan').value) || 0;
+      const valorGes = Number(document.getElementById('valorGes').value) || 0;
+
+      // calcular cotización
+      const resultado = calcularCotizacion({ renta, edadTitular, edadesCargas, valorBasePlan, valorGes });
+
+      // mostrar en pantalla en el bloque resultado-preliminar
+      const detalleDiv = document.getElementById('resultadoDetalle');
+      detalleDiv.innerHTML = `
+        <p><strong>Nombre:</strong> ${nombre}</p>
+        <p><strong>RUT:</strong> ${rut}</p>
+        <p><strong>Personas en plan:</strong> ${resultado.personas}</p>
+        <p><strong>Costo base ajustado por factores:</strong> $${formatearCLP(resultado.costoFactorizado)}</p>
+        <p><strong>GES total:</strong> $${formatearCLP(resultado.totalGes)}</p>
+        <p><strong>Valor final del plan (referencial):</strong> $${formatearCLP(resultado.valorFinal)}</p>
+        <p><strong>7% de tu renta:</strong> $${formatearCLP(resultado.siete)}</p>
+        <p><strong>Adicional a pagar (si aplica):</strong> $${formatearCLP(resultado.adicional)}</p>
+      `;
+      document.getElementById('resultado-preliminar').style.display = 'block';
+
+      // agregar valores calculados al formData para enviar al Google Script
+      formData.append('valorFinal', resultado.valorFinal);
+      formData.append('adicional', resultado.adicional);
+      formData.append('siete', resultado.siete);
+      formData.append('personas', resultado.personas);
+      formData.append('costoFactorizado', resultado.costoFactorizado);
+      formData.append('totalGes', resultado.totalGes);
+
+      // guardar valorFinal para posible uso
+      document.getElementById('valorFinalEnvio').value = resultado.valorFinal;
+
+      // enviar a Google Apps Script (endpoint configurado en action)
+      try {
+        const actionUrl = form.getAttribute('action');
+        await fetch(actionUrl, { method: 'POST', body: formData });
+        // mostrar mensaje de éxito
+        detalleDiv.innerHTML += `<p style="margin-top:10px;color:#d4af37">Enviado correctamente. Pronto recibirás confirmación.</p>`;
+      } catch (err) {
+        detalleDiv.innerHTML += `<p style="margin-top:10px;color:#ff8080">Error al enviar. Revisa tu conexión o configura el script.</p>`;
+        console.error(err);
+      }
+
+      // opcional: abrir WhatsApp con mensaje prellenado (no enviar automático)
+      // const waMsg = encodeURIComponent(`Hola José, envié mi formulario: ${nombre} - RUT ${rut}.`);
+      // window.open(`https://wa.me/56990701837?text=${waMsg}`, '_blank');
+    }
+  </script>
+</body>
+</html>
