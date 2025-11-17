@@ -26,33 +26,15 @@
   <header>
     <h1>Asesoría en Planes de Salud Colmena</h1>
     <p class="gold">Atención premium para clientes exigentes</p>
-    <p class="small">Para comenzar, completa el formulario y luego ejecuta la calculadora para obtener tu cotización en UF y CLP.</p>
+    <p class="small">Completa el formulario para obtener una cotización exacta en UF y CLP.</p>
   </header>
 
-  <section id="quien-soy" class="card">
-    <h2 class="gold">Quién soy</h2>
-    <p><strong>Mi nombre es José Mora González, Ejecutivo y Asesor en Planes de Salud.</strong></p>
-    <img src="images/tu_foto.jpg" alt="Foto José Mora González" class="profile" />
-    <p>Con amplia experiencia en <strong>Isapre Colmena</strong>, he asesorado a cientos de afiliados en elección de planes, optimización de cobertura GES y gestión de cambios de previsión. Experto en cálculos de cotización, evaluación de redes asistenciales y atención personalizada para clientes exigentes.</p>
-  </section>
+  <!-- FORMULARIO -->
+  <section id="formulario" class="card">
+    <h2 class="gold">Formulario para Cálculo del Plan</h2>
 
-  <section id="beneficios" class="card">
-    <h2 class="gold">Beneficios de Colmena</h2>
-    <ul>
-      <li>Planes preferentes con amplia cobertura.</li>
-      <li>Acceso a prestadores premium.</li>
-      <li>Atención personalizada.</li>
-      <li>Programa GES garantizado.</li>
-      <li>Óptimo para rentas altas sin carga familiar.</li>
-    </ul>
-  </section>
+    <form id="mainForm" action="TU_URL_WEBAPP" method="POST" onsubmit="handleSubmit(event)">
 
-  <!-- Formulario para Cálculo del Plan de Salud -->
-  <section id="formulario-calculo" class="card">
-    <h2 class="gold">Formulario para Cálculo del Plan de Salud</h2>
-    <p class="small">Completa los datos (la calculadora aparece después del formulario). Las edades de las cargas deben ingresarse una por línea.</p>
-
-    <form id="mainForm" action="https://script.google.com/macros/s/AKfycby3Yqo8apovgk94lzM9JJRrwocJ1JEs8F8_SEAWnDbaC4q9PEHnVPCsAgZQkssYCAujVQ/exec" method="POST" onsubmit="handleSubmit(event)">
       <div class="row">
         <div class="col"><input type="text" name="nombre" placeholder="Nombre completo" required /></div>
         <div class="col"><input type="email" name="correo" placeholder="Correo electrónico" required /></div>
@@ -63,7 +45,7 @@
         <div class="col"><input type="number" name="edad" placeholder="Edad titular" required /></div>
       </div>
 
-      <input type="text" name="rut" placeholder="RUT (12345678-9 o 12.345.678-9)" pattern="^[0-9.]{7,11}-[0-9Kk]$" required />
+      <input type="text" name="rut" placeholder="RUT" required />
 
       <select name="isapre" required>
         <option value="">Isapre actual</option>
@@ -77,8 +59,8 @@
 
       <input type="number" id="renta" name="renta" placeholder="Renta imponible mensual (CLP)" required />
 
-      <label class="small">Edad de sus cargas (una por línea)</label>
-      <textarea name="cargas" id="cargas" placeholder="Ej: 5&#10;12&#10;34"></textarea>
+      <label class="small">Edad de las cargas (una por línea)</label>
+      <textarea name="cargas" id="cargas" placeholder="Ej: 5&#10;12&#10;30"></textarea>
 
       <select name="region" required>
         <option value="">Selecciona tu Región</option>
@@ -102,163 +84,139 @@
 
       <textarea name="mensaje" placeholder="Mensaje adicional (opcional)"></textarea>
 
-      <!-- Valores internos (ajustables) -->
+      <!-- Valores internos -->
       <input type="hidden" name="valorBasePlan" id="valorBasePlan" value="35000">
-      <input type="hidden" name="valorGes" id="valorGes" value="8200">
-      <input type="hidden" name="valorFinalEnvio" id="valorFinalEnvio" value="">
+
+      <!-- GES en UF → 0.93 UF por persona -->
+      <input type="hidden" name="valorGesUF" id="valorGesUF" value="0.93">
 
       <button type="submit">Cotizar Ahora</button>
     </form>
   </section>
 
-  <!-- Calculadora: aparece después del formulario -->
-  <section id="calculadora" class="card">
-    <h2 class="gold">Calculadora automática</h2>
-    <p class="uf-note">UF del día: <span id="ufValor">cargando...</span> — Fecha: <span id="ufFecha">-</span></p>
-    <p>Ingresa tu renta y haz clic en Calcular (la calculadora usa la renta que ingresaste en el formulario).</p>
-    <div style="max-width:400px;margin:auto">
-      <input type="number" id="rentaCalc" placeholder="Renta imponible (CLP)" />
-      <button type="button" onclick="calcularDesdeFormulario()">Calcular</button>
-      <div id="salidaCalc" style="margin-top:12px;color:#fff"></div>
-    </div>
+  <!-- UF -->
+  <section class="card">
+    <h2 class="gold">UF del día</h2>
+    <p class="uf-note">UF: <span id="ufValor">cargando…</span> — Fecha: <span id="ufFecha">-</span></p>
   </section>
 
-  <!-- Resultado preliminar (se mostrará después de enviar el formulario) -->
+  <!-- RESULTADO -->
   <section id="resultado-preliminar" class="card" style="display:none">
-    <h2 class="gold">Resultado preliminar de la cotización</h2>
-    <div id="resultadoDetalle" style="font-size:16px; line-height:1.6; color:#fff"></div>
+    <h2 class="gold">Resultado preliminar</h2>
+    <div id="resultadoDetalle" style="line-height:1.7"></div>
   </section>
 
   <a class="whatsapp" href="https://wa.me/56990701837" target="_blank">Contactar por WhatsApp</a>
 
   <script>
-    // Cargar UF diaria desde Mindicador.cl (API pública)
+    /* ================================
+          CARGAR UF DEL DÍA
+       ================================ */
     async function cargarUF() {
       try {
         const res = await fetch('https://mindicador.cl/api');
         const data = await res.json();
-        const uf = data.uf && data.uf.valor ? data.uf.valor : null;
-        const fecha = data.uf && data.uf.fecha ? new Date(data.uf.fecha).toLocaleDateString() : '-';
-        if (uf) {
-          window.__UF_VALOR = uf; // valor en CLP
-          document.getElementById('ufValor').innerText = uf.toLocaleString('es-CL');
-          document.getElementById('ufFecha').innerText = fecha;
-        } else {
-          document.getElementById('ufValor').innerText = 'no disponible';
-        }
-      } catch (err) {
-        console.error('Error al cargar UF', err);
-        document.getElementById('ufValor').innerText = 'error';
+        const uf = data.uf.valor;
+        window.__UF_VALOR = uf;
+        document.getElementById('ufValor').innerText = uf.toLocaleString('es-CL');
+        document.getElementById('ufFecha').innerText = new Date(data.uf.fecha).toLocaleDateString();
+      } catch (e) {
+        document.getElementById('ufValor').innerText = "Error";
       }
     }
 
-    // Factores etarios (reemplazar con referencia oficial de Colmena si la tienes)
+    /* ================================
+          FACTORES ETARIOS
+       ================================ */
     function obtenerFactor(edad) {
       if (edad <= 18) return 0.6;
       if (edad <= 35) return 1.0;
       if (edad <= 45) return 1.5;
       if (edad <= 59) return 2.0;
-      return 2.4; // 60+
+      return 2.4;
     }
 
-    function formatearCLP(v) {
-      return v.toLocaleString('es-CL');
+    function formatearCLP(n) {
+      return n.toLocaleString("es-CL");
     }
 
+    /* ================================
+          CALCULO GENERAL
+       ================================ */
     function calcularCotizacion(obj) {
-      const personas = 1 + (obj.edadesCargas ? obj.edadesCargas.length : 0);
-      let sumaFactores = 0;
-      sumaFactores += obtenerFactor(obj.edadTitular);
-      if (obj.edadesCargas) obj.edadesCargas.forEach(e => { sumaFactores += obtenerFactor(e); });
+      const personas = 1 + obj.edadesCargas.length;
+
+      let sumaFactores = obtenerFactor(obj.edadTitular);
+      obj.edadesCargas.forEach(e => sumaFactores += obtenerFactor(e));
+
       const costoFactorizado = obj.valorBasePlan * sumaFactores;
-      const totalGes = obj.valorGes * personas;
+
+      // GES en UF → CLP
+      const uf = window.__UF_VALOR || 0;
+      const valorGesCLP = obj.valorGesUF * uf;
+      const totalGes = Math.round(valorGesCLP * personas);
+
       const valorFinal = Math.round(costoFactorizado + totalGes);
       const siete = Math.round(obj.renta * 0.07);
-      const adicional = valorFinal > siete ? valorFinal - siete : 0;
-      const ufValor = window.__UF_VALOR || null;
-      const valorFinalUF = ufValor ? (valorFinal / ufValor) : null;
-      return { personas, sumaFactores, costoFactorizado, totalGes, valorFinal, siete, adicional, valorFinalUF };
+      const adicional = Math.max(0, valorFinal - siete);
+
+      const valorFinalUF = uf ? valorFinal / uf : null;
+
+      return { personas, costoFactorizado, totalGes, valorFinal, siete, adicional, valorFinalUF };
     }
 
-    // Manejo del submit del formulario (calcula y envía al Google Script)
+    /* ================================
+          ENVIO Y RESULTADO
+       ================================ */
     async function handleSubmit(e) {
       e.preventDefault();
-      const form = document.getElementById('mainForm');
+
+      const form = document.getElementById("mainForm");
       const formData = new FormData(form);
-      const nombre = formData.get('nombre');
-      const correo = formData.get('correo');
-      const telefono = formData.get('telefono');
-      const edadTitular = parseInt(formData.get('edad')) || 0;
-      const rut = formData.get('rut');
-      const isapre = formData.get('isapre');
-      const renta = Number(formData.get('renta')) || 0;
-      const cargasText = formData.get('cargas') || '';
-      const edadesCargas = cargasText.split(/\r?\n/).map(s => s.trim()).filter(s => s!="").map(s => parseInt(s));
-      const region = formData.get('region');
-      const mensaje = formData.get('mensaje');
-      const valorBasePlan = Number(document.getElementById('valorBasePlan').value) || 0;
-      const valorGes = Number(document.getElementById('valorGes').value) || 0;
 
-      const resultado = calcularCotizacion({ renta, edadTitular, edadesCargas, valorBasePlan, valorGes });
+      const edadesCargas = (formData.get("cargas") || "")
+        .split(/\n/)
+        .map(s => s.trim())
+        .filter(s => s !== "")
+        .map(s => parseInt(s));
 
-      // mostrar resultado preliminar
-      const detalleDiv = document.getElementById('resultadoDetalle');
-      detalleDiv.innerHTML = `
-        <p><strong>Nombre:</strong> ${nombre}</p>
-        <p><strong>RUT:</strong> ${rut}</p>
+      const resultado = calcularCotizacion({
+        renta: Number(formData.get("renta")),
+        edadTitular: Number(formData.get("edad")),
+        edadesCargas,
+        valorBasePlan: Number(document.getElementById("valorBasePlan").value),
+        valorGesUF: Number(document.getElementById("valorGesUF").value)
+      });
+
+      const div = document.getElementById("resultadoDetalle");
+      div.innerHTML = `
         <p><strong>Personas en plan:</strong> ${resultado.personas}</p>
-        <p><strong>Costo base ajustado por factores:</strong> $${formatearCLP(resultado.costoFactorizado)}</p>
+        <p><strong>Costo base ajustado:</strong> $${formatearCLP(resultado.costoFactorizado)}</p>
         <p><strong>GES total:</strong> $${formatearCLP(resultado.totalGes)}</p>
-        <p><strong>Valor final del plan (CLP):</strong> $${formatearCLP(resultado.valorFinal)}</p>
-        <p><strong>Valor final del plan (UF):</strong> ${resultado.valorFinalUF ? resultado.valorFinalUF.toFixed(3) + ' UF' : 'UF no disponible' }</p>
-        <p><strong>7% de tu renta:</strong> $${formatearCLP(resultado.siete)}</p>
-        <p><strong>Adicional a pagar (si aplica):</strong> $${formatearCLP(resultado.adicional)}</p>
+        <p><strong>Valor final:</strong> $${formatearCLP(resultado.valorFinal)}</p>
+        <p><strong>Valor final UF:</strong> ${resultado.valorFinalUF?.toFixed(3) ?? 'N/D'} UF</p>
+        <p><strong>7% renta:</strong> $${formatearCLP(resultado.siete)}</p>
+        <p><strong>Adicional:</strong> $${formatearCLP(resultado.adicional)}</p>
       `;
-      document.getElementById('resultado-preliminar').style.display = 'block';
+      document.getElementById("resultado-preliminar").style.display = "block";
 
-      // adjuntar valores al envio
-      formData.append('valorFinal', resultado.valorFinal);
-      formData.append('adicional', resultado.adicional);
-      formData.append('siete', resultado.siete);
-      formData.append('personas', resultado.personas);
-      formData.append('costoFactorizado', resultado.costoFactorizado);
-      formData.append('totalGes', resultado.totalGes);
+      /* Enviar al Google Script */
+      formData.append("valorFinal", resultado.valorFinal);
+      formData.append("adicional", resultado.adicional);
+      formData.append("siete", resultado.siete);
+      formData.append("personas", resultado.personas);
+      formData.append("costoFactorizado", resultado.costoFactorizado);
+      formData.append("totalGes", resultado.totalGes);
 
-      document.getElementById('valorFinalEnvio').value = resultado.valorFinal;
-
-      // enviar a Google Apps Script
       try {
-        const actionUrl = form.getAttribute('action');
-        await fetch(actionUrl, { method: 'POST', body: formData });
-        detalleDiv.innerHTML += `<p style="margin-top:10px;color:#d4af37">Enviado correctamente. Pronto recibirás confirmación.</p>`;
+        await fetch(form.action, { method: "POST", body: formData });
+        div.innerHTML += `<p style="color:#d4af37;margin-top:12px">Enviado correctamente.</p>`;
       } catch (err) {
-        detalleDiv.innerHTML += `<p style="margin-top:10px;color:#ff8080">Error al enviar. Revisa tu conexión o configura el script.</p>`;
-        console.error(err);
+        div.innerHTML += `<p style="color:#ff8080;margin-top:12px">Error al enviar.</p>`;
       }
     }
 
-    // Calculadora manual que usa la renta del formulario o la que se ingrese aquí
-    function calcularDesdeFormulario() {
-      const rentaInput = Number(document.getElementById('rentaCalc').value) || Number(document.getElementById('renta').value) || 0;
-      const edadTitular = Number(document.querySelector('input[name="edad"]').value) || 0;
-      const cargasText = document.getElementById('cargas').value || '';
-      const edadesCargas = cargasText.split(/\r?\n/).map(s => s.trim()).filter(s => s!="").map(s => parseInt(s));
-      const valorBasePlan = Number(document.getElementById('valorBasePlan').value) || 0;
-      const valorGes = Number(document.getElementById('valorGes').value) || 0;
-
-      const resultado = calcularCotizacion({ renta: rentaInput, edadTitular, edadesCargas, valorBasePlan, valorGes });
-
-      const salida = document.getElementById('salidaCalc');
-      salida.innerHTML = `Valor final: <strong>$${formatearCLP(resultado.valorFinal)}</strong><br>` +
-                         `Equivalente: <strong>${resultado.valorFinalUF ? resultado.valorFinalUF.toFixed(3) + ' UF' : 'UF no disponible'}</strong><br>` +
-                         `7% de renta: <strong>$${formatearCLP(resultado.siete)}</strong><br>` +
-                         `Adicional: <strong>$${formatearCLP(resultado.adicional)}</strong>`;
-    }
-
-    // inicializar
-    window.addEventListener('load', () => {
-      cargarUF();
-    });
+    window.addEventListener("load", cargarUF);
   </script>
 </body>
 </html>
