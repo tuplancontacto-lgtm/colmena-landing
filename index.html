@@ -33,7 +33,11 @@
   <section id="formulario" class="card">
     <h2 class="gold">Formulario para Cálculo del Plan</h2>
 
-    <form id="mainForm" action="https://script.google.com/macros/s/AKfycbwGIQFE13lj0uzoa0lj6CCcv2StY6mi1S8cb3TljPIHXDh4W2A21F0YrOF92OP5BB_ojA/exec" method="POST">
+   <form id="mainForm"
+      action="https://script.google.com/macros/s/AKfycbwGIQFE13lj0uzoa0lj6CCcv2StY6mi1S8cb3TljPIHXDh4W2A21F0YrOF92OP5BB_ojA/exec"
+      method="POST"
+      onsubmit="handleSubmit(event)">
+
 
       <div class="row">
         <div class="col"><input type="text" name="nombre" placeholder="Nombre completo" required /></div>
