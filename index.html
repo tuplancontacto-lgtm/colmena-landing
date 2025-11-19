@@ -101,7 +101,7 @@
   <a class="whatsapp" href="https://wa.me/56990701837" target="_blank">Contactar por WhatsApp</a>
 
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz1B1A1-d4nGFfhPDIp37GLeveWOsY2rr5TAV5iDU6eAduzUxs6dSx7gbSpMqJoHhAIqQ/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz1B1A1-d4nGFfhPDIp37GLeveWOsY2rr5TAV5iDU6eAduzUxs6dSx7gbSpMqJoHhAlqQ/exec';
 
     async function cargarUF() {
       try {
@@ -116,7 +116,7 @@
         document.getElementById('ufFecha').innerText = new Date(data.uf.fecha).toLocaleDateString('es-CL', {
           year: 'numeric',
           month: 'long',
-          day: 'numeric'
+          day: 'numeric
         });
       } catch (e) {
         const ufDefault = 38000;
@@ -153,7 +153,7 @@
       return { personas, costoFactorizado, totalGes, valorFinal, siete, adicional, valorFinalUF };
     }
 
-    document.getElementById('mainForm').addEventListener('submit', async function(e) {
+    document.getElementById('mainForm').addEventListener('submit', function(e) {
       e.preventDefault();
       
       const submitBtn = document.getElementById('submitBtn');
@@ -173,7 +173,7 @@
         valorGesUF: 0.93
       });
 
-      // Agregar datos calculados al FormData
+      // Agregar datos calculados
       formData.append("valorFinal", resultado.valorFinal);
       formData.append("adicional", resultado.adicional);
       formData.append("siete", resultado.siete);
@@ -192,38 +192,39 @@
         <p><strong>Valor final UF:</strong> ${resultado.valorFinalUF?.toFixed(3) ?? 'N/D'} UF</p>
         <p><strong>7% renta:</strong> $${formatearCLP(resultado.siete)}</p>
         <p><strong>Adicional:</strong> $${formatearCLP(resultado.adicional)}</p>
+        <p class="gold">⏳ Enviando datos...</p>
       `;
       document.getElementById("resultado-preliminar").style.display = "block";
 
-      // Enviar a Google Apps Script usando iframe oculto
+      // Enviar usando técnica de formulario + iframe
       const iframe = document.createElement('iframe');
+      iframe.name = 'hiddenIframe';
       iframe.style.display = 'none';
-      iframe.name = 'hiddenFrame';
       document.body.appendChild(iframe);
 
-      const tempForm = document.createElement('form');
-      tempForm.method = 'POST';
-      tempForm.action = SCRIPT_URL;
-      tempForm.target = 'hiddenFrame';
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = SCRIPT_URL;
+      form.target = 'hiddenIframe';
 
-      for (let [key, value] of formData.entries()) {
+      for (const [key, value] of formData.entries()) {
         const input = document.createElement('input');
         input.type = 'hidden';
         input.name = key;
         input.value = value;
-        tempForm.appendChild(input);
+        form.appendChild(input);
       }
 
-      document.body.appendChild(tempForm);
-      tempForm.submit();
-      document.body.removeChild(tempForm);
+      document.body.appendChild(form);
+      form.submit();
 
-      div.innerHTML += `<p class="success-msg">✅ Datos enviados correctamente. Recibirás un correo pronto.</p>`;
-
+      // Actualizar mensaje después de 2 segundos
       setTimeout(() => {
+        div.innerHTML = div.innerHTML.replace('⏳ Enviando datos...', '✅ Datos enviados correctamente. Recibirás un correo pronto.');
         submitBtn.disabled = false;
         submitBtn.textContent = "Cotizar Ahora";
-      }, 3000);
+        document.body.removeChild(form);
+      }, 2000);
     });
 
     window.addEventListener("load", cargarUF);
