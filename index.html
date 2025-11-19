@@ -116,13 +116,15 @@
         document.getElementById('ufFecha').innerText = new Date(data.uf.fecha).toLocaleDateString('es-CL', {
           year: 'numeric',
           month: 'long',
-          day: 'numeric
+          day: 'numeric'
         });
+        console.log('✅ UF cargada:', uf);
       } catch (e) {
         const ufDefault = 38000;
         window.__UF_VALOR = ufDefault;
         document.getElementById('ufValor').innerText = '$' + ufDefault.toLocaleString('es-CL') + ' (estimado)';
         document.getElementById('ufFecha').innerText = 'No disponible';
+        console.log('⚠️ Usando UF por defecto');
       }
     }
 
@@ -156,6 +158,8 @@
     document.getElementById('mainForm').addEventListener('submit', function(e) {
       e.preventDefault();
       
+      console.log('📤 Formulario enviado');
+      
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.disabled = true;
       submitBtn.textContent = "Enviando...";
@@ -172,6 +176,8 @@
         valorBasePlan: 35000,
         valorGesUF: 0.93
       });
+
+      console.log('💰 Cálculos:', resultado);
 
       // Agregar datos calculados
       formData.append("valorFinal", resultado.valorFinal);
@@ -217,6 +223,8 @@
 
       document.body.appendChild(form);
       form.submit();
+      
+      console.log('✅ Formulario POST enviado');
 
       // Actualizar mensaje después de 2 segundos
       setTimeout(() => {
