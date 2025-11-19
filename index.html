@@ -32,7 +32,6 @@
     <p class="small">Completa el formulario para obtener una cotización exacta en UF y CLP.</p>
   </header>
 
-  <!-- FORMULARIO -->
   <section id="formulario" class="card">
     <h2 class="gold">Formulario para Cálculo del Plan</h2>
 
@@ -90,7 +89,6 @@
 
       <textarea name="mensaje" placeholder="Mensaje adicional (opcional)"></textarea>
 
-      <!-- Campos ocultos calculados -->
       <input type="hidden" name="valorFinal" id="valorFinal">
       <input type="hidden" name="adicional" id="adicional">
       <input type="hidden" name="siete" id="siete">
@@ -103,13 +101,11 @@
     </form>
   </section>
 
-  <!-- UF -->
   <section class="card">
     <h2 class="gold">UF del día</h2>
     <p class="uf-note">UF: <span id="ufValor">cargando…</span> — Fecha: <span id="ufFecha">-</span></p>
   </section>
 
-  <!-- RESULTADO -->
   <section id="resultado-preliminar" class="card" style="display:none">
     <h2 class="gold">Resultado preliminar</h2>
     <div id="resultadoDetalle" style="line-height:1.7"></div>
@@ -117,13 +113,9 @@
 
   <a class="whatsapp" href="https://wa.me/56990701837" target="_blank">Contactar por WhatsApp</a>
 
-  <!-- iframe oculto para envío -->
   <iframe name="hidden-iframe" id="hidden-iframe"></iframe>
 
   <script>
-    /* ================================
-          CARGAR UF DEL DÍA
-       ================================ */
     async function cargarUF() {
       try {
         const res = await fetch('https://mindicador.cl/api');
@@ -139,19 +131,14 @@
           month: 'long',
           day: 'numeric'
         });
-        console.log('✅ UF cargada:', uf);
       } catch (e) {
         const ufDefault = 38000;
         window.__UF_VALOR = ufDefault;
         document.getElementById('ufValor').innerText = '$' + ufDefault.toLocaleString('es-CL') + ' (estimado)';
         document.getElementById('ufFecha').innerText = 'No disponible';
-        console.log('⚠️ Usando UF por defecto:', ufDefault);
       }
     }
 
-    /* ================================
-          FACTORES ETARIOS
-       ================================ */
     function obtenerFactor(edad) {
       if (edad <= 18) return 0.6;
       if (edad <= 35) return 1.0;
@@ -164,46 +151,28 @@
       return n.toLocaleString("es-CL");
     }
 
-    /* ================================
-          CALCULO GENERAL
-       ================================ */
     function calcularCotizacion(obj) {
       const personas = 1 + obj.edadesCargas.length;
-
       let sumaFactores = obtenerFactor(obj.edadTitular);
       obj.edadesCargas.forEach(e => sumaFactores += obtenerFactor(e));
-
       const costoFactorizado = obj.valorBasePlan * sumaFactores;
-
       const uf = window.__UF_VALOR || 38000;
       const valorGesCLP = 0.93 * uf;
       const totalGes = Math.round(valorGesCLP * personas);
-
       const valorFinal = Math.round(costoFactorizado + totalGes);
       const siete = Math.round(obj.renta * 0.07);
       const adicional = Math.max(0, valorFinal - siete);
-
       const valorFinalUF = uf ? valorFinal / uf : null;
-
       return { personas, costoFactorizado, totalGes, valorFinal, siete, adicional, valorFinalUF };
     }
 
-    /* ================================
-          MANEJO DEL FORMULARIO
-       ================================ */
     document.getElementById('mainForm').addEventListener('submit', function(e) {
-      console.log('📤 Enviando formulario...');
-      
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.disabled = true;
       submitBtn.textContent = "Enviando...";
 
-      // Obtener datos del formulario
       const edadesCargas = (document.getElementById('cargas').value || "")
-        .split(/\n/)
-        .map(s => s.trim())
-        .filter(s => s !== "")
-        .map(s => parseInt(s));
+        .split(/\n/).map(s => s.trim()).filter(s => s !== "").map(s => parseInt(s));
 
       const resultado = calcularCotizacion({
         renta: Number(document.getElementById('renta').value),
@@ -213,7 +182,6 @@
         valorGesUF: 0.93
       });
 
-      // Llenar campos ocultos con los cálculos
       document.getElementById('valorFinal').value = resultado.valorFinal;
       document.getElementById('adicional').value = resultado.adicional;
       document.getElementById('siete').value = resultado.siete;
@@ -221,7 +189,6 @@
       document.getElementById('costoFactorizado').value = resultado.costoFactorizado;
       document.getElementById('totalGes').value = resultado.totalGes;
 
-      // Mostrar resultado
       const div = document.getElementById("resultadoDetalle");
       div.innerHTML = `
         <p><strong>Personas en plan:</strong> ${resultado.personas}</p>
@@ -235,14 +202,10 @@
       `;
       document.getElementById("resultado-preliminar").style.display = "block";
 
-      // Rehabilitar botón después de 3 segundos
       setTimeout(() => {
         submitBtn.disabled = false;
         submitBtn.textContent = "Cotizar Ahora";
-        console.log('✅ Formulario enviado');
       }, 3000);
-
-      // No prevenir el envío - dejar que el form se envíe normalmente al iframe
     });
 
     window.addEventListener("load", cargarUF);
