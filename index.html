@@ -22,7 +22,6 @@
     .uf-note { font-size:0.9rem; color:#cfcfcf; }
     .error-msg { color: #ff8080; margin-top: 12px; }
     .success-msg { color: #d4af37; margin-top: 12px; }
-    #hidden-iframe { display: none; }
   </style>
 </head>
 <body>
@@ -35,11 +34,7 @@
   <section id="formulario" class="card">
     <h2 class="gold">Formulario para Cálculo del Plan</h2>
 
-    <form id="mainForm"
-      action="https://script.google.com/macros/s/AKfycbz1B1A1-d4nGFfhPDIp37GLeveWOsY2rr5TAV5iDU6eAduzUxs6dSx7gbSpMqJoHhAIqQ/exec"
-      method="POST"
-      target="hidden-iframe">
-
+    <form id="mainForm">
       <div class="row">
         <div class="col"><input type="text" name="nombre" placeholder="Nombre completo" required /></div>
         <div class="col"><input type="email" name="correo" placeholder="Correo electrónico" required /></div>
@@ -89,14 +84,6 @@
 
       <textarea name="mensaje" placeholder="Mensaje adicional (opcional)"></textarea>
 
-      <input type="hidden" name="valorFinal" id="valorFinal">
-      <input type="hidden" name="adicional" id="adicional">
-      <input type="hidden" name="siete" id="siete">
-      <input type="hidden" name="personas" id="personas">
-      <input type="hidden" name="costoFactorizado" id="costoFactorizado">
-      <input type="hidden" name="totalGes" id="totalGes">
-      <input type="hidden" name="planRecomendado" value="Plan Estándar">
-
       <button type="submit" id="submitBtn">Cotizar Ahora</button>
     </form>
   </section>
@@ -113,9 +100,9 @@
 
   <a class="whatsapp" href="https://wa.me/56990701837" target="_blank">Contactar por WhatsApp</a>
 
-  <iframe name="hidden-iframe" id="hidden-iframe"></iframe>
-
   <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz1B1A1-d4nGFfhPDIp37GLeveWOsY2rr5TAV5iDU6eAduzUxs6dSx7gbSpMqJoHhAIqQ/exec';
+
     async function cargarUF() {
       try {
         const res = await fetch('https://mindicador.cl/api');
@@ -166,29 +153,36 @@
       return { personas, costoFactorizado, totalGes, valorFinal, siete, adicional, valorFinalUF };
     }
 
-    document.getElementById('mainForm').addEventListener('submit', function(e) {
+    document.getElementById('mainForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.disabled = true;
       submitBtn.textContent = "Enviando...";
 
-      const edadesCargas = (document.getElementById('cargas').value || "")
+      const formData = new FormData(this);
+      
+      const edadesCargas = (formData.get("cargas") || "")
         .split(/\n/).map(s => s.trim()).filter(s => s !== "").map(s => parseInt(s));
 
       const resultado = calcularCotizacion({
-        renta: Number(document.getElementById('renta').value),
-        edadTitular: Number(document.getElementById('edad').value),
+        renta: Number(formData.get("renta")),
+        edadTitular: Number(formData.get("edad")),
         edadesCargas,
         valorBasePlan: 35000,
         valorGesUF: 0.93
       });
 
-      document.getElementById('valorFinal').value = resultado.valorFinal;
-      document.getElementById('adicional').value = resultado.adicional;
-      document.getElementById('siete').value = resultado.siete;
-      document.getElementById('personas').value = resultado.personas;
-      document.getElementById('costoFactorizado').value = resultado.costoFactorizado;
-      document.getElementById('totalGes').value = resultado.totalGes;
+      // Agregar datos calculados al FormData
+      formData.append("valorFinal", resultado.valorFinal);
+      formData.append("adicional", resultado.adicional);
+      formData.append("siete", resultado.siete);
+      formData.append("personas", resultado.personas);
+      formData.append("costoFactorizado", resultado.costoFactorizado);
+      formData.append("totalGes", resultado.totalGes);
+      formData.append("planRecomendado", "Plan Estándar");
 
+      // Mostrar resultado
       const div = document.getElementById("resultadoDetalle");
       div.innerHTML = `
         <p><strong>Personas en plan:</strong> ${resultado.personas}</p>
@@ -198,9 +192,33 @@
         <p><strong>Valor final UF:</strong> ${resultado.valorFinalUF?.toFixed(3) ?? 'N/D'} UF</p>
         <p><strong>7% renta:</strong> $${formatearCLP(resultado.siete)}</p>
         <p><strong>Adicional:</strong> $${formatearCLP(resultado.adicional)}</p>
-        <p class="success-msg">✅ Datos enviados correctamente. Recibirás un correo pronto.</p>
       `;
       document.getElementById("resultado-preliminar").style.display = "block";
+
+      // Enviar a Google Apps Script usando iframe oculto
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.name = 'hiddenFrame';
+      document.body.appendChild(iframe);
+
+      const tempForm = document.createElement('form');
+      tempForm.method = 'POST';
+      tempForm.action = SCRIPT_URL;
+      tempForm.target = 'hiddenFrame';
+
+      for (let [key, value] of formData.entries()) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = value;
+        tempForm.appendChild(input);
+      }
+
+      document.body.appendChild(tempForm);
+      tempForm.submit();
+      document.body.removeChild(tempForm);
+
+      div.innerHTML += `<p class="success-msg">✅ Datos enviados correctamente. Recibirás un correo pronto.</p>`;
 
       setTimeout(() => {
         submitBtn.disabled = false;
