@@ -14,12 +14,11 @@
     button { background: #d4af37; color: #0a1a2a; padding: 15px 25px; border: none; border-radius: 10px; font-size: 1.1rem; cursor: pointer; }
     button:hover { opacity: 0.85; }
     button:disabled { opacity: 0.6; cursor: not-allowed; }
-    form input, form select, form textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: none; }
+    form input, form select, form textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: none; box-sizing: border-box; }
     .whatsapp { display: block; background: #25D366; text-align: center; padding: 15px; color: white; text-decoration: none; border-radius: 10px; font-size: 1.2rem; font-weight: bold; margin-top: 20px; max-width: 300px; margin-left: auto; margin-right: auto; }
     .small { font-size: 0.9rem; color: #ccc; }
-    .row { display:flex; gap:16px; }
-    .col { flex:1; }
-    img.profile { width:160px; height:160px; object-fit:cover; border-radius:12px; display:block; margin:16px auto; }
+    .row { display:flex; gap:16px; flex-wrap: wrap; }
+    .col { flex:1; min-width: 200px; }
     .uf-note { font-size:0.9rem; color:#cfcfcf; }
     .error-msg { color: #ff8080; margin-top: 12px; }
     .success-msg { color: #d4af37; margin-top: 12px; }
@@ -36,10 +35,7 @@
   <section id="formulario" class="card">
     <h2 class="gold">Formulario para Cálculo del Plan</h2>
 
-    <form id="mainForm"
-      action="https://script.google.com/macros/s/AKfycbz1B1A1-d4nGFfhPDIp37GLeveWOsY2rr5TAV5iDU6eAduzUxs6dSx7gbSpMqJoHhAIqQ/exec"
-      method="POST"
-      onsubmit="handleSubmit(event)">
+    <form id="mainForm">
 
       <div class="row">
         <div class="col"><input type="text" name="nombre" placeholder="Nombre completo" required /></div>
@@ -90,12 +86,6 @@
 
       <textarea name="mensaje" placeholder="Mensaje adicional (opcional)"></textarea>
 
-      <!-- Valores internos -->
-      <input type="hidden" name="valorBasePlan" id="valorBasePlan" value="35000">
-
-      <!-- GES en UF → 0.93 UF por persona -->
-      <input type="hidden" name="valorGesUF" id="valorGesUF" value="0.93">
-
       <button type="submit" id="submitBtn">Cotizar Ahora</button>
     </form>
   </section>
@@ -115,6 +105,8 @@
   <a class="whatsapp" href="https://wa.me/56990701837" target="_blank">Contactar por WhatsApp</a>
 
   <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz1B1A1-d4nGFfhPDIp37GLeveWOsY2rr5TAV5iDU6eAduzUxs6dSx7gbSpMqJoHhAIqQ/exec';
+
     /* ================================
           CARGAR UF DEL DÍA
        ================================ */
@@ -124,11 +116,20 @@
         const data = await res.json();
         const uf = data.uf.valor;
         window.__UF_VALOR = uf;
-        document.getElementById('ufValor').innerText = uf.toLocaleString('es-CL');
-        document.getElementById('ufFecha').innerText = new Date(data.uf.fecha).toLocaleDateString();
+        document.getElementById('ufValor').innerText = '$' + uf.toLocaleString('es-CL', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+        document.getElementById('ufFecha').innerText = new Date(data.uf.fecha).toLocaleDateString('es-CL', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
       } catch (e) {
-        document.getElementById('ufValor').innerText = "Error";
-        console.error('Error cargando UF:', e);
+        const ufDefault = 38000;
+        window.__UF_VALOR = ufDefault;
+        document.getElementById('ufValor').innerText = '$' + ufDefault.toLocaleString('es-CL') + ' (estimado)';
+        document.getElementById('ufFecha').innerText = 'No disponible';
       }
     }
 
@@ -158,9 +159,8 @@
 
       const costoFactorizado = obj.valorBasePlan * sumaFactores;
 
-      // GES en UF → CLP
-      const uf = window.__UF_VALOR || 0;
-      const valorGesCLP = obj.valorGesUF * uf;
+      const uf = window.__UF_VALOR || 38000;
+      const valorGesCLP = 0.93 * uf;
       const totalGes = Math.round(valorGesCLP * personas);
 
       const valorFinal = Math.round(costoFactorizado + totalGes);
@@ -182,7 +182,6 @@
       const submitBtn = document.getElementById("submitBtn");
       const formData = new FormData(form);
 
-      // Deshabilitar botón mientras se envía
       submitBtn.disabled = true;
       submitBtn.textContent = "Enviando...";
 
@@ -196,8 +195,8 @@
         renta: Number(formData.get("renta")),
         edadTitular: Number(formData.get("edad")),
         edadesCargas,
-        valorBasePlan: Number(document.getElementById("valorBasePlan").value),
-        valorGesUF: Number(document.getElementById("valorGesUF").value)
+        valorBasePlan: 35000,
+        valorGesUF: 0.93
       });
 
       const div = document.getElementById("resultadoDetalle");
@@ -219,28 +218,32 @@
       formData.append("personas", resultado.personas);
       formData.append("costoFactorizado", resultado.costoFactorizado);
       formData.append("totalGes", resultado.totalGes);
+      formData.append("planRecomendado", "Plan Estándar");
 
       try {
-        const response = await fetch(form.action, { 
-          method: "POST", 
+        console.log('📤 Enviando datos a Google Sheets...');
+        
+        const response = await fetch(SCRIPT_URL, { 
+          method: 'POST',
           body: formData,
-          mode: 'no-cors' // Importante para Google Apps Script
+          redirect: 'follow'
         });
         
-        div.innerHTML += `<p class="success-msg">✅ Datos guardados y correo enviado correctamente.</p>`;
+        console.log('✅ Respuesta recibida');
         
-        // Opcional: limpiar formulario después de envío exitoso
-        // form.reset();
+        div.innerHTML += `<p class="success-msg">✅ Datos enviados correctamente. Recibirás un correo pronto.</p>`;
         
       } catch (err) {
-        console.error('Error:', err);
+        console.error('❌ Error:', err);
         div.innerHTML += `<p class="error-msg">❌ Error al enviar. Por favor intenta nuevamente.</p>`;
       } finally {
-        // Rehabilitar botón
         submitBtn.disabled = false;
         submitBtn.textContent = "Cotizar Ahora";
       }
     }
+
+    // Asignar el evento submit
+    document.getElementById('mainForm').addEventListener('submit', handleSubmit);
 
     window.addEventListener("load", cargarUF);
   </script>
