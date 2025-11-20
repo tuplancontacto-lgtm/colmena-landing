@@ -22,6 +22,8 @@
     .uf-note { font-size:0.9rem; color:#cfcfcf; }
     .error-msg { color: #ff8080; margin-top: 12px; }
     .success-msg { color: #d4af37; margin-top: 12px; }
+    .btn-asesoria { display: inline-block; background: linear-gradient(135deg, #d4af37, #f0c860); color: #0a1a2a; padding: 18px 40px; text-decoration: none; border-radius: 12px; font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); transition: all 0.3s ease; border: none; cursor: pointer; }
+    .btn-asesoria:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6); }
   </style>
 </head>
 <body>
@@ -36,18 +38,18 @@
 
     <form id="mainForm">
       <div class="row">
-        <div class="col"><input type="text" name="nombre" placeholder="Nombre completo" required /></div>
-        <div class="col"><input type="email" name="correo" placeholder="Correo electrónico" required /></div>
+        <div class="col"><input type="text" name="nombre" id="nombre" placeholder="Nombre completo" required /></div>
+        <div class="col"><input type="email" name="correo" id="correo" placeholder="Correo electrónico" required /></div>
       </div>
 
       <div class="row">
-        <div class="col"><input type="tel" name="telefono" placeholder="Teléfono" required /></div>
+        <div class="col"><input type="tel" name="telefono" id="telefono" placeholder="Teléfono" required /></div>
         <div class="col"><input type="number" name="edad" id="edad" placeholder="Edad titular" required /></div>
       </div>
 
-      <input type="text" name="rut" placeholder="RUT" required />
+      <input type="text" name="rut" id="rut" placeholder="RUT" required />
 
-      <select name="isapre" required>
+      <select name="isapre" id="isapre" required>
         <option value="">Isapre actual</option>
         <option>FONASA</option>
         <option>Colmena</option>
@@ -62,7 +64,7 @@
       <label class="small">Edad de las cargas (una por línea)</label>
       <textarea name="cargas" id="cargas" placeholder="Ej: 5&#10;12&#10;30"></textarea>
 
-      <select name="region" required>
+      <select name="region" id="region" required>
         <option value="">Selecciona tu Región</option>
         <option>Región de Arica y Parinacota</option>
         <option>Región de Tarapacá</option>
@@ -82,7 +84,7 @@
         <option>Región de Magallanes</option>
       </select>
 
-      <textarea name="mensaje" placeholder="Mensaje adicional (opcional)"></textarea>
+      <textarea name="mensaje" id="mensaje" placeholder="Mensaje adicional (opcional)"></textarea>
 
       <button type="submit" id="submitBtn">Cotizar Ahora</button>
     </form>
@@ -93,26 +95,39 @@
     <p class="uf-note">UF: <span id="ufValor">cargando…</span> — Fecha: <span id="ufFecha">-</span></p>
   </section>
 
-<section id="resultado-preliminar" class="card" style="display:none">
-  <h2 class="gold">Resultado preliminar</h2>
-  <div id="resultadoDetalle" style="line-height:1.7"></div>
-  
-  <!-- BOTÓN PARA GOOGLE FORM -->
-  <div style="text-align: center; margin-top: 30px;">
-    <a href="https://forms.gle/jLwJovZLvzqpxsZ76" target="_blank" 
-       style="display: inline-block; background: linear-gradient(135deg, #d4af37, #f0c860); color: #0a1a2a; padding: 18px 40px; text-decoration: none; border-radius: 12px; font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); transition: all 0.3s ease;">
-      📋 Solicitar Asesoría Personalizada
-    </a>
-    <p style="margin-top: 15px; font-size: 0.9rem; color: #ccc;">
-      Completa tus datos y un asesor te contactará
-    </p>
-  </div>
-</section>
+  <section id="resultado-preliminar" class="card" style="display:none">
+    <h2 class="gold">Resultado preliminar</h2>
+    <div id="resultadoDetalle" style="line-height:1.7"></div>
+    
+    <div style="text-align: center; margin-top: 30px;">
+      <button id="btnAsesoria" class="btn-asesoria">
+        📋 Solicitar Asesoría Personalizada
+      </button>
+      <p style="margin-top: 15px; font-size: 0.9rem; color: #ccc;">
+        Tus datos ya estarán pre-cargados en el formulario
+      </p>
+    </div>
+  </section>
 
   <a class="whatsapp" href="https://wa.me/56990701837" target="_blank">Contactar por WhatsApp</a>
 
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz1B1A1-d4nGFfhPDIp37GLeveWOsY2rr5TAV5iDU6eAduzUxs6dSx7gbSpMqJoHhAlqQ/exec';
+    const FORM_BASE_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/viewform';
+    
+    // IDs de los campos del Google Form
+    const FORM_FIELDS = {
+      nombre: 'entry.1455181501',
+      correo: 'entry.1253669566',
+      telefono: 'entry.1927631596',
+      edad: 'entry.1515225692',
+      rut: 'entry.852144857',
+      isapre: 'entry.1312575017',
+      renta: 'entry.1350273122',
+      region: 'entry.1283417188',
+      cargas: 'entry.6457415'
+    };
+
+    let formularioDatos = {};
 
     async function cargarUF() {
       try {
@@ -166,6 +181,22 @@
       return { personas, costoFactorizado, totalGes, valorFinal, siete, adicional, valorFinalUF };
     }
 
+    function construirURLPreLlenada() {
+      const params = new URLSearchParams();
+      
+      if (formularioDatos.nombre) params.append(FORM_FIELDS.nombre, formularioDatos.nombre);
+      if (formularioDatos.correo) params.append(FORM_FIELDS.correo, formularioDatos.correo);
+      if (formularioDatos.telefono) params.append(FORM_FIELDS.telefono, formularioDatos.telefono);
+      if (formularioDatos.edad) params.append(FORM_FIELDS.edad, formularioDatos.edad);
+      if (formularioDatos.rut) params.append(FORM_FIELDS.rut, formularioDatos.rut);
+      if (formularioDatos.isapre) params.append(FORM_FIELDS.isapre, formularioDatos.isapre);
+      if (formularioDatos.renta) params.append(FORM_FIELDS.renta, formularioDatos.renta);
+      if (formularioDatos.region) params.append(FORM_FIELDS.region, formularioDatos.region);
+      if (formularioDatos.cargas) params.append(FORM_FIELDS.cargas, formularioDatos.cargas);
+      
+      return `${FORM_BASE_URL}?${params.toString()}`;
+    }
+
     document.getElementById('mainForm').addEventListener('submit', function(e) {
       e.preventDefault();
       
@@ -173,9 +204,23 @@
       
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.disabled = true;
-      submitBtn.textContent = "Enviando...";
+      submitBtn.textContent = "Calculando...";
 
       const formData = new FormData(this);
+      
+      // Guardar datos del formulario
+      formularioDatos = {
+        nombre: formData.get("nombre"),
+        correo: formData.get("correo"),
+        telefono: formData.get("telefono"),
+        edad: formData.get("edad"),
+        rut: formData.get("rut"),
+        isapre: formData.get("isapre"),
+        renta: formData.get("renta"),
+        cargas: formData.get("cargas"),
+        region: formData.get("region"),
+        mensaje: formData.get("mensaje")
+      };
       
       const edadesCargas = (formData.get("cargas") || "")
         .split(/\n/).map(s => s.trim()).filter(s => s !== "").map(s => parseInt(s));
@@ -190,15 +235,6 @@
 
       console.log('💰 Cálculos:', resultado);
 
-      // Agregar datos calculados
-      formData.append("valorFinal", resultado.valorFinal);
-      formData.append("adicional", resultado.adicional);
-      formData.append("siete", resultado.siete);
-      formData.append("personas", resultado.personas);
-      formData.append("costoFactorizado", resultado.costoFactorizado);
-      formData.append("totalGes", resultado.totalGes);
-      formData.append("planRecomendado", "Plan Estándar");
-
       // Mostrar resultado
       const div = document.getElementById("resultadoDetalle");
       div.innerHTML = `
@@ -209,41 +245,18 @@
         <p><strong>Valor final UF:</strong> ${resultado.valorFinalUF?.toFixed(3) ?? 'N/D'} UF</p>
         <p><strong>7% renta:</strong> $${formatearCLP(resultado.siete)}</p>
         <p><strong>Adicional:</strong> $${formatearCLP(resultado.adicional)}</p>
-        <p class="gold">⏳ Enviando datos...</p>
       `;
       document.getElementById("resultado-preliminar").style.display = "block";
 
-      // Enviar usando técnica de formulario + iframe
-      const iframe = document.createElement('iframe');
-      iframe.name = 'hiddenIframe';
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Cotizar Ahora";
+    });
 
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = SCRIPT_URL;
-      form.target = 'hiddenIframe';
-
-      for (const [key, value] of formData.entries()) {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = value;
-        form.appendChild(input);
-      }
-
-      document.body.appendChild(form);
-      form.submit();
-      
-      console.log('✅ Formulario POST enviado');
-
-      // Actualizar mensaje después de 2 segundos
-      setTimeout(() => {
-        div.innerHTML = div.innerHTML.replace('⏳ Enviando datos...', '✅ Datos enviados correctamente. Recibirás un correo pronto.');
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Cotizar Ahora";
-        document.body.removeChild(form);
-      }, 2000);
+    // Botón para abrir formulario pre-llenado
+    document.getElementById('btnAsesoria').addEventListener('click', function() {
+      const url = construirURLPreLlenada();
+      console.log('🔗 Abriendo formulario pre-llenado:', url);
+      window.open(url, '_blank');
     });
 
     window.addEventListener("load", cargarUF);
