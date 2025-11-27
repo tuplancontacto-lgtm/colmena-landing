@@ -24,6 +24,149 @@
     .success-msg { color: #d4af37; margin-top: 12px; }
     .btn-asesoria { display: inline-block; background: linear-gradient(135deg, #d4af37, #f0c860); color: #0a1a2a; padding: 18px 40px; text-decoration: none; border-radius: 12px; font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); transition: all 0.3s ease; border: none; cursor: pointer; }
     .btn-asesoria:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6); }
+
+    /* ========================================= */
+    /* NUEVOS ESTILOS PARA SECCIÓN DE REFERIDOS */
+    /* ========================================= */
+    .referidos-section {
+      background: linear-gradient(135deg, #0f2640 0%, #1a3a5a 100%);
+      padding: 60px 20px;
+      margin: 40px 0;
+    }
+
+    .referidos-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #112233;
+      padding: 40px;
+      border-radius: 20px;
+      border: 1px solid #d4af37;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+
+    .referidos-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .referidos-header h2 {
+      color: #d4af37;
+      font-size: 32px;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    .referidos-header p {
+      color: #b8c5d6;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .referidos-form {
+      display: grid;
+      gap: 20px;
+    }
+
+    .form-section {
+      background: #1a2a3a;
+      padding: 25px;
+      border-radius: 15px;
+      border-left: 4px solid #d4af37;
+    }
+
+    .form-section h3 {
+      color: #d4af37;
+      font-size: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-group-referidos {
+      margin-bottom: 15px;
+    }
+
+    .form-group-referidos label {
+      display: block;
+      color: #b8c5d6;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .form-group-referidos input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #2a3a4a;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+      background: #0a1a2a;
+      color: white;
+    }
+
+    .form-group-referidos input:focus {
+      outline: none;
+      border-color: #d4af37;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+    }
+
+    .btn-enviar-referido {
+      background: linear-gradient(135deg, #d4af37 0%, #f0c860 100%);
+      color: #0a1a2a;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .btn-enviar-referido:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5);
+      opacity: 1;
+    }
+
+    .btn-enviar-referido:active {
+      transform: translateY(0);
+    }
+
+    .btn-enviar-referido:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .mensaje-exito-referido {
+      background: #1a4d2e;
+      color: #4ade80;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      display: none;
+      text-align: center;
+      font-weight: 600;
+      border: 1px solid #4ade80;
+    }
+
+    .mensaje-error-referido {
+      background: #4a1a1a;
+      color: #ff8080;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      display: none;
+      text-align: center;
+      font-weight: 600;
+      border: 1px solid #ff8080;
+    }
   </style>
 </head>
 <body>
@@ -108,6 +251,69 @@
       </p>
     </div>
   </section>
+
+  <!-- ========================================= -->
+  <!-- NUEVA SECCIÓN DE REFERIDOS -->
+  <!-- ========================================= -->
+  <section class="referidos-section" id="referidos">
+    <div class="referidos-container">
+      <div class="referidos-header">
+        <h2>¿Quieres que asesoremos a un amigo, familiar o colega?</h2>
+        <p>Comparte los beneficios de nuestros planes de salud. Ingresa los datos y nos comunicaremos con tu referido.</p>
+      </div>
+
+      <form id="formReferidos" class="referidos-form">
+        <!-- Datos del Usuario que Refiere -->
+        <div class="form-section">
+          <h3>👤 Tus Datos</h3>
+          
+          <div class="form-group-referidos">
+            <label for="nombreUsuario">Tu Nombre Completo *</label>
+            <input type="text" id="nombreUsuario" name="nombreUsuario" required 
+                   placeholder="Ej: María González">
+          </div>
+        </div>
+
+        <!-- Datos del Referido -->
+        <div class="form-section">
+          <h3>🎯 Datos de tu Referido</h3>
+          
+          <div class="form-group-referidos">
+            <label for="nombreReferido">Nombre Completo del Referido *</label>
+            <input type="text" id="nombreReferido" name="nombreReferido" required 
+                   placeholder="Ej: Juan Pérez">
+          </div>
+
+          <div class="form-group-referidos">
+            <label for="telefonoReferido">Teléfono del Referido *</label>
+            <input type="tel" id="telefonoReferido" name="telefonoReferido" required 
+                   placeholder="Ej: +56912345678" pattern="[0-9+]{8,15}">
+          </div>
+
+          <div class="form-group-referidos">
+            <label for="correoReferido">Correo Electrónico del Referido *</label>
+            <input type="email" id="correoReferido" name="correoReferido" required 
+                   placeholder="Ej: juan.perez@email.com">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-enviar-referido">
+          📤 Enviar Referencia
+        </button>
+
+        <div class="mensaje-exito-referido" id="mensajeExitoReferido">
+          ✅ ¡Referencia enviada exitosamente! Nos comunicaremos pronto con tu referido.
+        </div>
+
+        <div class="mensaje-error-referido" id="mensajeErrorReferido">
+          ❌ Hubo un error al enviar la referencia. Por favor, intenta nuevamente.
+        </div>
+      </form>
+    </div>
+  </section>
+  <!-- ========================================= -->
+  <!-- FIN SECCIÓN DE REFERIDOS -->
+  <!-- ========================================= -->
 
   <a class="whatsapp" href="https://wa.me/56990701837" target="_blank">Contactar por WhatsApp</a>
 
@@ -258,6 +464,88 @@
       console.log('🔗 Abriendo formulario pre-llenado:', url);
       window.open(url, '_blank');
     });
+
+    // ========================================
+    // SISTEMA DE REFERIDOS
+    // ========================================
+
+    // URL del Google Form de Referidos (YA CONFIGURADA)
+    const GOOGLE_FORM_REFERIDOS_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeIppjYB0Vgc6RsJ3AM0HcAVhLaxAT6ZZ_MxdPhmuwRkwLT-A/formResponse';
+
+    // IDs de los campos del Google Form de Referidos (YA CONFIGURADOS)
+    const FORM_REFERIDOS_FIELDS = {
+      nombreUsuario: 'entry.1664559901',
+      nombreReferido: 'entry.715463265',
+      telefonoReferido: 'entry.1382714918',
+      correoReferido: 'entry.897178414',
+      mensaje: 'entry.178502788'
+    };
+
+    // Manejar envío del formulario de referidos
+    document.getElementById('formReferidos').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      console.log('📤 Formulario de referidos enviado');
+      
+      const nombreUsuario = document.getElementById('nombreUsuario').value;
+      const nombreReferido = document.getElementById('nombreReferido').value;
+      const telefonoReferido = document.getElementById('telefonoReferido').value;
+      const correoReferido = document.getElementById('correoReferido').value;
+      
+      // Ocultar mensajes previos
+      document.getElementById('mensajeExitoReferido').style.display = 'none';
+      document.getElementById('mensajeErrorReferido').style.display = 'none';
+      
+      // Deshabilitar botón mientras se envía
+      const btnEnviar = document.querySelector('.btn-enviar-referido');
+      btnEnviar.disabled = true;
+      btnEnviar.textContent = '⏳ Enviando...';
+      
+      try {
+        // Enviar a Google Forms
+        await enviarReferidoAGoogleForm(nombreUsuario, nombreReferido, telefonoReferido, correoReferido);
+        
+        // Mostrar mensaje de éxito
+        document.getElementById('mensajeExitoReferido').style.display = 'block';
+        
+        // Limpiar formulario
+        document.getElementById('formReferidos').reset();
+        
+        // Scroll al mensaje de éxito
+        document.getElementById('mensajeExitoReferido').scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' 
+        });
+        
+        console.log('✅ Referido enviado exitosamente');
+        
+      } catch (error) {
+        console.error('❌ Error al enviar referido:', error);
+        document.getElementById('mensajeErrorReferido').style.display = 'block';
+      } finally {
+        // Rehabilitar botón
+        btnEnviar.disabled = false;
+        btnEnviar.textContent = '📤 Enviar Referencia';
+      }
+    });
+
+    // Función para enviar a Google Forms
+    async function enviarReferidoAGoogleForm(nombreUsuario, nombreReferido, telefonoReferido, correoReferido) {
+      const formData = new FormData();
+      
+      formData.append(FORM_REFERIDOS_FIELDS.nombreUsuario, nombreUsuario);
+      formData.append(FORM_REFERIDOS_FIELDS.nombreReferido, nombreReferido);
+      formData.append(FORM_REFERIDOS_FIELDS.telefonoReferido, telefonoReferido);
+      formData.append(FORM_REFERIDOS_FIELDS.correoReferido, correoReferido);
+      formData.append(FORM_REFERIDOS_FIELDS.mensaje, `Referido de: ${nombreUsuario}`);
+      
+      // Enviar a Google Forms (modo no-cors)
+      await fetch(GOOGLE_FORM_REFERIDOS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData
+      });
+    }
 
     window.addEventListener("load", cargarUF);
   </script>
