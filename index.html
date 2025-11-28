@@ -247,7 +247,7 @@
         📋 Solicitar Asesoría Personalizada
       </button>
       <p style="margin-top: 15px; font-size: 0.9rem; color: #ccc;">
-        Tus datos ya estarán pre-cargados en el formulario
+        Tus datos se enviarán inmediatamente
       </p>
     </div>
   </section>
@@ -255,7 +255,7 @@
   <!-- ========================================= -->
   <!-- NUEVA SECCIÓN DE REFERIDOS -->
   <!-- ========================================= -->
-  <section class="referidos-section" id="referidos">
+  <section class="referidos-section" id="referidos" style="display:none">
     <div class="referidos-container">
       <div class="referidos-header">
         <h2>¿Quieres que asesoremos a un amigo, familiar o colega?</h2>
@@ -313,6 +313,17 @@
   </section>
   <!-- ========================================= -->
   <!-- FIN SECCIÓN DE REFERIDOS -->
+  <!-- ========================================= -->
+
+  <!-- ========================================= -->
+  <!-- SECCIÓN DE RESUMEN FINAL -->
+  <!-- ========================================= -->
+  <section id="resumen-final" class="card" style="display:none">
+    <h2 class="gold">✅ Resumen de tus Solicitudes</h2>
+    <div id="resumenContenido" style="line-height:1.8"></div>
+  </section>
+  <!-- ========================================= -->
+  <!-- FIN RESUMEN FINAL -->
   <!-- ========================================= -->
 
   <a class="whatsapp" href="https://wa.me/56990701837" target="_blank">Contactar por WhatsApp</a>
@@ -459,11 +470,62 @@
     });
 
     // Botón para abrir formulario pre-llenado
-    document.getElementById('btnAsesoria').addEventListener('click', function() {
-      const url = construirURLPreLlenada();
-      console.log('🔗 Abriendo formulario pre-llenado:', url);
-      window.open(url, '_blank');
+    document.getElementById('btnAsesoria').addEventListener('click', async function() {
+      console.log('📤 Enviando datos de asesoría...');
+      
+      // Deshabilitar botón
+      this.disabled = true;
+      this.textContent = '⏳ Enviando...';
+      
+      try {
+        // Enviar a Google Forms
+        await enviarCotizacionAGoogleForm();
+        
+        console.log('✅ Datos enviados exitosamente');
+        
+        // Cambiar texto del botón
+        this.textContent = '✅ Datos Enviados';
+        this.style.background = '#4ade80';
+        
+        // Mostrar sección de referidos
+        document.getElementById('referidos').style.display = 'block';
+        
+        // Scroll a la sección de referidos
+        setTimeout(() => {
+          document.getElementById('referidos').scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+          });
+        }, 500);
+        
+      } catch (error) {
+        console.error('❌ Error al enviar:', error);
+        this.textContent = '❌ Error - Intenta de nuevo';
+        this.disabled = false;
+      }
     });
+
+    // Función para enviar cotización a Google Forms
+    async function enviarCotizacionAGoogleForm() {
+      const formData = new FormData();
+      
+      if (formularioDatos.nombre) formData.append(FORM_FIELDS.nombre, formularioDatos.nombre);
+      if (formularioDatos.correo) formData.append(FORM_FIELDS.correo, formularioDatos.correo);
+      if (formularioDatos.telefono) formData.append(FORM_FIELDS.telefono, formularioDatos.telefono);
+      if (formularioDatos.edad) formData.append(FORM_FIELDS.edad, formularioDatos.edad);
+      if (formularioDatos.rut) formData.append(FORM_FIELDS.rut, formularioDatos.rut);
+      if (formularioDatos.isapre) formData.append(FORM_FIELDS.isapre, formularioDatos.isapre);
+      if (formularioDatos.renta) formData.append(FORM_FIELDS.renta, formularioDatos.renta);
+      if (formularioDatos.region) formData.append(FORM_FIELDS.region, formularioDatos.region);
+      if (formularioDatos.cargas) formData.append(FORM_FIELDS.cargas, formularioDatos.cargas);
+      
+      // Enviar a Google Forms (modo no-cors)
+      await fetch(FORM_BASE_URL.replace('/viewform', '/formResponse'), {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData
+      });
+    }
 
     // ========================================
     // SISTEMA DE REFERIDOS
@@ -511,19 +573,18 @@
         // Limpiar formulario
         document.getElementById('formReferidos').reset();
         
-        // Scroll al mensaje de éxito
-        document.getElementById('mensajeExitoReferido').scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'center' 
-        });
+        // Cambiar botón
+        btnEnviar.textContent = '✅ Referido Enviado';
+        btnEnviar.style.background = '#4ade80';
         
         console.log('✅ Referido enviado exitosamente');
+        
+        // Mostrar resumen final
+        mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, correoReferido);
         
       } catch (error) {
         console.error('❌ Error al enviar referido:', error);
         document.getElementById('mensajeErrorReferido').style.display = 'block';
-      } finally {
-        // Rehabilitar botón
         btnEnviar.disabled = false;
         btnEnviar.textContent = '📤 Enviar Referencia';
       }
@@ -545,6 +606,51 @@
         mode: 'no-cors',
         body: formData
       });
+    }
+
+    // Función para mostrar resumen final
+    function mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, correoReferido) {
+      const resumenHTML = `
+        <div style="background: #1a2a3a; padding: 25px; border-radius: 15px; margin-bottom: 20px;">
+          <h3 style="color: #d4af37; margin-top: 0;">📋 Solicitud de Asesoría</h3>
+          <p><strong>Nombre:</strong> ${formularioDatos.nombre}</p>
+          <p><strong>Correo:</strong> ${formularioDatos.correo}</p>
+          <p><strong>Teléfono:</strong> ${formularioDatos.telefono}</p>
+          <p><strong>Edad:</strong> ${formularioDatos.edad} años</p>
+          <p><strong>RUT:</strong> ${formularioDatos.rut}</p>
+          <p><strong>Isapre actual:</strong> ${formularioDatos.isapre}</p>
+          <p><strong>Renta:</strong> $${Number(formularioDatos.renta).toLocaleString('es-CL')}</p>
+          <p><strong>Región:</strong> ${formularioDatos.region}</p>
+          ${formularioDatos.cargas ? `<p><strong>Cargas:</strong> ${formularioDatos.cargas.replace(/\n/g, ', ')}</p>` : ''}
+          <p style="color: #4ade80; font-weight: bold; margin-top: 15px;">✅ Enviado exitosamente</p>
+        </div>
+
+        <div style="background: #1a2a3a; padding: 25px; border-radius: 15px;">
+          <h3 style="color: #d4af37; margin-top: 0;">🎯 Referido</h3>
+          <p><strong>Referido por:</strong> ${nombreUsuario}</p>
+          <p><strong>Nombre del referido:</strong> ${nombreReferido}</p>
+          <p><strong>Teléfono:</strong> ${telefonoReferido}</p>
+          <p><strong>Correo:</strong> ${correoReferido}</p>
+          <p style="color: #4ade80; font-weight: bold; margin-top: 15px;">✅ Enviado exitosamente</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; padding: 20px; background: #0f2640; border-radius: 10px;">
+          <p style="font-size: 1.1rem; color: #d4af37; margin: 0;">
+            ¡Gracias por tu confianza! Nos comunicaremos contigo y con tu referido en las próximas horas.
+          </p>
+        </div>
+      `;
+
+      document.getElementById('resumenContenido').innerHTML = resumenHTML;
+      document.getElementById('resumen-final').style.display = 'block';
+      
+      // Scroll al resumen
+      setTimeout(() => {
+        document.getElementById('resumen-final').scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
+      }, 300);
     }
 
     window.addEventListener("load", cargarUF);
