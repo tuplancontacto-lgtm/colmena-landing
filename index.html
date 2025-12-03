@@ -290,11 +290,16 @@ function calcularCotizacion(obj) {
   ENVÍO DEL FORMULARIO PRINCIPAL
 =========================================================*/
 
-document.getElementById("mainForm").addEventListener("submit", function(e) {
+/*========================================================
+  ENVÍO DEL FORMULARIO PRINCIPAL (AHORA SÍ ENVÍA)
+=========================================================*/
+
+document.getElementById("mainForm").addEventListener("submit", async function(e) {
   e.preventDefault();
 
   const data = new FormData(this);
 
+  // Guardamos datos para resumen
   formularioDatos = {
     nombre: data.get("nombre"),
     correo: data.get("correo"),
@@ -308,6 +313,27 @@ document.getElementById("mainForm").addEventListener("submit", function(e) {
     mensaje: data.get("mensaje")
   };
 
+  /* ======================================
+     📌 ENVÍO A GOOGLE FORMS AUTOMÁTICO
+     (ANTES ESTABA SOLO EN btnAsesoria)
+  ======================================= */
+
+  const f = new FormData();
+  for (let k in FORM_FIELDS) {
+    f.append(FORM_FIELDS[k], formularioDatos[k] ?? "");
+  }
+
+  // Enviar al Google Form
+  await fetch(FORM_BASE_URL, {
+    method: "POST",
+    mode: "no-cors",
+    body: f
+  });
+
+  /* ======================================
+     📌 Cálculo preliminar (igual que antes)
+  ======================================= */
+
   const edadesCargas = (formularioDatos.cargas || "")
     .split("\n")
     .map(s => s.trim())
@@ -320,6 +346,26 @@ document.getElementById("mainForm").addEventListener("submit", function(e) {
     edadesCargas,
     valorBasePlan: 35000
   });
+
+  document.getElementById("resultadoDetalle").innerHTML = `
+    <p><strong>Personas en plan:</strong> ${r.personas}</p>
+    <p><strong>Costo base ajustado:</strong> $${formatearCLP(r.costoFactorizado)}</p>
+    <p><strong>GES total (${r.personasQuePaganGES} personas):</strong> $${formatearCLP(r.totalGes)}</p>
+    <p><strong>Valor final:</strong> $${formatearCLP(r.valorFinal)}</p>
+    <p><strong>Valor final UF:</strong> ${r.valorFinalUF.toFixed(3)} UF</p>
+    <p><strong>7% renta:</strong> $${formatearCLP(r.siete)}</p>
+    <p><strong>Adicional:</strong> $${formatearCLP(r.adicional)}</p>
+  `;
+
+  document.getElementById("resultado-preliminar").style.display = "block";
+
+  // 🤖 Hacer scroll bonito
+  setTimeout(() => {
+    document.getElementById("resultado-preliminar")
+      .scrollIntoView({ behavior: "smooth" });
+  }, 300);
+});
+
 
   document.getElementById("resultadoDetalle").innerHTML = `
     <p><strong>Personas en plan:</strong> ${r.personas}</p>
