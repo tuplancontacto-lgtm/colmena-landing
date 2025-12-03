@@ -180,9 +180,7 @@
 =========================================================*/
 
 const FORM_BASE_URL =
-'https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/formResponse';
-
-
+  'https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/formResponse';
 
 const FORM_FIELDS = {
   nombre: 'entry.1455181501',
@@ -196,7 +194,6 @@ const FORM_FIELDS = {
   cargas: 'entry.6457415',
   mensaje: 'entry.860152674'
 };
-
 
 let formularioDatos = {};
 
@@ -227,10 +224,7 @@ async function cargarUF() {
     document.getElementById("ufFecha").innerText = "No disponible";
     window.__UF_VALOR = 38000;
   }
-cargarUF();   // ← ESTA LÍNEA HACE QUE LA UF SE CARGUE
-
-
-
+}
 
 /*========================================================
   CÁLCULOS
@@ -262,7 +256,6 @@ function calcularCotizacion(obj) {
   const costoFactorizado = obj.valorBasePlan * sumaFactores;
   const uf = window.__UF_VALOR || 38000;
 
-  /* GES CORRECTO */
   const valorGesUF = 0.77;
   const valorGesCLP = valorGesUF * uf;
 
@@ -295,16 +288,11 @@ function calcularCotizacion(obj) {
   ENVÍO DEL FORMULARIO PRINCIPAL
 =========================================================*/
 
-/*========================================================
-  ENVÍO DEL FORMULARIO PRINCIPAL (AHORA SÍ ENVÍA)
-=========================================================*/
-
 document.getElementById("mainForm").addEventListener("submit", async function(e) {
   e.preventDefault();
 
   const data = new FormData(this);
 
-  // Guardamos datos para resumen
   formularioDatos = {
     nombre: data.get("nombre"),
     correo: data.get("correo"),
@@ -318,27 +306,19 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     mensaje: data.get("mensaje")
   };
 
-  /* ======================================
-     📌 ENVÍO A GOOGLE FORMS AUTOMÁTICO
-     (ANTES ESTABA SOLO EN btnAsesoria)
-  ======================================= */
-
+  // 📌 Envío a Google Forms
   const f = new FormData();
   for (let k in FORM_FIELDS) {
     f.append(FORM_FIELDS[k], formularioDatos[k] ?? "");
   }
 
-  // Enviar al Google Form
   await fetch(FORM_BASE_URL, {
     method: "POST",
     mode: "no-cors",
     body: f
   });
 
-  /* ======================================
-     📌 Cálculo preliminar (igual que antes)
-  ======================================= */
-
+  // 📌 Cálculo preliminar
   const edadesCargas = (formularioDatos.cargas || "")
     .split("\n")
     .map(s => s.trim())
@@ -352,53 +332,35 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     valorBasePlan: 35000
   });
 
- const nCargas = edadesCargas.length;
+  const nCargas = edadesCargas.length;
 
-const mensajeCliente = `
-  <strong style="font-size:1.2rem;">Cotización Personalizada – Colmena</strong><br><br>
+  const mensajeCliente = `
+    <strong style="font-size:1.2rem;">Cotización Personalizada – Colmena</strong><br><br>
 
-  Hola ${formularioDatos.nombre}, revisé tus datos y preparé una propuesta ideal según tu renta, cargas y edad.<br><br>
+    Hola ${formularioDatos.nombre}, revisé tus datos y preparé una propuesta ideal según tu renta, cargas y edad.<br><br>
 
-  <strong>🔹 Resultado de tu cotización</strong><br>
-  Valor final estimado: <strong>${r.valorFinalUF.toFixed(3)} UF</strong><br>
-  Total estimado en pesos: <strong>$${formatearCLP(r.valorFinal)}</strong><br>
-  7% de tu renta: <strong>$${formatearCLP(r.siete)}</strong><br>
-  Adicional a pagar sobre el 7%: <strong>$${formatearCLP(r.adicional)}</strong><br>
-  Cargas consideradas: <strong>${nCargas}</strong><br><br>
+    <strong>🔹 Resultado de tu cotización</strong><br>
+    Valor final estimado: <strong>${r.valorFinalUF.toFixed(3)} UF</strong><br>
+    Total estimado en pesos: <strong>$${formatearCLP(r.valorFinal)}</strong><br>
+    7% de tu renta: <strong>$${formatearCLP(r.siete)}</strong><br>
+    Adicional a pagar sobre el 7%: <strong>$${formatearCLP(r.adicional)}</strong><br>
+    Cargas consideradas: <strong>${nCargas}</strong><br><br>
 
-  <strong>¿Qué viene ahora?</strong><br>
-  Se seleccionarán 2 planes Colmena especialmente para ti:<br>
-  • Un plan lo más cercano posible a tu 7%, con el adicional más bajo.<br>
-  • Un plan con algo más de cobertura y mejor red de clínicas.<br><br>
+    <strong>¿Qué viene ahora?</strong><br>
+    Se seleccionarán 2 planes Colmena especialmente para ti:<br>
+    • Un plan lo más cercano posible a tu 7%, con el adicional más bajo.<br>
+    • Un plan con algo más de cobertura y mejor red de clínicas.<br><br>
 
-  Luego revisaremos juntos cuál te conviene más 💛
-`;
+    Luego revisaremos juntos cuál te conviene más 💛
+  `;
 
-document.getElementById("resultadoDetalle").innerHTML = mensajeCliente;
-document.getElementById("resultado-preliminar").style.display = "block";
-
-
+  document.getElementById("resultadoDetalle").innerHTML = mensajeCliente;
   document.getElementById("resultado-preliminar").style.display = "block";
 
-  // 🤖 Hacer scroll bonito
   setTimeout(() => {
     document.getElementById("resultado-preliminar")
       .scrollIntoView({ behavior: "smooth" });
   }, 300);
-});
-
-
-  document.getElementById("resultadoDetalle").innerHTML = `
-    <p><strong>Personas en plan:</strong> ${r.personas}</p>
-    <p><strong>Costo base ajustado:</strong> $${formatearCLP(r.costoFactorizado)}</p>
-    <p><strong>GES total (${r.personasQuePaganGES} personas):</strong> $${formatearCLP(r.totalGes)}</p>
-    <p><strong>Valor final:</strong> $${formatearCLP(r.valorFinal)}</p>
-    <p><strong>Valor final UF:</strong> ${r.valorFinalUF.toFixed(3)} UF</p>
-    <p><strong>7% renta:</strong> $${formatearCLP(r.siete)}</p>
-    <p><strong>Adicional:</strong> $${formatearCLP(r.adicional)}</p>
-  `;
-
-  document.getElementById("resultado-preliminar").style.display = "block";
 });
 
 /*========================================================
@@ -410,11 +372,9 @@ document.getElementById("btnAsesoria").addEventListener("click", async function(
   this.textContent = "⏳ Enviando...";
 
   const f = new FormData();
-
   for (let k in FORM_FIELDS) {
     f.append(FORM_FIELDS[k], formularioDatos[k] ?? "");
-}
-
+  }
 
   await fetch(FORM_BASE_URL, {
     method: "POST",
@@ -437,7 +397,7 @@ document.getElementById("btnAsesoria").addEventListener("click", async function(
 =========================================================*/
 
 const GOOGLE_FORM_REFERIDOS_URL =
-'https://docs.google.com/forms/d/e/1FAIpQLSeIppjYB0Vgc6RsJ3AM0HcAVhLaxAT6ZZ_MxdPhmuwRkwLT-A/formResponse';
+  'https://docs.google.com/forms/d/e/1FAIpQLSeIppjYB0Vgc6RsJ3AM0HcAVhLaxAT6ZZ_MxdPhmuwRkwLT-A/formResponse';
 
 document.getElementById("formReferidos").addEventListener("submit", async function(e) {
   e.preventDefault();
@@ -461,7 +421,6 @@ document.getElementById("formReferidos").addEventListener("submit", async functi
   document.getElementById("mensajeExitoReferido").style.display="block";
 
   mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, correoReferido);
-
 });
 
 /*========================================================
@@ -511,6 +470,10 @@ function mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, co
     });
   }, 400);
 }
+
+/*========================================================
+  INICIO
+=========================================================*/
 
 window.addEventListener("load", cargarUF);
 </script>
