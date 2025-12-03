@@ -345,10 +345,9 @@ document.getElementById("btnAsesoria").addEventListener("click", async function(
   const f = new FormData();
 
   for (let k in FORM_FIELDS) {
-    if (formularioDatos[k]) {
-      f.append(FORM_FIELDS[k], formularioDatos[k]);
-    }
-  }
+    f.append(FORM_FIELDS[k], formularioDatos[k] ?? "");
+}
+
 
   await fetch(FORM_BASE_URL, {
     method: "POST",
