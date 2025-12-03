@@ -206,7 +206,7 @@ let formularioDatos = {};
 
 async function cargarUF() {
   try {
-    const r = await fetch("https://mindicador.cl/api");
+    const r = await fetch("https://mindicador.cl/api/");
     const j = await r.json();
 
     const uf = j.uf.valor;
@@ -217,7 +217,9 @@ async function cargarUF() {
 
     document.getElementById("ufFecha").innerText =
       new Date(j.uf.fecha).toLocaleDateString("es-CL", {
-        year: "numeric", month: "long", day: "numeric"
+        year: "numeric",
+        month: "long",
+        day: "numeric"
       });
 
   } catch (err) {
@@ -226,6 +228,10 @@ async function cargarUF() {
     window.__UF_VALOR = 38000;
   }
 }
+
+// **FALTABA ESTA LÍNEA**
+cargarUF();
+
 
 /*========================================================
   CÁLCULOS
