@@ -20,641 +20,430 @@
     .row { display:flex; gap:16px; flex-wrap: wrap; }
     .col { flex:1; min-width: 200px; }
     .uf-note { font-size:0.9rem; color:#cfcfcf; }
-    .error-msg { color: #ff8080; margin-top: 12px; }
-    .success-msg { color: #d4af37; margin-top: 12px; }
-    .btn-asesoria { display: inline-block; background: linear-gradient(135deg, #d4af37, #f0c860); color: #0a1a2a; padding: 18px 40px; text-decoration: none; border-radius: 12px; font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); transition: all 0.3s ease; border: none; cursor: pointer; }
-    .btn-asesoria:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6); }
+    .btn-asesoria { display: inline-block; background: linear-gradient(135deg, #d4af37, #f0c860); color: #0a1a2a; padding: 18px 40px; text-decoration: none; border-radius: 12px; font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 15px rgba(212,175,55,0.4); transition: all .3s ease; border: none; cursor: pointer; }
+    .btn-asesoria:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,175,55,0.6); }
 
-    /* ========================================= */
-    /* NUEVOS ESTILOS PARA SECCIÓN DE REFERIDOS */
-    /* ========================================= */
-    .referidos-section {
-      background: linear-gradient(135deg, #0f2640 0%, #1a3a5a 100%);
-      padding: 60px 20px;
-      margin: 40px 0;
-    }
+    /* Referidos */
+    .referidos-section { background: linear-gradient(135deg,#0f2640 0%,#1a3a5a 100%); padding:60px 20px; margin:40px 0; }
+    .referidos-container { max-width:800px; margin:0 auto; background:#112233; padding:40px; border-radius:20px; border:1px solid #d4af37; box-shadow:0 10px 40px rgba(0,0,0,0.3); }
+    .referidos-header { text-align:center; margin-bottom:30px; }
+    .referidos-header h2 { color:#d4af37; font-size:32px; margin-bottom:15px; font-weight:700; }
+    .referidos-header p { color:#b8c5d6; font-size:18px; }
+    .referidos-form { display:grid; gap:20px; }
 
-    .referidos-container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: #112233;
-      padding: 40px;
-      border-radius: 20px;
-      border: 1px solid #d4af37;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-    }
+    .form-section { background:#1a2a3a; padding:25px; border-radius:15px; border-left:4px solid #d4af37; }
+    .form-section h3 { color:#d4af37; font-size:20px; margin-bottom:20px; }
 
-    .referidos-header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
+    .form-group-referidos label { display:block; color:#b8c5d6; margin-bottom:8px; font-size:14px; font-weight:600; }
+    .form-group-referidos input { width:100%; padding:12px; border:2px solid #2a3a4a; border-radius:8px; background:#0a1a2a; color:white; }
 
-    .referidos-header h2 {
-      color: #d4af37;
-      font-size: 32px;
-      margin-bottom: 15px;
-      font-weight: 700;
-    }
+    .btn-enviar-referido { background:linear-gradient(135deg,#d4af37,#f0c860); color:#0a1a2a; padding:15px 40px; border:none; border-radius:10px; font-size:18px; font-weight:700; cursor:pointer; box-shadow:0 5px 15px rgba(212,175,55,0.3); width:100%; margin-top:20px; }
 
-    .referidos-header p {
-      color: #b8c5d6;
-      font-size: 18px;
-      line-height: 1.6;
-    }
-
-    .referidos-form {
-      display: grid;
-      gap: 20px;
-    }
-
-    .form-section {
-      background: #1a2a3a;
-      padding: 25px;
-      border-radius: 15px;
-      border-left: 4px solid #d4af37;
-    }
-
-    .form-section h3 {
-      color: #d4af37;
-      font-size: 20px;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .form-group-referidos {
-      margin-bottom: 15px;
-    }
-
-    .form-group-referidos label {
-      display: block;
-      color: #b8c5d6;
-      font-weight: 600;
-      margin-bottom: 8px;
-      font-size: 14px;
-    }
-
-    .form-group-referidos input {
-      width: 100%;
-      padding: 12px 15px;
-      border: 2px solid #2a3a4a;
-      border-radius: 8px;
-      font-size: 16px;
-      transition: all 0.3s ease;
-      box-sizing: border-box;
-      background: #0a1a2a;
-      color: white;
-    }
-
-    .form-group-referidos input:focus {
-      outline: none;
-      border-color: #d4af37;
-      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
-    }
-
-    .btn-enviar-referido {
-      background: linear-gradient(135deg, #d4af37 0%, #f0c860 100%);
-      color: #0a1a2a;
-      padding: 15px 40px;
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
-      width: 100%;
-      margin-top: 20px;
-    }
-
-    .btn-enviar-referido:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5);
-      opacity: 1;
-    }
-
-    .btn-enviar-referido:active {
-      transform: translateY(0);
-    }
-
-    .btn-enviar-referido:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .mensaje-exito-referido {
-      background: #1a4d2e;
-      color: #4ade80;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 20px;
-      display: none;
-      text-align: center;
-      font-weight: 600;
-      border: 1px solid #4ade80;
-    }
-
-    .mensaje-error-referido {
-      background: #4a1a1a;
-      color: #ff8080;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 20px;
-      display: none;
-      text-align: center;
-      font-weight: 600;
-      border: 1px solid #ff8080;
-    }
+    .mensaje-exito-referido, .mensaje-error-referido { padding:15px; border-radius:10px; margin-top:20px; display:none; font-weight:600; text-align:center; }
+    .mensaje-exito-referido { background:#1a4d2e; color:#4ade80; border:1px solid #4ade80; }
+    .mensaje-error-referido { background:#4a1a1a; color:#ff8080; border:1px solid #ff8080; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Asesoría en Planes de Salud Colmena</h1>
-    <p class="gold">Atención premium para clientes exigentes</p>
-    <p class="small">Completa el formulario para obtener una cotización exacta en UF y CLP.</p>
-  </header>
 
-  <section id="formulario" class="card">
-    <h2 class="gold">Formulario para Cálculo del Plan</h2>
+<header>
+  <h1>Asesoría en Planes de Salud Colmena</h1>
+  <p class="gold">Atención premium para clientes exigentes</p>
+  <p class="small">Completa el formulario para obtener una cotización exacta en UF y CLP.</p>
+</header>
 
-    <form id="mainForm">
-      <div class="row">
-        <div class="col"><input type="text" name="nombre" id="nombre" placeholder="Nombre completo" required /></div>
-        <div class="col"><input type="email" name="correo" id="correo" placeholder="Correo electrónico" required /></div>
+<section id="formulario" class="card">
+  <h2 class="gold">Formulario para Cálculo del Plan</h2>
+
+  <form id="mainForm">
+    <div class="row">
+      <div class="col"><input type="text" name="nombre" id="nombre" placeholder="Nombre completo" required /></div>
+      <div class="col"><input type="email" name="correo" id="correo" placeholder="Correo electrónico" required /></div>
+    </div>
+
+    <div class="row">
+      <div class="col"><input type="tel" name="telefono" id="telefono" placeholder="Teléfono" required /></div>
+      <div class="col"><input type="number" name="edad" id="edad" placeholder="Edad titular" required /></div>
+    </div>
+
+    <input type="text" name="rut" id="rut" placeholder="RUT" required />
+
+    <select name="isapre" id="isapre" required>
+      <option value="">Isapre actual</option>
+      <option>FONASA</option>
+      <option>Colmena</option>
+      <option>Cruz Blanca</option>
+      <option>Consalud</option>
+      <option>Banmédica</option>
+      <option>Vida Tres</option>
+    </select>
+
+    <input type="number" id="renta" name="renta" placeholder="Renta imponible mensual (CLP)" required />
+
+    <label class="small">Edad de las cargas (una por línea)</label>
+    <textarea name="cargas" id="cargas" placeholder="Ej: 5&#10;12&#10;30"></textarea>
+
+    <select name="region" id="region" required>
+      <option value="">Selecciona tu Región</option>
+      <option>Región de Valparaíso</option>
+      <option>Región Metropolitana</option>
+      <option>Región de Los Ríos</option>
+      <option>Región de Los Lagos</option>
+      <option>Región de La Araucanía</option>
+      <option>Región del Bío-Bío</option>
+    </select>
+
+    <textarea name="mensaje" id="mensaje" placeholder="Mensaje adicional (opcional)"></textarea>
+
+    <button type="submit" id="submitBtn">Cotizar Ahora</button>
+  </form>
+</section>
+
+<section class="card">
+  <h2 class="gold">UF del día</h2>
+  <p class="uf-note">UF: <span id="ufValor">cargando…</span> — Fecha: <span id="ufFecha">-</span></p>
+</section>
+
+<section id="resultado-preliminar" class="card" style="display:none">
+  <h2 class="gold">Resultado preliminar</h2>
+  <div id="resultadoDetalle" style="line-height:1.7"></div>
+
+  <div style="text-align:center;margin-top:30px;">
+    <button id="btnAsesoria" class="btn-asesoria">📋 Solicitar Asesoría Personalizada</button>
+    <p class="small">Tus datos se enviarán inmediatamente</p>
+  </div>
+</section>
+
+<!-- REFERIDOS -->
+<section class="referidos-section" id="referidos" style="display:none">
+  <div class="referidos-container">
+
+    <div class="referidos-header">
+      <h2>¿Quieres que asesoremos a un amigo?</h2>
+      <p>Ingresa los datos y nos comunicaremos con tu referido.</p>
+    </div>
+
+    <form id="formReferidos" class="referidos-form">
+
+      <div class="form-section">
+        <h3>👤 Tus Datos</h3>
+        <div class="form-group-referidos">
+          <label for="nombreUsuario">Tu Nombre *</label>
+          <input type="text" id="nombreUsuario" required>
+        </div>
       </div>
 
-      <div class="row">
-        <div class="col"><input type="tel" name="telefono" id="telefono" placeholder="Teléfono" required /></div>
-        <div class="col"><input type="number" name="edad" id="edad" placeholder="Edad titular" required /></div>
+      <div class="form-section">
+        <h3>🎯 Datos del Referido</h3>
+
+        <div class="form-group-referidos">
+          <label>Nombre Completo *</label>
+          <input type="text" id="nombreReferido" required>
+        </div>
+
+        <div class="form-group-referidos">
+          <label>Teléfono *</label>
+          <input type="tel" id="telefonoReferido" required>
+        </div>
+
+        <div class="form-group-referidos">
+          <label>Correo *</label>
+          <input type="email" id="correoReferido" required>
+        </div>
       </div>
 
-      <input type="text" name="rut" id="rut" placeholder="RUT" required />
+      <button type="submit" class="btn-enviar-referido">📤 Enviar Referido</button>
 
-      <select name="isapre" id="isapre" required>
-        <option value="">Isapre actual</option>
-        <option>FONASA</option>
-        <option>Colmena</option>
-        <option>Cruz Blanca</option>
-        <option>Consalud</option>
-        <option>Banmédica</option>
-        <option>Vida Tres</option>
-      </select>
+      <div id="mensajeExitoReferido" class="mensaje-exito-referido">
+        ✅ ¡Referido Enviado!
+      </div>
 
-      <input type="number" id="renta" name="renta" placeholder="Renta imponible mensual (CLP)" required />
+      <div id="mensajeErrorReferido" class="mensaje-error-referido">
+        ❌ Error al enviar. Intenta nuevamente.
+      </div>
 
-      <label class="small">Edad de las cargas (una por línea)</label>
-      <textarea name="cargas" id="cargas" placeholder="Ej: 5&#10;12&#10;30"></textarea>
-
-      <select name="region" id="region" required>
-        <option value="">Selecciona tu Región</option>
-        <option>Región de Arica y Parinacota</option>
-        <option>Región de Tarapacá</option>
-        <option>Región de Antofagasta</option>
-        <option>Región de Atacama</option>
-        <option>Región de Coquimbo</option>
-        <option>Región de Valparaíso</option>
-        <option>Región Metropolitana</option>
-        <option>Región de O'Higgins</option>
-        <option>Región del Maule</option>
-        <option>Región del Ñuble</option>
-        <option>Región del Bío-Bío</option>
-        <option>Región de La Araucanía</option>
-        <option>Región de Los Ríos</option>
-        <option>Región de Los Lagos</option>
-        <option>Región de Aysén</option>
-        <option>Región de Magallanes</option>
-      </select>
-
-      <textarea name="mensaje" id="mensaje" placeholder="Mensaje adicional (opcional)"></textarea>
-
-      <button type="submit" id="submitBtn">Cotizar Ahora</button>
     </form>
-  </section>
+  </div>
+</section>
 
-  <section class="card">
-    <h2 class="gold">UF del día</h2>
-    <p class="uf-note">UF: <span id="ufValor">cargando…</span> — Fecha: <span id="ufFecha">-</span></p>
-  </section>
+<!-- RESUMEN FINAL -->
+<section id="resumen-final" class="card" style="display:none">
+  <h2 class="gold">✅ Resumen de tus Solicitudes</h2>
+  <div id="resumenContenido" style="line-height:1.8"></div>
+</section>
 
-  <section id="resultado-preliminar" class="card" style="display:none">
-    <h2 class="gold">Resultado preliminar</h2>
-    <div id="resultadoDetalle" style="line-height:1.7"></div>
-    
-    <div style="text-align: center; margin-top: 30px;">
-      <button id="btnAsesoria" class="btn-asesoria">
-        📋 Solicitar Asesoría Personalizada
-      </button>
-      <p style="margin-top: 15px; font-size: 0.9rem; color: #ccc;">
-        Tus datos se enviarán inmediatamente
+<a class="whatsapp" href="https://wa.me/56990701837" target="_blank">Contactar por WhatsApp</a>
+
+<script>
+/*========================================================
+  CONFIG FORMULARIO
+=========================================================*/
+
+const FORM_BASE_URL =
+'https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/formResponse';
+
+const FORM_FIELDS = {
+  nombre: 'entry.1455181501',
+  correo: 'entry.1253669566',
+  telefono: 'entry.1927631596',
+  edad: 'entry.1515225692',
+  rut: 'entry.852144857',
+  isapre: 'entry.1312575017',
+  renta: 'entry.1350273122',
+  region: 'entry.1283417188',
+  cargas: 'entry.6457415'
+};
+
+let formularioDatos = {};
+
+/*========================================================
+  CARGAR UF
+=========================================================*/
+
+async function cargarUF() {
+  try {
+    const r = await fetch("https://mindicador.cl/api");
+    const j = await r.json();
+
+    const uf = j.uf.valor;
+    window.__UF_VALOR = uf;
+
+    document.getElementById("ufValor").innerText =
+      "$" + uf.toLocaleString("es-CL", { minimumFractionDigits: 2 });
+
+    document.getElementById("ufFecha").innerText =
+      new Date(j.uf.fecha).toLocaleDateString("es-CL", {
+        year: "numeric", month: "long", day: "numeric"
+      });
+
+  } catch (err) {
+    document.getElementById("ufValor").innerText = "$38.000 (estimado)";
+    document.getElementById("ufFecha").innerText = "No disponible";
+    window.__UF_VALOR = 38000;
+  }
+}
+
+/*========================================================
+  CÁLCULOS
+=========================================================*/
+
+function obtenerFactor(e) {
+  if (e <= 18) return 0.6;
+  if (e <= 35) return 1.0;
+  if (e <= 45) return 1.5;
+  if (e <= 59) return 2.0;
+  return 2.4;
+}
+
+function formatearCLP(n) {
+  return n.toLocaleString("es-CL");
+}
+
+/*========================================================
+  COTIZACIÓN: GES = 0.77 UF — CARGAS <2 AÑOS NO PAGAN
+=========================================================*/
+
+function calcularCotizacion(obj) {
+
+  const personasTotales = 1 + obj.edadesCargas.length;
+
+  let sumaFactores = obtenerFactor(obj.edadTitular);
+  obj.edadesCargas.forEach(e => sumaFactores += obtenerFactor(e));
+
+  const costoFactorizado = obj.valorBasePlan * sumaFactores;
+  const uf = window.__UF_VALOR || 38000;
+
+  /* GES CORRECTO */
+  const valorGesUF = 0.77;
+  const valorGesCLP = valorGesUF * uf;
+
+  let personasQuePaganGES = 1; // Titular siempre paga
+
+  obj.edadesCargas.forEach(e => {
+    if (e >= 2) personasQuePaganGES++;
+  });
+
+  const totalGes = Math.round(valorGesCLP * personasQuePaganGES);
+
+  const valorFinal = Math.round(costoFactorizado + totalGes);
+  const siete = Math.round(obj.renta * 0.07);
+  const adicional = Math.max(0, valorFinal - siete);
+  const valorFinalUF = valorFinal / uf;
+
+  return {
+    personas: personasTotales,
+    personasQuePaganGES,
+    costoFactorizado,
+    totalGes,
+    valorFinal,
+    siete,
+    adicional,
+    valorFinalUF
+  };
+}
+
+/*========================================================
+  ENVÍO DEL FORMULARIO PRINCIPAL
+=========================================================*/
+
+document.getElementById("mainForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const data = new FormData(this);
+
+  formularioDatos = {
+    nombre: data.get("nombre"),
+    correo: data.get("correo"),
+    telefono: data.get("telefono"),
+    edad: data.get("edad"),
+    rut: data.get("rut"),
+    isapre: data.get("isapre"),
+    renta: data.get("renta"),
+    cargas: data.get("cargas"),
+    region: data.get("region"),
+    mensaje: data.get("mensaje")
+  };
+
+  const edadesCargas = (formularioDatos.cargas || "")
+    .split("\n")
+    .map(s => s.trim())
+    .filter(Boolean)
+    .map(Number);
+
+  const r = calcularCotizacion({
+    renta: Number(formularioDatos.renta),
+    edadTitular: Number(formularioDatos.edad),
+    edadesCargas,
+    valorBasePlan: 35000
+  });
+
+  document.getElementById("resultadoDetalle").innerHTML = `
+    <p><strong>Personas en plan:</strong> ${r.personas}</p>
+    <p><strong>Costo base ajustado:</strong> $${formatearCLP(r.costoFactorizado)}</p>
+    <p><strong>GES total (${r.personasQuePaganGES} personas):</strong> $${formatearCLP(r.totalGes)}</p>
+    <p><strong>Valor final:</strong> $${formatearCLP(r.valorFinal)}</p>
+    <p><strong>Valor final UF:</strong> ${r.valorFinalUF.toFixed(3)} UF</p>
+    <p><strong>7% renta:</strong> $${formatearCLP(r.siete)}</p>
+    <p><strong>Adicional:</strong> $${formatearCLP(r.adicional)}</p>
+  `;
+
+  document.getElementById("resultado-preliminar").style.display = "block";
+});
+
+/*========================================================
+  ENVÍO A GOOGLE FORMS DESDE BOTÓN DE ASESORÍA
+=========================================================*/
+
+document.getElementById("btnAsesoria").addEventListener("click", async function() {
+  this.disabled = true;
+  this.textContent = "⏳ Enviando...";
+
+  const f = new FormData();
+
+  for (let k in FORM_FIELDS) {
+    if (formularioDatos[k]) {
+      f.append(FORM_FIELDS[k], formularioDatos[k]);
+    }
+  }
+
+  await fetch(FORM_BASE_URL, {
+    method: "POST",
+    mode: "no-cors",
+    body: f
+  });
+
+  this.textContent = "✅ Enviado";
+  this.style.background = "#4ade80";
+
+  document.getElementById("referidos").style.display = "block";
+
+  setTimeout(() => {
+    document.getElementById("referidos").scrollIntoView({ behavior: "smooth" });
+  }, 400);
+});
+
+/*========================================================
+  REFERIDOS
+=========================================================*/
+
+const GOOGLE_FORM_REFERIDOS_URL =
+'https://docs.google.com/forms/d/e/1FAIpQLSeIppjYB0Vgc6RsJ3AM0HcAVhLaxAT6ZZ_MxdPhmuwRkwLT-A/formResponse';
+
+document.getElementById("formReferidos").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const nombreUsuario = document.getElementById("nombreUsuario").value;
+  const nombreReferido = document.getElementById("nombreReferido").value;
+  const telefonoReferido = document.getElementById("telefonoReferido").value;
+  const correoReferido = document.getElementById("correoReferido").value;
+
+  const f = new FormData();
+  f.append("entry.1664559901", nombreUsuario);
+  f.append("entry.715463265", nombreReferido);
+  f.append("entry.1382714918", telefonoReferido);
+  f.append("entry.897178414", correoReferido);
+  f.append("entry.178502788", "Referido enviado desde landing");
+
+  await fetch(GOOGLE_FORM_REFERIDOS_URL, {
+    method:"POST", mode:"no-cors", body:f
+  });
+
+  document.getElementById("mensajeExitoReferido").style.display="block";
+
+  mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, correoReferido);
+
+});
+
+/*========================================================
+  RESUMEN FINAL
+=========================================================*/
+
+function mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, correoReferido) {
+
+  const html = `
+    <div style="background:#1a2a3a;padding:25px;border-radius:15px;margin-bottom:20px;">
+      <h3 style="color:#d4af37;margin-top:0;">📋 Solicitud de Asesoría</h3>
+      <p><strong>Nombre:</strong> ${formularioDatos.nombre}</p>
+      <p><strong>Correo:</strong> ${formularioDatos.correo}</p>
+      <p><strong>Teléfono:</strong> ${formularioDatos.telefono}</p>
+      <p><strong>Edad:</strong> ${formularioDatos.edad} años</p>
+      <p><strong>RUT:</strong> ${formularioDatos.rut}</p>
+      <p><strong>Isapre actual:</strong> ${formularioDatos.isapre}</p>
+      <p><strong>Renta:</strong> $${Number(formularioDatos.renta).toLocaleString('es-CL')}</p>
+      <p><strong>Región:</strong> ${formularioDatos.region}</p>
+      ${formularioDatos.cargas ? `<p><strong>Cargas:</strong> ${formularioDatos.cargas.replace(/\n/g,", ")}</p>` : ""}
+      <p style="color:#4ade80;font-weight:bold;margin-top:15px;">✅ Enviado exitosamente</p>
+    </div>
+
+    <div style="background:#1a2a3a;padding:25px;border-radius:15px;">
+      <h3 style="color:#d4af37;margin-top:0;">🎯 Referido</h3>
+      <p><strong>Referido por:</strong> ${nombreUsuario}</p>
+      <p><strong>Nombre del referido:</strong> ${nombreReferido}</p>
+      <p><strong>Teléfono:</strong> ${telefonoReferido}</p>
+      <p><strong>Correo:</strong> ${correoReferido}</p>
+      <p style="color:#4ade80;font-weight:bold;margin-top:15px;">✅ Referido enviado</p>
+    </div>
+
+    <div style="text-align:center;margin-top:30px;padding:20px;background:#0f2640;border-radius:10px;">
+      <p style="font-size:1.1rem;color:#d4af37;margin:0;">
+        ¡Gracias por tu confianza! Te contactaremos dentro de pocas horas.
       </p>
     </div>
-  </section>
+  `;
 
-  <!-- ========================================= -->
-  <!-- NUEVA SECCIÓN DE REFERIDOS -->
-  <!-- ========================================= -->
-  <section class="referidos-section" id="referidos" style="display:none">
-    <div class="referidos-container">
-      <div class="referidos-header">
-        <h2>¿Quieres que asesoremos a un amigo, familiar o colega?</h2>
-        <p>Comparte los beneficios de nuestros planes de salud. Ingresa los datos y nos comunicaremos con tu referido.</p>
-      </div>
+  document.getElementById("resumenContenido").innerHTML = html;
+  document.getElementById("resumen-final").style.display = "block";
 
-      <form id="formReferidos" class="referidos-form">
-        <!-- Datos del Usuario que Refiere -->
-        <div class="form-section">
-          <h3>👤 Tus Datos</h3>
-          
-          <div class="form-group-referidos">
-            <label for="nombreUsuario">Tu Nombre Completo *</label>
-            <input type="text" id="nombreUsuario" name="nombreUsuario" required 
-                   placeholder="Ej: María González">
-          </div>
-        </div>
-
-        <!-- Datos del Referido -->
-        <div class="form-section">
-          <h3>🎯 Datos de tu Referido</h3>
-          
-          <div class="form-group-referidos">
-            <label for="nombreReferido">Nombre Completo del Referido *</label>
-            <input type="text" id="nombreReferido" name="nombreReferido" required 
-                   placeholder="Ej: Juan Pérez">
-          </div>
-
-          <div class="form-group-referidos">
-            <label for="telefonoReferido">Teléfono del Referido *</label>
-            <input type="tel" id="telefonoReferido" name="telefonoReferido" required 
-                   placeholder="Ej: +56912345678" pattern="[0-9+]{8,15}">
-          </div>
-
-          <div class="form-group-referidos">
-            <label for="correoReferido">Correo Electrónico del Referido *</label>
-            <input type="email" id="correoReferido" name="correoReferido" required 
-                   placeholder="Ej: juan.perez@email.com">
-          </div>
-        </div>
-
-        <button type="submit" class="btn-enviar-referido">
-          📤 Enviar Referencia
-        </button>
-
-        <div class="mensaje-exito-referido" id="mensajeExitoReferido">
-          ✅ ¡Referencia enviada exitosamente! Nos comunicaremos pronto con tu referido.
-        </div>
-
-        <div class="mensaje-error-referido" id="mensajeErrorReferido">
-          ❌ Hubo un error al enviar la referencia. Por favor, intenta nuevamente.
-        </div>
-      </form>
-    </div>
-  </section>
-  <!-- ========================================= -->
-  <!-- FIN SECCIÓN DE REFERIDOS -->
-  <!-- ========================================= -->
-
-  <!-- ========================================= -->
-  <!-- SECCIÓN DE RESUMEN FINAL -->
-  <!-- ========================================= -->
-  <section id="resumen-final" class="card" style="display:none">
-    <h2 class="gold">✅ Resumen de tus Solicitudes</h2>
-    <div id="resumenContenido" style="line-height:1.8"></div>
-  </section>
-  <!-- ========================================= -->
-  <!-- FIN RESUMEN FINAL -->
-  <!-- ========================================= -->
-
-  <a class="whatsapp" href="https://wa.me/56990701837" target="_blank">Contactar por WhatsApp</a>
-
-  <script>
-    const FORM_BASE_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/viewform';
-    
-    // IDs de los campos del Google Form
-    const FORM_FIELDS = {
-      nombre: 'entry.1455181501',
-      correo: 'entry.1253669566',
-      telefono: 'entry.1927631596',
-      edad: 'entry.1515225692',
-      rut: 'entry.852144857',
-      isapre: 'entry.1312575017',
-      renta: 'entry.1350273122',
-      region: 'entry.1283417188',
-      cargas: 'entry.6457415'
-    };
-
-    let formularioDatos = {};
-
-    async function cargarUF() {
-      try {
-        const res = await fetch('https://mindicador.cl/api');
-        const data = await res.json();
-        const uf = data.uf.valor;
-        window.__UF_VALOR = uf;
-        document.getElementById('ufValor').innerText = '$' + uf.toLocaleString('es-CL', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        });
-        document.getElementById('ufFecha').innerText = new Date(data.uf.fecha).toLocaleDateString('es-CL', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        });
-        console.log('✅ UF cargada:', uf);
-      } catch (e) {
-        const ufDefault = 38000;
-        window.__UF_VALOR = ufDefault;
-        document.getElementById('ufValor').innerText = '$' + ufDefault.toLocaleString('es-CL') + ' (estimado)';
-        document.getElementById('ufFecha').innerText = 'No disponible';
-        console.log('⚠️ Usando UF por defecto');
-      }
-    }
-
-    function obtenerFactor(edad) {
-      if (edad <= 18) return 0.6;
-      if (edad <= 35) return 1.0;
-      if (edad <= 45) return 1.5;
-      if (edad <= 59) return 2.0;
-      return 2.4;
-    }
-
-    function formatearCLP(n) {
-      return n.toLocaleString("es-CL");
-    }
-
-    function calcularCotizacion(obj) {
-      const personas = 1 + obj.edadesCargas.length;
-      let sumaFactores = obtenerFactor(obj.edadTitular);
-      obj.edadesCargas.forEach(e => sumaFactores += obtenerFactor(e));
-      const costoFactorizado = obj.valorBasePlan * sumaFactores;
-      const uf = window.__UF_VALOR || 38000;
-      const valorGesCLP = 0.93 * uf;
-      const totalGes = Math.round(valorGesCLP * personas);
-      const valorFinal = Math.round(costoFactorizado + totalGes);
-      const siete = Math.round(obj.renta * 0.07);
-      const adicional = Math.max(0, valorFinal - siete);
-      const valorFinalUF = uf ? valorFinal / uf : null;
-      return { personas, costoFactorizado, totalGes, valorFinal, siete, adicional, valorFinalUF };
-    }
-
-    function construirURLPreLlenada() {
-      const params = new URLSearchParams();
-      
-      if (formularioDatos.nombre) params.append(FORM_FIELDS.nombre, formularioDatos.nombre);
-      if (formularioDatos.correo) params.append(FORM_FIELDS.correo, formularioDatos.correo);
-      if (formularioDatos.telefono) params.append(FORM_FIELDS.telefono, formularioDatos.telefono);
-      if (formularioDatos.edad) params.append(FORM_FIELDS.edad, formularioDatos.edad);
-      if (formularioDatos.rut) params.append(FORM_FIELDS.rut, formularioDatos.rut);
-      if (formularioDatos.isapre) params.append(FORM_FIELDS.isapre, formularioDatos.isapre);
-      if (formularioDatos.renta) params.append(FORM_FIELDS.renta, formularioDatos.renta);
-      if (formularioDatos.region) params.append(FORM_FIELDS.region, formularioDatos.region);
-      if (formularioDatos.cargas) params.append(FORM_FIELDS.cargas, formularioDatos.cargas);
-      
-      return `${FORM_BASE_URL}?${params.toString()}`;
-    }
-
-    document.getElementById('mainForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      console.log('📤 Formulario enviado');
-      
-      const submitBtn = document.getElementById('submitBtn');
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Calculando...";
-
-      const formData = new FormData(this);
-      
-      // Guardar datos del formulario
-      formularioDatos = {
-        nombre: formData.get("nombre"),
-        correo: formData.get("correo"),
-        telefono: formData.get("telefono"),
-        edad: formData.get("edad"),
-        rut: formData.get("rut"),
-        isapre: formData.get("isapre"),
-        renta: formData.get("renta"),
-        cargas: formData.get("cargas"),
-        region: formData.get("region"),
-        mensaje: formData.get("mensaje")
-      };
-      
-      const edadesCargas = (formData.get("cargas") || "")
-        .split(/\n/).map(s => s.trim()).filter(s => s !== "").map(s => parseInt(s));
-
-      const resultado = calcularCotizacion({
-        renta: Number(formData.get("renta")),
-        edadTitular: Number(formData.get("edad")),
-        edadesCargas,
-        valorBasePlan: 35000,
-        valorGesUF: 0.93
-      });
-
-      console.log('💰 Cálculos:', resultado);
-
-      // Mostrar resultado
-      const div = document.getElementById("resultadoDetalle");
-      div.innerHTML = `
-        <p><strong>Personas en plan:</strong> ${resultado.personas}</p>
-        <p><strong>Costo base ajustado:</strong> $${formatearCLP(resultado.costoFactorizado)}</p>
-        <p><strong>GES total:</strong> $${formatearCLP(resultado.totalGes)}</p>
-        <p><strong>Valor final:</strong> $${formatearCLP(resultado.valorFinal)}</p>
-        <p><strong>Valor final UF:</strong> ${resultado.valorFinalUF?.toFixed(3) ?? 'N/D'} UF</p>
-        <p><strong>7% renta:</strong> $${formatearCLP(resultado.siete)}</p>
-        <p><strong>Adicional:</strong> $${formatearCLP(resultado.adicional)}</p>
-      `;
-      document.getElementById("resultado-preliminar").style.display = "block";
-
-      submitBtn.disabled = false;
-      submitBtn.textContent = "Cotizar Ahora";
+  setTimeout(() => {
+    document.getElementById("resumen-final").scrollIntoView({
+      behavior:"smooth",
+      block:"start"
     });
+  }, 400);
+}
 
-    // Botón para abrir formulario pre-llenado
-    document.getElementById('btnAsesoria').addEventListener('click', async function() {
-      console.log('📤 Enviando datos de asesoría...');
-      
-      // Deshabilitar botón
-      this.disabled = true;
-      this.textContent = '⏳ Enviando...';
-      
-      try {
-        // Enviar a Google Forms
-        await enviarCotizacionAGoogleForm();
-        
-        console.log('✅ Datos enviados exitosamente');
-        
-        // Cambiar texto del botón
-        this.textContent = '✅ Datos Enviados';
-        this.style.background = '#4ade80';
-        
-        // Mostrar sección de referidos
-        document.getElementById('referidos').style.display = 'block';
-        
-        // Scroll a la sección de referidos
-        setTimeout(() => {
-          document.getElementById('referidos').scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'start' 
-          });
-        }, 500);
-        
-      } catch (error) {
-        console.error('❌ Error al enviar:', error);
-        this.textContent = '❌ Error - Intenta de nuevo';
-        this.disabled = false;
-      }
-    });
+window.addEventListener("load", cargarUF);
+</script>
 
-    // Función para enviar cotización a Google Forms
-    async function enviarCotizacionAGoogleForm() {
-      const formData = new FormData();
-      
-      if (formularioDatos.nombre) formData.append(FORM_FIELDS.nombre, formularioDatos.nombre);
-      if (formularioDatos.correo) formData.append(FORM_FIELDS.correo, formularioDatos.correo);
-      if (formularioDatos.telefono) formData.append(FORM_FIELDS.telefono, formularioDatos.telefono);
-      if (formularioDatos.edad) formData.append(FORM_FIELDS.edad, formularioDatos.edad);
-      if (formularioDatos.rut) formData.append(FORM_FIELDS.rut, formularioDatos.rut);
-      if (formularioDatos.isapre) formData.append(FORM_FIELDS.isapre, formularioDatos.isapre);
-      if (formularioDatos.renta) formData.append(FORM_FIELDS.renta, formularioDatos.renta);
-      if (formularioDatos.region) formData.append(FORM_FIELDS.region, formularioDatos.region);
-      if (formularioDatos.cargas) formData.append(FORM_FIELDS.cargas, formularioDatos.cargas);
-      
-      // Enviar a Google Forms (modo no-cors)
-      await fetch(FORM_BASE_URL.replace('/viewform', '/formResponse'), {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData
-      });
-    }
-
-    // ========================================
-    // SISTEMA DE REFERIDOS
-    // ========================================
-
-    // URL del Google Form de Referidos (YA CONFIGURADA)
-    const GOOGLE_FORM_REFERIDOS_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeIppjYB0Vgc6RsJ3AM0HcAVhLaxAT6ZZ_MxdPhmuwRkwLT-A/formResponse';
-
-    // IDs de los campos del Google Form de Referidos (YA CONFIGURADOS)
-    const FORM_REFERIDOS_FIELDS = {
-      nombreUsuario: 'entry.1664559901',
-      nombreReferido: 'entry.715463265',
-      telefonoReferido: 'entry.1382714918',
-      correoReferido: 'entry.897178414',
-      mensaje: 'entry.178502788'
-    };
-
-    // Manejar envío del formulario de referidos
-    document.getElementById('formReferidos').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      console.log('📤 Formulario de referidos enviado');
-      
-      const nombreUsuario = document.getElementById('nombreUsuario').value;
-      const nombreReferido = document.getElementById('nombreReferido').value;
-      const telefonoReferido = document.getElementById('telefonoReferido').value;
-      const correoReferido = document.getElementById('correoReferido').value;
-      
-      // Ocultar mensajes previos
-      document.getElementById('mensajeExitoReferido').style.display = 'none';
-      document.getElementById('mensajeErrorReferido').style.display = 'none';
-      
-      // Deshabilitar botón mientras se envía
-      const btnEnviar = document.querySelector('.btn-enviar-referido');
-      btnEnviar.disabled = true;
-      btnEnviar.textContent = '⏳ Enviando...';
-      
-      try {
-        // Enviar a Google Forms
-        await enviarReferidoAGoogleForm(nombreUsuario, nombreReferido, telefonoReferido, correoReferido);
-        
-        // Mostrar mensaje de éxito
-        document.getElementById('mensajeExitoReferido').style.display = 'block';
-        
-        // Limpiar formulario
-        document.getElementById('formReferidos').reset();
-        
-        // Cambiar botón
-        btnEnviar.textContent = '✅ Referido Enviado';
-        btnEnviar.style.background = '#4ade80';
-        
-        console.log('✅ Referido enviado exitosamente');
-        
-        // Mostrar resumen final
-        mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, correoReferido);
-        
-      } catch (error) {
-        console.error('❌ Error al enviar referido:', error);
-        document.getElementById('mensajeErrorReferido').style.display = 'block';
-        btnEnviar.disabled = false;
-        btnEnviar.textContent = '📤 Enviar Referencia';
-      }
-    });
-
-    // Función para enviar a Google Forms
-    async function enviarReferidoAGoogleForm(nombreUsuario, nombreReferido, telefonoReferido, correoReferido) {
-      const formData = new FormData();
-      
-      formData.append(FORM_REFERIDOS_FIELDS.nombreUsuario, nombreUsuario);
-      formData.append(FORM_REFERIDOS_FIELDS.nombreReferido, nombreReferido);
-      formData.append(FORM_REFERIDOS_FIELDS.telefonoReferido, telefonoReferido);
-      formData.append(FORM_REFERIDOS_FIELDS.correoReferido, correoReferido);
-      formData.append(FORM_REFERIDOS_FIELDS.mensaje, `Referido de: ${nombreUsuario}`);
-      
-      // Enviar a Google Forms (modo no-cors)
-      await fetch(GOOGLE_FORM_REFERIDOS_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData
-      });
-    }
-
-    // Función para mostrar resumen final
-    function mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, correoReferido) {
-      const resumenHTML = `
-        <div style="background: #1a2a3a; padding: 25px; border-radius: 15px; margin-bottom: 20px;">
-          <h3 style="color: #d4af37; margin-top: 0;">📋 Solicitud de Asesoría</h3>
-          <p><strong>Nombre:</strong> ${formularioDatos.nombre}</p>
-          <p><strong>Correo:</strong> ${formularioDatos.correo}</p>
-          <p><strong>Teléfono:</strong> ${formularioDatos.telefono}</p>
-          <p><strong>Edad:</strong> ${formularioDatos.edad} años</p>
-          <p><strong>RUT:</strong> ${formularioDatos.rut}</p>
-          <p><strong>Isapre actual:</strong> ${formularioDatos.isapre}</p>
-          <p><strong>Renta:</strong> $${Number(formularioDatos.renta).toLocaleString('es-CL')}</p>
-          <p><strong>Región:</strong> ${formularioDatos.region}</p>
-          ${formularioDatos.cargas ? `<p><strong>Cargas:</strong> ${formularioDatos.cargas.replace(/\n/g, ', ')}</p>` : ''}
-          <p style="color: #4ade80; font-weight: bold; margin-top: 15px;">✅ Enviado exitosamente</p>
-        </div>
-
-        <div style="background: #1a2a3a; padding: 25px; border-radius: 15px;">
-          <h3 style="color: #d4af37; margin-top: 0;">🎯 Referido</h3>
-          <p><strong>Referido por:</strong> ${nombreUsuario}</p>
-          <p><strong>Nombre del referido:</strong> ${nombreReferido}</p>
-          <p><strong>Teléfono:</strong> ${telefonoReferido}</p>
-          <p><strong>Correo:</strong> ${correoReferido}</p>
-          <p style="color: #4ade80; font-weight: bold; margin-top: 15px;">✅ Enviado exitosamente</p>
-        </div>
-
-        <div style="text-align: center; margin-top: 30px; padding: 20px; background: #0f2640; border-radius: 10px;">
-          <p style="font-size: 1.1rem; color: #d4af37; margin: 0;">
-            ¡Gracias por tu confianza! Nos comunicaremos contigo y con tu referido en las próximas horas.
-          </p>
-        </div>
-      
-
-
-      document.getElementById('resumenContenido').innerHTML = resumenHTML;
-      document.getElementById('resumen-final').style.display = 'block';
-      
-      // Scroll al resumen
-      setTimeout(() => {
-        document.getElementById('resumen-final').scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'start' 
-        });
-      }, 300);
-    }
-
-    window.addEventListener("load", cargarUF);
-  </script>
 </body>
 </html>
