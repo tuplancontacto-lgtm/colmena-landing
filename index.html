@@ -347,15 +347,31 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     valorBasePlan: 35000
   });
 
-  document.getElementById("resultadoDetalle").innerHTML = `
-    <p><strong>Personas en plan:</strong> ${r.personas}</p>
-    <p><strong>Costo base ajustado:</strong> $${formatearCLP(r.costoFactorizado)}</p>
-    <p><strong>GES total (${r.personasQuePaganGES} personas):</strong> $${formatearCLP(r.totalGes)}</p>
-    <p><strong>Valor final:</strong> $${formatearCLP(r.valorFinal)}</p>
-    <p><strong>Valor final UF:</strong> ${r.valorFinalUF.toFixed(3)} UF</p>
-    <p><strong>7% renta:</strong> $${formatearCLP(r.siete)}</p>
-    <p><strong>Adicional:</strong> $${formatearCLP(r.adicional)}</p>
-  `;
+ const nCargas = edadesCargas.length;
+
+const mensajeCliente = `
+  <strong style="font-size:1.2rem;">Cotización Personalizada – Colmena</strong><br><br>
+
+  Hola ${formularioDatos.nombre}, revisé tus datos y preparé una propuesta ideal según tu renta, cargas y edad.<br><br>
+
+  <strong>🔹 Resultado de tu cotización</strong><br>
+  Valor final estimado: <strong>${r.valorFinalUF.toFixed(3)} UF</strong><br>
+  Total estimado en pesos: <strong>$${formatearCLP(r.valorFinal)}</strong><br>
+  7% de tu renta: <strong>$${formatearCLP(r.siete)}</strong><br>
+  Adicional a pagar sobre el 7%: <strong>$${formatearCLP(r.adicional)}</strong><br>
+  Cargas consideradas: <strong>${nCargas}</strong><br><br>
+
+  <strong>¿Qué viene ahora?</strong><br>
+  Se seleccionarán 2 planes Colmena especialmente para ti:<br>
+  • Un plan lo más cercano posible a tu 7%, con el adicional más bajo.<br>
+  • Un plan con algo más de cobertura y mejor red de clínicas.<br><br>
+
+  Luego revisaremos juntos cuál te conviene más 💛
+`;
+
+document.getElementById("resultadoDetalle").innerHTML = mensajeCliente;
+document.getElementById("resultado-preliminar").style.display = "block";
+
 
   document.getElementById("resultado-preliminar").style.display = "block";
 
