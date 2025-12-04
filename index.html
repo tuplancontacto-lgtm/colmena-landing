@@ -80,7 +80,7 @@
 
     <input type="number" id="renta" name="renta" placeholder="Renta imponible mensual (CLP)" required />
 
-    <label class="small">Edad de las cargas (una por línea)</label>
+    <label class="small">Edad de las cargas (una por línea o separadas por coma)</label>
     <textarea name="cargas" id="cargas" placeholder="Ej: 5&#10;12&#10;30"></textarea>
 
     <select name="region" id="region" required>
@@ -110,7 +110,7 @@
 
   <div style="text-align:center;margin-top:30px;">
     <button id="btnAsesoria" class="btn-asesoria">📋 Solicitar Asesoría Personalizada</button>
-    <p class="small">Tus datos se enviarán inmediatamente</p>
+    <p class="small">Tus datos se enviarán por WhatsApp y te contactaremos a la brevedad.</p>
   </div>
 </section>
 
@@ -196,6 +196,7 @@ const FORM_FIELDS = {
 };
 
 let formularioDatos = {};
+let ultimoResultado = null; // para usar en WhatsApp
 
 /*========================================================
   CARGAR UF
@@ -285,7 +286,7 @@ function calcularCotizacion(obj) {
 }
 
 /*========================================================
-  ENVÍO DEL FORMULARIO PRINCIPAL
+  ENVÍO DEL FORMULARIO PRINCIPAL (COTIZAR AHORA)
 =========================================================*/
 
 document.getElementById("mainForm").addEventListener("submit", async function(e) {
@@ -306,10 +307,18 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     mensaje: data.get("mensaje")
   };
 
-  // 📌 Envío a Google Forms
+  // Texto de cargas normalizado (para mostrar)
+  const cargasTexto = (formularioDatos.cargas || "").replace(/\n/g, ", ");
+
+  // 📌 Envío a Google Forms (una sola vez, aquí)
   const f = new FormData();
   for (let k in FORM_FIELDS) {
-    f.append(FORM_FIELDS[k], formularioDatos[k] ?? "");
+    // para cargas, mandamos con comas
+    if (k === "cargas") {
+      f.append(FORM_FIELDS[k], cargasTexto);
+    } else {
+      f.append(FORM_FIELDS[k], formularioDatos[k] ?? "");
+    }
   }
 
   await fetch(FORM_BASE_URL, {
@@ -320,7 +329,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
 
   // 📌 Cálculo preliminar
   const edadesCargas = (formularioDatos.cargas || "")
-    .split("\n")
+    .split(/[\n,;]+/)
     .map(s => s.trim())
     .filter(Boolean)
     .map(Number);
@@ -333,6 +342,13 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
   });
 
   const nCargas = edadesCargas.length;
+
+  // guardamos para WhatsApp
+  ultimoResultado = {
+    ...r,
+    nCargas,
+    cargasTexto
+  };
 
   const mensajeCliente = `
     <strong style="font-size:1.2rem;">Cotización Personalizada – Colmena</strong><br><br>
@@ -364,27 +380,57 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
 });
 
 /*========================================================
-  ENVÍO A GOOGLE FORMS DESDE BOTÓN DE ASESORÍA
+  BOTÓN "SOLICITAR ASESORÍA" (SOLO WHATSAPP + REFERIDOS)
 =========================================================*/
 
-document.getElementById("btnAsesoria").addEventListener("click", async function() {
-  this.disabled = true;
-  this.textContent = "⏳ Enviando...";
-
-  const f = new FormData();
-  for (let k in FORM_FIELDS) {
-    f.append(FORM_FIELDS[k], formularioDatos[k] ?? "");
+document.getElementById("btnAsesoria").addEventListener("click", function() {
+  if (!formularioDatos.nombre || !ultimoResultado) {
+    alert("Primero completa la cotización.");
+    return;
   }
 
-  await fetch(FORM_BASE_URL, {
-    method: "POST",
-    mode: "no-cors",
-    body: f
-  });
+  this.disabled = true;
+  this.textContent = "⏳ Abriendo WhatsApp...";
 
-  this.textContent = "✅ Enviado";
+  const r = ultimoResultado;
+  const cargasTexto = r.cargasTexto || "Sin cargas";
+
+  // Mensaje urgente para ti (WhatsApp)
+  const mensajeWA = `
+⚠️ URGENTE — NUEVA SOLICITUD DE ASESORÍA DE PLANES COLMENA
+
+📌 Datos del Cliente:
+• Nombre: ${formularioDatos.nombre}
+• RUT: ${formularioDatos.rut}
+• Teléfono: ${formularioDatos.telefono}
+• Correo: ${formularioDatos.correo}
+• Edad Titular: ${formularioDatos.edad}
+• Isapre Actual: ${formularioDatos.isapre}
+• Región: ${formularioDatos.region}
+• Renta Imponible: $${formatearCLP(Number(formularioDatos.renta || 0))}
+• Cargas: ${cargasTexto}
+
+📌 Resultado de Cotización:
+• Valor Final Estimado: ${r.valorFinalUF.toFixed(3)} UF
+• Total en Pesos: $${formatearCLP(r.valorFinal)}
+• 7% del Cliente: $${formatearCLP(r.siete)}
+• Adicional a Pagar: $${formatearCLP(r.adicional)}
+• Personas Consideradas: ${r.personas}
+
+📌 Planes Recomendados:
+1️⃣ Plan cercano al 7% (a definir en la asesoría)
+2️⃣ Plan con mayor cobertura (a definir en la asesoría)
+
+⏳ El cliente está esperando contacto inmediato.
+  `.trim();
+
+  const waUrl = "https://wa.me/56975356696?text=" + encodeURIComponent(mensajeWA);
+  window.open(waUrl, "_blank");
+
+  this.textContent = "✅ Enviado a WhatsApp";
   this.style.background = "#4ade80";
 
+  // Mostramos sección de Referidos
   document.getElementById("referidos").style.display = "block";
 
   setTimeout(() => {
@@ -407,20 +453,26 @@ document.getElementById("formReferidos").addEventListener("submit", async functi
   const telefonoReferido = document.getElementById("telefonoReferido").value;
   const correoReferido = document.getElementById("correoReferido").value;
 
-  const f = new FormData();
-  f.append("entry.1664559901", nombreUsuario);
-  f.append("entry.715463265", nombreReferido);
-  f.append("entry.1382714918", telefonoReferido);
-  f.append("entry.897178414", correoReferido);
-  f.append("entry.178502788", "Referido enviado desde landing");
+  try {
+    const f = new FormData();
+    f.append("entry.1664559901", nombreUsuario);
+    f.append("entry.715463265", nombreReferido);
+    f.append("entry.1382714918", telefonoReferido);
+    f.append("entry.897178414", correoReferido);
+    f.append("entry.178502788", "Referido enviado desde landing");
 
-  await fetch(GOOGLE_FORM_REFERIDOS_URL, {
-    method:"POST", mode:"no-cors", body:f
-  });
+    await fetch(GOOGLE_FORM_REFERIDOS_URL, {
+      method:"POST", mode:"no-cors", body:f
+    });
 
-  document.getElementById("mensajeExitoReferido").style.display="block";
+    document.getElementById("mensajeExitoReferido").style.display="block";
+    document.getElementById("mensajeErrorReferido").style.display="none";
 
-  mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, correoReferido);
+    mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, correoReferido);
+  } catch (err) {
+    document.getElementById("mensajeExitoReferido").style.display="none";
+    document.getElementById("mensajeErrorReferido").style.display="block";
+  }
 });
 
 /*========================================================
@@ -428,6 +480,8 @@ document.getElementById("formReferidos").addEventListener("submit", async functi
 =========================================================*/
 
 function mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, correoReferido) {
+
+  const cargasTexto = (formularioDatos.cargas || "").replace(/\n/g,", ");
 
   const html = `
     <div style="background:#1a2a3a;padding:25px;border-radius:15px;margin-bottom:20px;">
@@ -440,7 +494,7 @@ function mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, co
       <p><strong>Isapre actual:</strong> ${formularioDatos.isapre}</p>
       <p><strong>Renta:</strong> $${Number(formularioDatos.renta).toLocaleString('es-CL')}</p>
       <p><strong>Región:</strong> ${formularioDatos.region}</p>
-      ${formularioDatos.cargas ? `<p><strong>Cargas:</strong> ${formularioDatos.cargas.replace(/\n/g,", ")}</p>` : ""}
+      ${cargasTexto ? `<p><strong>Cargas:</strong> ${cargasTexto}</p>` : ""}
       <p style="color:#4ade80;font-weight:bold;margin-top:15px;">✅ Enviado exitosamente</p>
     </div>
 
@@ -469,6 +523,11 @@ function mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, co
       block:"start"
     });
   }, 400);
+
+  // ⬅ Después de unos segundos, volver al inicio para permitir nueva cotización
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, 6000);
 }
 
 /*========================================================
