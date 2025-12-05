@@ -5,43 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Planes de Salud Colmena - Asesoría Profesional</title>
   <style>
+    * { box-sizing: border-box; }
     body { font-family: Arial, sans-serif; background-color: #0a1a2a; color: white; margin: 0; padding: 0; }
     header { background: linear-gradient(90deg, #0a1a2a, #12375a); padding: 40px; text-align: center; }
     h1 { color: #d4af37; font-size: 2.5rem; margin: 0; }
+    h2 { color: #d4af37; }
     section { padding: 40px 20px; max-width: 900px; margin: auto; }
     .gold { color: #d4af37; }
     .card { background: #112233; border: 1px solid #d4af37; padding: 20px; border-radius: 15px; margin-bottom: 25px; }
     button { background: #d4af37; color: #0a1a2a; padding: 15px 25px; border: none; border-radius: 10px; font-size: 1.1rem; cursor: pointer; }
     button:hover { opacity: 0.85; }
     button:disabled { opacity: 0.6; cursor: not-allowed; }
-    form input, form select, form textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: none; box-sizing: border-box; }
+    form input, form select, form textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: none; }
     .whatsapp { display: block; background: #25D366; text-align: center; padding: 15px; color: white; text-decoration: none; border-radius: 10px; font-size: 1.2rem; font-weight: bold; margin-top: 20px; max-width: 300px; margin-left: auto; margin-right: auto; }
     .small { font-size: 0.9rem; color: #ccc; }
     .row { display:flex; gap:16px; flex-wrap: wrap; }
     .col { flex:1; min-width: 200px; }
     .uf-note { font-size:0.9rem; color:#cfcfcf; }
+    .error-msg { color: #ff8080; margin-top: 12px; }
+    .success-msg { color: #4ade80; margin-top: 12px; font-weight: bold; }
+    
+    /* Planes recomendados */
+    .plan-card { background: #1a2a3a; border: 2px solid #3a5a7a; padding: 20px; border-radius: 12px; margin: 15px 0; }
+    .plan-card.recomendado { border-color: #d4af37; background: #1f3345; }
+    .plan-nombre { font-size: 1.2rem; font-weight: bold; color: #d4af37; margin-bottom: 10px; }
+    .plan-detalle { font-size: 0.95rem; line-height: 1.6; color: #ddd; }
+    
+    /* Botón asesoría */
     .btn-asesoria { display: inline-block; background: linear-gradient(135deg, #d4af37, #f0c860); color: #0a1a2a; padding: 18px 40px; text-decoration: none; border-radius: 12px; font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 15px rgba(212,175,55,0.4); transition: all .3s ease; border: none; cursor: pointer; }
     .btn-asesoria:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,175,55,0.6); }
 
     /* Referidos */
     .referidos-section { background: linear-gradient(135deg,#0f2640 0%,#1a3a5a 100%); padding:60px 20px; margin:40px 0; }
-    .referidos-container { max-width:800px; margin:0 auto; background:#112233; padding:40px; border-radius:20px; border:1px solid #d4af37; box-shadow:0 10px 40px rgba(0,0,0,0.3); }
+    .referidos-container { max-width:800px; margin:0 auto; background:#112233; padding:40px; border-radius:20px; border:1px solid #d4af37; }
     .referidos-header { text-align:center; margin-bottom:30px; }
-    .referidos-header h2 { color:#d4af37; font-size:32px; margin-bottom:15px; font-weight:700; }
-    .referidos-header p { color:#b8c5d6; font-size:18px; }
-    .referidos-form { display:grid; gap:20px; }
-
-    .form-section { background:#1a2a3a; padding:25px; border-radius:15px; border-left:4px solid #d4af37; }
-    .form-section h3 { color:#d4af37; font-size:20px; margin-bottom:20px; }
-
-    .form-group-referidos label { display:block; color:#b8c5d6; margin-bottom:8px; font-size:14px; font-weight:600; }
+    .referidos-header h2 { color:#d4af37; font-size:28px; margin-bottom:15px; }
+    .referidos-header p { color:#b8c5d6; font-size:16px; }
+    .form-section { background:#1a2a3a; padding:25px; border-radius:15px; border-left:4px solid #d4af37; margin-bottom: 20px; }
+    .form-section h3 { color:#d4af37; font-size:18px; margin-bottom:15px; margin-top: 0; }
+    .form-group-referidos { margin-bottom: 15px; }
+    .form-group-referidos label { display:block; color:#b8c5d6; margin-bottom:8px; font-size:14px; }
     .form-group-referidos input { width:100%; padding:12px; border:2px solid #2a3a4a; border-radius:8px; background:#0a1a2a; color:white; }
-
-    .btn-enviar-referido { background:linear-gradient(135deg,#d4af37,#f0c860); color:#0a1a2a; padding:15px 40px; border:none; border-radius:10px; font-size:18px; font-weight:700; cursor:pointer; box-shadow:0 5px 15px rgba(212,175,55,0.3); width:100%; margin-top:20px; }
-
+    .btn-enviar-referido { background:linear-gradient(135deg,#d4af37,#f0c860); color:#0a1a2a; padding:15px 40px; border:none; border-radius:10px; font-size:16px; font-weight:700; cursor:pointer; width:100%; }
     .mensaje-exito-referido, .mensaje-error-referido { padding:15px; border-radius:10px; margin-top:20px; display:none; font-weight:600; text-align:center; }
     .mensaje-exito-referido { background:#1a4d2e; color:#4ade80; border:1px solid #4ade80; }
     .mensaje-error-referido { background:#4a1a1a; color:#ff8080; border:1px solid #ff8080; }
+    
+    /* Tabla resumen compacta */
+    .tabla-resumen { width: 100%; max-width: 400px; border-collapse: collapse; margin: 15px 0; }
+    .tabla-resumen td { padding: 8px 12px; border-bottom: 1px solid #2a3a4a; }
+    .tabla-resumen td:first-child { color: #aaa; width: 50%; }
+    .tabla-resumen td:last-child { color: #fff; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -62,11 +76,11 @@
     </div>
 
     <div class="row">
-      <div class="col"><input type="tel" name="telefono" id="telefono" placeholder="Teléfono" required /></div>
-      <div class="col"><input type="number" name="edad" id="edad" placeholder="Edad titular" required /></div>
+      <div class="col"><input type="tel" name="telefono" id="telefono" placeholder="Teléfono (ej: +56912345678)" required /></div>
+      <div class="col"><input type="number" name="edad" id="edad" placeholder="Edad titular" min="18" max="99" required /></div>
     </div>
 
-    <input type="text" name="rut" id="rut" placeholder="RUT" required />
+    <input type="text" name="rut" id="rut" placeholder="RUT (ej: 12.345.678-9)" required />
 
     <select name="isapre" id="isapre" required>
       <option value="">Isapre actual</option>
@@ -76,26 +90,39 @@
       <option>Consalud</option>
       <option>Banmédica</option>
       <option>Vida Tres</option>
+      <option>Nueva Masvida</option>
+      <option>Esencial</option>
     </select>
 
     <input type="number" id="renta" name="renta" placeholder="Renta imponible mensual (CLP)" required />
 
-    <label class="small">Edad de las cargas (una por línea)</label>
-    <textarea name="cargas" id="cargas" placeholder="Ej: 5&#10;12&#10;30"></textarea>
+    <label class="small">Edad de las cargas (separadas por coma, ej: 5, 12, 30)</label>
+    <textarea name="cargas" id="cargas" placeholder="Ej: 5, 12, 30" rows="2"></textarea>
 
     <select name="region" id="region" required>
       <option value="">Selecciona tu Región</option>
+      <option>Región de Arica y Parinacota</option>
+      <option>Región de Tarapacá</option>
+      <option>Región de Antofagasta</option>
+      <option>Región de Atacama</option>
+      <option>Región de Coquimbo</option>
       <option>Región de Valparaíso</option>
       <option>Región Metropolitana</option>
+      <option>Región de O'Higgins</option>
+      <option>Región del Maule</option>
+      <option>Región de Ñuble</option>
+      <option>Región del Bío-Bío</option>
+      <option>Región de La Araucanía</option>
       <option>Región de Los Ríos</option>
       <option>Región de Los Lagos</option>
-      <option>Región de La Araucanía</option>
-      <option>Región del Bío-Bío</option>
+      <option>Región de Aysén</option>
+      <option>Región de Magallanes</option>
     </select>
 
-    <textarea name="mensaje" id="mensaje" placeholder="Mensaje adicional (opcional)"></textarea>
+    <textarea name="mensaje" id="mensaje" placeholder="Mensaje adicional (opcional)" rows="2"></textarea>
 
     <button type="submit" id="submitBtn">Cotizar Ahora</button>
+    <p id="statusMsg" class="small" style="margin-top:10px;"></p>
   </form>
 </section>
 
@@ -104,27 +131,26 @@
   <p class="uf-note">UF: <span id="ufValor">cargando…</span> — Fecha: <span id="ufFecha">-</span></p>
 </section>
 
+<!-- RESULTADO PRELIMINAR -->
 <section id="resultado-preliminar" class="card" style="display:none">
   <h2 class="gold">Resultado preliminar</h2>
   <div id="resultadoDetalle" style="line-height:1.7"></div>
 
   <div style="text-align:center;margin-top:30px;">
     <button id="btnAsesoria" class="btn-asesoria">📋 Solicitar Asesoría Personalizada</button>
-    <p class="small">Tus datos se enviarán a un ejecutivo para contactarte.</p>
+    <p class="small" style="margin-top:10px;">Se abrirá WhatsApp para contactar a un asesor.</p>
   </div>
 </section>
 
 <!-- REFERIDOS -->
 <section class="referidos-section" id="referidos" style="display:none">
   <div class="referidos-container">
-
     <div class="referidos-header">
       <h2>¿Quieres que asesoremos a un amigo?</h2>
       <p>Ingresa los datos y nos comunicaremos con tu referido.</p>
     </div>
 
-    <form id="formReferidos" class="referidos-form">
-
+    <form id="formReferidos">
       <div class="form-section">
         <h3>👤 Tus Datos</h3>
         <div class="form-group-referidos">
@@ -135,17 +161,14 @@
 
       <div class="form-section">
         <h3>🎯 Datos del Referido</h3>
-
         <div class="form-group-referidos">
           <label>Nombre Completo *</label>
           <input type="text" id="nombreReferido" required>
         </div>
-
         <div class="form-group-referidos">
           <label>Teléfono *</label>
           <input type="tel" id="telefonoReferido" required>
         </div>
-
         <div class="form-group-referidos">
           <label>Correo *</label>
           <input type="email" id="correoReferido" required>
@@ -154,14 +177,8 @@
 
       <button type="submit" class="btn-enviar-referido">📤 Enviar Referido</button>
 
-      <div id="mensajeExitoReferido" class="mensaje-exito-referido">
-        ✅ ¡Referido Enviado!
-      </div>
-
-      <div id="mensajeErrorReferido" class="mensaje-error-referido">
-        ❌ Error al enviar. Intenta nuevamente.
-      </div>
-
+      <div id="mensajeExitoReferido" class="mensaje-exito-referido">✅ ¡Referido Enviado!</div>
+      <div id="mensajeErrorReferido" class="mensaje-error-referido">❌ Error al enviar. Intenta nuevamente.</div>
     </form>
   </div>
 </section>
@@ -174,59 +191,86 @@
 
 <a class="whatsapp" href="https://wa.me/56990701837" target="_blank">Contactar por WhatsApp</a>
 
+<footer style="text-align:center; padding:30px; color:#666; font-size:0.85rem;">
+  © 2025 Colmena Golden Cross - Asesoría en Planes de Salud
+</footer>
+
 <script>
 /*========================================================
-  CONFIG FORMULARIO
+  CONFIGURACIÓN - ACTUALIZA ESTOS VALORES
 =========================================================*/
 
-const FORM_BASE_URL =
-  'https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/formResponse';
+// URL del Google Form (formResponse)
+const FORM_BASE_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/formResponse';
 
+// IDs de los campos del formulario - VERIFICA QUE COINCIDAN CON TU GOOGLE FORM
 const FORM_FIELDS = {
-  nombre: 'entry.1455181501',
-  rut: 'entry.1514828805',
-  correo: 'entry.1253669566',
+  nombre:   'entry.1455181501',
+  rut:      'entry.1514828805',
+  correo:   'entry.1253669566',
   telefono: 'entry.1927631596',
-  edad: 'entry.1515225692',
-  isapre: 'entry.1312575017',
-  renta: 'entry.1350273122',
-  region: 'entry.1283417188',
-  cargas: 'entry.6457415',
-  mensaje: 'entry.860152674'
+  edad:     'entry.1515225692',
+  isapre:   'entry.1312575017',
+  renta:    'entry.1350273122',
+  region:   'entry.1283417188',
+  cargas:   'entry.6457415',
+  mensaje:  'entry.860152674',
+  plan1:    'entry.1234567890',  // Ajustar si existe
+  plan2:    'entry.0987654321'   // Ajustar si existe
 };
 
-let formularioDatos = {};
-let ultimoResultado = null;
+// URL del Google Form de Referidos
+const GOOGLE_FORM_REFERIDOS_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeIppjYB0Vgc6RsJ3AM0HcAVhLaxAT6ZZ_MxdPhmuwRkwLT-A/formResponse';
 
-/* URLs de datos desde GitHub (RAW) */
-const URL_TEXTOS_TOP =
-  'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/refs/heads/main/data/textos_comerciales_top_planes.json';
+// Número de WhatsApp para asesoría (sin +)
+const WHATSAPP_ASESORIA = '56975356696';
 
-let PLANES_TOP = {
-  REGIONALES: [],
-  SANTIAGO: []
-};
+// CallMeBot - Tu API Key
+const CALLMEBOT_PHONE = '56990701837';
+const CALLMEBOT_APIKEY = 'TU_API_KEY_AQUI'; // Reemplaza con tu API key real
 
 /*========================================================
-  CARGA DE DATOS DE PLANES (TEXTOS COMERCIALES TOP)
+  VARIABLES GLOBALES
 =========================================================*/
+let formularioDatos = {};
+let ultimoResultado = null;
+let PLANES_TOP = { REGIONALES: [], SANTIAGO: [] };
 
+const URL_TEXTOS_TOP = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/refs/heads/main/data/textos_comerciales_top_planes.json';
+
+/*========================================================
+  CARGAR UF
+=========================================================*/
+async function cargarUF() {
+  try {
+    const r = await fetch("https://mindicador.cl/api/");
+    const j = await r.json();
+    const uf = j.uf.valor;
+    window.__UF_VALOR = uf;
+    document.getElementById("ufValor").innerText = "$" + uf.toLocaleString("es-CL", { minimumFractionDigits: 2 });
+    document.getElementById("ufFecha").innerText = new Date(j.uf.fecha).toLocaleDateString("es-CL", { year: "numeric", month: "long", day: "numeric" });
+  } catch (err) {
+    document.getElementById("ufValor").innerText = "$39.000 (estimado)";
+    document.getElementById("ufFecha").innerText = "No disponible";
+    window.__UF_VALOR = 39000;
+  }
+}
+
+/*========================================================
+  CARGAR DATOS DE PLANES
+=========================================================*/
 async function cargarDataPlanes() {
   try {
     const rTop = await fetch(URL_TEXTOS_TOP);
     const dataTop = await rTop.json();
-
     PLANES_TOP = { REGIONALES: [], SANTIAGO: [] };
     dataTop.forEach(p => {
-      if (!PLANES_TOP[p.segmento]) {
-        PLANES_TOP[p.segmento] = [];
-      }
+      if (!PLANES_TOP[p.segmento]) PLANES_TOP[p.segmento] = [];
       PLANES_TOP[p.segmento].push(p);
     });
-
     console.log('✅ Textos comerciales cargados', PLANES_TOP);
   } catch (err) {
-    console.error('Error cargando textos comerciales de planes', err);
+    console.error('Error cargando textos comerciales', err);
   }
 }
 
@@ -245,38 +289,8 @@ function obtenerTopPlanesPorRegion(regionTexto) {
 }
 
 /*========================================================
-  CARGAR UF
-=========================================================*/
-
-async function cargarUF() {
-  try {
-    const r = await fetch("https://mindicador.cl/api/");
-    const j = await r.json();
-
-    const uf = j.uf.valor;
-    window.__UF_VALOR = uf;
-
-    document.getElementById("ufValor").innerText =
-      "$" + uf.toLocaleString("es-CL", { minimumFractionDigits: 2 });
-
-    document.getElementById("ufFecha").innerText =
-      new Date(j.uf.fecha).toLocaleDateString("es-CL", {
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      });
-
-  } catch (err) {
-    document.getElementById("ufValor").innerText = "$38.000 (estimado)";
-    document.getElementById("ufFecha").innerText = "No disponible";
-    window.__UF_VALOR = 38000;
-  }
-}
-
-/*========================================================
   CÁLCULOS
 =========================================================*/
-
 function obtenerFactor(e) {
   if (e <= 18) return 0.6;
   if (e <= 35) return 1.0;
@@ -289,57 +303,59 @@ function formatearCLP(n) {
   return (n || 0).toLocaleString("es-CL");
 }
 
-/*========================================================
-  COTIZACIÓN: GES = 0.77 UF — CARGAS <2 AÑOS NO PAGAN
-=========================================================*/
-
 function calcularCotizacion(obj) {
-
   const personasTotales = 1 + obj.edadesCargas.length;
-
   let sumaFactores = obtenerFactor(obj.edadTitular);
   obj.edadesCargas.forEach(e => sumaFactores += obtenerFactor(e));
 
   const costoFactorizado = obj.valorBasePlan * sumaFactores;
-  const uf = window.__UF_VALOR || 38000;
+  const uf = window.__UF_VALOR || 39000;
 
   const valorGesUF = 0.77;
   const valorGesCLP = valorGesUF * uf;
 
-  let personasQuePaganGES = 1; // Titular siempre paga
-
-  obj.edadesCargas.forEach(e => {
-    if (e >= 2) personasQuePaganGES++;
-  });
+  let personasQuePaganGES = 1;
+  obj.edadesCargas.forEach(e => { if (e >= 2) personasQuePaganGES++; });
 
   const totalGes = Math.round(valorGesCLP * personasQuePaganGES);
-
   const valorFinal = Math.round(costoFactorizado + totalGes);
   const siete = Math.round(obj.renta * 0.07);
   const adicional = Math.max(0, valorFinal - siete);
   const valorFinalUF = valorFinal / uf;
 
-  return {
-    personas: personasTotales,
-    personasQuePaganGES,
-    costoFactorizado,
-    totalGes,
-    valorFinal,
-    siete,
-    adicional,
-    valorFinalUF
-  };
+  return { personas: personasTotales, personasQuePaganGES, costoFactorizado, totalGes, valorFinal, siete, adicional, valorFinalUF };
 }
 
 /*========================================================
-  ENVÍO DEL FORMULARIO PRINCIPAL (COTIZAR AHORA)
-  - Envía UNA VEZ a Google Forms
-  - Calcula resultado
-  - Muestra 2 planes sugeridos + clínicas
+  ENVIAR NOTIFICACIÓN CALLMEBOT (WHATSAPP)
 =========================================================*/
+async function enviarCallMeBot(mensaje) {
+  if (!CALLMEBOT_APIKEY || CALLMEBOT_APIKEY === 'TU_API_KEY_AQUI') {
+    console.log('CallMeBot no configurado');
+    return;
+  }
+  try {
+    const url = `https://api.callmebot.com/whatsapp.php?phone=${CALLMEBOT_PHONE}&text=${encodeURIComponent(mensaje)}&apikey=${CALLMEBOT_APIKEY}`;
+    await fetch(url, { mode: 'no-cors' });
+    console.log('✅ Notificación WhatsApp enviada');
+  } catch (err) {
+    console.error('Error CallMeBot:', err);
+  }
+}
 
+/*========================================================
+  FORMULARIO PRINCIPAL - COTIZAR AHORA
+=========================================================*/
 document.getElementById("mainForm").addEventListener("submit", async function(e) {
   e.preventDefault();
+
+  const btn = document.getElementById("submitBtn");
+  const statusMsg = document.getElementById("statusMsg");
+  
+  btn.disabled = true;
+  btn.textContent = "Enviando...";
+  statusMsg.textContent = "";
+  statusMsg.className = "small";
 
   const data = new FormData(this);
 
@@ -356,124 +372,136 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     mensaje: data.get("mensaje")
   };
 
-  // Texto de cargas normalizado (para enviar y mostrar)
-  const cargasTexto = (formularioDatos.cargas || "").replace(/\n/g, ", ");
+  // Normalizar cargas
+  const cargasTexto = (formularioDatos.cargas || "").replace(/\n/g, ", ").trim();
+  const edadesCargas = cargasTexto.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean).map(Number).filter(n => !isNaN(n));
 
-  // 📌 Envío a Google Forms (UNA sola vez)
-  const f = new FormData();
-  for (let k in FORM_FIELDS) {
-    if (k === "cargas") {
-      f.append(FORM_FIELDS[k], cargasTexto);
-    } else {
-      f.append(FORM_FIELDS[k], formularioDatos[k] ?? "");
-    }
-  }
-
-  await fetch(FORM_BASE_URL, {
-    method: "POST",
-    mode: "no-cors",
-    body: f
-  });
-
-  // 📌 Cálculo preliminar
-  const edadesCargas = (formularioDatos.cargas || "")
-    .split(/[\n,;]+/)
-    .map(s => s.trim())
-    .filter(Boolean)
-    .map(Number);
-
+  // Calcular cotización
   const r = calcularCotizacion({
     renta: Number(formularioDatos.renta),
     edadTitular: Number(formularioDatos.edad),
     edadesCargas,
-    valorBasePlan: 35000 // PB real no se muestra, solo se usa para simular
+    valorBasePlan: 35000
   });
 
-  const nCargas = edadesCargas.length;
+  // Obtener planes recomendados
+  const { segmento, plan1, plan2 } = obtenerTopPlanesPorRegion(formularioDatos.region);
+  const nombrePlan1 = plan1 ? plan1.plan_individual : "Plan Premium Colmena";
+  const nombrePlan2 = plan2 ? plan2.plan_individual : "Plan Plus Colmena";
 
-  // Guardamos para WhatsApp / asesoría
-  ultimoResultado = {
-    ...r,
-    nCargas,
-    cargasTexto
-  };
+  ultimoResultado = { ...r, nCargas: edadesCargas.length, cargasTexto, edadesCargas, segmento, nombrePlan1, nombrePlan2 };
 
-  const resumenCostos = `
-    <strong style="font-size:1.2rem;">Cotización Personalizada – Colmena</strong><br><br>
+  // ENVIAR A GOOGLE FORMS
+  try {
+    const f = new FormData();
+    f.append(FORM_FIELDS.nombre, formularioDatos.nombre);
+    f.append(FORM_FIELDS.rut, formularioDatos.rut);
+    f.append(FORM_FIELDS.correo, formularioDatos.correo);
+    f.append(FORM_FIELDS.telefono, formularioDatos.telefono);
+    f.append(FORM_FIELDS.edad, formularioDatos.edad);
+    f.append(FORM_FIELDS.isapre, formularioDatos.isapre);
+    f.append(FORM_FIELDS.renta, formularioDatos.renta);
+    f.append(FORM_FIELDS.region, formularioDatos.region);
+    f.append(FORM_FIELDS.cargas, cargasTexto);
+    f.append(FORM_FIELDS.mensaje, formularioDatos.mensaje || "(sin mensaje)");
 
-    Hola ${formularioDatos.nombre}, revisé tus datos y preparé una propuesta ideal según tu renta, cargas y edad.<br><br>
-
-    <strong>🔹 Resultado de tu cotización</strong><br>
-    Valor final estimado (simulado): <strong>${r.valorFinalUF.toFixed(3)} UF</strong><br>
-    Total estimado en pesos: <strong>$${formatearCLP(r.valorFinal)}</strong><br>
-    7% de tu renta: <strong>$${formatearCLP(r.siete)}</strong><br>
-    Adicional a pagar sobre el 7%: <strong>$${formatearCLP(r.adicional)}</strong><br>
-    Cargas consideradas: <strong>${nCargas}</strong><br><br>
-  `;
-
-  // 📌 Selección de los 2 planes top según región (Regionales / Santiago)
-  const { segmento, planes, plan1, plan2 } = obtenerTopPlanesPorRegion(formularioDatos.region || "");
-
-  let htmlPlanes = `
-    <hr style="margin:20px 0;">
-    <h3>🏥 Cobertura hospitalaria y planes sugeridos</h3>
-    <p class="small">
-      A continuación se muestran dos planes de Colmena sugeridos para tu segmento <strong>${segmento}</strong>.
-      Son referencias descriptivas basadas en tu perfil; el detalle final siempre se confirma con un Asesor Ejecutivo.
-    </p>
-  `;
-
-  if (plan1) {
-    htmlPlanes += `
-      <h4>🔹 Plan recomendado 1</h4>
-      <p><strong>${plan1.plan_individual}</strong></p>
-      <p>${(plan1.texto_comercial || "").replace(/\n/g, "<br>")}</p>
-    `;
+    await fetch(FORM_BASE_URL, { method: "POST", mode: "no-cors", body: f });
+    console.log('✅ Datos enviados a Google Forms');
+    
+    statusMsg.textContent = "✅ Datos enviados correctamente";
+    statusMsg.className = "small success-msg";
+  } catch (err) {
+    console.error('Error enviando a Google Forms:', err);
+    statusMsg.textContent = "⚠️ Error al enviar, pero puedes continuar";
+    statusMsg.className = "small error-msg";
   }
 
-  if (plan2) {
-    htmlPlanes += `
-      <h4>🔹 Plan recomendado 2</h4>
-      <p><strong>${plan2.plan_individual}</strong></p>
-      <p>${(plan2.texto_comercial || "").replace(/\n/g, "<br>")}</p>
-    `;
-  }
+  // ENVIAR NOTIFICACIÓN CALLMEBOT
+  const mensajeWA = `🔔 NUEVA COTIZACIÓN\n\nNombre: ${formularioDatos.nombre}\nTeléfono: ${formularioDatos.telefono}\nEdad: ${formularioDatos.edad}\nRenta: $${formatearCLP(Number(formularioDatos.renta))}\nRegión: ${formularioDatos.region}\nCargas: ${edadesCargas.length}\n\nValor estimado: ${r.valorFinalUF.toFixed(2)} UF ($${formatearCLP(r.valorFinal)})`;
+  enviarCallMeBot(mensajeWA);
 
-  htmlPlanes += `
-    <p class="small" style="margin-top:15px;">
-      Solicita asesoría y te enviamos estos planes para que los revises junto a un Asesor Ejecutivo.
-      Esta información es descriptiva y debe ser corroborada al momento por un Asesor Ejecutivo.
-    </p>
-    <p class="small" style="margin-top:8px;">
-      Si deseas obtener el Plan completo contáctanos por Asesoría o WhatsApp.
-    </p>
+  // MOSTRAR RESULTADO
+  const htmlResultado = `
+    <h3 style="color:#d4af37; margin-top:0;">Cotización Personalizada – Colmena</h3>
+    <p>Hola <strong>${formularioDatos.nombre}</strong>, revisé tus datos y preparé una propuesta ideal según tu renta, cargas y edad.</p>
+    
+    <h4 style="color:#d4af37;">🔹 Resultado de tu cotización</h4>
+    <table class="tabla-resumen">
+      <tr><td>Valor final estimado:</td><td>${r.valorFinalUF.toFixed(2)} UF</td></tr>
+      <tr><td>Total en pesos:</td><td>$${formatearCLP(r.valorFinal)}</td></tr>
+      <tr><td>7% de tu renta:</td><td>$${formatearCLP(r.siete)}</td></tr>
+      <tr><td>Adicional sobre el 7%:</td><td>$${formatearCLP(r.adicional)}</td></tr>
+      <tr><td>Cargas consideradas:</td><td>${edadesCargas.length}${edadesCargas.length > 0 ? ' (' + edadesCargas.join(', ') + ' años)' : ''}</td></tr>
+    </table>
+    
+    <hr style="margin:25px 0; border-color:#d4af37;">
+    
+    <h4 style="color:#d4af37;">🏥 Planes Recomendados - Segmento ${segmento}</h4>
+    <p class="small">A continuación se muestran dos planes sugeridos. El detalle final se confirma con un Asesor.</p>
+    
+    <div class="plan-card recomendado">
+      <div class="plan-nombre">✨ ${nombrePlan1}</div>
+      <div class="plan-detalle">${plan1 ? formatearTextoComercial(plan1.texto_comercial) : 'Plan premium con cobertura completa en clínicas de primera categoría.'}</div>
+    </div>
+    
+    <div class="plan-card">
+      <div class="plan-nombre">🔷 ${nombrePlan2}</div>
+      <div class="plan-detalle">${plan2 ? formatearTextoComercial(plan2.texto_comercial) : 'Plan con excelente relación precio-cobertura.'}</div>
+    </div>
+    
+    <div style="background:#1a3a2a; padding:15px; border-radius:10px; text-align:center; margin-top:20px;">
+      <p style="margin:0; color:#4ade80;">
+        <strong>📋 Estos planes son sugerencias basadas en tu perfil.</strong><br>
+        <span class="small">Solicita asesoría para confirmar el mejor plan para ti.</span>
+      </p>
+    </div>
   `;
 
-  const mensajeCliente = resumenCostos + htmlPlanes;
-
-  document.getElementById("resultadoDetalle").innerHTML = mensajeCliente;
+  document.getElementById("resultadoDetalle").innerHTML = htmlResultado;
   document.getElementById("resultado-preliminar").style.display = "block";
 
+  btn.disabled = false;
+  btn.textContent = "Cotizar Ahora";
+
   setTimeout(() => {
-    document.getElementById("resultado-preliminar")
-      .scrollIntoView({ behavior: "smooth" });
+    document.getElementById("resultado-preliminar").scrollIntoView({ behavior: "smooth" });
   }, 300);
 });
 
 /*========================================================
-  BOTÓN "SOLICITAR ASESORÍA"
-  - NO reenvía formulario
-  - Abre WhatsApp a tu número con mensaje URGENTE
-  - Muestra sección de Referidos
+  FORMATEAR TEXTO COMERCIAL (RESUMIDO)
 =========================================================*/
+function formatearTextoComercial(texto) {
+  if (!texto) return '';
+  
+  // Limitar el texto a las primeras líneas importantes
+  const lineas = texto.split('\n').filter(l => l.trim());
+  const resumen = [];
+  
+  for (let i = 0; i < Math.min(lineas.length, 5); i++) {
+    let linea = lineas[i].trim();
+    // Si la línea es muy larga (lista de clínicas), resumirla
+    if (linea.length > 200 && linea.includes('Clínica')) {
+      const match = linea.match(/Red de Clínicas (G\d+)/);
+      if (match) {
+        resumen.push(`• ${match[0]}: Amplia red de clínicas con 100% de cobertura`);
+      }
+    } else if (linea.length < 200) {
+      resumen.push(linea);
+    }
+  }
+  
+  return resumen.join('<br>');
+}
 
+/*========================================================
+  BOTÓN SOLICITAR ASESORÍA
+=========================================================*/
 document.getElementById("btnAsesoria").addEventListener("click", function() {
   if (!formularioDatos || !formularioDatos.nombre) {
     alert("Primero completa y envía la cotización.");
     return;
   }
-
-  const telDestino = "56975356696"; // tu número
 
   const nombre = formularioDatos.nombre || "";
   const rut = formularioDatos.rut || "";
@@ -481,46 +509,41 @@ document.getElementById("btnAsesoria").addEventListener("click", function() {
   const isapre = formularioDatos.isapre || "";
   const region = formularioDatos.region || "";
   const renta = Number(formularioDatos.renta) || 0;
-  const cargasTexto = ultimoResultado?.cargasTexto || (formularioDatos.cargas || "");
-  const nCargas = ultimoResultado?.nCargas ?? (
-    (formularioDatos.cargas || "").split(/[\n,;]+/).filter(Boolean).length
-  );
+  const cargasTexto = ultimoResultado?.cargasTexto || "";
+  const nCargas = ultimoResultado?.nCargas ?? 0;
 
-  const valorUF = ultimoResultado ? ultimoResultado.valorFinalUF.toFixed(3) : "";
+  const valorUF = ultimoResultado ? ultimoResultado.valorFinalUF.toFixed(2) : "";
   const valorPesos = ultimoResultado ? formatearCLP(ultimoResultado.valorFinal) : "";
   const adicional = ultimoResultado ? formatearCLP(ultimoResultado.adicional) : "";
   const siete = ultimoResultado ? formatearCLP(ultimoResultado.siete) : "";
 
-  // obtenemos nuevamente los planes para poder mencionarlos en el WhatsApp
-  const { plan1, plan2 } = obtenerTopPlanesPorRegion(formularioDatos.region || "");
-  const nombrePlan1 = plan1 ? plan1.plan_individual : "";
-  const nombrePlan2 = plan2 ? plan2.plan_individual : "";
+  const nombrePlan1 = ultimoResultado?.nombrePlan1 || "";
+  const nombrePlan2 = ultimoResultado?.nombrePlan2 || "";
 
   const mensaje = 
-    "URGENTE: Nueva cotización Colmena\n\n" +
-    "Datos del cliente:\n" +
-    `Nombre: ${nombre}\n` +
-    `RUT: ${rut}\n` +
-    `Edad: ${edad}\n` +
-    `Isapre actual: ${isapre}\n` +
-    `Región: ${region}\n` +
-    `Renta imponible: $${formatearCLP(renta)}\n` +
-    `Cargas declaradas: ${nCargas}${cargasTexto ? " (" + cargasTexto + ")" : ""}\n\n` +
-    "Resultado estimado de la cotización:\n" +
-    `Valor final simulado: ${valorUF} UF (aprox $${valorPesos})\n` +
-    `7% de renta: $${siete}\n` +
-    `Adicional sobre el 7%: $${adicional}\n\n` +
-    "Planes sugeridos por el sistema:\n" +
-    `1) ${nombrePlan1 || "-"}\n` +
-    `2) ${nombrePlan2 || "-"}\n\n` +
-    "Favor contactar a la brevedad para asesoría.";
+    "🔔 SOLICITUD DE ASESORÍA\n\n" +
+    "👤 Datos del cliente:\n" +
+    `• Nombre: ${nombre}\n` +
+    `• RUT: ${rut}\n` +
+    `• Edad: ${edad} años\n` +
+    `• Isapre actual: ${isapre}\n` +
+    `• Región: ${region}\n` +
+    `• Renta: $${formatearCLP(renta)}\n` +
+    `• Cargas: ${nCargas}${cargasTexto ? " (" + cargasTexto + ")" : ""}\n\n` +
+    "💰 Cotización estimada:\n" +
+    `• Valor: ${valorUF} UF ($${valorPesos})\n` +
+    `• 7% renta: $${siete}\n` +
+    `• Adicional: $${adicional}\n\n` +
+    "📋 Planes sugeridos:\n" +
+    `1) ${nombrePlan1}\n` +
+    `2) ${nombrePlan2}\n\n` +
+    "⚡ Solicita contacto urgente.";
 
-  const url = `https://wa.me/${telDestino}?text=${encodeURIComponent(mensaje)}`;
+  const url = `https://wa.me/${WHATSAPP_ASESORIA}?text=${encodeURIComponent(mensaje)}`;
   window.open(url, "_blank");
 
   // Mostrar sección de referidos
   document.getElementById("referidos").style.display = "block";
-
   setTimeout(() => {
     document.getElementById("referidos").scrollIntoView({ behavior: "smooth" });
   }, 400);
@@ -529,10 +552,6 @@ document.getElementById("btnAsesoria").addEventListener("click", function() {
 /*========================================================
   REFERIDOS
 =========================================================*/
-
-const GOOGLE_FORM_REFERIDOS_URL =
-  'https://docs.google.com/forms/d/e/1FAIpQLSeIppjYB0Vgc6RsJ3AM0HcAVhLaxAT6ZZ_MxdPhmuwRkwLT-A/formResponse';
-
 document.getElementById("formReferidos").addEventListener("submit", async function(e) {
   e.preventDefault();
 
@@ -549,62 +568,58 @@ document.getElementById("formReferidos").addEventListener("submit", async functi
   f.append("entry.178502788", "Referido enviado desde landing");
 
   try {
-    await fetch(GOOGLE_FORM_REFERIDOS_URL, {
-      method:"POST", mode:"no-cors", body:f
-    });
+    await fetch(GOOGLE_FORM_REFERIDOS_URL, { method: "POST", mode: "no-cors", body: f });
+    document.getElementById("mensajeExitoReferido").style.display = "block";
+    document.getElementById("mensajeErrorReferido").style.display = "none";
 
-    document.getElementById("mensajeExitoReferido").style.display="block";
+    // Notificación CallMeBot del referido
+    const msgRef = `🎯 NUEVO REFERIDO\n\nReferido por: ${nombreUsuario}\nNombre: ${nombreReferido}\nTel: ${telefonoReferido}\nCorreo: ${correoReferido}`;
+    enviarCallMeBot(msgRef);
 
     mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, correoReferido);
 
-    // Limpiar formulario principal y volver al inicio
-    const formMain = document.getElementById("mainForm");
-    formMain.reset();
+    // Reset
+    document.getElementById("mainForm").reset();
     formularioDatos = {};
     ultimoResultado = null;
     document.getElementById("resultado-preliminar").style.display = "none";
 
     setTimeout(() => {
-      document.getElementById("formulario").scrollIntoView({
-        behavior:"smooth",
-        block:"start"
-      });
-    }, 800);
+      document.getElementById("resumen-final").scrollIntoView({ behavior: "smooth" });
+    }, 500);
 
   } catch (err) {
     console.error("Error enviando referido", err);
-    document.getElementById("mensajeErrorReferido").style.display="block";
+    document.getElementById("mensajeErrorReferido").style.display = "block";
+    document.getElementById("mensajeExitoReferido").style.display = "none";
   }
 });
 
 /*========================================================
   RESUMEN FINAL
 =========================================================*/
-
 function mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, correoReferido) {
-
   const html = `
     <div style="background:#1a2a3a;padding:25px;border-radius:15px;margin-bottom:20px;">
       <h3 style="color:#d4af37;margin-top:0;">📋 Solicitud de Asesoría</h3>
-      <p><strong>Nombre:</strong> ${formularioDatos.nombre || "(ya reseteado para nueva cotización)"}</p>
-      <p><strong>Correo:</strong> ${formularioDatos.correo || ""}</p>
-      <p><strong>Teléfono:</strong> ${formularioDatos.telefono || ""}</p>
-      <p style="color:#4ade80;font-weight:bold;margin-top:15px;">✅ Datos enviados para asesoría</p>
+      <p><strong>Estado:</strong> <span style="color:#4ade80;">✅ Enviada correctamente</span></p>
+      <p class="small">Un asesor te contactará pronto.</p>
     </div>
 
     <div style="background:#1a2a3a;padding:25px;border-radius:15px;">
-      <h3 style="color:#d4af37;margin-top:0;">🎯 Referido</h3>
+      <h3 style="color:#d4af37;margin-top:0;">🎯 Referido Enviado</h3>
       <p><strong>Referido por:</strong> ${nombreUsuario}</p>
-      <p><strong>Nombre del referido:</strong> ${nombreReferido}</p>
+      <p><strong>Nombre:</strong> ${nombreReferido}</p>
       <p><strong>Teléfono:</strong> ${telefonoReferido}</p>
       <p><strong>Correo:</strong> ${correoReferido}</p>
-      <p style="color:#4ade80;font-weight:bold;margin-top:15px;">✅ Referido enviado</p>
+      <p style="color:#4ade80;font-weight:bold;margin-top:15px;">✅ Datos enviados</p>
     </div>
 
     <div style="text-align:center;margin-top:30px;padding:20px;background:#0f2640;border-radius:10px;">
       <p style="font-size:1.1rem;color:#d4af37;margin:0;">
-        ¡Gracias por tu confianza! Te contactaremos dentro de pocas horas.
+        ¡Gracias por tu confianza! Te contactaremos pronto.
       </p>
+      <button onclick="location.reload()" style="margin-top:15px;">Nueva Cotización</button>
     </div>
   `;
 
@@ -615,7 +630,6 @@ function mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, co
 /*========================================================
   INICIO
 =========================================================*/
-
 window.addEventListener("load", () => {
   cargarUF();
   cargarDataPlanes();
