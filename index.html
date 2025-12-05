@@ -80,7 +80,7 @@
 
     <input type="number" id="renta" name="renta" placeholder="Renta imponible mensual (CLP)" required />
 
-    <label class="small">Edad de las cargas (una por línea o separadas por coma)</label>
+    <label class="small">Edad de las cargas (una por línea)</label>
     <textarea name="cargas" id="cargas" placeholder="Ej: 5&#10;12&#10;30"></textarea>
 
     <select name="region" id="region" required>
@@ -110,7 +110,7 @@
 
   <div style="text-align:center;margin-top:30px;">
     <button id="btnAsesoria" class="btn-asesoria">📋 Solicitar Asesoría Personalizada</button>
-    <p class="small">Tus datos se enviarán por WhatsApp y te contactaremos a la brevedad.</p>
+    <p class="small">Tus datos se enviarán a un ejecutivo para contactarte.</p>
   </div>
 </section>
 
@@ -196,7 +196,53 @@ const FORM_FIELDS = {
 };
 
 let formularioDatos = {};
-let ultimoResultado = null; // para usar en WhatsApp
+let ultimoResultado = null;
+
+/* URLs de datos desde GitHub (RAW) */
+const URL_TEXTOS_TOP =
+  'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/refs/heads/main/data/textos_comerciales_top_planes.json';
+
+let PLANES_TOP = {
+  REGIONALES: [],
+  SANTIAGO: []
+};
+
+/*========================================================
+  CARGA DE DATOS DE PLANES (TEXTOS COMERCIALES TOP)
+=========================================================*/
+
+async function cargarDataPlanes() {
+  try {
+    const rTop = await fetch(URL_TEXTOS_TOP);
+    const dataTop = await rTop.json();
+
+    PLANES_TOP = { REGIONALES: [], SANTIAGO: [] };
+    dataTop.forEach(p => {
+      if (!PLANES_TOP[p.segmento]) {
+        PLANES_TOP[p.segmento] = [];
+      }
+      PLANES_TOP[p.segmento].push(p);
+    });
+
+    console.log('✅ Textos comerciales cargados', PLANES_TOP);
+  } catch (err) {
+    console.error('Error cargando textos comerciales de planes', err);
+  }
+}
+
+function obtenerTopPlanesPorRegion(regionTexto) {
+  let segmento = 'REGIONALES';
+  if (regionTexto && regionTexto.toLowerCase().includes('metropolitana')) {
+    segmento = 'SANTIAGO';
+  }
+  const arr = PLANES_TOP[segmento] || [];
+  return {
+    segmento,
+    planes: arr,
+    plan1: arr[0] || null,
+    plan2: arr[1] || null
+  };
+}
 
 /*========================================================
   CARGAR UF
@@ -240,7 +286,7 @@ function obtenerFactor(e) {
 }
 
 function formatearCLP(n) {
-  return n.toLocaleString("es-CL");
+  return (n || 0).toLocaleString("es-CL");
 }
 
 /*========================================================
@@ -287,6 +333,9 @@ function calcularCotizacion(obj) {
 
 /*========================================================
   ENVÍO DEL FORMULARIO PRINCIPAL (COTIZAR AHORA)
+  - Envía UNA VEZ a Google Forms
+  - Calcula resultado
+  - Muestra 2 planes sugeridos + clínicas
 =========================================================*/
 
 document.getElementById("mainForm").addEventListener("submit", async function(e) {
@@ -307,13 +356,12 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     mensaje: data.get("mensaje")
   };
 
-  // Texto de cargas normalizado (para mostrar)
+  // Texto de cargas normalizado (para enviar y mostrar)
   const cargasTexto = (formularioDatos.cargas || "").replace(/\n/g, ", ");
 
-  // 📌 Envío a Google Forms (una sola vez, aquí)
+  // 📌 Envío a Google Forms (UNA sola vez)
   const f = new FormData();
   for (let k in FORM_FIELDS) {
-    // para cargas, mandamos con comas
     if (k === "cargas") {
       f.append(FORM_FIELDS[k], cargasTexto);
     } else {
@@ -338,37 +386,70 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     renta: Number(formularioDatos.renta),
     edadTitular: Number(formularioDatos.edad),
     edadesCargas,
-    valorBasePlan: 35000
+    valorBasePlan: 35000 // PB real no se muestra, solo se usa para simular
   });
 
   const nCargas = edadesCargas.length;
 
-  // guardamos para WhatsApp
+  // Guardamos para WhatsApp / asesoría
   ultimoResultado = {
     ...r,
     nCargas,
     cargasTexto
   };
 
-  const mensajeCliente = `
+  const resumenCostos = `
     <strong style="font-size:1.2rem;">Cotización Personalizada – Colmena</strong><br><br>
 
     Hola ${formularioDatos.nombre}, revisé tus datos y preparé una propuesta ideal según tu renta, cargas y edad.<br><br>
 
     <strong>🔹 Resultado de tu cotización</strong><br>
-    Valor final estimado: <strong>${r.valorFinalUF.toFixed(3)} UF</strong><br>
+    Valor final estimado (simulado): <strong>${r.valorFinalUF.toFixed(3)} UF</strong><br>
     Total estimado en pesos: <strong>$${formatearCLP(r.valorFinal)}</strong><br>
     7% de tu renta: <strong>$${formatearCLP(r.siete)}</strong><br>
     Adicional a pagar sobre el 7%: <strong>$${formatearCLP(r.adicional)}</strong><br>
     Cargas consideradas: <strong>${nCargas}</strong><br><br>
-
-    <strong>¿Qué viene ahora?</strong><br>
-    Se seleccionarán 2 planes Colmena especialmente para ti:<br>
-    • Un plan lo más cercano posible a tu 7%, con el adicional más bajo.<br>
-    • Un plan con algo más de cobertura y mejor red de clínicas.<br><br>
-
-    Luego revisaremos juntos cuál te conviene más 💛
   `;
+
+  // 📌 Selección de los 2 planes top según región (Regionales / Santiago)
+  const { segmento, planes, plan1, plan2 } = obtenerTopPlanesPorRegion(formularioDatos.region || "");
+
+  let htmlPlanes = `
+    <hr style="margin:20px 0;">
+    <h3>🏥 Cobertura hospitalaria y planes sugeridos</h3>
+    <p class="small">
+      A continuación se muestran dos planes de Colmena sugeridos para tu segmento <strong>${segmento}</strong>.
+      Son referencias descriptivas basadas en tu perfil; el detalle final siempre se confirma con un Asesor Ejecutivo.
+    </p>
+  `;
+
+  if (plan1) {
+    htmlPlanes += `
+      <h4>🔹 Plan recomendado 1</h4>
+      <p><strong>${plan1.plan_individual}</strong></p>
+      <p>${(plan1.texto_comercial || "").replace(/\n/g, "<br>")}</p>
+    `;
+  }
+
+  if (plan2) {
+    htmlPlanes += `
+      <h4>🔹 Plan recomendado 2</h4>
+      <p><strong>${plan2.plan_individual}</strong></p>
+      <p>${(plan2.texto_comercial || "").replace(/\n/g, "<br>")}</p>
+    `;
+  }
+
+  htmlPlanes += `
+    <p class="small" style="margin-top:15px;">
+      Solicita asesoría y te enviamos estos planes para que los revises junto a un Asesor Ejecutivo.
+      Esta información es descriptiva y debe ser corroborada al momento por un Asesor Ejecutivo.
+    </p>
+    <p class="small" style="margin-top:8px;">
+      Si deseas obtener el Plan completo contáctanos por Asesoría o WhatsApp.
+    </p>
+  `;
+
+  const mensajeCliente = resumenCostos + htmlPlanes;
 
   document.getElementById("resultadoDetalle").innerHTML = mensajeCliente;
   document.getElementById("resultado-preliminar").style.display = "block";
@@ -380,57 +461,64 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
 });
 
 /*========================================================
-  BOTÓN "SOLICITAR ASESORÍA" (SOLO WHATSAPP + REFERIDOS)
+  BOTÓN "SOLICITAR ASESORÍA"
+  - NO reenvía formulario
+  - Abre WhatsApp a tu número con mensaje URGENTE
+  - Muestra sección de Referidos
 =========================================================*/
 
 document.getElementById("btnAsesoria").addEventListener("click", function() {
-  if (!formularioDatos.nombre || !ultimoResultado) {
-    alert("Primero completa la cotización.");
+  if (!formularioDatos || !formularioDatos.nombre) {
+    alert("Primero completa y envía la cotización.");
     return;
   }
 
-  this.disabled = true;
-  this.textContent = "⏳ Abriendo WhatsApp...";
+  const telDestino = "56975356696"; // tu número
 
-  const r = ultimoResultado;
-  const cargasTexto = r.cargasTexto || "Sin cargas";
+  const nombre = formularioDatos.nombre || "";
+  const rut = formularioDatos.rut || "";
+  const edad = formularioDatos.edad || "";
+  const isapre = formularioDatos.isapre || "";
+  const region = formularioDatos.region || "";
+  const renta = Number(formularioDatos.renta) || 0;
+  const cargasTexto = ultimoResultado?.cargasTexto || (formularioDatos.cargas || "");
+  const nCargas = ultimoResultado?.nCargas ?? (
+    (formularioDatos.cargas || "").split(/[\n,;]+/).filter(Boolean).length
+  );
 
-  // Mensaje urgente para ti (WhatsApp)
-  const mensajeWA = `
-⚠️ URGENTE — NUEVA SOLICITUD DE ASESORÍA DE PLANES COLMENA
+  const valorUF = ultimoResultado ? ultimoResultado.valorFinalUF.toFixed(3) : "";
+  const valorPesos = ultimoResultado ? formatearCLP(ultimoResultado.valorFinal) : "";
+  const adicional = ultimoResultado ? formatearCLP(ultimoResultado.adicional) : "";
+  const siete = ultimoResultado ? formatearCLP(ultimoResultado.siete) : "";
 
-📌 Datos del Cliente:
-• Nombre: ${formularioDatos.nombre}
-• RUT: ${formularioDatos.rut}
-• Teléfono: ${formularioDatos.telefono}
-• Correo: ${formularioDatos.correo}
-• Edad Titular: ${formularioDatos.edad}
-• Isapre Actual: ${formularioDatos.isapre}
-• Región: ${formularioDatos.region}
-• Renta Imponible: $${formatearCLP(Number(formularioDatos.renta || 0))}
-• Cargas: ${cargasTexto}
+  // obtenemos nuevamente los planes para poder mencionarlos en el WhatsApp
+  const { plan1, plan2 } = obtenerTopPlanesPorRegion(formularioDatos.region || "");
+  const nombrePlan1 = plan1 ? plan1.plan_individual : "";
+  const nombrePlan2 = plan2 ? plan2.plan_individual : "";
 
-📌 Resultado de Cotización:
-• Valor Final Estimado: ${r.valorFinalUF.toFixed(3)} UF
-• Total en Pesos: $${formatearCLP(r.valorFinal)}
-• 7% del Cliente: $${formatearCLP(r.siete)}
-• Adicional a Pagar: $${formatearCLP(r.adicional)}
-• Personas Consideradas: ${r.personas}
+  const mensaje = 
+    "URGENTE: Nueva cotización Colmena\n\n" +
+    "Datos del cliente:\n" +
+    `Nombre: ${nombre}\n` +
+    `RUT: ${rut}\n` +
+    `Edad: ${edad}\n` +
+    `Isapre actual: ${isapre}\n` +
+    `Región: ${region}\n` +
+    `Renta imponible: $${formatearCLP(renta)}\n` +
+    `Cargas declaradas: ${nCargas}${cargasTexto ? " (" + cargasTexto + ")" : ""}\n\n` +
+    "Resultado estimado de la cotización:\n" +
+    `Valor final simulado: ${valorUF} UF (aprox $${valorPesos})\n` +
+    `7% de renta: $${siete}\n` +
+    `Adicional sobre el 7%: $${adicional}\n\n` +
+    "Planes sugeridos por el sistema:\n" +
+    `1) ${nombrePlan1 || "-"}\n` +
+    `2) ${nombrePlan2 || "-"}\n\n` +
+    "Favor contactar a la brevedad para asesoría.";
 
-📌 Planes Recomendados:
-1️⃣ Plan cercano al 7% (a definir en la asesoría)
-2️⃣ Plan con mayor cobertura (a definir en la asesoría)
+  const url = `https://wa.me/${telDestino}?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, "_blank");
 
-⏳ El cliente está esperando contacto inmediato.
-  `.trim();
-
-  const waUrl = "https://wa.me/56975356696?text=" + encodeURIComponent(mensajeWA);
-  window.open(waUrl, "_blank");
-
-  this.textContent = "✅ Enviado a WhatsApp";
-  this.style.background = "#4ade80";
-
-  // Mostramos sección de Referidos
+  // Mostrar sección de referidos
   document.getElementById("referidos").style.display = "block";
 
   setTimeout(() => {
@@ -453,24 +541,38 @@ document.getElementById("formReferidos").addEventListener("submit", async functi
   const telefonoReferido = document.getElementById("telefonoReferido").value;
   const correoReferido = document.getElementById("correoReferido").value;
 
-  try {
-    const f = new FormData();
-    f.append("entry.1664559901", nombreUsuario);
-    f.append("entry.715463265", nombreReferido);
-    f.append("entry.1382714918", telefonoReferido);
-    f.append("entry.897178414", correoReferido);
-    f.append("entry.178502788", "Referido enviado desde landing");
+  const f = new FormData();
+  f.append("entry.1664559901", nombreUsuario);
+  f.append("entry.715463265", nombreReferido);
+  f.append("entry.1382714918", telefonoReferido);
+  f.append("entry.897178414", correoReferido);
+  f.append("entry.178502788", "Referido enviado desde landing");
 
+  try {
     await fetch(GOOGLE_FORM_REFERIDOS_URL, {
       method:"POST", mode:"no-cors", body:f
     });
 
     document.getElementById("mensajeExitoReferido").style.display="block";
-    document.getElementById("mensajeErrorReferido").style.display="none";
 
     mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, correoReferido);
+
+    // Limpiar formulario principal y volver al inicio
+    const formMain = document.getElementById("mainForm");
+    formMain.reset();
+    formularioDatos = {};
+    ultimoResultado = null;
+    document.getElementById("resultado-preliminar").style.display = "none";
+
+    setTimeout(() => {
+      document.getElementById("formulario").scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+    }, 800);
+
   } catch (err) {
-    document.getElementById("mensajeExitoReferido").style.display="none";
+    console.error("Error enviando referido", err);
     document.getElementById("mensajeErrorReferido").style.display="block";
   }
 });
@@ -481,21 +583,13 @@ document.getElementById("formReferidos").addEventListener("submit", async functi
 
 function mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, correoReferido) {
 
-  const cargasTexto = (formularioDatos.cargas || "").replace(/\n/g,", ");
-
   const html = `
     <div style="background:#1a2a3a;padding:25px;border-radius:15px;margin-bottom:20px;">
       <h3 style="color:#d4af37;margin-top:0;">📋 Solicitud de Asesoría</h3>
-      <p><strong>Nombre:</strong> ${formularioDatos.nombre}</p>
-      <p><strong>Correo:</strong> ${formularioDatos.correo}</p>
-      <p><strong>Teléfono:</strong> ${formularioDatos.telefono}</p>
-      <p><strong>Edad:</strong> ${formularioDatos.edad} años</p>
-      <p><strong>RUT:</strong> ${formularioDatos.rut}</p>
-      <p><strong>Isapre actual:</strong> ${formularioDatos.isapre}</p>
-      <p><strong>Renta:</strong> $${Number(formularioDatos.renta).toLocaleString('es-CL')}</p>
-      <p><strong>Región:</strong> ${formularioDatos.region}</p>
-      ${cargasTexto ? `<p><strong>Cargas:</strong> ${cargasTexto}</p>` : ""}
-      <p style="color:#4ade80;font-weight:bold;margin-top:15px;">✅ Enviado exitosamente</p>
+      <p><strong>Nombre:</strong> ${formularioDatos.nombre || "(ya reseteado para nueva cotización)"}</p>
+      <p><strong>Correo:</strong> ${formularioDatos.correo || ""}</p>
+      <p><strong>Teléfono:</strong> ${formularioDatos.telefono || ""}</p>
+      <p style="color:#4ade80;font-weight:bold;margin-top:15px;">✅ Datos enviados para asesoría</p>
     </div>
 
     <div style="background:#1a2a3a;padding:25px;border-radius:15px;">
@@ -516,25 +610,16 @@ function mostrarResumenFinal(nombreUsuario, nombreReferido, telefonoReferido, co
 
   document.getElementById("resumenContenido").innerHTML = html;
   document.getElementById("resumen-final").style.display = "block";
-
-  setTimeout(() => {
-    document.getElementById("resumen-final").scrollIntoView({
-      behavior:"smooth",
-      block:"start"
-    });
-  }, 400);
-
-  // ⬅ Después de unos segundos, volver al inicio para permitir nueva cotización
-  setTimeout(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, 6000);
 }
 
 /*========================================================
   INICIO
 =========================================================*/
 
-window.addEventListener("load", cargarUF);
+window.addEventListener("load", () => {
+  cargarUF();
+  cargarDataPlanes();
+});
 </script>
 
 </body>
