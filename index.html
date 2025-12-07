@@ -21,14 +21,13 @@
     .small { font-size: 0.9rem; color: #ccc; }
     .row { display:flex; gap:16px; flex-wrap: wrap; }
     .col { flex:1; min-width: 200px; }
-    .uf-note { font-size:0.9rem; color:#cfcfcf; }
     .success-msg { color: #4ade80; margin-top: 12px; font-weight: bold; }
     .error-msg { color: #ff8080; margin-top: 12px; }
 
     /* Resumen cotización */
     .resumen-cotizacion { background: #0d1f2d; border: 1px solid #3a5a7a; border-radius: 10px; padding: 20px; margin-bottom: 25px; }
     .resumen-titulo { color: #d4af37; font-size: 1.3rem; margin-bottom: 15px; font-weight: bold; }
-    .resumen-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+    .resumen-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; }
     .resumen-item { text-align: center; padding: 15px; background: #112233; border-radius: 8px; }
     .resumen-label { font-size: 0.85rem; color: #888; margin-bottom: 5px; }
     .resumen-value { font-size: 1.2rem; font-weight: bold; color: #fff; }
@@ -55,27 +54,20 @@
     .plan-info-value.verde { color: #4ade80; }
     .plan-info-value.amarillo { color: #fbbf24; }
 
-    /* Coberturas por red */
-    .coberturas-section { margin: 20px 0; }
+    /* Coberturas */
+    .coberturas-section { margin: 20px 0; padding: 15px; background: #0d1f2d; border-radius: 10px; }
     .coberturas-title { color: #d4af37; font-size: 1rem; margin-bottom: 10px; }
-    .coberturas-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-    .cobertura-tag { background: #1a3a5a; padding: 8px 12px; border-radius: 20px; font-size: 0.85rem; }
-    .cobertura-tag span { color: #4ade80; font-weight: bold; }
+    .coberturas-texto { font-size: 0.9rem; line-height: 1.6; color: #ccc; }
 
-    /* Clínicas */
+    /* Clínicas con tabs */
     .clinicas-section { margin-top: 25px; padding-top: 20px; border-top: 1px solid #3a5a7a; }
-    .clinicas-title { color: #d4af37; font-size: 1.1rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
-    .cobertura-badge { display: inline-block; background: #4ade80; color: #0a1a2a; padding: 4px 12px; border-radius: 15px; font-weight: bold; font-size: 0.85rem; }
-    
-    /* Tabs para grupos */
+    .clinicas-title { color: #d4af37; font-size: 1.1rem; margin-bottom: 15px; }
     .grupos-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
     .grupo-tab { background: #1a2a3a; border: 1px solid #3a5a7a; color: #ccc; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s; }
     .grupo-tab:hover { border-color: #d4af37; color: #d4af37; }
     .grupo-tab.active { background: #d4af37; color: #0a1a2a; border-color: #d4af37; font-weight: bold; }
-    
-    /* Tabla de clínicas */
     .clinicas-tabla { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    .clinicas-tabla th { background: #1a3a5a; color: #d4af37; padding: 12px 15px; text-align: left; font-weight: 600; }
+    .clinicas-tabla th { background: #1a3a5a; color: #d4af37; padding: 12px 15px; text-align: left; }
     .clinicas-tabla td { padding: 10px 15px; border-bottom: 1px solid #2a3a4a; }
     .clinicas-tabla tr:nth-child(even) { background: #0d1f2d; }
     .clinicas-tabla tr:nth-child(odd) { background: #112233; }
@@ -152,22 +144,22 @@
 
     <select name="region" id="region" required>
       <option value="">Selecciona tu Región</option>
-      <option>Región de Arica y Parinacota</option>
-      <option>Región de Tarapacá</option>
-      <option>Región de Antofagasta</option>
-      <option>Región de Atacama</option>
-      <option>Región de Coquimbo</option>
-      <option>Región de Valparaíso</option>
-      <option>Región Metropolitana</option>
-      <option>Región de O'Higgins</option>
-      <option>Región del Maule</option>
-      <option>Región de Ñuble</option>
-      <option>Región del Bío-Bío</option>
-      <option>Región de La Araucanía</option>
-      <option>Región de Los Ríos</option>
-      <option>Región de Los Lagos</option>
-      <option>Región de Aysén</option>
-      <option>Región de Magallanes</option>
+      <option value="Arica y Parinacota">Región de Arica y Parinacota</option>
+      <option value="Tarapacá">Región de Tarapacá</option>
+      <option value="Antofagasta">Región de Antofagasta</option>
+      <option value="Atacama">Región de Atacama</option>
+      <option value="Coquimbo">Región de Coquimbo</option>
+      <option value="Valparaíso">Región de Valparaíso</option>
+      <option value="Metropolitana">Región Metropolitana</option>
+      <option value="O'Higgins">Región de O'Higgins</option>
+      <option value="Maule">Región del Maule</option>
+      <option value="Ñuble">Región de Ñuble</option>
+      <option value="Bío-Bío">Región del Bío-Bío</option>
+      <option value="La Araucanía">Región de La Araucanía</option>
+      <option value="Los Ríos">Región de Los Ríos</option>
+      <option value="Los Lagos">Región de Los Lagos</option>
+      <option value="Aysén">Región de Aysén</option>
+      <option value="Magallanes">Región de Magallanes</option>
     </select>
 
     <textarea name="mensaje" id="mensaje" placeholder="Mensaje adicional (opcional)" rows="2"></textarea>
@@ -179,7 +171,7 @@
 
 <section class="card">
   <h2 class="gold">UF del día</h2>
-  <p class="uf-note">UF: <span id="ufValor">cargando…</span> — Fecha: <span id="ufFecha">-</span></p>
+  <p class="small">UF: <span id="ufValor">cargando…</span> — Fecha: <span id="ufFecha">-</span></p>
 </section>
 
 <!-- RESULTADO -->
@@ -232,12 +224,6 @@
   </div>
 </section>
 
-<!-- RESUMEN FINAL -->
-<section id="resumen-final" class="card" style="display:none">
-  <h2 class="gold">✅ Resumen de tus Solicitudes</h2>
-  <div id="resumenContenido"></div>
-</section>
-
 <a class="whatsapp" href="https://wa.me/56990701837" target="_blank">Contactar por WhatsApp</a>
 
 <footer style="text-align:center; padding:30px; color:#666; font-size:0.85rem;">
@@ -270,8 +256,44 @@ const CALLMEBOT_PHONE = '56975356696';
 const CALLMEBOT_APIKEY = '7360481';
 
 // URLs de datos
-const URL_PLANES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/planes_con_redes.json';
+const URL_PLANES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/planes_completos.json';
 const URL_REDES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/redes_clinicas.json';
+
+/*========================================================
+  MAPEO DE REGIONES A ZONAS
+=========================================================*/
+const REGION_A_ZONA = {
+  'Arica y Parinacota': 'NORTE',
+  'Tarapacá': 'NORTE',
+  'Antofagasta': 'NORTE',
+  'Atacama': 'NORTE',
+  'Coquimbo': 'NORTE',
+  'Valparaíso': 'CENTRO',
+  "O'Higgins": 'CENTRO',
+  'Maule': 'CENTRO',
+  'Metropolitana': 'SANTIAGO',
+  'Ñuble': 'SUR',
+  'Bío-Bío': 'SUR',
+  'La Araucanía': 'SUR',
+  'Los Ríos': 'SUR',
+  'Los Lagos': 'SUR',
+  'Aysén': 'SUR',
+  'Magallanes': 'SUR'
+};
+
+/*========================================================
+  TABLA DE FACTORES DE EDAD CORRECTA
+=========================================================*/
+function obtenerFactor(edad) {
+  if (edad < 2) return 0.0;      // Menores de 2 no pagan
+  if (edad <= 18) return 0.6;    // 2-18 años
+  if (edad <= 25) return 1.0;    // 19-25 años
+  if (edad <= 35) return 1.2;    // 26-35 años
+  if (edad <= 45) return 1.3;    // 36-45 años
+  if (edad <= 55) return 1.5;    // 46-55 años
+  if (edad <= 65) return 1.8;    // 56-65 años
+  return 2.4;                     // 66+ años
+}
 
 /*========================================================
   VARIABLES GLOBALES
@@ -313,28 +335,22 @@ async function cargarRedesClincias() {
   try {
     const r = await fetch(URL_REDES);
     REDES_CLINICAS = await r.json();
-    console.log('✅ Redes de clínicas cargadas:', Object.keys(REDES_CLINICAS));
+    console.log('✅ Redes de clínicas cargadas');
   } catch (err) {
     console.error('Error cargando redes:', err);
   }
 }
 
 /*========================================================
-  CÁLCULOS
+  FORMATEO
 =========================================================*/
-function obtenerFactor(edad) {
-  if (edad < 2) return 0.0;
-  if (edad <= 18) return 0.6;
-  if (edad <= 35) return 1.0;
-  if (edad <= 45) return 1.5;
-  if (edad <= 59) return 2.0;
-  return 2.4;
-}
-
 function formatearCLP(n) {
   return (n || 0).toLocaleString("es-CL");
 }
 
+/*========================================================
+  CÁLCULO DEL VALOR DEL PLAN
+=========================================================*/
 function calcularValorPlan(pbUF, edadTitular, edadesCargas) {
   const uf = window.__UF_VALOR || 39700;
   
@@ -347,7 +363,7 @@ function calcularValorPlan(pbUF, edadTitular, edadesCargas) {
   const valorPlanCLP = Math.round(valorPlanUF * uf);
   
   // GES: 0.77 UF por persona >= 2 años
-  let personasGES = 1; // titular
+  let personasGES = edadTitular >= 2 ? 1 : 0;
   edadesCargas.forEach(e => { if (e >= 2) personasGES++; });
   const gesUF = 0.77 * personasGES;
   const gesCLP = Math.round(gesUF * uf);
@@ -363,27 +379,34 @@ function calcularValorPlan(pbUF, edadTitular, edadesCargas) {
   SELECCIÓN DE PLANES
   Regla: Plan debe ser >= 95% del 7% y el más cercano
 =========================================================*/
-function seleccionarPlanes(sieteUF, segmento, edadTitular, edadesCargas) {
+function seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas) {
   const uf = window.__UF_VALOR || 39700;
   const minimo95 = sieteUF * 0.95;
   
-  // Filtrar planes del segmento
-  const planesSegmento = PLANES.filter(p => p.segmento === segmento);
+  // Filtrar planes de la zona (o LIBRE_ELECCION que aplica a todas)
+  const planesZona = PLANES.filter(p => 
+    p.zona === zona || p.zona === 'LIBRE_ELECCION'
+  );
+  
+  console.log(`Buscando planes para zona: ${zona}, encontrados: ${planesZona.length}`);
   
   // Para cada plan, calcular su valor real según cargas
-  const planesConValor = planesSegmento.map(p => {
+  const planesConValor = planesZona.map(p => {
     const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
     return {
       ...p,
       valorCalculadoUF: calc.totalUF,
       valorCalculadoCLP: calc.totalCLP,
       gesUF: calc.gesUF,
-      gesCLP: calc.gesCLP
+      gesCLP: calc.gesCLP,
+      sumaFactores: calc.sumaFactores
     };
   });
   
   // Filtrar planes >= 95% del 7%
   const planesValidos = planesConValor.filter(p => p.valorCalculadoUF >= minimo95);
+  
+  console.log(`Planes que cumplen >= 95% del 7% (${minimo95.toFixed(2)} UF): ${planesValidos.length}`);
   
   // Ordenar por cercanía al 7%
   planesValidos.sort((a, b) => {
@@ -395,6 +418,13 @@ function seleccionarPlanes(sieteUF, segmento, edadTitular, edadesCargas) {
   // Tomar los 2 mejores
   const plan1 = planesValidos[0] || null;
   const plan2 = planesValidos[1] || null;
+  
+  if (plan1) {
+    console.log(`Plan 1: ${plan1.plan} - ${plan1.valorCalculadoUF.toFixed(2)} UF`);
+  }
+  if (plan2) {
+    console.log(`Plan 2: ${plan2.plan} - ${plan2.valorCalculadoUF.toFixed(2)} UF`);
+  }
   
   return { plan1, plan2 };
 }
@@ -414,23 +444,22 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP) {
   const cardClass = esPrincipal ? '' : 'secundario';
   const badgeText = esPrincipal ? '✨ PLAN RECOMENDADO 1' : '🔷 PLAN RECOMENDADO 2';
   
-  // Coberturas por red
+  // Hospitalización/coberturas
   let coberturasHTML = '';
-  if (plan.coberturas_redes) {
-    const redes = Object.entries(plan.coberturas_redes)
-      .sort((a, b) => b[1] - a[1])
-      .map(([red, pct]) => `<span class="cobertura-tag">${red}: <span>${pct}%</span></span>`)
-      .join('');
+  if (plan.hospitalizacion) {
     coberturasHTML = `
       <div class="coberturas-section">
-        <div class="coberturas-title">📊 Cobertura Hospitalaria por Red</div>
-        <div class="coberturas-grid">${redes}</div>
+        <div class="coberturas-title">📊 Cobertura Hospitalaria</div>
+        <div class="coberturas-texto">${plan.hospitalizacion.replace(/\\n/g, '<br>')}</div>
       </div>
     `;
   }
   
-  // Tabs de clínicas
-  const clinicasHTML = generarHTMLClinicas(plan, numero);
+  // Clínicas si tiene coberturas_redes
+  let clinicasHTML = '';
+  if (plan.coberturas_redes && Object.keys(REDES_CLINICAS).length > 0) {
+    clinicasHTML = generarHTMLClinicas(plan, numero);
+  }
   
   return `
     <div class="plan-card ${cardClass}">
@@ -459,7 +488,7 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP) {
         </div>
         <div class="plan-info-item">
           <div class="plan-info-label">Tope anual</div>
-          <div class="plan-info-value">${formatearCLP(plan.tope_anual_uf)} UF</div>
+          <div class="plan-info-value">${formatearCLP(plan.tope_anual_uf || 7000)} UF</div>
         </div>
       </div>
       
@@ -473,9 +502,7 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP) {
   GENERAR HTML DE CLÍNICAS CON TABS
 =========================================================*/
 function generarHTMLClinicas(plan, numeroPlan) {
-  if (!plan.coberturas_redes || Object.keys(REDES_CLINICAS).length === 0) {
-    return '';
-  }
+  if (!plan.coberturas_redes) return '';
   
   const grupos = Object.keys(plan.coberturas_redes).sort();
   const planId = `plan${numeroPlan}`;
@@ -484,7 +511,7 @@ function generarHTMLClinicas(plan, numeroPlan) {
   let tabsHTML = grupos.map((g, i) => {
     const activeClass = i === 0 ? 'active' : '';
     const cobertura = plan.coberturas_redes[g];
-    return `<button class="grupo-tab ${activeClass}" onclick="mostrarGrupo('${planId}', '${g}')">${g} (${cobertura}%)</button>`;
+    return `<button type="button" class="grupo-tab ${activeClass}" onclick="mostrarGrupo('${planId}', '${g}')">${g} (${cobertura}%)</button>`;
   }).join('');
   
   // Contenido de cada grupo
@@ -510,9 +537,7 @@ function generarHTMLClinicas(plan, numeroPlan) {
   
   return `
     <div class="clinicas-section">
-      <div class="clinicas-title">
-        🏨 Red de Clínicas <span class="cobertura-badge">Con Cobertura</span>
-      </div>
+      <div class="clinicas-title">🏨 Red de Clínicas</div>
       <div class="grupos-tabs">${tabsHTML}</div>
       ${contenidoHTML}
     </div>
@@ -525,19 +550,24 @@ function mostrarGrupo(planId, grupo) {
     el.classList.remove('active');
   });
   
-  // Desactivar todos los tabs
-  const planCard = document.getElementById(`${planId}-${grupo}`).closest('.plan-card');
-  planCard.querySelectorAll('.grupo-tab').forEach(tab => tab.classList.remove('active'));
+  // Desactivar todos los tabs del plan
+  const grupoContent = document.getElementById(`${planId}-${grupo}`);
+  if (grupoContent) {
+    const planCard = grupoContent.closest('.plan-card');
+    if (planCard) {
+      planCard.querySelectorAll('.grupo-tab').forEach(tab => tab.classList.remove('active'));
+      
+      // Activar el tab correspondiente
+      planCard.querySelectorAll('.grupo-tab').forEach(tab => {
+        if (tab.textContent.startsWith(grupo)) {
+          tab.classList.add('active');
+        }
+      });
+    }
+  }
   
   // Activar el seleccionado
   document.getElementById(`${planId}-${grupo}`).classList.add('active');
-  
-  // Activar el tab correspondiente
-  planCard.querySelectorAll('.grupo-tab').forEach(tab => {
-    if (tab.textContent.startsWith(grupo)) {
-      tab.classList.add('active');
-    }
-  });
 }
 
 /*========================================================
@@ -594,15 +624,19 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
   const sieteCLP = Math.round(renta * 0.07);
   const sieteUF = sieteCLP / uf;
   
-  // Determinar segmento
-  const segmento = formularioDatos.region.toLowerCase().includes('metropolitana') ? 'SANTIAGO' : 'REGIONALES';
+  // Determinar zona según región
+  const zona = REGION_A_ZONA[formularioDatos.region] || 'SANTIAGO';
+  
+  console.log(`Región: ${formularioDatos.region} → Zona: ${zona}`);
+  console.log(`7%: $${formatearCLP(sieteCLP)} (${sieteUF.toFixed(2)} UF)`);
+  console.log(`Factor titular (${edadTitular} años): ${obtenerFactor(edadTitular)}`);
   
   // Seleccionar planes
-  const { plan1, plan2 } = seleccionarPlanes(sieteUF, segmento, edadTitular, edadesCargas);
+  const { plan1, plan2 } = seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas);
   
   // Guardar resultado
   ultimoResultado = {
-    sieteCLP, sieteUF, edadesCargas, cargasTexto, segmento, plan1, plan2
+    sieteCLP, sieteUF, edadesCargas, cargasTexto, zona, plan1, plan2
   };
 
   // ENVIAR A GOOGLE FORMS
@@ -634,7 +668,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
 
 👤 ${formularioDatos.nombre}
 📞 ${formularioDatos.telefono}
-📍 ${formularioDatos.region}
+📍 ${formularioDatos.region} (${zona})
 💰 Renta: $${formatearCLP(renta)}
 👥 Cargas: ${edadesCargas.length}
 
@@ -662,8 +696,9 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
           <div class="resumen-uf">${edadesCargas.length > 0 ? '(' + edadesCargas.join(', ') + ' años)' : 'Sin cargas'}</div>
         </div>
         <div class="resumen-item">
-          <div class="resumen-label">Región</div>
-          <div class="resumen-value" style="font-size:0.95rem;">${segmento}</div>
+          <div class="resumen-label">Zona</div>
+          <div class="resumen-value" style="font-size:0.95rem;">${zona}</div>
+          <div class="resumen-uf">${formularioDatos.region}</div>
         </div>
       </div>
     </div>
@@ -716,7 +751,7 @@ document.getElementById("btnAsesoria").addEventListener("click", function() {
 • Teléfono: ${formularioDatos.telefono}
 • Edad: ${formularioDatos.edad} años
 • Isapre actual: ${formularioDatos.isapre}
-• Región: ${formularioDatos.region}
+• Región: ${formularioDatos.region} (${r.zona})
 • Renta: $${formatearCLP(Number(formularioDatos.renta))}
 • Cargas: ${r.edadesCargas.length}${r.cargasTexto ? ' (' + r.cargasTexto + ')' : ''}
 
