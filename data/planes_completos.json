@@ -1,0 +1,2541 @@
+[
+  {
+    "plan": "COLMENA STAR 1254040",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.43,
+    "hospitalizacion": "50% Hospital del Profesor\n40% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera.",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1254050",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.47,
+    "hospitalizacion": "50% Hospital del Profesor\n40% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1254060",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.5,
+    "hospitalizacion": "50% Hospital del Profesor\n40% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2254040",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.52,
+    "hospitalizacion": "60% Hospital del Profesor, Clínica Cordillera.\n40% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1254070",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.53,
+    "hospitalizacion": "50% Hospital del Profesor\n40% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2254540",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.54,
+    "hospitalizacion": "65% Hospital del Profesor, Clínica Cordillera.\n45% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1254080",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.55,
+    "hospitalizacion": "50% Hospital del Profesor\n40% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1255050",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.55,
+    "hospitalizacion": "60% Hospital del Profesor\n50% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2254045",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.55,
+    "hospitalizacion": "60% Hospital del Profesor, Clínica Cordillera.\n40% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2254545",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.57,
+    "hospitalizacion": "65% Hospital del Profesor, Clínica Cordillera.\n45% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2255040",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.57,
+    "hospitalizacion": "70% Hospital del Profesor, Clínica Cordillera.\n50% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1255060",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.58,
+    "hospitalizacion": "60% Hospital del Profesor\n50% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2254050",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.58,
+    "hospitalizacion": "60% Hospital del Profesor, Clínica Cordillera.\n40% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2244040",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.58,
+    "hospitalizacion": "%G41=50%  %G42 =40%  %G43=30% %G44=25%  %G45=25%  %G46=25%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2255045",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.59,
+    "hospitalizacion": "70% Hospital del Profesor, Clínica Cordillera.\n50% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2254550",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.6,
+    "hospitalizacion": "65% Hospital del Profesor, Clínica Cordillera.\n45% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1255070",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.61,
+    "hospitalizacion": "60% Hospital del Profesor\n50% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1255080",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.63,
+    "hospitalizacion": "60% Hospital del Profesor\n50% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1256050",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.63,
+    "hospitalizacion": "70% Hospital del Profesor\n60% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2255050",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.63,
+    "hospitalizacion": "70% Hospital del Profesor, Clínica Cordillera.\n50% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1254040",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.63,
+    "hospitalizacion": "50% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n40% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1256060",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.66,
+    "hospitalizacion": "70% Hospital del Profesor\n60% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2244050",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.66,
+    "hospitalizacion": "%G41=50%  %G42 =40%  %G43=30% %G44=25%  %G45=25%  %G46=25%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1254540",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.67,
+    "hospitalizacion": "55% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n45% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1256070",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.69,
+    "hospitalizacion": "70% Hospital del Profesor\n60% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1254045",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.69,
+    "hospitalizacion": "50% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n40% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2245040",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.69,
+    "hospitalizacion": "%G41=60%  %G42 =50%  %G43=40% %G44=30%  %G45=25%  %G46=25%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1256080",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.71,
+    "hospitalizacion": "70% Hospital del Profesor\n60% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1257050",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.71,
+    "hospitalizacion": "80% Hospital del Profesor\n70% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2256050",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.71,
+    "hospitalizacion": "80% Hospital del Profesor, Clínica Cordillera.\n60% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1255040",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.71,
+    "hospitalizacion": "60% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n50% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2255060",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.73,
+    "hospitalizacion": "70% Hospital del Profesor, Clínica Cordillera.\n50% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1254545",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.73,
+    "hospitalizacion": "55% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n45% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1257060",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.75,
+    "hospitalizacion": "80% Hospital del Profesor\n70% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1257070",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.77,
+    "hospitalizacion": "80% Hospital del Profesor\n70% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1255050",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.77,
+    "hospitalizacion": "60% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n50% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2257050",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.79,
+    "hospitalizacion": "90% Hospital del Profesor, Clínica Cordillera.\n70% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1257080",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.8,
+    "hospitalizacion": "80% Hospital del Profesor\n70% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2256060",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.8,
+    "hospitalizacion": "80% Hospital del Profesor, Clínica Cordillera.\n60% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2255070",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.81,
+    "hospitalizacion": "70% Hospital del Profesor, Clínica Cordillera.\n50% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2245050",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.82,
+    "hospitalizacion": "%G41=60%  %G42 =50%  %G43=40% %G44=30%  %G45=25%  %G46=25%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1258060",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.83,
+    "hospitalizacion": "90% Hospital del Profesor\n80% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1258070",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.86,
+    "hospitalizacion": "90% Hospital del Profesor\n80% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2255080",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.87,
+    "hospitalizacion": "70% Hospital del Profesor, Clínica Cordillera.\n50% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2257060",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.87,
+    "hospitalizacion": "90% Hospital del Profesor, Clínica Cordillera.\n70% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1258080",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.88,
+    "hospitalizacion": "90% Hospital del Profesor\n80% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2256070",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.88,
+    "hospitalizacion": "80% Hospital del Profesor, Clínica Cordillera.\n60% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2245060",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.88,
+    "hospitalizacion": "%G41=60%  %G42 =50%  %G43=40% %G44=30%  %G45=25%  %G46=25%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2258050",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.9,
+    "hospitalizacion": "100% Hospital del Profesor, Clínica Cordillera.\n80% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Sant",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 1224",
+    "zona": "SUR",
+    "pb_uf": 1.9,
+    "hospitalizacion": "70",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 70,
+      "G42": 50,
+      "G43": 40,
+      "G44": 30
+    }
+  },
+  {
+    "plan": "COLMENA STAR 1259060",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.91,
+    "hospitalizacion": "100% Hospital del Profesor\n90% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 2224",
+    "zona": "SUR",
+    "pb_uf": 1.93,
+    "hospitalizacion": "70",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 70,
+      "G42": 50,
+      "G43": 40,
+      "G44": 30
+    }
+  },
+  {
+    "plan": "COLMENA STAR 1259070",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.94,
+    "hospitalizacion": "100% Hospital del Profesor\n90% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2256080",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.94,
+    "hospitalizacion": "80% Hospital del Profesor, Clínica Cordillera.\n60% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1256050",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.94,
+    "hospitalizacion": "70% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n60% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 12510050",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.95,
+    "hospitalizacion": "100% Hospital del Profesor, Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1255060",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.95,
+    "hospitalizacion": "60% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n50% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2245070",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.95,
+    "hospitalizacion": "%G41=60%  %G42 =50%  %G43=40% %G44=30%  %G45=25%  %G46=25%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 1259080",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.96,
+    "hospitalizacion": "100% Hospital del Profesor\n90% Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2257070",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.96,
+    "hospitalizacion": "90% Hospital del Profesor, Clínica Cordillera.\n70% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 3224",
+    "zona": "SUR",
+    "pb_uf": 1.96,
+    "hospitalizacion": "70",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 70,
+      "G42": 50,
+      "G43": 40,
+      "G44": 30
+    }
+  },
+  {
+    "plan": "COLMENA STAR 12510060",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.98,
+    "hospitalizacion": "100% Hospital del Profesor, Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1254040",
+    "zona": "CENTRO",
+    "pb_uf": 1.98,
+    "hospitalizacion": "60% Clínica Los Carrera, Clínica Los Leones\n50% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n40% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provide",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 4224",
+    "zona": "SUR",
+    "pb_uf": 1.98,
+    "hospitalizacion": "80",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 80,
+      "G42": 60,
+      "G43": 50,
+      "G44": 30
+    }
+  },
+  {
+    "plan": "COLMENA SILVER 2258060",
+    "zona": "SANTIAGO",
+    "pb_uf": 1.99,
+    "hospitalizacion": "100% Hospital del Profesor, Clínica Cordillera.\n80% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Sant",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1256060",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.0,
+    "hospitalizacion": "70% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n60% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2245080",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.0,
+    "hospitalizacion": "%G41=60%  %G42 =50%  %G43=40% %G44=30%  %G45=25%  %G46=25%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 12510070",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.01,
+    "hospitalizacion": "100% Hospital del Profesor, Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1254040",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.02,
+    "hospitalizacion": "60% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n50% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (L",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA STAR 12510080",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.03,
+    "hospitalizacion": "100% Hospital del Profesor, Clínica Dávila Vespucio, Clínica RedSalud Santiago, Clínica Bupa Santiago, Hospital Clínico Universidad de Chile, Clínica Cordillera",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 5224",
+    "zona": "SUR",
+    "pb_uf": 2.03,
+    "hospitalizacion": "80",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 80,
+      "G42": 60,
+      "G43": 50,
+      "G44": 30
+    }
+  },
+  {
+    "plan": "COLMENA BLUE 1255070",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.04,
+    "hospitalizacion": "60% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n50% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2246050",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.04,
+    "hospitalizacion": "%G41=70%  %G42 =60%  %G43=50% %G44=40%  %G45=30%  %G46=30%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1254050",
+    "zona": "CENTRO",
+    "pb_uf": 2.05,
+    "hospitalizacion": "60% Clínica Los Carrera, Clínica Los Leones\n50% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n40% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provide",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2257080",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.06,
+    "hospitalizacion": "90% Hospital del Profesor, Clínica Cordillera.\n70% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santi",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2259050",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.06,
+    "hospitalizacion": "100% Hospital del Profesor, Clínica Cordillera, \n90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud San",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 6224",
+    "zona": "SUR",
+    "pb_uf": 2.08,
+    "hospitalizacion": "80",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 80,
+      "G42": 60,
+      "G43": 50,
+      "G44": 30
+    }
+  },
+  {
+    "plan": "COLMENA BLUE 1257050",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.1,
+    "hospitalizacion": "80% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n70% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 1125",
+    "zona": "NORTE",
+    "pb_uf": 2.11,
+    "hospitalizacion": "50% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n40% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 7224",
+    "zona": "SUR",
+    "pb_uf": 2.11,
+    "hospitalizacion": "90",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 90,
+      "G42": 70,
+      "G43": 60,
+      "G44": 40
+    }
+  },
+  {
+    "plan": "COLMENA PLUS 2246060",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.12,
+    "hospitalizacion": "%G41=70%  %G42 =60%  %G43=50% %G44=40%  %G45=30%  %G46=30%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1256070",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.15,
+    "hospitalizacion": "70% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n60% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1257060",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.15,
+    "hospitalizacion": "80% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n70% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2246070",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.15,
+    "hospitalizacion": "%G41=70%  %G42 =60%  %G43=50% %G44=40%  %G45=30%  %G46=30%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1254060",
+    "zona": "CENTRO",
+    "pb_uf": 2.15,
+    "hospitalizacion": "60% Clínica Los Carrera, Clínica Los Leones\n50% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n40% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provide",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1255080",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.16,
+    "hospitalizacion": "60% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n50% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2259060",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.17,
+    "hospitalizacion": "100% Hospital del Profesor, Clínica Cordillera, \n90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud San",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 22510050",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.18,
+    "hospitalizacion": "100% Hospital del Profesor, Clínica Cordillera, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santiago",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2247050",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.18,
+    "hospitalizacion": "%G41=80%  %G42 =70%  %G43=60% %G44=50%  %G45=30%  %G46=30%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1255050",
+    "zona": "CENTRO",
+    "pb_uf": 2.18,
+    "hospitalizacion": "70% Clínica Los Carrera, Clínica Los Leones\n60% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n50% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provide",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1254050",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.19,
+    "hospitalizacion": "60% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n50% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (L",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 8224",
+    "zona": "SUR",
+    "pb_uf": 2.19,
+    "hospitalizacion": "90",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 90,
+      "G42": 70,
+      "G43": 60,
+      "G44": 40
+    }
+  },
+  {
+    "plan": "COLMENA SILVER 2258070",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.2,
+    "hospitalizacion": "100% Hospital del Profesor, Clínica Cordillera.\n80% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Sant",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2246080",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.2,
+    "hospitalizacion": "%G41=70%  %G42 =60%  %G43=50% %G44=40%  %G45=30%  %G46=30%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1254040",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.21,
+    "hospitalizacion": "50% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n40% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1257070",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.22,
+    "hospitalizacion": "80% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n70% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1258050",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.22,
+    "hospitalizacion": "90% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n80% Clínica Indisa (Providencia y Maipú),  Clínica Dávila",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX 2245050",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 2.22,
+    "hospitalizacion": "60",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 60,
+      "G42": 50,
+      "G43": 40,
+      "G44": 30,
+      "G45": 25,
+      "G46": 25
+    }
+  },
+  {
+    "plan": "COLMENA MAX NORTE 2125",
+    "zona": "NORTE",
+    "pb_uf": 2.22,
+    "hospitalizacion": "50% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n40% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 9224",
+    "zona": "SUR",
+    "pb_uf": 2.25,
+    "hospitalizacion": "90",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 90,
+      "G42": 70,
+      "G43": 60,
+      "G44": 40
+    }
+  },
+  {
+    "plan": "COLMENA SILVER 2259070",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.26,
+    "hospitalizacion": "100% Hospital del Profesor, Clínica Cordillera, \n90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud San",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2258080",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.27,
+    "hospitalizacion": "100% Hospital del Profesor, Clínica Cordillera.\n80% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Sant",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1256080",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.28,
+    "hospitalizacion": "70% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n60% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1254070",
+    "zona": "CENTRO",
+    "pb_uf": 2.28,
+    "hospitalizacion": "60% Clínica Los Carrera, Clínica Los Leones\n50% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n40% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provide",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 10224",
+    "zona": "SUR",
+    "pb_uf": 2.28,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G42": 80,
+      "G43": 70,
+      "G44": 50
+    }
+  },
+  {
+    "plan": "COLMENA SILVER 22510060",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.29,
+    "hospitalizacion": "100% Hospital del Profesor, Clínica Cordillera, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santiago",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1254540",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.29,
+    "hospitalizacion": "55% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n45% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1258060",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.3,
+    "hospitalizacion": "90% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n80% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX 2246050",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 2.3,
+    "hospitalizacion": "70",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 70,
+      "G42": 60,
+      "G43": 50,
+      "G44": 40,
+      "G45": 30,
+      "G46": 30
+    }
+  },
+  {
+    "plan": "MAX CENTRO PF 1255060",
+    "zona": "CENTRO",
+    "pb_uf": 2.3,
+    "hospitalizacion": "70% Clínica Los Carrera, Clínica Los Leones\n60% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n50% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provide",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1256050",
+    "zona": "CENTRO",
+    "pb_uf": 2.31,
+    "hospitalizacion": "80% Clínica Los Carrera, Clínica Los Leones\n70% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n60% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provide",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 3125",
+    "zona": "NORTE",
+    "pb_uf": 2.34,
+    "hospitalizacion": "50% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n40% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1257080",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.35,
+    "hospitalizacion": "80% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n70% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 11224",
+    "zona": "SUR",
+    "pb_uf": 2.35,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G42": 80,
+      "G43": 70,
+      "G44": 50
+    }
+  },
+  {
+    "plan": "COLMENA ELITE 1255050",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.36,
+    "hospitalizacion": "70% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n60% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (L",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1254060",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.37,
+    "hospitalizacion": "60% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n50% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (L",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1255040",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.37,
+    "hospitalizacion": "60% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n50% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1256060",
+    "zona": "CENTRO",
+    "pb_uf": 2.39,
+    "hospitalizacion": "80% Clínica Los Carrera, Clínica Los Leones\n70% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n60% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provide",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 2259080",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.4,
+    "hospitalizacion": "100% Hospital del Profesor, Clínica Cordillera, \n90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud San",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 22510070",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.4,
+    "hospitalizacion": "100% Hospital del Profesor, Clínica Cordillera, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santiago",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX 2246060",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 2.4,
+    "hospitalizacion": "70",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 70,
+      "G42": 60,
+      "G43": 50,
+      "G44": 40,
+      "G45": 30,
+      "G46": 30
+    }
+  },
+  {
+    "plan": "MAX CENTRO PF 1255070",
+    "zona": "CENTRO",
+    "pb_uf": 2.4,
+    "hospitalizacion": "70% Clínica Los Carrera, Clínica Los Leones\n60% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n50% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provide",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1258070",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.42,
+    "hospitalizacion": "90% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n80% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1259050",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.42,
+    "hospitalizacion": "90% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile, Clínica Dávila Vespucio, Clínica Dávila Recoleta, Clínica",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1255050",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.43,
+    "hospitalizacion": "60% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n50% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 6125",
+    "zona": "NORTE",
+    "pb_uf": 2.44,
+    "hospitalizacion": "60% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n50% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1257050",
+    "zona": "CENTRO",
+    "pb_uf": 2.44,
+    "hospitalizacion": "90% Clínica Los Carrera, Clínica Los Leones\n80% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n70% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provide",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 4125",
+    "zona": "NORTE",
+    "pb_uf": 2.45,
+    "hospitalizacion": "50% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n40% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA SILVER 22510080",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.46,
+    "hospitalizacion": "100% Hospital del Profesor, Clínica Cordillera, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Indisa (Maipú), Clínica BUPA Santiago, Clínica RedSalud Providencia, Clínica RedSalud Santiago",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1258080",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.47,
+    "hospitalizacion": "90% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile.\n80% Clínica Indisa (Providencia y Maipú), Clínica Dávila ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX 2247050",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 2.5,
+    "hospitalizacion": "80",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 80,
+      "G42": 70,
+      "G43": 60,
+      "G44": 50,
+      "G45": 30,
+      "G46": 30
+    }
+  },
+  {
+    "plan": "MAX CENTRO PF 1254080",
+    "zona": "CENTRO",
+    "pb_uf": 2.5,
+    "hospitalizacion": "60% Clínica Los Carrera, Clínica Los Leones\n50% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n40% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provide",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 12224",
+    "zona": "SUR",
+    "pb_uf": 2.5,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G42": 80,
+      "G43": 70,
+      "G44": 50
+    }
+  },
+  {
+    "plan": "COLMENA BLUE 1259060",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.52,
+    "hospitalizacion": "90% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile, Clínica Dávila Vespucio, Clínica Dávila Recoleta, Clínica",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1256050",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.53,
+    "hospitalizacion": "80% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n70% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (L",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 5125",
+    "zona": "NORTE",
+    "pb_uf": 2.53,
+    "hospitalizacion": "50% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n40% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1256070",
+    "zona": "CENTRO",
+    "pb_uf": 2.53,
+    "hospitalizacion": "80% Clínica Los Carrera, Clínica Los Leones\n70% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n60% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provide",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1254070",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.54,
+    "hospitalizacion": "60% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n50% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (L",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1255060",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.54,
+    "hospitalizacion": "70% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n60% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (L",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 7125",
+    "zona": "NORTE",
+    "pb_uf": 2.55,
+    "hospitalizacion": "60% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n50% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1258050",
+    "zona": "CENTRO",
+    "pb_uf": 2.55,
+    "hospitalizacion": "100% Clínica Los Carrera, Clínica Los Leones\n90% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n80% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provid",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 13224",
+    "zona": "SUR",
+    "pb_uf": 2.55,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G42": 90,
+      "G43": 80,
+      "G44": 50
+    }
+  },
+  {
+    "plan": "MAX CENTRO PF 1257060",
+    "zona": "CENTRO",
+    "pb_uf": 2.57,
+    "hospitalizacion": "90% Clínica Los Carrera, Clínica Los Leones\n80% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n70% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provide",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 10125",
+    "zona": "NORTE",
+    "pb_uf": 2.59,
+    "hospitalizacion": "70% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n60% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX 2247060",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 2.6,
+    "hospitalizacion": "80",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 80,
+      "G42": 70,
+      "G44": 60,
+      "G45": 50,
+      "G46": 35
+    }
+  },
+  {
+    "plan": "MAX CENTRO PF 1255080",
+    "zona": "CENTRO",
+    "pb_uf": 2.61,
+    "hospitalizacion": "70% Clínica Los Carrera, Clínica Los Leones\n60% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n50% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provide",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1259070",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.62,
+    "hospitalizacion": "90% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile, Clínica Dávila Vespucio, Clínica Dávila Recoleta, Clínica",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 12510050",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.62,
+    "hospitalizacion": "100% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile, Clínica Dávila Vespucio, Clínica Dávila Recoleta, Clínic",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 8125",
+    "zona": "NORTE",
+    "pb_uf": 2.67,
+    "hospitalizacion": "60% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n50% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1258060",
+    "zona": "CENTRO",
+    "pb_uf": 2.68,
+    "hospitalizacion": "100% Clínica Los Carrera, Clínica Los Leones\n90% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n80% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provid",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1259050",
+    "zona": "CENTRO",
+    "pb_uf": 2.68,
+    "hospitalizacion": "100% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Los Carrera, Clínica Los Leones, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n90% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Providenc",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 1259080",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.69,
+    "hospitalizacion": "90% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile,  Clínica Dávila Vespucio, Clínica Dávila Recoleta, Clínic",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1254080",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.69,
+    "hospitalizacion": "60% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n50% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (L",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1257050",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.69,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n80% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (L",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX 2247070",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 2.7,
+    "hospitalizacion": "80",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 80,
+      "G42": 70,
+      "G44": 60,
+      "G45": 50,
+      "G46": 35
+    }
+  },
+  {
+    "plan": "COLMENA MAX 2248050",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 2.7,
+    "hospitalizacion": "90",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 90,
+      "G42": 80,
+      "G44": 60,
+      "G45": 50,
+      "G46": 35
+    }
+  },
+  {
+    "plan": "MAX CENTRO PF 1257070",
+    "zona": "CENTRO",
+    "pb_uf": 2.7,
+    "hospitalizacion": "90% Clínica Los Carrera, Clínica Los Leones\n80% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n70% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provide",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1255070",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.71,
+    "hospitalizacion": "70% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n60% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (L",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1256060",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.71,
+    "hospitalizacion": "80% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n70% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (L",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2247060",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.71,
+    "hospitalizacion": "%G41=80%  %G42 =70%  %G43=70% %G44=60%  %G45=50%  %G46=35%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 12510060",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.72,
+    "hospitalizacion": "100% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile, Clínica Dávila Vespucio, Clínica Dávila Recoleta, Clínic",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1256080",
+    "zona": "CENTRO",
+    "pb_uf": 2.72,
+    "hospitalizacion": "80% Clínica Los Carrera, Clínica Los Leones\n70% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n60% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provide",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1256050",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.73,
+    "hospitalizacion": "70% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n60% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1255060",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.74,
+    "hospitalizacion": "60% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n50% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 11125",
+    "zona": "NORTE",
+    "pb_uf": 2.74,
+    "hospitalizacion": "70% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n60% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 14224",
+    "zona": "SUR",
+    "pb_uf": 2.75,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G42": 90,
+      "G43": 80,
+      "G44": 50
+    }
+  },
+  {
+    "plan": "COLMENA MAX NORTE 9125",
+    "zona": "NORTE",
+    "pb_uf": 2.78,
+    "hospitalizacion": "60% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n50% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 14125",
+    "zona": "NORTE",
+    "pb_uf": 2.79,
+    "hospitalizacion": "80% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n70% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2248050",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.8,
+    "hospitalizacion": "%G41=90%  %G42 =80%  %G43=80% %G44=60%  %G45=50%  %G46=35%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX 2248060",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 2.8,
+    "hospitalizacion": "90",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 90,
+      "G42": 80,
+      "G44": 70,
+      "G45": 60,
+      "G46": 35
+    }
+  },
+  {
+    "plan": "MAX CENTRO PF 1258070",
+    "zona": "CENTRO",
+    "pb_uf": 2.81,
+    "hospitalizacion": "100% Clínica Los Carrera, Clínica Los Leones\n90% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n80% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provid",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1259060",
+    "zona": "CENTRO",
+    "pb_uf": 2.81,
+    "hospitalizacion": "100% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Los Carrera, Clínica Los Leones, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n90% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Providenc",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 12510070",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.82,
+    "hospitalizacion": "100% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile, Clínica Dávila Vespucio, Clínica Dávila Recoleta, Clínic",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1257080",
+    "zona": "CENTRO",
+    "pb_uf": 2.82,
+    "hospitalizacion": "90% Clínica Los Carrera, Clínica Los Leones\n80% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n70% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provide",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3254040",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.85,
+    "hospitalizacion": "60% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n50% Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n40% Clínica Universidad de Los Andes, Clínica Las Con",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1255080",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.86,
+    "hospitalizacion": "70% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n60% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (L",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 12125",
+    "zona": "NORTE",
+    "pb_uf": 2.87,
+    "hospitalizacion": "70% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n60% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1256070",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.88,
+    "hospitalizacion": "80% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n70% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (L",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1257060",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.88,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n80% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (L",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1256060",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.89,
+    "hospitalizacion": "70% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n60% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2247070",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.9,
+    "hospitalizacion": "%G41=80%  %G42 =70%  %G43=70% %G44=60%  %G45=50%  %G46=35%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1255070",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.92,
+    "hospitalizacion": "60% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n50% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 15125",
+    "zona": "NORTE",
+    "pb_uf": 2.93,
+    "hospitalizacion": "80% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n70% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1258080",
+    "zona": "CENTRO",
+    "pb_uf": 2.93,
+    "hospitalizacion": "100% Clínica Los Carrera, Clínica Los Leones\n90% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n80% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Provid",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA BLUE 12510080",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.95,
+    "hospitalizacion": "100% Clínica RedSalud Providencia, Clínica RedSalud Santiago, Hospital del Profesor, Clínica Cordillera, Hospital Clínico Universidad de Chile, Clínica Dávila Vespucio, Clínica Dávila Recoleta, Clínic",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1258050",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.95,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n90% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1259070",
+    "zona": "CENTRO",
+    "pb_uf": 2.95,
+    "hospitalizacion": "100% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Los Carrera, Clínica Los Leones, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n90% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Providenc",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3254540",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.96,
+    "hospitalizacion": "65% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n55% Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n45% Clínica Universidad de Los Andes, Clínica Las Con",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1255070A",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.97,
+    "hospitalizacion": "60% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n50% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3254045",
+    "zona": "SANTIAGO",
+    "pb_uf": 2.97,
+    "hospitalizacion": "60% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n50% Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n40% Clínica Universidad de Los Andes, Clínica Las Con",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 13125",
+    "zona": "NORTE",
+    "pb_uf": 2.98,
+    "hospitalizacion": "70% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n60% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2247080",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.0,
+    "hospitalizacion": "%G41=80%  %G42 =70%  %G43=70% %G44=60%  %G45=50%  %G46=35%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX 2248070",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 3.0,
+    "hospitalizacion": "90",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 90,
+      "G42": 80,
+      "G44": 70,
+      "G45": 60,
+      "G46": 35
+    }
+  },
+  {
+    "plan": "COLMENA MAX 2249050",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 3.0,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G42": 90,
+      "G44": 80,
+      "G45": 70,
+      "G46": 35
+    }
+  },
+  {
+    "plan": "COLMENA MAX SUR 15224",
+    "zona": "SUR",
+    "pb_uf": 3.0,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G42": 90,
+      "G43": 80,
+      "G44": 50
+    }
+  },
+  {
+    "plan": "COLMENA GOLD 1257050",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.01,
+    "hospitalizacion": "80% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n70% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1256080",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.03,
+    "hospitalizacion": "80% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n70% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (L",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3255040",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.03,
+    "hospitalizacion": "70% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n60% Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n50% Clínica Universidad de Los Andes, Clínica Las Con",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1257070",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.05,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n80% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (L",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2248060",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.05,
+    "hospitalizacion": "%G41=90%  %G42 =80%  %G43=80% %G44=70%  %G45=60%  %G46=35%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 16125",
+    "zona": "NORTE",
+    "pb_uf": 3.07,
+    "hospitalizacion": "80% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n70% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1255080",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.09,
+    "hospitalizacion": "60% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n50% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1259050",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.11,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago, Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (Lir",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1256070",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.11,
+    "hospitalizacion": "70% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n60% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3255050",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.13,
+    "hospitalizacion": "70% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n60% Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n50% Clínica Universidad de Los Andes, Clínica Las Con",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1258060",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.14,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n90% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1256070A",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.16,
+    "hospitalizacion": "70% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n60% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 17125",
+    "zona": "NORTE",
+    "pb_uf": 3.18,
+    "hospitalizacion": "80% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n70% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1257060",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.19,
+    "hospitalizacion": "80% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n70% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1257080",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.2,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n80% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (L",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2248070",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.2,
+    "hospitalizacion": "%G41=90%  %G42 =80%  %G43=80% %G44=70%  %G45=60%  %G46=35%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 18125",
+    "zona": "NORTE",
+    "pb_uf": 3.22,
+    "hospitalizacion": "90% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n80% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 12510050",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.23,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago, Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (Lir",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 16224",
+    "zona": "SUR",
+    "pb_uf": 3.25,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G42": 100,
+      "G43": 90,
+      "G44": 60
+    }
+  },
+  {
+    "plan": "COLMENA MASTER 3256050",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.28,
+    "hospitalizacion": "80% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n70% Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n60% Clínica Universidad de Los Andes, Clínica Las Con",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 1259080",
+    "zona": "CENTRO",
+    "pb_uf": 3.28,
+    "hospitalizacion": "100% Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Los Carrera, Clínica Los Leones, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n90% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica Indisa (Providenc",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1256080",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.29,
+    "hospitalizacion": "70% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n60% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1257070",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.29,
+    "hospitalizacion": "80% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n70% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1258050",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.29,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n80% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2248080",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.3,
+    "hospitalizacion": "%G41=90%  %G42 =80%  %G43=80% %G44=70%  %G45=60%  %G46=35%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX 2249060",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 3.3,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G42": 90,
+      "G45": 80,
+      "G46": 35
+    }
+  },
+  {
+    "plan": "COLMENA MAX SUR 19224",
+    "zona": "SUR",
+    "pb_uf": 3.3,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G42": 100,
+      "G43": 100,
+      "G44": 60
+    }
+  },
+  {
+    "plan": "COLMENA ELITE 1259060",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.31,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago, Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (Lir",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1258070",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.32,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n90% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 19125",
+    "zona": "NORTE",
+    "pb_uf": 3.36,
+    "hospitalizacion": "90% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n80% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1257070A",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.38,
+    "hospitalizacion": "80% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n70% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2249050",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.4,
+    "hospitalizacion": "%G41=100%  %G42 =90%  %G43=90% %G44=80%  %G45=70%  %G46=35%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 12510050",
+    "zona": "CENTRO",
+    "pb_uf": 3.4,
+    "hospitalizacion": "100% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Los Carrera, Clínica Los Leones, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica Indisa (Providencia y ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 17224",
+    "zona": "SUR",
+    "pb_uf": 3.4,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G42": 100,
+      "G43": 90,
+      "G44": 60
+    }
+  },
+  {
+    "plan": "COLMENA ELITE 12510060",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.44,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago, Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (Lir",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 22125",
+    "zona": "NORTE",
+    "pb_uf": 3.45,
+    "hospitalizacion": "100% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n90% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 20224",
+    "zona": "SUR",
+    "pb_uf": 3.45,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G42": 100,
+      "G43": 100,
+      "G44": 60
+    }
+  },
+  {
+    "plan": "COLMENA ELITE 1258080",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.47,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago\n90% Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1259070",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.48,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago, Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (Lir",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1257080",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.48,
+    "hospitalizacion": "80% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n70% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 18224",
+    "zona": "SUR",
+    "pb_uf": 3.5,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G42": 100,
+      "G43": 90,
+      "G44": 60
+    }
+  },
+  {
+    "plan": "COLMENA MAX NORTE 20125",
+    "zona": "NORTE",
+    "pb_uf": 3.52,
+    "hospitalizacion": "90% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n80% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3257050",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.56,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n80% Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n70% Clínica Universidad de Los Andes, Clínica Las Con",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1258060",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.57,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n80% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3256060",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.58,
+    "hospitalizacion": "80% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n70% Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n60% Clínica Universidad de Los Andes, Clínica Las Con",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX 2249070",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 3.6,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G42": 90,
+      "G45": 80,
+      "G46": 35
+    }
+  },
+  {
+    "plan": "MAX CENTRO PF 12510060",
+    "zona": "CENTRO",
+    "pb_uf": 3.6,
+    "hospitalizacion": "100% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Los Carrera, Clínica Los Leones, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica Indisa (Providencia y ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX SUR 21224",
+    "zona": "SUR",
+    "pb_uf": 3.6,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G42": 100,
+      "G43": 100,
+      "G44": 60
+    }
+  },
+  {
+    "plan": "COLMENA MAX NORTE 23125",
+    "zona": "NORTE",
+    "pb_uf": 3.61,
+    "hospitalizacion": "100% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n90% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 26125",
+    "zona": "NORTE",
+    "pb_uf": 3.61,
+    "hospitalizacion": "100% BUPA Antofagasta, Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 12510070",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.63,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago, Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (Lir",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 21125",
+    "zona": "NORTE",
+    "pb_uf": 3.63,
+    "hospitalizacion": "90% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n80% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 1259080",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.65,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago, Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (Lir",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1259050",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.67,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia, Clínica Santa María, Hospital Clínico Universidad Católica (Marcol",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3255070",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.71,
+    "hospitalizacion": "70% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n60% Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n50% Clínica Universidad de Los Andes, Clínica Las Con",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 24125",
+    "zona": "NORTE",
+    "pb_uf": 3.76,
+    "hospitalizacion": "100% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n90% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 27125",
+    "zona": "NORTE",
+    "pb_uf": 3.76,
+    "hospitalizacion": "100% BUPA Antofagasta, Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1259060",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.78,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia, Clínica Santa María, Hospital Clínico Universidad Católica (Marcol",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA ELITE 12510080",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.79,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica Bupa Santiago, Clínica Indisa (Providencia y Maipú), Hospital Clínico Universidad Católica (Marcoleta), Clínica Universidad Católica (Lir",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3258050",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.79,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n80% Clínica Universidad de Los Andes, Clínica Las Condes,",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1258070",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.8,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n80% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX 22410050",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 3.8,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G44": 90,
+      "G45": 80,
+      "G46": 40
+    }
+  },
+  {
+    "plan": "MAX CENTRO PF 12510070",
+    "zona": "CENTRO",
+    "pb_uf": 3.8,
+    "hospitalizacion": "100% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Los Carrera, Clínica Los Leones, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica Indisa (Providencia y ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3257060",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.82,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n80% Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n70% Clínica Universidad de Los Andes, Clínica Las Con",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1258070A",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.85,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n80% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 25125",
+    "zona": "NORTE",
+    "pb_uf": 3.89,
+    "hospitalizacion": "100% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n90% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2249060",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.9,
+    "hospitalizacion": "%G41=100%  %G42 =90%  %G43=90% %G44=90%  %G45=80%  %G46=35%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX NORTE 28125",
+    "zona": "NORTE",
+    "pb_uf": 3.92,
+    "hospitalizacion": "100% BUPA Antofagasta, Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1258080",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.93,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia.\n80% Clínica Santa María, Hospital Clínico Universidad Católica (Ma",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3255080",
+    "zona": "SANTIAGO",
+    "pb_uf": 3.93,
+    "hospitalizacion": "70% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n60% Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n50% Clínica Universidad de Los Andes, Clínica Las Con",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "MAX CENTRO PF 12510080",
+    "zona": "CENTRO",
+    "pb_uf": 3.95,
+    "hospitalizacion": "100% Clínica BUPA Reñaca, Clínica Ciudad del Mar, Clínica RedSalud Valparaiso, Hospital Clínico Viña del Mar, Clínica Isamédica, Clínica RedSalud Rancagua, Clínica Los Carrera, Clínica Los Leones, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica Indisa (Providencia y ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX 22410060",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 4.0,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G45": 90,
+      "G46": 40
+    }
+  },
+  {
+    "plan": "COLMENA MAX NORTE 29125",
+    "zona": "NORTE",
+    "pb_uf": 4.04,
+    "hospitalizacion": "100% BUPA Antofagasta, Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica Indisa (Providencia y Maipú).",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3259050",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.05,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú), Clínica Universidad de Los Andes, Clínica Las Condes, Clín",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3258060",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.07,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n80% Clínica Universidad de Los Andes, Clínica Las Condes,",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3257070",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.08,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n80% Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n70% Clínica Universidad de Los Andes, Clínica Las Con",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1259070",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.1,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia, Clínica Santa María, Hospital Clínico Universidad Católica (Marcol",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2249070",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.1,
+    "hospitalizacion": "%G41=100%  %G42 =90%  %G43=90% %G44=90%  %G45=80%  %G46=35%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1259070A",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.15,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia, Clínica Santa María, Hospital Clínico Universidad Católica (Marcol",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 12510050",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.18,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia, Clínica Santa María, Hospital Clínico Universidad Católica (Marco",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 32510050",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.2,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú), Clínica Universidad de Los Andes, Clínica Las Condes, Clí",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 22410050",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.2,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=90%  %G45=80%  %G46=40%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX 22410070",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 4.2,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G45": 90,
+      "G46": 40
+    }
+  },
+  {
+    "plan": "COLMENA MASTER 3259060",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.26,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú), Clínica Universidad de Los Andes, Clínica Las Condes, Clín",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1259080",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.27,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia, Clínica Santa María, Hospital Clínico Universidad Católica (Marcol",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3256080",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.27,
+    "hospitalizacion": "80% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n70% Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n60% Clínica Universidad de Los Andes, Clínica Las Con",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3258070",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.27,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n80% Clínica Universidad de Los Andes, Clínica Las Condes,",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 32510060",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.4,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú), Clínica Universidad de Los Andes, Clínica Las Condes, Clí",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 22410060",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.4,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=100%  %G45=90%  %G46=40%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3259070",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.41,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú), Clínica Universidad de Los Andes, Clínica Las Condes, Clín",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2249080",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.41,
+    "hospitalizacion": "%G41=100%  %G42 =90%  %G43=90% %G44=90%  %G45=80%  %G46=35%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 12510060",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.47,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia, Clínica Santa María, Hospital Clínico Universidad Católica (Marco",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 22410070",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.5,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=100%  %G45=90%  %G46=40%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3257080",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.51,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago.\n80% Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n70% Clínica Universidad de Los Andes, Clínica Las Con",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 32510070",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.55,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú), Clínica Universidad de Los Andes, Clínica Las Condes, Clí",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2241007A",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.6,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=100%  %G45=90%  %G46=45%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX 2241007A",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 4.6,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G45": 90,
+      "G46": 45
+    }
+  },
+  {
+    "plan": "COLMENA GOLD 12510070",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.64,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia, Clínica Santa María, Hospital Clínico Universidad Católica (Marco",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 1251007A",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.66,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia, Clínica Santa María, Hospital Clínico Universidad Católica (Marco",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA GOLD 12510080",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.68,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Santiago, Clínica RedSalud Providencia, Clínica Santa María, Hospital Clínico Universidad Católica (Marco",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3258080",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.74,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú). \n80% Clínica Universidad de Los Andes, Clínica Las Condes,",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2241007B",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.75,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=100%  %G45=90%  %G46=50%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 22410080",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.78,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=100%  %G45=90%  %G46=40%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2241008A",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.82,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=100%  %G45=90%  %G46=45%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PRO 1247060",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.86,
+    "hospitalizacion": "70% Clínica Alemana, Clínica Las Condes, Clínica Universidad de los Andes, Clínica San Carlos de Apoquindo, Clínica MEDS, Clínica Santa María, Clínica RedSalud Vitacura, Hospital Clínico Universidad C",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2241008B",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.86,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=100%  %G45=90%  %G46=50%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3251007A",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.89,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú), Clínica Universidad de Los Andes, Clínica Las Condes, Clí",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX 2241007B",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 4.9,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G45": 90,
+      "G46": 50
+    }
+  },
+  {
+    "plan": "COLMENA MASTER 3251007B",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.92,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú), Clínica Universidad de Los Andes, Clínica Las Condes, Clí",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 3259080",
+    "zona": "SANTIAGO",
+    "pb_uf": 4.93,
+    "hospitalizacion": "90% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú), Clínica Universidad de Los Andes, Clínica Las Condes, Clín",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2241007C",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.0,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=100%  %G45=90%  %G46=55%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2241008C",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.03,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=100%  %G45=90%  %G46=55%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2241007D",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.1,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=100%  %G45=90%  %G46=60%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PRO 1248060",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.14,
+    "hospitalizacion": "80% Clínica Alemana, Clínica Las Condes, Clínica Universidad de los Andes, Clínica San Carlos de Apoquindo, Clínica MEDS, Clínica Santa María, Clínica RedSalud Vitacura, Hospital Clínico Universidad C",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MASTER 32510080",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.15,
+    "hospitalizacion": "100% Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica RedSalud Vitacura, Clínica Indisa (Providencia y Maipú), Clínica Universidad de Los Andes, Clínica Las Condes, Clí",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2241008D",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.15,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=100%  %G45=90%  %G46=60%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2241007E",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.2,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=100%  %G45=90%  %G46=65%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA MAX 2241007C",
+    "zona": "LIBRE_ELECCION",
+    "pb_uf": 5.2,
+    "hospitalizacion": "100",
+    "tope_anual_uf": 7000,
+    "coberturas_redes": {
+      "G41": 100,
+      "G45": 90,
+      "G46": 55
+    }
+  },
+  {
+    "plan": "COLMENA PRO 1247070",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.24,
+    "hospitalizacion": "70% Clínica Alemana, Clínica Las Condes, Clínica Universidad de los Andes, Clínica San Carlos de Apoquindo, Clínica MEDS, Clínica Santa María, Clínica RedSalud Vitacura, Hospital Clínico Universidad C",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2241008E",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.25,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=100%  %G45=90%  %G46=65%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2241007F",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.3,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=100%  %G45=100%  %G46=70%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2241007G",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.35,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=100%  %G45=100%  %G46=75%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2241007H",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.4,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=100%  %G45=100%  %G46=80%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PRO 1249060",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.42,
+    "hospitalizacion": "90% Clínica Alemana, Clínica Las Condes, Clínica Universidad de los Andes, Clínica San Carlos de Apoquindo, Clínica MEDS, Clínica Santa María, Clínica RedSalud Vitacura, Hospital Clínico Universidad C",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PLUS 2241007I",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.45,
+    "hospitalizacion": "%G41=100%  %G42 =100%  %G43=100% %G44=100%  %G45=100%  %G46=90%",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PRO 1248070",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.53,
+    "hospitalizacion": "80% Clínica Alemana, Clínica Las Condes, Clínica Universidad de los Andes, Clínica San Carlos de Apoquindo, Clínica MEDS, Clínica Santa María, Clínica RedSalud Vitacura, Hospital Clínico Universidad C",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PRO 1247080",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.63,
+    "hospitalizacion": "70% Clínica Alemana, Clínica Las Condes, Clínica Universidad de los Andes, Clínica San Carlos de Apoquindo, Clínica MEDS, Clínica Santa María, Clínica RedSalud Vitacura, Hospital Clínico Universidad C",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PRO 12410060",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.69,
+    "hospitalizacion": "100% Clínica Alemana, Clínica Las Condes, Clínica Universidad de los Andes, Clínica San Carlos de Apoquindo, Clínica MEDS, Clínica Santa María, Clínica RedSalud Vitacura, Hospital Clínico Universidad ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PRO 1249070",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.81,
+    "hospitalizacion": "90% Clínica Alemana, Clínica Las Condes, Clínica Universidad de los Andes, Clínica San Carlos de Apoquindo, Clínica MEDS, Clínica Santa María, Clínica RedSalud Vitacura, Hospital Clínico Universidad C",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PRO 1248080",
+    "zona": "SANTIAGO",
+    "pb_uf": 5.91,
+    "hospitalizacion": "80% Clínica Alemana, Clínica Las Condes, Clínica Universidad de los Andes, Clínica San Carlos de Apoquindo, Clínica MEDS, Clínica Santa María, Clínica RedSalud Vitacura, Hospital Clínico Universidad C",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PRO 12410070",
+    "zona": "SANTIAGO",
+    "pb_uf": 6.07,
+    "hospitalizacion": "100% Clínica Alemana, Clínica Las Condes, Clínica Universidad de los Andes, Clínica San Carlos de Apoquindo, Clínica MEDS, Clínica Santa María, Clínica RedSalud Vitacura, Hospital Clínico Universidad ",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PRO 1249080",
+    "zona": "SANTIAGO",
+    "pb_uf": 6.19,
+    "hospitalizacion": "90% Clínica Alemana, Clínica Las Condes, Clínica Universidad de los Andes, Clínica San Carlos de Apoquindo, Clínica MEDS, Clínica Santa María, Clínica RedSalud Vitacura, Hospital Clínico Universidad C",
+    "tope_anual_uf": 7000
+  },
+  {
+    "plan": "COLMENA PRO 12410080",
+    "zona": "SANTIAGO",
+    "pb_uf": 6.46,
+    "hospitalizacion": "100% Clínica Alemana, Clínica Las Condes, Clínica Universidad de los Andes, Clínica San Carlos de Apoquindo, Clínica MEDS, Clínica Santa María, Clínica RedSalud Vitacura, Hospital Clínico Universidad ",
+    "tope_anual_uf": 7000
+  }
+]
