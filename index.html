@@ -246,7 +246,9 @@ const FORM_FIELDS = {
   renta: 'entry.1350273122',
   region: 'entry.1283417188',
   cargas: 'entry.6457415',
-  mensaje: 'entry.860152674'
+  mensaje: 'entry.860152674',
+  plan1: 'entry.1176082335',
+  plan2: 'entry.1798986413'
 };
 
 const GOOGLE_FORM_REFERIDOS_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeIppjYB0Vgc6RsJ3AM0HcAVhLaxAT6ZZ_MxdPhmuwRkwLT-A/formResponse';
@@ -641,6 +643,9 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
 
   // ENVIAR A GOOGLE FORMS
   try {
+    const plan1Nombre = plan1 ? plan1.plan : 'Sin plan disponible';
+    const plan2Nombre = plan2 ? plan2.plan : 'Sin plan disponible';
+    
     const f = new FormData();
     f.append(FORM_FIELDS.nombre, formularioDatos.nombre);
     f.append(FORM_FIELDS.rut, formularioDatos.rut);
@@ -652,6 +657,8 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     f.append(FORM_FIELDS.region, formularioDatos.region);
     f.append(FORM_FIELDS.cargas, cargasTexto);
     f.append(FORM_FIELDS.mensaje, formularioDatos.mensaje || "(sin mensaje)");
+    f.append(FORM_FIELDS.plan1, plan1Nombre);
+    f.append(FORM_FIELDS.plan2, plan2Nombre);
 
     await fetch(FORM_BASE_URL, { method: "POST", mode: "no-cors", body: f });
     statusMsg.textContent = "✅ Datos enviados correctamente";
@@ -662,8 +669,6 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
   }
 
   // ENVIAR CALLMEBOT
-  const plan1Nombre = plan1 ? plan1.plan : 'Sin plan';
-  const plan2Nombre = plan2 ? plan2.plan : 'Sin plan';
   const msgWA = `🔔 NUEVA COTIZACIÓN
 
 👤 ${formularioDatos.nombre}
@@ -675,8 +680,8 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
 📊 7%: $${formatearCLP(sieteCLP)} (${sieteUF.toFixed(2)} UF)
 
 📋 Planes sugeridos:
-1) ${plan1Nombre}
-2) ${plan2Nombre}`;
+1) ${plan1 ? plan1.plan : 'Sin plan'}
+2) ${plan2 ? plan2.plan : 'Sin plan'}`;
   
   enviarCallMeBot(msgWA);
 
