@@ -343,6 +343,10 @@ const CALLMEBOT_APIKEY = '7360481';
 const URL_PLANES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/planes_completos.json';
 const URL_REDES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/redes_clinicas.json';
 
+// Contador de recálculos (máximo 2)
+let contadorRecalculos = 0;
+const MAX_RECALCULOS = 2;
+
 /*========================================================
   MAPEO DE REGIONES A ZONAS
 =========================================================*/
@@ -680,6 +684,9 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
   btn.disabled = true;
   btn.textContent = "Calculando...";
   statusMsg.textContent = "";
+  
+  // Resetear contador de recálculos para nueva cotización
+  contadorRecalculos = 0;
 
   const data = new FormData(this);
 
@@ -851,7 +858,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
 });
 
 /*========================================================
-  RECALCULAR CON MONTO ADICIONAL
+  RECALCULAR CON MONTO ADICIONAL (máximo 2 veces)
 =========================================================*/
 function recalcularConAdicional() {
   const montoAdicionalInput = document.getElementById("montoAdicional");
@@ -867,6 +874,9 @@ function recalcularConAdicional() {
     return;
   }
 
+  // Incrementar contador
+  contadorRecalculos++;
+  
   const uf = window.__UF_VALOR || 39700;
   const r = ultimoResultado;
   
@@ -874,7 +884,7 @@ function recalcularConAdicional() {
   const nuevoPresupuestoCLP = r.sieteCLP + montoAdicional;
   const nuevoPresupuestoUF = nuevoPresupuestoCLP / uf;
   
-  console.log(`Recalculando con adicional: $${montoAdicional}`);
+  console.log(`Recálculo #${contadorRecalculos} con adicional: $${montoAdicional}`);
   console.log(`Nuevo presupuesto: $${nuevoPresupuestoCLP} (${nuevoPresupuestoUF.toFixed(2)} UF)`);
   
   // Seleccionar nuevos planes con el presupuesto aumentado
@@ -940,29 +950,52 @@ function recalcularConAdicional() {
     </div>
   `;
 
-  // Sección para ajustar monto adicional
-  htmlResultado += `
-    <div class="mejorar-cobertura">
-      <div class="mejorar-titulo">🔄 ¿Deseas ajustar tu aporte adicional?</div>
-      <div class="adicional-actual">
-        <div class="adicional-label">Aporte adicional actual</div>
-        <div class="adicional-valor">$${formatearCLP(montoAdicional)}</div>
-      </div>
-      
-      <div class="mejorar-input-container">
-        <div>
-          <label class="small" style="display:block; margin-bottom:5px; color:#ccc;">Nuevo monto adicional:</label>
-          <input type="number" id="montoAdicional" class="mejorar-input" placeholder="Ej: 50000" min="0" step="1000" value="${montoAdicional}">
+  // Verificar si puede seguir recalculando
+  if (contadorRecalculos < MAX_RECALCULOS) {
+    // Aún puede recalcular
+    const recalculosRestantes = MAX_RECALCULOS - contadorRecalculos;
+    htmlResultado += `
+      <div class="mejorar-cobertura">
+        <div class="mejorar-titulo">🔄 ¿Deseas ajustar tu aporte adicional?</div>
+        <p class="small" style="color:#fbbf24; margin-bottom:15px;">Te queda ${recalculosRestantes} ajuste${recalculosRestantes > 1 ? 's' : ''} disponible${recalculosRestantes > 1 ? 's' : ''}</p>
+        <div class="adicional-actual">
+          <div class="adicional-label">Aporte adicional actual</div>
+          <div class="adicional-valor">$${formatearCLP(montoAdicional)}</div>
         </div>
-        <button type="button" id="btnRecalcular" class="btn-recalcular">🔄 Recalcular Planes</button>
+        
+        <div class="mejorar-input-container">
+          <div>
+            <label class="small" style="display:block; margin-bottom:5px; color:#ccc;">Nuevo monto adicional:</label>
+            <input type="number" id="montoAdicional" class="mejorar-input" placeholder="Ej: 50000" min="0" step="1000" value="${montoAdicional}">
+          </div>
+          <button type="button" id="btnRecalcular" class="btn-recalcular">🔄 Recalcular Planes</button>
+        </div>
       </div>
-    </div>
-  `;
+    `;
+  } else {
+    // Ya no puede recalcular - mostrar mensaje final
+    htmlResultado += `
+      <div class="mejorar-cobertura" style="border-color: #d4af37;">
+        <div class="mejorar-titulo" style="color:#d4af37;">✅ Has revisado tus opciones de cobertura</div>
+        <p class="mejorar-texto">
+          Ya exploraste diferentes alternativas. Ahora puedes solicitar asesoría personalizada para finalizar tu afiliación, 
+          o si conoces a alguien que necesite un plan de salud, ¡puedes referirlo!
+        </p>
+        <div class="adicional-actual">
+          <div class="adicional-label">Tu presupuesto final</div>
+          <div class="adicional-valor">$${formatearCLP(nuevoPresupuestoCLP)}</div>
+        </div>
+      </div>
+    `;
+  }
 
   document.getElementById("resultadoDetalle").innerHTML = htmlResultado;
   
-  // Re-agregar evento al nuevo botón
-  document.getElementById("btnRecalcular").addEventListener("click", recalcularConAdicional);
+  // Re-agregar evento al nuevo botón si existe
+  const btnRecalcular = document.getElementById("btnRecalcular");
+  if (btnRecalcular) {
+    btnRecalcular.addEventListener("click", recalcularConAdicional);
+  }
 
   // Scroll al resultado
   document.getElementById("resultado-preliminar").scrollIntoView({ behavior: "smooth" });
@@ -973,13 +1006,17 @@ function recalcularConAdicional() {
 =========================================================*/
 function seleccionarPlanesConPresupuesto(presupuestoUF, zona, numPersonas) {
   const uf = window.__UF_VALOR || 39700;
+  const edadTitular = Number(formularioDatos.edad);
+  const edadesCargas = ultimoResultado.edadesCargas;
   
   // Filtrar por zona
   const planesZona = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
   
+  console.log(`Buscando planes para zona ${zona}, presupuesto ${presupuestoUF.toFixed(2)} UF`);
+  
   // Calcular valor para cada plan
   const planesConValor = planesZona.map(plan => {
-    const calc = calcularValorPlan(plan, ultimoResultado.edadesCargas, formularioDatos.edad, uf);
+    const calc = calcularValorPlan(plan, edadesCargas, edadTitular, uf);
     return {
       ...plan,
       valorCalculadoUF: calc.totalUF,
@@ -990,11 +1027,19 @@ function seleccionarPlanesConPresupuesto(presupuestoUF, zona, numPersonas) {
     };
   });
   
-  // Filtrar planes que estén dentro del presupuesto (hasta 105% del presupuesto)
-  const maxPresupuesto = presupuestoUF * 1.05;
-  const planesValidos = planesConValor.filter(p => p.valorCalculadoUF <= maxPresupuesto && p.valorCalculadoUF >= presupuestoUF * 0.85);
+  // Filtrar planes que estén dentro del presupuesto (hasta 110% del presupuesto)
+  const maxPresupuesto = presupuestoUF * 1.10;
+  const minPresupuesto = presupuestoUF * 0.90;
+  const planesValidos = planesConValor.filter(p => p.valorCalculadoUF <= maxPresupuesto && p.valorCalculadoUF >= minPresupuesto);
   
-  console.log(`Planes válidos para presupuesto ${presupuestoUF.toFixed(2)} UF: ${planesValidos.length}`);
+  console.log(`Planes válidos para presupuesto ${presupuestoUF.toFixed(2)} UF (rango ${minPresupuesto.toFixed(2)}-${maxPresupuesto.toFixed(2)}): ${planesValidos.length}`);
+  
+  // Si no hay planes en el rango, buscar los más cercanos
+  if (planesValidos.length === 0) {
+    const planesOrdenados = planesConValor.filter(p => p.valorCalculadoUF <= maxPresupuesto);
+    planesOrdenados.sort((a, b) => b.valorCalculadoUF - a.valorCalculadoUF);
+    return { plan1: planesOrdenados[0] || null, plan2: planesOrdenados[1] || null };
+  }
   
   // Ordenar por valor descendente (mejores planes primero, más cercanos al presupuesto)
   planesValidos.sort((a, b) => b.valorCalculadoUF - a.valorCalculadoUF);
@@ -1033,7 +1078,7 @@ document.getElementById("btnAsesoria").addEventListener("click", function() {
 
   const mensaje = `🔔 SOLICITUD DE ASESORÍA
 
-👤 *Datos del cliente:*
+👤 Datos del cliente:
 • Nombre: ${formularioDatos.nombre}
 • RUT: ${formularioDatos.rut}
 • Teléfono: ${formularioDatos.telefono}
@@ -1043,18 +1088,21 @@ document.getElementById("btnAsesoria").addEventListener("click", function() {
 • Renta: $${formatearCLP(Number(formularioDatos.renta))}
 • Cargas: ${r.edadesCargas.length}${r.cargasTexto ? ' (' + r.cargasTexto + ')' : ''}
 
-💰 *Cotización:*
+💰 Cotización:
 • Tu 7%: $${formatearCLP(r.sieteCLP)} (${r.sieteUF.toFixed(2)} UF)
 ${textoAdicional}
 
-📋 *Planes sugeridos:*
+📋 Planes sugeridos:
 1) ${plan1Nombre} → ${plan1Valor}
 2) ${plan2Nombre} → ${plan2Valor}
 
-⚡ Solicita contacto urgente.`;
+⚡ SOLICITA CONTACTO URGENTE`;
 
-  const url = `https://wa.me/${WHATSAPP_ASESORIA}?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, "_blank");
+  // Enviar por CallMeBot directamente
+  enviarCallMeBot(mensaje);
+  
+  // Mostrar confirmación
+  alert("✅ Solicitud enviada. Un asesor te contactará a la brevedad.");
 
   document.getElementById("referidos").style.display = "block";
   setTimeout(() => {
@@ -1098,6 +1146,7 @@ Correo: ${correoReferido}`;
       document.getElementById("mainForm").reset();
       formularioDatos = {};
       ultimoResultado = null;
+      contadorRecalculos = 0; // Resetear contador de recálculos
       document.getElementById("resultado-preliminar").style.display = "none";
       document.getElementById("referidos").style.display = "none";
       window.scrollTo({ top: 0, behavior: 'smooth' });
