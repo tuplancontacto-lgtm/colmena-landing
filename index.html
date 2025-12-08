@@ -95,9 +95,91 @@
     .mensaje-exito-referido { background:#1a4d2e; color:#4ade80; border:1px solid #4ade80; }
     .mensaje-error-referido { background:#4a1a1a; color:#ff8080; border:1px solid #ff8080; }
 
+    /* Disclaimer */
+    .disclaimer {
+      background: #1a2a3a;
+      border-left: 4px solid #fbbf24;
+      padding: 15px 20px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.85rem;
+      color: #b8c5d6;
+      font-style: italic;
+    }
+    .disclaimer-icon { color: #fbbf24; margin-right: 8px; }
+
+    /* Sección mejorar cobertura */
+    .mejorar-cobertura {
+      background: linear-gradient(135deg, #0f2640, #1a3a5a);
+      border: 2px solid #4ade80;
+      border-radius: 15px;
+      padding: 30px;
+      margin: 30px 0;
+      text-align: center;
+    }
+    .mejorar-titulo {
+      color: #4ade80;
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+    }
+    .mejorar-texto {
+      color: #b8c5d6;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .mejorar-input-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .mejorar-input {
+      width: 200px;
+      padding: 15px;
+      font-size: 1.1rem;
+      border: 2px solid #4ade80;
+      border-radius: 10px;
+      background: #0a1a2a;
+      color: white;
+      text-align: center;
+    }
+    .mejorar-input:focus {
+      outline: none;
+      border-color: #d4af37;
+      box-shadow: 0 0 10px rgba(212,175,55,0.3);
+    }
+    .btn-recalcular {
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      color: #0a1a2a;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-recalcular:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(74,222,128,0.4);
+    }
+    .adicional-actual {
+      background: #112233;
+      padding: 15px 25px;
+      border-radius: 10px;
+      margin: 15px 0;
+      display: inline-block;
+    }
+    .adicional-label { color: #888; font-size: 0.9rem; }
+    .adicional-valor { color: #4ade80; font-size: 1.3rem; font-weight: bold; }
+
     @media (max-width: 600px) {
       .plan-nombre { font-size: 1.4rem; }
       .clinicas-tabla th, .clinicas-tabla td { padding: 8px 10px; font-size: 0.85rem; }
+      .mejorar-input { width: 100%; }
     }
   </style>
 </head>
@@ -434,11 +516,11 @@ function seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas) {
 /*========================================================
   GENERAR HTML DE UN PLAN
 =========================================================*/
-function generarHTMLPlan(plan, numero, sieteUF, sieteCLP) {
+function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   if (!plan) return '';
   
   const uf = window.__UF_VALOR || 39700;
-  const adicionalUF = Math.max(0, plan.valorCalculadoUF - sieteUF);
+  const adicionalUF = Math.max(0, plan.valorCalculadoUF - sieteUF - (montoAdicional / uf));
   const adicionalCLP = Math.round(adicionalUF * uf);
   
   const esPrincipal = numero === 1;
@@ -481,7 +563,7 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP) {
         </div>
         <div class="plan-info-item">
           <div class="plan-info-label">Adicional a pagar</div>
-          <div class="plan-info-value ${adicionalCLP === 0 ? 'verde' : 'amarillo'}">$${formatearCLP(adicionalCLP)}</div>
+          <div class="plan-info-value ${adicionalCLP <= 0 ? 'verde' : 'amarillo'}">$${formatearCLP(Math.max(0, adicionalCLP))}</div>
         </div>
         <div class="plan-info-item">
           <div class="plan-info-label">GES incluido</div>
@@ -713,17 +795,52 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
   `;
   
   if (plan1) {
-    htmlResultado += generarHTMLPlan(plan1, 1, sieteUF, sieteCLP);
+    htmlResultado += generarHTMLPlan(plan1, 1, sieteUF, sieteCLP, 0);
   } else {
     htmlResultado += `<p class="small" style="color:#fbbf24;">No se encontró un plan que cumpla con el criterio para tu 7%. Solicita asesoría personalizada.</p>`;
   }
   
   if (plan2) {
-    htmlResultado += generarHTMLPlan(plan2, 2, sieteUF, sieteCLP);
+    htmlResultado += generarHTMLPlan(plan2, 2, sieteUF, sieteCLP, 0);
   }
+
+  // Agregar disclaimer después de los planes
+  htmlResultado += `
+    <div class="disclaimer">
+      <span class="disclaimer-icon">⚠️</span>
+      Los valores presentados son referenciales y están sujetos a verificación. Un Ejecutivo de Ventas validará esta información y te contactará para formalizar tu plan de salud.
+    </div>
+  `;
+
+  // Agregar sección para mejorar cobertura
+  htmlResultado += `
+    <div class="mejorar-cobertura">
+      <div class="mejorar-titulo">💡 ¿Te gustaría acceder a mejores coberturas?</div>
+      <div class="mejorar-texto">
+        Puedes complementar tu 7% legal con un aporte adicional mensual para obtener planes con mayores beneficios, mejor red de clínicas y mayor protección para ti y tu familia.
+      </div>
+      
+      <div class="adicional-actual">
+        <div class="adicional-label">Tu presupuesto actual (7%)</div>
+        <div class="adicional-valor">$${formatearCLP(sieteCLP)}</div>
+      </div>
+      
+      <div class="mejorar-input-container">
+        <div>
+          <label class="small" style="display:block; margin-bottom:5px; color:#ccc;">Monto adicional mensual:</label>
+          <input type="number" id="montoAdicional" class="mejorar-input" placeholder="Ej: 50000" min="0" step="1000">
+        </div>
+        <button type="button" id="btnRecalcular" class="btn-recalcular">🔄 Recalcular Planes</button>
+      </div>
+      <p class="small" style="margin-top:15px; color:#888;">Ingresa un monto en pesos chilenos para ver planes con mejores coberturas.</p>
+    </div>
+  `;
 
   document.getElementById("resultadoDetalle").innerHTML = htmlResultado;
   document.getElementById("resultado-preliminar").style.display = "block";
+
+  // Agregar evento al botón recalcular
+  document.getElementById("btnRecalcular").addEventListener("click", recalcularConAdicional);
 
   btn.disabled = false;
   btn.textContent = "Cotizar Ahora";
@@ -732,6 +849,165 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     document.getElementById("resultado-preliminar").scrollIntoView({ behavior: "smooth" });
   }, 300);
 });
+
+/*========================================================
+  RECALCULAR CON MONTO ADICIONAL
+=========================================================*/
+function recalcularConAdicional() {
+  const montoAdicionalInput = document.getElementById("montoAdicional");
+  const montoAdicional = parseInt(montoAdicionalInput.value) || 0;
+  
+  if (montoAdicional <= 0) {
+    alert("Por favor ingresa un monto adicional mayor a 0");
+    return;
+  }
+
+  if (!ultimoResultado) {
+    alert("Primero realiza una cotización");
+    return;
+  }
+
+  const uf = window.__UF_VALOR || 39700;
+  const r = ultimoResultado;
+  
+  // Nuevo presupuesto total = 7% + adicional
+  const nuevoPresupuestoCLP = r.sieteCLP + montoAdicional;
+  const nuevoPresupuestoUF = nuevoPresupuestoCLP / uf;
+  
+  console.log(`Recalculando con adicional: $${montoAdicional}`);
+  console.log(`Nuevo presupuesto: $${nuevoPresupuestoCLP} (${nuevoPresupuestoUF.toFixed(2)} UF)`);
+  
+  // Seleccionar nuevos planes con el presupuesto aumentado
+  const nuevosPlanes = seleccionarPlanesConPresupuesto(nuevoPresupuestoUF, r.zona, r.edadesCargas.length + 1);
+  
+  const plan1 = nuevosPlanes.plan1;
+  const plan2 = nuevosPlanes.plan2;
+  
+  // Actualizar ultimoResultado
+  ultimoResultado.plan1 = plan1;
+  ultimoResultado.plan2 = plan2;
+  ultimoResultado.montoAdicional = montoAdicional;
+  ultimoResultado.presupuestoTotalCLP = nuevoPresupuestoCLP;
+  ultimoResultado.presupuestoTotalUF = nuevoPresupuestoUF;
+
+  // Generar nuevo HTML
+  let htmlResultado = `
+    <div class="resumen-cotizacion">
+      <div class="resumen-titulo">📊 Tu Cotización Mejorada - ${formularioDatos.nombre}</div>
+      <div class="resumen-grid">
+        <div class="resumen-item">
+          <div class="resumen-label">Tu 7% obligatorio</div>
+          <div class="resumen-value">$${formatearCLP(r.sieteCLP)}</div>
+          <div class="resumen-uf">${r.sieteUF.toFixed(2)} UF</div>
+        </div>
+        <div class="resumen-item">
+          <div class="resumen-label">Aporte adicional</div>
+          <div class="resumen-value" style="color:#4ade80;">+$${formatearCLP(montoAdicional)}</div>
+          <div class="resumen-uf">+${(montoAdicional / uf).toFixed(2)} UF</div>
+        </div>
+        <div class="resumen-item">
+          <div class="resumen-label">Presupuesto Total</div>
+          <div class="resumen-value destacado">$${formatearCLP(nuevoPresupuestoCLP)}</div>
+          <div class="resumen-uf">${nuevoPresupuestoUF.toFixed(2)} UF</div>
+        </div>
+        <div class="resumen-item">
+          <div class="resumen-label">Zona</div>
+          <div class="resumen-value" style="font-size:0.95rem;">${r.zona}</div>
+          <div class="resumen-uf">${formularioDatos.region}</div>
+        </div>
+      </div>
+    </div>
+    
+    <h2 class="gold" style="margin-top:30px;">🏥 Nuevos Planes con Mayor Cobertura</h2>
+    <p class="small">Con tu presupuesto mejorado de $${formatearCLP(nuevoPresupuestoCLP)}, ahora puedes acceder a estos planes:</p>
+  `;
+  
+  if (plan1) {
+    htmlResultado += generarHTMLPlan(plan1, 1, nuevoPresupuestoUF, nuevoPresupuestoCLP, montoAdicional);
+  } else {
+    htmlResultado += `<p class="small" style="color:#fbbf24;">No se encontró un plan adicional. Solicita asesoría personalizada.</p>`;
+  }
+  
+  if (plan2) {
+    htmlResultado += generarHTMLPlan(plan2, 2, nuevoPresupuestoUF, nuevoPresupuestoCLP, montoAdicional);
+  }
+
+  // Disclaimer
+  htmlResultado += `
+    <div class="disclaimer">
+      <span class="disclaimer-icon">⚠️</span>
+      Los valores presentados son referenciales y están sujetos a verificación. Un Ejecutivo de Ventas validará esta información y te contactará para formalizar tu plan de salud.
+    </div>
+  `;
+
+  // Sección para ajustar monto adicional
+  htmlResultado += `
+    <div class="mejorar-cobertura">
+      <div class="mejorar-titulo">🔄 ¿Deseas ajustar tu aporte adicional?</div>
+      <div class="adicional-actual">
+        <div class="adicional-label">Aporte adicional actual</div>
+        <div class="adicional-valor">$${formatearCLP(montoAdicional)}</div>
+      </div>
+      
+      <div class="mejorar-input-container">
+        <div>
+          <label class="small" style="display:block; margin-bottom:5px; color:#ccc;">Nuevo monto adicional:</label>
+          <input type="number" id="montoAdicional" class="mejorar-input" placeholder="Ej: 50000" min="0" step="1000" value="${montoAdicional}">
+        </div>
+        <button type="button" id="btnRecalcular" class="btn-recalcular">🔄 Recalcular Planes</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById("resultadoDetalle").innerHTML = htmlResultado;
+  
+  // Re-agregar evento al nuevo botón
+  document.getElementById("btnRecalcular").addEventListener("click", recalcularConAdicional);
+
+  // Scroll al resultado
+  document.getElementById("resultado-preliminar").scrollIntoView({ behavior: "smooth" });
+}
+
+/*========================================================
+  SELECCIONAR PLANES CON PRESUPUESTO PERSONALIZADO
+=========================================================*/
+function seleccionarPlanesConPresupuesto(presupuestoUF, zona, numPersonas) {
+  const uf = window.__UF_VALOR || 39700;
+  
+  // Filtrar por zona
+  const planesZona = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
+  
+  // Calcular valor para cada plan
+  const planesConValor = planesZona.map(plan => {
+    const calc = calcularValorPlan(plan, ultimoResultado.edadesCargas, formularioDatos.edad, uf);
+    return {
+      ...plan,
+      valorCalculadoUF: calc.totalUF,
+      valorCalculadoCLP: calc.totalCLP,
+      gesUF: calc.gesUF,
+      gesCLP: calc.gesCLP,
+      sumaFactores: calc.sumaFactores
+    };
+  });
+  
+  // Filtrar planes que estén dentro del presupuesto (hasta 105% del presupuesto)
+  const maxPresupuesto = presupuestoUF * 1.05;
+  const planesValidos = planesConValor.filter(p => p.valorCalculadoUF <= maxPresupuesto && p.valorCalculadoUF >= presupuestoUF * 0.85);
+  
+  console.log(`Planes válidos para presupuesto ${presupuestoUF.toFixed(2)} UF: ${planesValidos.length}`);
+  
+  // Ordenar por valor descendente (mejores planes primero, más cercanos al presupuesto)
+  planesValidos.sort((a, b) => b.valorCalculadoUF - a.valorCalculadoUF);
+  
+  // Tomar los 2 mejores
+  const plan1 = planesValidos[0] || null;
+  const plan2 = planesValidos[1] || null;
+  
+  if (plan1) console.log(`Nuevo Plan 1: ${plan1.plan} - ${plan1.valorCalculadoUF.toFixed(2)} UF`);
+  if (plan2) console.log(`Nuevo Plan 2: ${plan2.plan} - ${plan2.valorCalculadoUF.toFixed(2)} UF`);
+  
+  return { plan1, plan2 };
+}
 
 /*========================================================
   BOTÓN ASESORÍA
@@ -747,6 +1023,13 @@ document.getElementById("btnAsesoria").addEventListener("click", function() {
   const plan2Nombre = r.plan2 ? r.plan2.plan : '-';
   const plan1Valor = r.plan1 ? `$${formatearCLP(r.plan1.valorCalculadoCLP)} (${r.plan1.valorCalculadoUF.toFixed(2)} UF)` : '-';
   const plan2Valor = r.plan2 ? `$${formatearCLP(r.plan2.valorCalculadoCLP)} (${r.plan2.valorCalculadoUF.toFixed(2)} UF)` : '-';
+  
+  // Verificar si hay monto adicional
+  const tieneAdicional = r.montoAdicional && r.montoAdicional > 0;
+  const textoAdicional = tieneAdicional 
+    ? `• Aporte adicional: $${formatearCLP(r.montoAdicional)}
+• Presupuesto total: $${formatearCLP(r.presupuestoTotalCLP)} (${r.presupuestoTotalUF.toFixed(2)} UF)`
+    : '';
 
   const mensaje = `🔔 SOLICITUD DE ASESORÍA
 
@@ -762,6 +1045,7 @@ document.getElementById("btnAsesoria").addEventListener("click", function() {
 
 💰 *Cotización:*
 • Tu 7%: $${formatearCLP(r.sieteCLP)} (${r.sieteUF.toFixed(2)} UF)
+${textoAdicional}
 
 📋 *Planes sugeridos:*
 1) ${plan1Nombre} → ${plan1Valor}
