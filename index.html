@@ -1044,7 +1044,7 @@ function seleccionarPlanesConPresupuesto(presupuestoUF, zona, numPersonas) {
   
   // Calcular valor para cada plan
   const planesConValor = planesZona.map(plan => {
-    const calc = calcularValorPlan(plan, edadesCargas, edadTitular, uf);
+    const calc = calcularValorPlan(plan.pb_uf, edadTitular, edadesCargas);
     return {
       ...plan,
       valorCalculadoUF: calc.totalUF,
