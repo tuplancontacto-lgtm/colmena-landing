@@ -1030,7 +1030,12 @@ function recalcularConAdicional() {
 function seleccionarPlanesConPresupuesto(presupuestoUF, zona, numPersonas) {
   const uf = window.__UF_VALOR || 39700;
   const edadTitular = Number(formularioDatos.edad);
-  const edadesCargas = ultimoResultado.edadesCargas;
+  
+  // Asegurar que edadesCargas sea un array
+  let edadesCargas = ultimoResultado.edadesCargas;
+  if (!Array.isArray(edadesCargas)) {
+    edadesCargas = [];
+  }
   
   // Filtrar por zona
   const planesZona = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
