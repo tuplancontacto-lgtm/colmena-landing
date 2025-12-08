@@ -731,6 +731,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
   };
 
   // ENVIAR A GOOGLE FORMS
+  console.log("Enviando a Google Forms...");
   try {
     const plan1Nombre = plan1 ? plan1.plan : 'Sin plan disponible';
     const plan2Nombre = plan2 ? plan2.plan : 'Sin plan disponible';
@@ -749,15 +750,25 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     f.append(FORM_FIELDS.plan1, plan1Nombre);
     f.append(FORM_FIELDS.plan2, plan2Nombre);
 
-    await fetch(FORM_BASE_URL, { method: "POST", mode: "no-cors", body: f });
-    statusMsg.textContent = "✅ Datos enviados correctamente";
-    statusMsg.className = "small success-msg";
+    fetch(FORM_BASE_URL, { method: "POST", mode: "no-cors", body: f })
+      .then(() => {
+        console.log("✅ Google Forms enviado");
+        statusMsg.textContent = "✅ Datos enviados correctamente";
+        statusMsg.className = "small success-msg";
+      })
+      .catch(err => {
+        console.error("Error Google Forms:", err);
+        statusMsg.textContent = "⚠️ Error al enviar formulario";
+        statusMsg.className = "small error-msg";
+      });
   } catch (err) {
+    console.error("Error preparando Google Forms:", err);
     statusMsg.textContent = "⚠️ Error al enviar";
     statusMsg.className = "small error-msg";
   }
 
   // ENVIAR CALLMEBOT
+  console.log("Enviando CallMeBot...");
   const msgWA = `🔔 NUEVA COTIZACIÓN
 
 👤 ${formularioDatos.nombre}
@@ -861,24 +872,31 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
   RECALCULAR CON MONTO ADICIONAL (máximo 2 veces)
 =========================================================*/
 function recalcularConAdicional() {
-  const montoAdicionalInput = document.getElementById("montoAdicional");
-  const montoAdicional = parseInt(montoAdicionalInput.value) || 0;
-  
-  if (montoAdicional <= 0) {
-    alert("Por favor ingresa un monto adicional mayor a 0");
-    return;
-  }
+  try {
+    const montoAdicionalInput = document.getElementById("montoAdicional");
+    if (!montoAdicionalInput) {
+      console.error("No se encontró el input de monto adicional");
+      return;
+    }
+    
+    const montoAdicional = parseInt(montoAdicionalInput.value) || 0;
+    
+    if (montoAdicional <= 0) {
+      alert("Por favor ingresa un monto adicional mayor a 0");
+      return;
+    }
 
-  if (!ultimoResultado) {
-    alert("Primero realiza una cotización");
-    return;
-  }
+    if (!ultimoResultado) {
+      alert("Primero realiza una cotización");
+      return;
+    }
 
-  // Incrementar contador
-  contadorRecalculos++;
-  
-  const uf = window.__UF_VALOR || 39700;
-  const r = ultimoResultado;
+    // Incrementar contador
+    contadorRecalculos++;
+    console.log(`Recálculo #${contadorRecalculos}`);
+    
+    const uf = window.__UF_VALOR || 39700;
+    const r = ultimoResultado;
   
   // Nuevo presupuesto total = 7% + adicional
   const nuevoPresupuestoCLP = r.sieteCLP + montoAdicional;
@@ -999,6 +1017,11 @@ function recalcularConAdicional() {
 
   // Scroll al resultado
   document.getElementById("resultado-preliminar").scrollIntoView({ behavior: "smooth" });
+  
+  } catch (error) {
+    console.error("Error en recalcularConAdicional:", error);
+    alert("Ocurrió un error al recalcular. Por favor intenta de nuevo.");
+  }
 }
 
 /*========================================================
