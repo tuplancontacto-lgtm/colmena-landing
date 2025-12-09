@@ -370,17 +370,31 @@ const REGION_A_ZONA = {
 };
 
 /*========================================================
-  TABLA DE FACTORES DE EDAD CORRECTA
+  TABLA DE FACTORES DE EDAD - COTIZANTE
 =========================================================*/
 function obtenerFactor(edad) {
-  if (edad < 2) return 0.0;      // Menores de 2 no pagan
-  if (edad <= 18) return 0.6;    // 2-18 años
-  if (edad <= 25) return 1.0;    // 19-25 años
-  if (edad <= 35) return 1.2;    // 26-35 años
-  if (edad <= 45) return 1.3;    // 36-45 años
-  if (edad <= 55) return 1.5;    // 46-55 años
-  if (edad <= 65) return 1.8;    // 56-65 años
-  return 2.4;                     // 66+ años
+  if (edad < 2) return 0.0;       // De 0 a < 2 años
+  if (edad < 20) return 0.6;      // De 2 a < 20 años
+  if (edad < 25) return 0.9;      // De 20 a < 25 años
+  if (edad < 35) return 1.0;      // De 25 a < 35 años
+  if (edad < 45) return 1.3;      // De 35 a < 45 años
+  if (edad < 55) return 1.4;      // De 45 a < 55 años
+  if (edad < 65) return 2.0;      // De 55 a < 65 años
+  return 2.4;                      // De 65 y más
+}
+
+/*========================================================
+  TABLA DE FACTORES DE EDAD - CARGAS
+=========================================================*/
+function obtenerFactorCarga(edad) {
+  if (edad < 2) return 0.0;       // De 0 a < 2 años
+  if (edad < 20) return 0.6;      // De 2 a < 20 años
+  if (edad < 25) return 0.7;      // De 20 a < 25 años
+  if (edad < 35) return 0.7;      // De 25 a < 35 años
+  if (edad < 45) return 0.9;      // De 35 a < 45 años
+  if (edad < 55) return 1.0;      // De 45 a < 55 años
+  if (edad < 65) return 1.4;      // De 55 a < 65 años
+  return 2.2;                      // De 65 y más
 }
 
 /*========================================================
@@ -442,9 +456,9 @@ function formatearCLP(n) {
 function calcularValorPlan(pbUF, edadTitular, edadesCargas) {
   const uf = window.__UF_VALOR || 39700;
   
-  // Sumar factores
+  // Sumar factores: titular usa obtenerFactor, cargas usa obtenerFactorCarga
   let sumaFactores = obtenerFactor(edadTitular);
-  edadesCargas.forEach(e => sumaFactores += obtenerFactor(e));
+  edadesCargas.forEach(e => sumaFactores += obtenerFactorCarga(e));
   
   // Valor plan = PB * suma de factores
   const valorPlanUF = pbUF * sumaFactores;
