@@ -770,19 +770,21 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
 
   // ENVIAR CALLMEBOT
   console.log("Enviando CallMeBot...");
+  const cargasInfo = edadesCargas.length > 0 ? `${edadesCargas.length} (${edadesCargas.join(', ')} años)` : '0';
   const msgWA = `🔔 NUEVA COTIZACIÓN
 
 👤 ${formularioDatos.nombre}
+📧 ${formularioDatos.correo}
 📞 ${formularioDatos.telefono}
 📍 ${formularioDatos.region} (${zona})
 💰 Renta: $${formatearCLP(renta)}
-👥 Cargas: ${edadesCargas.length}
+👥 Cargas: ${cargasInfo}
 
 📊 7%: $${formatearCLP(sieteCLP)} (${sieteUF.toFixed(2)} UF)
 
 📋 Planes sugeridos:
-1) ${plan1 ? plan1.plan : 'Sin plan'}
-2) ${plan2 ? plan2.plan : 'Sin plan'}`;
+1) ${plan1 ? plan1.plan + ' → ' + plan1.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}
+2) ${plan2 ? plan2.plan + ' → ' + plan2.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}`;
   
   enviarCallMeBot(msgWA);
 
@@ -1095,8 +1097,11 @@ document.getElementById("btnAsesoria").addEventListener("click", function() {
   const r = ultimoResultado;
   const plan1Nombre = r.plan1 ? r.plan1.plan : '-';
   const plan2Nombre = r.plan2 ? r.plan2.plan : '-';
-  const plan1Valor = r.plan1 ? `$${formatearCLP(r.plan1.valorCalculadoCLP)} (${r.plan1.valorCalculadoUF.toFixed(2)} UF)` : '-';
-  const plan2Valor = r.plan2 ? `$${formatearCLP(r.plan2.valorCalculadoCLP)} (${r.plan2.valorCalculadoUF.toFixed(2)} UF)` : '-';
+  const plan1Valor = r.plan1 ? `${r.plan1.valorCalculadoUF.toFixed(2)} UF` : '-';
+  const plan2Valor = r.plan2 ? `${r.plan2.valorCalculadoUF.toFixed(2)} UF` : '-';
+  
+  // Info de cargas con edades
+  const cargasInfo = r.edadesCargas.length > 0 ? `${r.edadesCargas.length} (${r.edadesCargas.join(', ')} años)` : '0';
   
   // Verificar si hay monto adicional
   const tieneAdicional = r.montoAdicional && r.montoAdicional > 0;
@@ -1109,13 +1114,14 @@ document.getElementById("btnAsesoria").addEventListener("click", function() {
 
 👤 Datos del cliente:
 • Nombre: ${formularioDatos.nombre}
+• Correo: ${formularioDatos.correo}
 • RUT: ${formularioDatos.rut}
 • Teléfono: ${formularioDatos.telefono}
 • Edad: ${formularioDatos.edad} años
 • Isapre actual: ${formularioDatos.isapre}
 • Región: ${formularioDatos.region} (${r.zona})
 • Renta: $${formatearCLP(Number(formularioDatos.renta))}
-• Cargas: ${r.edadesCargas.length}${r.cargasTexto ? ' (' + r.cargasTexto + ')' : ''}
+• Cargas: ${cargasInfo}
 
 💰 Cotización:
 • Tu 7%: $${formatearCLP(r.sieteCLP)} (${r.sieteUF.toFixed(2)} UF)
