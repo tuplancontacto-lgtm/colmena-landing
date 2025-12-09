@@ -730,7 +730,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     sieteCLP, sieteUF, edadesCargas, cargasTexto, zona, plan1, plan2
   };
 
-  // ENVIAR A GOOGLE FORMS usando método de imagen (más confiable)
+  // ENVIAR A GOOGLE FORMS
   console.log("Enviando a Google Forms...");
   try {
     const plan1Nombre = plan1 ? plan1.plan : 'Sin plan disponible';
@@ -750,11 +750,6 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     params.append(FORM_FIELDS.plan1, plan1Nombre);
     params.append(FORM_FIELDS.plan2, plan2Nombre);
 
-    // Método 1: Imagen invisible (evita CORS)
-    const img = new Image();
-    img.src = FORM_BASE_URL + '?' + params.toString();
-    
-    // Método 2: Fetch como respaldo
     fetch(FORM_BASE_URL, { 
       method: "POST", 
       mode: "no-cors", 
