@@ -1202,37 +1202,31 @@ document.getElementById("btnEnviarUsuario").addEventListener("click", function()
   const plan2Nombre = r.plan2 ? r.plan2.plan : '-';
   const plan1Valor = r.plan1 ? `${r.plan1.valorCalculadoUF.toFixed(2)} UF` : '-';
   const plan2Valor = r.plan2 ? `${r.plan2.valorCalculadoUF.toFixed(2)} UF` : '-';
+
+  const mensaje = `Estimado/a ${formularioDatos.nombre} 👋
+
+Gracias por tu interés en *Colmena Golden Cross*
+
+📋 *Resumen de tu cotización:*
+• Plan 1: ${plan1Nombre} → ${plan1Valor}
+• Plan 2: ${plan2Nombre} → ${plan2Valor}
+• Tu 7%: $${formatearCLP(r.sieteCLP)} (${r.sieteUF.toFixed(2)} UF)
+
+📄 *Documentos para iniciar tu afiliación:*
+1. Última liquidación de sueldo
+2. 12 últimas cotizaciones AFP
+3. Foto RUT (ambos lados)
+
+Puedes enviarlos por este medio.
+
+*${ASESOR_NOMBRE}*
+Ejecutivo de Ventas - Colmena Golden Cross
+📞 ${ASESOR_TELEFONO}`;
+
+  // Enviar por CallMeBot al asesor
+  enviarCallMeBot(mensaje);
   
-  // Formatear teléfono del usuario (quitar espacios y agregar código país si falta)
-  let telefonoUsuario = formularioDatos.telefono.replace(/\s/g, '').replace(/\+/g, '');
-  if (!telefonoUsuario.startsWith('56')) {
-    telefonoUsuario = '56' + telefonoUsuario;
-  }
-
-  const mensaje = `¡Hola ${formularioDatos.nombre}! 👋
-
-*Gracias por cotizar en Colmena Golden Cross* 🏥
-
-📋 *Tus planes recomendados:*
-1️⃣ ${plan1Nombre} → ${plan1Valor}
-2️⃣ ${plan2Nombre} → ${plan2Valor}
-
-💰 Tu 7%: $${formatearCLP(r.sieteCLP)} (${r.sieteUF.toFixed(2)} UF)
-
-📄 *Documentos para cambiarte a Colmena:*
-• Última liquidación de sueldo
-• 12 últimas cotizaciones de tu AFP
-• Foto de tu RUT (ambos lados)
-
-👤 *Tu asesor:*
-${ASESOR_NOMBRE}
-📞 ${ASESOR_TELEFONO}
-
-¡Quedo atento a tus consultas! 🙌`;
-
-  // Abrir WhatsApp con el mensaje prellenado hacia el usuario
-  const url = `https://wa.me/${telefonoUsuario}?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, "_blank");
+  alert("✅ Resumen enviado a tu WhatsApp. Reenvíalo al cliente.");
 });
 
 /*========================================================
