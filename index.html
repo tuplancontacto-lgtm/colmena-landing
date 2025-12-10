@@ -176,6 +176,28 @@
     .adicional-label { color: #888; font-size: 0.9rem; }
     .adicional-valor { color: #4ade80; font-size: 1.3rem; font-weight: bold; }
 
+    .btn-enviar-usuario {
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 15px;
+      display: block;
+      width: 100%;
+      max-width: 350px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .btn-enviar-usuario:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(37,211,102,0.4);
+    }
+
     @media (max-width: 600px) {
       .plan-nombre { font-size: 1.4rem; }
       .clinicas-tabla th, .clinicas-tabla td { padding: 8px 10px; font-size: 0.85rem; }
@@ -262,7 +284,10 @@
 
   <div style="text-align:center;margin-top:30px;">
     <button id="btnAsesoria" class="btn-asesoria">📋 Solicitar Asesoría Personalizada</button>
-    <p class="small" style="margin-top:10px;">Se abrirá WhatsApp para contactar a un asesor.</p>
+    <p class="small" style="margin-top:10px;">Un asesor te contactará a la brevedad.</p>
+    
+    <button id="btnEnviarUsuario" class="btn-enviar-usuario">📲 Recibir Resumen por WhatsApp</button>
+    <p class="small" style="margin-top:10px;">Recibirás los planes cotizados y documentos requeridos.</p>
   </div>
 </section>
 
@@ -338,6 +363,10 @@ const GOOGLE_FORM_REFERIDOS_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeIp
 const WHATSAPP_ASESORIA = '56975356696';
 const CALLMEBOT_PHONE = '56975356696';
 const CALLMEBOT_APIKEY = '7360481';
+
+// Datos del asesor para mensaje al usuario
+const ASESOR_NOMBRE = 'José Mora';
+const ASESOR_TELEFONO = '+56 9 7535 6696';
 
 // URLs de datos
 const URL_PLANES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/planes_completos.json';
@@ -1157,6 +1186,53 @@ ${textoAdicional}
   setTimeout(() => {
     document.getElementById("referidos").scrollIntoView({ behavior: "smooth" });
   }, 400);
+});
+
+/*========================================================
+  BOTÓN ENVIAR RESUMEN AL USUARIO POR WHATSAPP
+=========================================================*/
+document.getElementById("btnEnviarUsuario").addEventListener("click", function() {
+  if (!formularioDatos || !formularioDatos.nombre) {
+    alert("Primero completa y envía la cotización.");
+    return;
+  }
+
+  const r = ultimoResultado;
+  const plan1Nombre = r.plan1 ? r.plan1.plan : '-';
+  const plan2Nombre = r.plan2 ? r.plan2.plan : '-';
+  const plan1Valor = r.plan1 ? `${r.plan1.valorCalculadoUF.toFixed(2)} UF` : '-';
+  const plan2Valor = r.plan2 ? `${r.plan2.valorCalculadoUF.toFixed(2)} UF` : '-';
+  
+  // Formatear teléfono del usuario (quitar espacios y agregar código país si falta)
+  let telefonoUsuario = formularioDatos.telefono.replace(/\s/g, '').replace(/\+/g, '');
+  if (!telefonoUsuario.startsWith('56')) {
+    telefonoUsuario = '56' + telefonoUsuario;
+  }
+
+  const mensaje = `¡Hola ${formularioDatos.nombre}! 👋
+
+*Gracias por cotizar en Colmena Golden Cross* 🏥
+
+📋 *Tus planes recomendados:*
+1️⃣ ${plan1Nombre} → ${plan1Valor}
+2️⃣ ${plan2Nombre} → ${plan2Valor}
+
+💰 Tu 7%: $${formatearCLP(r.sieteCLP)} (${r.sieteUF.toFixed(2)} UF)
+
+📄 *Documentos para cambiarte a Colmena:*
+• Última liquidación de sueldo
+• 12 últimas cotizaciones de tu AFP
+• Foto de tu RUT (ambos lados)
+
+👤 *Tu asesor:*
+${ASESOR_NOMBRE}
+📞 ${ASESOR_TELEFONO}
+
+¡Quedo atento a tus consultas! 🙌`;
+
+  // Abrir WhatsApp con el mensaje prellenado hacia el usuario
+  const url = `https://wa.me/${telefonoUsuario}?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, "_blank");
 });
 
 /*========================================================
