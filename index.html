@@ -5,6 +5,288 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Planes de Salud Colmena - Asesoría Profesional</title>
   <style>
+    /* --- Todo el CSS original completo aquí --- */
+    * { box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background-color: #0a1a2a; color: white; margin: 0; padding: 0; }
+    header { background: linear-gradient(90deg, #0a1a2a, #12375a); padding: 40px; text-align: center; }
+    h1 { color: #d4af37; font-size: 2.5rem; margin: 0; }
+    h2 { color: #d4af37; }
+    section { padding: 40px 20px; max-width: 900px; margin: auto; }
+    .gold { color: #d4af37; }
+    .card { background: #112233; border: 1px solid #d4af37; padding: 25px; border-radius: 15px; margin-bottom: 25px; }
+    button { background: #d4af37; color: #0a1a2a; padding: 15px 25px; border: none; border-radius: 10px; font-size: 1.1rem; cursor: pointer; }
+    button:hover { opacity: 0.85; }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    form input, form select, form textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: none; }
+    .whatsapp { display: block; background: #25D366; text-align: center; padding: 15px; color: white; text-decoration: none; border-radius: 10px; font-size: 1.2rem; font-weight: bold; margin-top: 20px; max-width: 300px; margin-left: auto; margin-right: auto; }
+    .small { font-size: 0.9rem; color: #ccc; }
+    .row { display:flex; gap:16px; flex-wrap: wrap; }
+    .col { flex:1; min-width: 200px; }
+    .success-msg { color: #4ade80; margin-top: 12px; font-weight: bold; }
+    .error-msg { color: #ff8080; margin-top: 12px; }
+    /* ...Mantén todo tu CSS original aquí... */
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Asesoría en Planes de Salud Colmena</h1>
+  <p class="gold">Atención premium para clientes exigentes</p>
+  <p class="small">Completa el formulario para obtener una cotización exacta en UF y CLP.</p>
+</header>
+
+<section id="formulario" class="card">
+  <h2 class="gold">Formulario para Cálculo del Plan</h2>
+  <form id="mainForm">
+    <div class="row">
+      <div class="col"><input type="text" name="nombre" id="nombre" placeholder="Nombre completo" required /></div>
+      <div class="col"><input type="email" name="correo" id="correo" placeholder="Correo electrónico" required /></div>
+    </div>
+    <div class="row">
+      <div class="col"><input type="tel" name="telefono" id="telefono" placeholder="Teléfono (ej: +56912345678)" required /></div>
+      <div class="col"><input type="number" name="edad" id="edad" placeholder="Edad titular" min="18" max="99" required /></div>
+    </div>
+    <input type="text" name="rut" id="rut" placeholder="RUT (ej: 12.345.678-9)" required />
+    <select name="isapre" id="isapre" required>
+      <option value="">Isapre actual</option>
+      <option>FONASA</option>
+      <option>Colmena</option>
+      <option>Cruz Blanca</option>
+      <option>Consalud</option>
+      <option>Banmédica</option>
+      <option>Vida Tres</option>
+      <option>Nueva Masvida</option>
+      <option>Esencial</option>
+    </select>
+    <input type="number" id="renta" name="renta" placeholder="Renta imponible mensual (CLP)" required />
+    <label class="small">Edad de las cargas (separadas por coma, ej: 5, 12, 30)</label>
+    <textarea name="cargas" id="cargas" placeholder="Ej: 5, 12, 30" rows="2"></textarea>
+    <select name="region" id="region" required>
+      <option value="">Selecciona tu Región</option>
+      <option value="Arica y Parinacota">Región de Arica y Parinacota</option>
+      <option value="Tarapacá">Región de Tarapacá</option>
+      <option value="Antofagasta">Región de Antofagasta</option>
+      <option value="Atacama">Región de Atacama</option>
+      <option value="Coquimbo">Región de Coquimbo</option>
+      <option value="Valparaíso">Región de Valparaíso</option>
+      <option value="Metropolitana">Región Metropolitana</option>
+      <option value="O'Higgins">Región de O'Higgins</option>
+      <option value="Maule">Región del Maule</option>
+      <option value="Ñuble">Región de Ñuble</option>
+      <option value="Bío-Bío">Región del Bío-Bío</option>
+      <option value="La Araucanía">Región de La Araucanía</option>
+      <option value="Los Ríos">Región de Los Ríos</option>
+      <option value="Los Lagos">Región de Los Lagos</option>
+      <option value="Aysén">Región de Aysén</option>
+      <option value="Magallanes">Región de Magallanes</option>
+    </select>
+    <textarea name="mensaje" id="mensaje" placeholder="Mensaje adicional (opcional)" rows="2"></textarea>
+    <button type="submit" id="submitBtn">Cotizar Ahora</button>
+    <p id="statusMsg" class="small" style="margin-top:10px;"></p>
+  </form>
+</section>
+
+<section class="card">
+  <h2 class="gold">UF del día</h2>
+  <p class="small">UF: <span id="ufValor">cargando…</span> — Fecha: <span id="ufFecha">-</span></p>
+</section>
+
+<section id="resultado-preliminar" class="card" style="display:none">
+  <div id="resultadoDetalle"></div>
+  <div style="text-align:center;margin-top:30px;">
+    <button id="btnAsesoria" class="btn-asesoria">📋 Solicitar Asesoría Personalizada</button>
+    <p class="small" style="margin-top:10px;">Un asesor te contactará a la brevedad.</p>
+    <button id="btnEnviarUsuario" class="btn-enviar-usuario">📲 Recibir Resumen por WhatsApp</button>
+    <p class="small" style="margin-top:10px;">Recibirás los planes cotizados y documentos requeridos.</p>
+  </div>
+</section>
+
+<section class="referidos-section" id="referidos" style="display:none">
+  <div class="referidos-container">
+    <div class="referidos-header">
+      <h2>¿Quieres que asesoremos a un amigo?</h2>
+      <p>Ingresa los datos y nos comunicaremos con tu referido.</p>
+    </div>
+    <form id="formReferidos">
+      <div class="form-section">
+        <h3>👤 Tus Datos</h3>
+        <div class="form-group-referidos">
+          <label for="nombreUsuario">Tu Nombre *</label>
+          <input type="text" id="nombreUsuario" required>
+        </div>
+      </div>
+      <div class="form-section">
+        <h3>🎯 Datos del Referido</h3>
+        <div class="form-group-referidos">
+          <label>Nombre Completo *</label>
+          <input type="text" id="nombreReferido" required>
+        </div>
+        <div class="form-group-referidos">
+          <label>Teléfono *</label>
+          <input type="tel" id="telefonoReferido" required>
+        </div>
+        <div class="form-group-referidos">
+          <label>Correo *</label>
+          <input type="email" id="correoReferido" required>
+        </div>
+      </div>
+      <button type="submit" class="btn-enviar-referido">📤 Enviar Referido</button>
+      <div id="mensajeExitoReferido" class="mensaje-exito-referido">✅ ¡Referido Enviado!</div>
+      <div id="mensajeErrorReferido" class="mensaje-error-referido">❌ Error al enviar.</div>
+    </form>
+  </div>
+</section>
+
+<a class="whatsapp" id="btnWAAsesor" href="#" target="_blank">Contactar por WhatsApp</a>
+
+<footer style="text-align:center; padding:30px; color:#666; font-size:0.85rem;">
+  © 2025 Colmena Golden Cross - Asesoría en Planes de Salud
+</footer>
+
+<script>
+/* ---------- SISTEMA DE ASESORES MULTI-URL ---------- */
+const ASESORES = {
+  jose_pepe: {
+    nombre: "José Pepe",
+    telefono: "+56990701837",
+    whatsapp: "56990701837",
+    callmebot_apikey: "5088331",
+    correo: "voz.josemora@gmail.com"
+  },
+  betty: {
+    nombre: "Betty González",
+    telefono: "+56983899232",
+    whatsapp: "56983899232",
+    callmebot_apikey: "Pendiente", // Actualízalo cuando obtengas su apikey real
+    correo: "betty.gonzalez@colmena.cl"
+  },
+  jose_mora: {
+    nombre: "José Mora",
+    telefono: "+56975356696",
+    whatsapp: "56975356696",
+    callmebot_apikey: "7360481",
+    correo: "jose.mora@colmena.cl"
+  }
+};
+
+function getQueryParam(param) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(param);
+}
+const asesorKey = getQueryParam("asesor") || "jose_mora";
+const asesor = ASESORES[asesorKey] || ASESORES["jose_mora"];
+const WHATSAPP_ASESORIA = asesor.whatsapp;
+const CALLMEBOT_PHONE = asesor.whatsapp;
+const CALLMEBOT_APIKEY = asesor.callmebot_apikey;
+const ASESOR_NOMBRE = asesor.nombre;
+const ASESOR_TELEFONO = asesor.telefono;
+const ASESOR_CORREO = asesor.correo;
+
+window.addEventListener("DOMContentLoaded", function() {
+  var btnWA = document.getElementById("btnWAAsesor");
+  if (btnWA) {
+    btnWA.href = `https://wa.me/${WHATSAPP_ASESORIA}`;
+    btnWA.innerText = `Contactar a ${ASESOR_NOMBRE} por WhatsApp`;
+  }
+});
+
+/* GOOGLE FORMS FIELDS: Cotización de Planes */
+const FORM_BASE_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/formResponse';
+const FORM_FIELDS = {
+  nombre: 'entry.1455181501',
+  rut: 'entry.1514828805',
+  correo: 'entry.1253669566',
+  telefono: 'entry.1927631596',
+  edad: 'entry.1515225692',
+  isapre: 'entry.1312575017',
+  renta: 'entry.1350273122',
+  region: 'entry.1283417188',
+  cargas: 'entry.6457415',
+  mensaje: 'entry.860152674',
+  plan1: 'entry.1176082335',
+  plan2: 'entry.1798986413',
+  asesorid: 'entry.1496988494'
+};
+
+/* GOOGLE FORMS FIELDS: Referidos */
+const GOOGLE_FORM_REFERIDOS_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeIppjYB0Vgc6RsJ3AM0HcAVhLaxAT6ZZ_MxdPhmuwRkwLT-A/formResponse';
+const REFERIDOS_FIELDS = {
+  tu_nombre: "entry.1664559901",
+  nombre_referido: "entry.715463265",
+  telefono_referido: "entry.1382714918",
+  correo_referido: "entry.897178414",
+  mensaje_adicional: "entry.178502788",
+  asesorid_referidos: "entry.683967436"
+};
+
+/* ------------- ENVÍO DE COTIZACIÓN ------------- */
+document.getElementById("mainForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  // ... Lógica previa sin cambios ...
+  // Ejemplo mapeo de los campos, adapta a tu lógica real:
+  const data = new FormData(this);
+  const formularioDatos = {
+    nombre: data.get("nombre"),
+    correo: data.get("correo"),
+    telefono: data.get("telefono"),
+    edad: data.get("edad"),
+    rut: data.get("rut"),
+    isapre: data.get("isapre"),
+    renta: data.get("renta"),
+    cargas: data.get("cargas"),
+    region: data.get("region"),
+    mensaje: data.get("mensaje")
+  };
+  // Parsea y arma cargasTexto, plan1Nombre, plan2Nombre como en tu código real
+  // ...
+  const params = new URLSearchParams();
+  params.append(FORM_FIELDS.nombre, formularioDatos.nombre);
+  params.append(FORM_FIELDS.rut, formularioDatos.rut);
+  params.append(FORM_FIELDS.correo, formularioDatos.correo);
+  params.append(FORM_FIELDS.telefono, formularioDatos.telefono);
+  params.append(FORM_FIELDS.edad, formularioDatos.edad);
+  params.append(FORM_FIELDS.isapre, formularioDatos.isapre);
+  params.append(FORM_FIELDS.renta, formularioDatos.renta);
+  params.append(FORM_FIELDS.region, formularioDatos.region);
+  params.append(FORM_FIELDS.cargas, formularioDatos.cargas); // O variable de edades/edadesCargas si ya parseaste
+  params.append(FORM_FIELDS.mensaje, formularioDatos.mensaje || "(sin mensaje)");
+  params.append(FORM_FIELDS.plan1, plan1Nombre); // Calculado como en tu código
+  params.append(FORM_FIELDS.plan2, plan2Nombre); // Calculado como en tu código
+  params.append(FORM_FIELDS.asesorid, asesorKey); // CLAVE: Identificador de asesor
+  fetch(FORM_BASE_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: params.toString()
+  }).catch(() => {});
+});
+
+/* ------------- ENVÍO DE REFERIDO ------------- */
+document.getElementById("formReferidos").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  const nombreUsuario = document.getElementById("nombreUsuario").value;
+  const nombreReferido = document.getElementById("nombreReferido").value;
+  const telefonoReferido = document.getElementById("telefonoReferido").value;
+  const correoReferido = document.getElementById("correoReferido").value;
+  const mensajeAdicionalReferido = ""; // Si tienes un campo extra de mensaje, captúralo aquí
+  const f = new FormData();
+  f.append(REFERIDOS_FIELDS.tu_nombre, nombreUsuario);
+  f.append(REFERIDOS_FIELDS.nombre_referido, nombreReferido);
+  f.append(REFERIDOS_FIELDS.telefono_referido, telefonoReferido);
+  f.append(REFERIDOS_FIELDS.correo_referido, correoReferido);
+  f.append(REFERIDOS_FIELDS.mensaje_adicional, mensajeAdicionalReferido || "(sin mensaje)");
+  f.append(REFERIDOS_FIELDS.asesorid_referidos, asesorKey);
+  await fetch(GOOGLE_FORM_REFERIDOS_URL, { method: "POST", mode: "no-cors", body: f });
+});
+
+/* ----- El resto de tus funciones y scripts intactos (Planes, WhatsApp, etc.) ----- */
+</script>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planes de Salud Colmena - Asesoría Profesional</title>
+  <style>
     * { box-sizing: border-box; }
     body { font-family: Arial, sans-serif; background-color: #0a1a2a; color: white; margin: 0; padding: 0; }
     header { background: linear-gradient(90deg, #0a1a2a, #12375a); padding: 40px; text-align: center; }
