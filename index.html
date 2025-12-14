@@ -515,23 +515,14 @@ function seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas) {
   const minimo95 = sieteUF * 0.95;
   
   // Filtrar planes de la zona (o LIBRE_ELECCION que aplica a todas)
-  const planesZona = PLANES.filter(p => 
-    p.zona === zona || p.zona === 'LIBRE_ELECCION'
-  );
-  
+  const planesZona = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
+
   console.log(`Buscando planes para zona: ${zona}, encontrados: ${planesZona.length}`);
   
   // Para cada plan, calcular su valor real según cargas
   const planesConValor = planesZona.map(p => {
     const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
-    return {
-      ...p,
-      valorCalculadoUF: calc.totalUF,
-      valorCalculadoCLP: calc.totalCLP,
-      gesUF: calc.gesUF,
-      gesCLP: calc.gesCLP,
-      sumaFactores: calc.sumaFactores
-    };
+    return { ...p, valorCalculadoUF: calc.totalUF, valorCalculadoCLP: calc.totalCLP, gesUF: calc.gesUF, gesCLP: calc.gesCLP, sumaFactores: calc.sumaFactores };
   });
   
   // Filtrar planes >= 95% del 7%
@@ -540,22 +531,14 @@ function seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas) {
   console.log(`Planes que cumplen >= 95% del 7% (${minimo95.toFixed(2)} UF): ${planesValidos.length}`);
   
   // Ordenar por cercanía al 7%
-  planesValidos.sort((a, b) => {
-    const diffA = Math.abs(a.valorCalculadoUF - sieteUF);
-    const diffB = Math.abs(b.valorCalculadoUF - sieteUF);
-    return diffA - diffB;
-  });
+  planesValidos.sort((a, b) => Math.abs(a.valorCalculadoUF - sieteUF) - Math.abs(b.valorCalculadoUF - sieteUF));
   
   // Tomar los 2 mejores
   const plan1 = planesValidos[0] || null;
   const plan2 = planesValidos[1] || null;
-  
-  if (plan1) {
-    console.log(`Plan 1: ${plan1.plan} - ${plan1.valorCalculadoUF.toFixed(2)} UF`);
-  }
-  if (plan2) {
-    console.log(`Plan 2: ${plan2.plan} - ${plan2.valorCalculadoUF.toFixed(2)} UF`);
-  }
+
+  if (plan1) console.log(`Plan 1: ${plan1.plan} - ${plan1.valorCalculadoUF.toFixed(2)} UF`);
+  if (plan2) console.log(`Plan 2: ${plan2.plan} - ${plan2.valorCalculadoUF.toFixed(2)} UF`);
   
   return { plan1, plan2 };
 }
@@ -569,7 +552,7 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   const uf = window.__UF_VALOR || 39700;
   const adicionalUF = Math.max(0, plan.valorCalculadoUF - sieteUF - (montoAdicional / uf));
   const adicionalCLP = Math.round(adicionalUF * uf);
-  
+
   const esPrincipal = numero === 1;
   const badgeClass = esPrincipal ? 'principal' : 'secundario';
   const cardClass = esPrincipal ? '' : 'secundario';
@@ -581,7 +564,7 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
     coberturasHTML = `
       <div class="coberturas-section">
         <div class="coberturas-title">📊 Cobertura Hospitalaria</div>
-        <div class="coberturas-texto">${plan.hospitalizacion.replace(/\\n/g, '<br>')}</div>
+        <div class="coberturas-texto">${plan.hospitalizacion.replace(/\n/g, '<br>')}</div>
       </div>
     `;
   }
@@ -1091,14 +1074,7 @@ function seleccionarPlanesConPresupuesto(presupuestoUF, zona, numPersonas) {
   // Calcular valor para cada plan
   const planesConValor = planesZona.map(plan => {
     const calc = calcularValorPlan(plan.pb_uf, edadTitular, edadesCargas);
-    return {
-      ...plan,
-      valorCalculadoUF: calc.totalUF,
-      valorCalculadoCLP: calc.totalCLP,
-      gesUF: calc.gesUF,
-      gesCLP: calc.gesCLP,
-      sumaFactores: calc.sumaFactores
-    };
+    return { ...plan, valorCalculadoUF: calc.totalUF, valorCalculadoCLP: calc.totalCLP, gesUF: calc.gesUF, gesCLP: calc.gesCLP, sumaFactores: calc.sumaFactores };
   });
   
   // Filtrar planes que estén dentro del presupuesto (hasta 110% del presupuesto)
@@ -1117,11 +1093,11 @@ function seleccionarPlanesConPresupuesto(presupuestoUF, zona, numPersonas) {
   
   // Ordenar por valor descendente (mejores planes primero, más cercanos al presupuesto)
   planesValidos.sort((a, b) => b.valorCalculadoUF - a.valorCalculadoUF);
-  
+
   // Tomar los 2 mejores
   const plan1 = planesValidos[0] || null;
-  const plan2 = planesValidos[1] || null;
-  
+  const plan2 = plansValidos[1] || null;
+
   if (plan1) console.log(`Nuevo Plan 1: ${plan1.plan} - ${plan1.valorCalculadoUF.toFixed(2)} UF`);
   if (plan2) console.log(`Nuevo Plan 2: ${plan2.plan} - ${plan2.valorCalculadoUF.toFixed(2)} UF`);
   
@@ -1151,7 +1127,7 @@ document.getElementById("btnAsesoria").addEventListener("click", function() {
   const textoAdicional = tieneAdicional 
     ? `• Aporte adicional: $${formatearCLP(r.montoAdicional)}
 • Presupuesto total: $${formatearCLP(r.presupuestoTotalCLP)} (${r.presupuestoTotalUF.toFixed(2)} UF)`
-    : '';
+    : ''; 
 
   const mensaje = `🔔 SOLICITUD DE ASESORÍA
 
@@ -1207,15 +1183,9 @@ document.getElementById("btnEnviarUsuario").addEventListener("click", function()
 
 Gracias por tu interés en *Colmena Golden Cross*
 
-📋 *Resumen de tu cotización:*
-• Plan 1: ${plan1Nombre} → ${plan1Valor}
-• Plan 2: ${plan2Nombre} → ${plan2Valor}
-• Tu 7%: $${formatearCLP(r.sieteCLP)} (${r.sieteUF.toFixed(2)} UF)
+📋 *Resumen de tu cotización:*\n• Plan 1: ${plan1Nombre} → ${plan1Valor}\n• Plan 2: ${plan2Nombre} → ${plan2Valor}\n• Tu 7%: $${formatearCLP(r.sieteCLP)} (${r.sieteUF.toFixed(2)} UF)
 
-📄 *Documentos para iniciar tu afiliación:*
-1. Última liquidación de sueldo
-2. 12 últimas cotizaciones AFP
-3. Foto RUT (ambos lados)
+📄 *Documentos para iniciar tu afiliación:*\n1. Última liquidación de sueldo\n2. 12 últimas cotizaciones AFP\n3. Foto RUT (ambos lados)
 
 Puedes enviarlos por este medio.
 
