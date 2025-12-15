@@ -5,280 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Planes de Salud Colmena - Asesoría Profesional</title>
   <style>
-    /* --- Todo el CSS original completo aquí --- */
-    * { box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; background-color: #0a1a2a; color: white; margin: 0; padding: 0; }
-    header { background: linear-gradient(90deg, #0a1a2a, #12375a); padding: 40px; text-align: center; }
-    h1 { color: #d4af37; font-size: 2.5rem; margin: 0; }
-    h2 { color: #d4af37; }
-    section { padding: 40px 20px; max-width: 900px; margin: auto; }
-    .gold { color: #d4af37; }
-    .card { background: #112233; border: 1px solid #d4af37; padding: 25px; border-radius: 15px; margin-bottom: 25px; }
-    button { background: #d4af37; color: #0a1a2a; padding: 15px 25px; border: none; border-radius: 10px; font-size: 1.1rem; cursor: pointer; }
-    button:hover { opacity: 0.85; }
-    button:disabled { opacity: 0.6; cursor: not-allowed; }
-    form input, form select, form textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: none; }
-    .whatsapp { display: block; background: #25D366; text-align: center; padding: 15px; color: white; text-decoration: none; border-radius: 10px; font-size: 1.2rem; font-weight: bold; margin-top: 20px; max-width: 300px; margin-left: auto; margin-right: auto; }
-    .small { font-size: 0.9rem; color: #ccc; }
-    .row { display:flex; gap:16px; flex-wrap: wrap; }
-    .col { flex:1; min-width: 200px; }
-    .success-msg { color: #4ade80; margin-top: 12px; font-weight: bold; }
-    .error-msg { color: #ff8080; margin-top: 12px; }
-    /* ...Mantén todo tu CSS original aquí... */
-  </style>
-</head>
-<body>
-
-<header>
-  <h1>Asesoría en Planes de Salud Colmena</h1>
-  <p class="gold">Atención premium para clientes exigentes</p>
-  <p class="small">Completa el formulario para obtener una cotización exacta en UF y CLP.</p>
-</header>
-
-<section id="formulario" class="card">
-  <h2 class="gold">Formulario para Cálculo del Plan</h2>
-  <form id="mainForm">
-    <div class="row">
-      <div class="col"><input type="text" name="nombre" id="nombre" placeholder="Nombre completo" required /></div>
-      <div class="col"><input type="email" name="correo" id="correo" placeholder="Correo electrónico" required /></div>
-    </div>
-    <div class="row">
-      <div class="col"><input type="tel" name="telefono" id="telefono" placeholder="Teléfono (ej: +56912345678)" required /></div>
-      <div class="col"><input type="number" name="edad" id="edad" placeholder="Edad titular" min="18" max="99" required /></div>
-    </div>
-    <input type="text" name="rut" id="rut" placeholder="RUT (ej: 12.345.678-9)" required />
-    <select name="isapre" id="isapre" required>
-      <option value="">Isapre actual</option>
-      <option>FONASA</option>
-      <option>Colmena</option>
-      <option>Cruz Blanca</option>
-      <option>Consalud</option>
-      <option>Banmédica</option>
-      <option>Vida Tres</option>
-      <option>Nueva Masvida</option>
-      <option>Esencial</option>
-    </select>
-    <input type="number" id="renta" name="renta" placeholder="Renta imponible mensual (CLP)" required />
-    <label class="small">Edad de las cargas (separadas por coma, ej: 5, 12, 30)</label>
-    <textarea name="cargas" id="cargas" placeholder="Ej: 5, 12, 30" rows="2"></textarea>
-    <select name="region" id="region" required>
-      <option value="">Selecciona tu Región</option>
-      <option value="Arica y Parinacota">Región de Arica y Parinacota</option>
-      <option value="Tarapacá">Región de Tarapacá</option>
-      <option value="Antofagasta">Región de Antofagasta</option>
-      <option value="Atacama">Región de Atacama</option>
-      <option value="Coquimbo">Región de Coquimbo</option>
-      <option value="Valparaíso">Región de Valparaíso</option>
-      <option value="Metropolitana">Región Metropolitana</option>
-      <option value="O'Higgins">Región de O'Higgins</option>
-      <option value="Maule">Región del Maule</option>
-      <option value="Ñuble">Región de Ñuble</option>
-      <option value="Bío-Bío">Región del Bío-Bío</option>
-      <option value="La Araucanía">Región de La Araucanía</option>
-      <option value="Los Ríos">Región de Los Ríos</option>
-      <option value="Los Lagos">Región de Los Lagos</option>
-      <option value="Aysén">Región de Aysén</option>
-      <option value="Magallanes">Región de Magallanes</option>
-    </select>
-    <textarea name="mensaje" id="mensaje" placeholder="Mensaje adicional (opcional)" rows="2"></textarea>
-    <button type="submit" id="submitBtn">Cotizar Ahora</button>
-    <p id="statusMsg" class="small" style="margin-top:10px;"></p>
-  </form>
-</section>
-
-<section class="card">
-  <h2 class="gold">UF del día</h2>
-  <p class="small">UF: <span id="ufValor">cargando…</span> — Fecha: <span id="ufFecha">-</span></p>
-</section>
-
-<section id="resultado-preliminar" class="card" style="display:none">
-  <div id="resultadoDetalle"></div>
-  <div style="text-align:center;margin-top:30px;">
-    <button id="btnAsesoria" class="btn-asesoria">📋 Solicitar Asesoría Personalizada</button>
-    <p class="small" style="margin-top:10px;">Un asesor te contactará a la brevedad.</p>
-    <button id="btnEnviarUsuario" class="btn-enviar-usuario">📲 Recibir Resumen por WhatsApp</button>
-    <p class="small" style="margin-top:10px;">Recibirás los planes cotizados y documentos requeridos.</p>
-  </div>
-</section>
-
-<section class="referidos-section" id="referidos" style="display:none">
-  <div class="referidos-container">
-    <div class="referidos-header">
-      <h2>¿Quieres que asesoremos a un amigo?</h2>
-      <p>Ingresa los datos y nos comunicaremos con tu referido.</p>
-    </div>
-    <form id="formReferidos">
-      <div class="form-section">
-        <h3>👤 Tus Datos</h3>
-        <div class="form-group-referidos">
-          <label for="nombreUsuario">Tu Nombre *</label>
-          <input type="text" id="nombreUsuario" required>
-        </div>
-      </div>
-      <div class="form-section">
-        <h3>🎯 Datos del Referido</h3>
-        <div class="form-group-referidos">
-          <label>Nombre Completo *</label>
-          <input type="text" id="nombreReferido" required>
-        </div>
-        <div class="form-group-referidos">
-          <label>Teléfono *</label>
-          <input type="tel" id="telefonoReferido" required>
-        </div>
-        <div class="form-group-referidos">
-          <label>Correo *</label>
-          <input type="email" id="correoReferido" required>
-        </div>
-      </div>
-      <button type="submit" class="btn-enviar-referido">📤 Enviar Referido</button>
-      <div id="mensajeExitoReferido" class="mensaje-exito-referido">✅ ¡Referido Enviado!</div>
-      <div id="mensajeErrorReferido" class="mensaje-error-referido">❌ Error al enviar.</div>
-    </form>
-  </div>
-</section>
-
-<a class="whatsapp" id="btnWAAsesor" href="#" target="_blank">Contactar por WhatsApp</a>
-
-<footer style="text-align:center; padding:30px; color:#666; font-size:0.85rem;">
-  © 2025 Colmena Golden Cross - Asesoría en Planes de Salud
-</footer>
-
-<script>
-/* ---------- SISTEMA DE ASESORES MULTI-URL ---------- */
-const ASESORES = {
-  jose_pepe: {
-    nombre: "José Pepe",
-    telefono: "+56990701837",
-    whatsapp: "56990701837",
-    callmebot_apikey: "5088331",
-    correo: "voz.josemora@gmail.com"
-  },
-  betty: {
-    nombre: "Betty González",
-    telefono: "+56983899232",
-    whatsapp: "56983899232",
-    callmebot_apikey: "Pendiente", // Actualízalo cuando obtengas su apikey real
-    correo: "betty.gonzalez@colmena.cl"
-  },
-  jose_mora: {
-    nombre: "José Mora",
-    telefono: "+56975356696",
-    whatsapp: "56975356696",
-    callmebot_apikey: "7360481",
-    correo: "jose.mora@colmena.cl"
-  }
-};
-
-function getQueryParam(param) {
-  const params = new URLSearchParams(window.location.search);
-  return params.get(param);
-}
-const asesorKey = getQueryParam("asesor") || "jose_mora";
-const asesor = ASESORES[asesorKey] || ASESORES["jose_mora"];
-const WHATSAPP_ASESORIA = asesor.whatsapp;
-const CALLMEBOT_PHONE = asesor.whatsapp;
-const CALLMEBOT_APIKEY = asesor.callmebot_apikey;
-const ASESOR_NOMBRE = asesor.nombre;
-const ASESOR_TELEFONO = asesor.telefono;
-const ASESOR_CORREO = asesor.correo;
-
-window.addEventListener("DOMContentLoaded", function() {
-  var btnWA = document.getElementById("btnWAAsesor");
-  if (btnWA) {
-    btnWA.href = `https://wa.me/${WHATSAPP_ASESORIA}`;
-    btnWA.innerText = `Contactar a ${ASESOR_NOMBRE} por WhatsApp`;
-  }
-});
-
-/* GOOGLE FORMS FIELDS: Cotización de Planes */
-const FORM_BASE_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/formResponse';
-const FORM_FIELDS = {
-  nombre: 'entry.1455181501',
-  rut: 'entry.1514828805',
-  correo: 'entry.1253669566',
-  telefono: 'entry.1927631596',
-  edad: 'entry.1515225692',
-  isapre: 'entry.1312575017',
-  renta: 'entry.1350273122',
-  region: 'entry.1283417188',
-  cargas: 'entry.6457415',
-  mensaje: 'entry.860152674',
-  plan1: 'entry.1176082335',
-  plan2: 'entry.1798986413',
-  asesorid: 'entry.1496988494'
-};
-
-/* GOOGLE FORMS FIELDS: Referidos */
-const GOOGLE_FORM_REFERIDOS_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeIppjYB0Vgc6RsJ3AM0HcAVhLaxAT6ZZ_MxdPhmuwRkwLT-A/formResponse';
-const REFERIDOS_FIELDS = {
-  tu_nombre: "entry.1664559901",
-  nombre_referido: "entry.715463265",
-  telefono_referido: "entry.1382714918",
-  correo_referido: "entry.897178414",
-  mensaje_adicional: "entry.178502788",
-  asesorid_referidos: "entry.683967436"
-};
-
-/* ------------- ENVÍO DE COTIZACIÓN ------------- */
-document.getElementById("mainForm").addEventListener("submit", async function(e) {
-  e.preventDefault();
-  // ... Lógica previa sin cambios ...
-  // Ejemplo mapeo de los campos, adapta a tu lógica real:
-  const data = new FormData(this);
-  const formularioDatos = {
-    nombre: data.get("nombre"),
-    correo: data.get("correo"),
-    telefono: data.get("telefono"),
-    edad: data.get("edad"),
-    rut: data.get("rut"),
-    isapre: data.get("isapre"),
-    renta: data.get("renta"),
-    cargas: data.get("cargas"),
-    region: data.get("region"),
-    mensaje: data.get("mensaje")
-  };
-  // Parsea y arma cargasTexto, plan1Nombre, plan2Nombre como en tu código real
-  // ...
-  const params = new URLSearchParams();
-  params.append(FORM_FIELDS.nombre, formularioDatos.nombre);
-  params.append(FORM_FIELDS.rut, formularioDatos.rut);
-  params.append(FORM_FIELDS.correo, formularioDatos.correo);
-  params.append(FORM_FIELDS.telefono, formularioDatos.telefono);
-  params.append(FORM_FIELDS.edad, formularioDatos.edad);
-  params.append(FORM_FIELDS.isapre, formularioDatos.isapre);
-  params.append(FORM_FIELDS.renta, formularioDatos.renta);
-  params.append(FORM_FIELDS.region, formularioDatos.region);
-  params.append(FORM_FIELDS.cargas, formularioDatos.cargas); // O variable de edades/edadesCargas si ya parseaste
-  params.append(FORM_FIELDS.mensaje, formularioDatos.mensaje || "(sin mensaje)");
-  params.append(FORM_FIELDS.plan1, plan1Nombre); // Calculado como en tu código
-  params.append(FORM_FIELDS.plan2, plan2Nombre); // Calculado como en tu código
-  params.append(FORM_FIELDS.asesorid, asesorKey); // CLAVE: Identificador de asesor
-  fetch(FORM_BASE_URL, {
-    method: "POST",
-    mode: "no-cors",
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    body: params.toString()
-  }).catch(() => {});
-});
-
-/* ------------- ENVÍO DE REFERIDO ------------- */
-document.getElementById("formReferidos").addEventListener("submit", async function(e) {
-  e.preventDefault();
-  const nombreUsuario = document.getElementById("nombreUsuario").value;
-  const nombreReferido = document.getElementById("nombreReferido").value;
-  const telefonoReferido = document.getElementById("telefonoReferido").value;
-  const correoReferido = document.getElementById("correoReferido").value;
-  const mensajeAdicionalReferido = ""; // Si tienes un campo extra de mensaje, captúralo aquí
-  const f = new FormData();
-  f.append(REFERIDOS_FIELDS.tu_nombre, nombreUsuario);
-  f.append(REFERIDOS_FIELDS.nombre_referido, nombreReferido);
-  f.append(REFERIDOS_FIELDS.telefono_referido, telefonoReferido);
-  f.append(REFERIDOS_FIELDS.correo_referido, correoReferido);
-  f.append(REFERIDOS_FIELDS.mensaje_adicional, mensajeAdicionalReferido || "(sin mensaje)");
-  f.append(REFERIDOS_FIELDS.asesorid_referidos, asesorKey);
-  await fetch(GOOGLE_FORM_REFERIDOS_URL, { method: "POST", mode: "no-cors", body: f });
-});
-
     * { box-sizing: border-box; }
     body { font-family: Arial, sans-serif; background-color: #0a1a2a; color: white; margin: 0; padding: 0; }
     header { background: linear-gradient(90deg, #0a1a2a, #12375a); padding: 40px; text-align: center; }
@@ -605,7 +331,7 @@ document.getElementById("formReferidos").addEventListener("submit", async functi
   </div>
 </section>
 
-<a class="whatsapp" href="https://wa.me/56990701837" target="_blank">Contactar por WhatsApp</a>
+<a class="whatsapp" id="btnWAAsesor" href="#" target="_blank">Contactar por WhatsApp</a>
 
 <footer style="text-align:center; padding:30px; color:#666; font-size:0.85rem;">
   © 2025 Colmena Golden Cross - Asesoría en Planes de Salud
@@ -613,7 +339,58 @@ document.getElementById("formReferidos").addEventListener("submit", async functi
 
 <script>
 /*========================================================
-  CONFIGURACIÓN
+  SISTEMA DE ASESORES MULTI-URL
+=========================================================*/
+const ASESORES = {
+  jose_pepe: {
+    nombre: "José Pepe",
+    telefono: "+56990701837",
+    whatsapp: "56990701837",
+    callmebot_apikey: "5088331",
+    correo: "voz.josemora@gmail.com"
+  },
+  betty: {
+    nombre: "Betty González",
+    telefono: "+56983899232",
+    whatsapp: "56983899232",
+    callmebot_apikey: "9999999", // ⚠️ ACTUALIZA CON LA APIKEY REAL
+    correo: "betty.gonzalez@colmena.cl"
+  },
+  jose_mora: {
+    nombre: "José Mora",
+    telefono: "+56975356696",
+    whatsapp: "56975356696",
+    callmebot_apikey: "7360481",
+    correo: "jose.mora@colmena.cl"
+  }
+};
+
+function getQueryParam(param) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(param);
+}
+
+const asesorKey = getQueryParam("asesor") || "jose_mora";
+const asesor = ASESORES[asesorKey] || ASESORES["jose_mora"];
+
+const WHATSAPP_ASESORIA = asesor.whatsapp;
+const CALLMEBOT_PHONE = asesor.whatsapp;
+const CALLMEBOT_APIKEY = asesor.callmebot_apikey;
+const ASESOR_NOMBRE = asesor.nombre;
+const ASESOR_TELEFONO = asesor.telefono;
+const ASESOR_CORREO = asesor.correo;
+
+// Actualizar botón WhatsApp dinámicamente
+window.addEventListener("DOMContentLoaded", function() {
+  const btnWA = document.getElementById("btnWAAsesor");
+  if (btnWA) {
+    btnWA.href = `https://wa.me/${WHATSAPP_ASESORIA}`;
+    btnWA.innerText = `Contactar a ${ASESOR_NOMBRE} por WhatsApp`;
+  }
+});
+
+/*========================================================
+  CONFIGURACIÓN GOOGLE FORMS
 =========================================================*/
 const FORM_BASE_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/formResponse';
 
@@ -629,18 +406,20 @@ const FORM_FIELDS = {
   cargas: 'entry.6457415',
   mensaje: 'entry.860152674',
   plan1: 'entry.1176082335',
-  plan2: 'entry.1798986413'
+  plan2: 'entry.1798986413',
+  asesorid: 'entry.1496988494'
 };
 
 const GOOGLE_FORM_REFERIDOS_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeIppjYB0Vgc6RsJ3AM0HcAVhLaxAT6ZZ_MxdPhmuwRkwLT-A/formResponse';
 
-const WHATSAPP_ASESORIA = '56975356696';
-const CALLMEBOT_PHONE = '56975356696';
-const CALLMEBOT_APIKEY = '7360481';
-
-// Datos del asesor para mensaje al usuario
-const ASESOR_NOMBRE = 'José Mora';
-const ASESOR_TELEFONO = '+56 9 7535 6696';
+const REFERIDOS_FIELDS = {
+  tu_nombre: "entry.1664559901",
+  nombre_referido: "entry.715463265",
+  telefono_referido: "entry.1382714918",
+  correo_referido: "entry.897178414",
+  mensaje_adicional: "entry.178502788",
+  asesorid_referidos: "entry.683967436"
+};
 
 // URLs de datos
 const URL_PLANES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/planes_completos.json';
@@ -673,31 +452,28 @@ const REGION_A_ZONA = {
 };
 
 /*========================================================
-  TABLA DE FACTORES DE EDAD - COTIZANTE
+  TABLA DE FACTORES DE EDAD
 =========================================================*/
 function obtenerFactor(edad) {
-  if (edad < 2) return 0.0;       // De 0 a < 2 años
-  if (edad < 20) return 0.6;      // De 2 a < 20 años
-  if (edad < 25) return 0.9;      // De 20 a < 25 años
-  if (edad < 35) return 1.0;      // De 25 a < 35 años
-  if (edad < 45) return 1.3;      // De 35 a < 45 años
-  if (edad < 55) return 1.4;      // De 45 a < 55 años
-  if (edad < 65) return 2.0;      // De 55 a < 65 años
-  return 2.4;                      // De 65 y más
+  if (edad < 2) return 0.0;
+  if (edad < 20) return 0.6;
+  if (edad < 25) return 0.9;
+  if (edad < 35) return 1.0;
+  if (edad < 45) return 1.3;
+  if (edad < 55) return 1.4;
+  if (edad < 65) return 2.0;
+  return 2.4;
 }
 
-/*========================================================
-  TABLA DE FACTORES DE EDAD - CARGAS
-=========================================================*/
 function obtenerFactorCarga(edad) {
-  if (edad < 2) return 0.0;       // De 0 a < 2 años
-  if (edad < 20) return 0.6;      // De 2 a < 20 años
-  if (edad < 25) return 0.7;      // De 20 a < 25 años
-  if (edad < 35) return 0.7;      // De 25 a < 35 años
-  if (edad < 45) return 0.9;      // De 35 a < 45 años
-  if (edad < 55) return 1.0;      // De 45 a < 55 años
-  if (edad < 65) return 1.4;      // De 55 a < 65 años
-  return 2.2;                      // De 65 y más
+  if (edad < 2) return 0.0;
+  if (edad < 20) return 0.6;
+  if (edad < 25) return 0.7;
+  if (edad < 35) return 0.7;
+  if (edad < 45) return 0.9;
+  if (edad < 55) return 1.0;
+  if (edad < 65) return 1.4;
+  return 2.2;
 }
 
 /*========================================================
@@ -759,21 +535,17 @@ function formatearCLP(n) {
 function calcularValorPlan(pbUF, edadTitular, edadesCargas) {
   const uf = window.__UF_VALOR || 39700;
   
-  // Sumar factores: titular usa obtenerFactor, cargas usa obtenerFactorCarga
   let sumaFactores = obtenerFactor(edadTitular);
   edadesCargas.forEach(e => sumaFactores += obtenerFactorCarga(e));
   
-  // Valor plan = PB * suma de factores
   const valorPlanUF = pbUF * sumaFactores;
   const valorPlanCLP = Math.round(valorPlanUF * uf);
   
-  // GES: 0.77 UF por persona >= 2 años
   let personasGES = edadTitular >= 2 ? 1 : 0;
   edadesCargas.forEach(e => { if (e >= 2) personasGES++; });
   const gesUF = 0.77 * personasGES;
   const gesCLP = Math.round(gesUF * uf);
   
-  // Total
   const totalUF = valorPlanUF + gesUF;
   const totalCLP = valorPlanCLP + gesCLP;
   
@@ -782,43 +554,46 @@ function calcularValorPlan(pbUF, edadTitular, edadesCargas) {
 
 /*========================================================
   SELECCIÓN DE PLANES
-  Regla: Plan debe ser >= 95% del 7% y el más cercano
 =========================================================*/
 function seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas) {
-  const uf = window.__UF_VALOR || 39700;
   const minimo95 = sieteUF * 0.95;
-  
-  // Filtrar planes de la zona (o LIBRE_ELECCION que aplica a todas)
   const planesZona = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
-
-  console.log(`Buscando planes para zona: ${zona}, encontrados: ${planesZona.length}`);
   
-  // Para cada plan, calcular su valor real según cargas
   const planesConValor = planesZona.map(p => {
     const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
     return { ...p, valorCalculadoUF: calc.totalUF, valorCalculadoCLP: calc.totalCLP, gesUF: calc.gesUF, gesCLP: calc.gesCLP, sumaFactores: calc.sumaFactores };
   });
   
-  // Filtrar planes >= 95% del 7%
   const planesValidos = planesConValor.filter(p => p.valorCalculadoUF >= minimo95);
-  
-  console.log(`Planes que cumplen >= 95% del 7% (${minimo95.toFixed(2)} UF): ${planesValidos.length}`);
-  
-  // Ordenar por cercanía al 7%
   planesValidos.sort((a, b) => Math.abs(a.valorCalculadoUF - sieteUF) - Math.abs(b.valorCalculadoUF - sieteUF));
   
-  // Tomar los 2 mejores
-  const plan1 = planesValidos[0] || null;
-  const plan2 = planesValidos[1] || null;
+  return { plan1: planesValidos[0] || null, plan2: planesValidos[1] || null };
+}
 
-  if (plan1) console.log(`Plan 1: ${plan1.plan} - ${plan1.valorCalculadoUF.toFixed(2)} UF`);
-  if (plan2) console.log(`Plan 2: ${plan2.plan} - ${plan2.valorCalculadoUF.toFixed(2)} UF`);
+function seleccionarPlanesConPresupuesto(presupuestoUF, zona, edadTitular, edadesCargas) {
+  const planesZona = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
   
-  return { plan1, plan2 };
+  const planesConValor = planesZona.map(p => {
+    const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
+    return { ...p, valorCalculadoUF: calc.totalUF, valorCalculadoCLP: calc.totalCLP, gesUF: calc.gesUF, gesCLP: calc.gesCLP };
+  });
+  
+  const maxPresupuesto = presupuestoUF * 1.10;
+  const minPresupuesto = presupuestoUF * 0.90;
+  let planesValidos = planesConValor.filter(p => p.valorCalculadoUF <= maxPresupuesto && p.valorCalculadoUF >= minPresupuesto);
+  
+  if (planesValidos.length === 0) {
+    planesValidos = planesConValor.filter(p => p.valorCalculadoUF <= maxPresupuesto);
+    planesValidos.sort((a, b) => b.valorCalculadoUF - a.valorCalculadoUF);
+  } else {
+    planesValidos.sort((a, b) => b.valorCalculadoUF - a.valorCalculadoUF);
+  }
+  
+  return { plan1: planesValidos[0] || null, plan2: planesValidos[1] || null };
 }
 
 /*========================================================
-  GENERAR HTML DE UN PLAN
+  GENERAR HTML
 =========================================================*/
 function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   if (!plan) return '';
@@ -832,7 +607,6 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   const cardClass = esPrincipal ? '' : 'secundario';
   const badgeText = esPrincipal ? '✨ PLAN RECOMENDADO 1' : '🔷 PLAN RECOMENDADO 2';
   
-  // Hospitalización/coberturas
   let coberturasHTML = '';
   if (plan.hospitalizacion) {
     coberturasHTML = `
@@ -843,7 +617,6 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
     `;
   }
   
-  // Clínicas si tiene coberturas_redes
   let clinicasHTML = '';
   if (plan.coberturas_redes && Object.keys(REDES_CLINICAS).length > 0) {
     clinicasHTML = generarHTMLClinicas(plan, numero);
@@ -862,16 +635,16 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
       <div class="plan-info">
         <div class="plan-info-item">
           <div class="plan-info-label">Valor del Plan</div>
-          <div class="plan-info-value">$${formatearCLP(plan.valorCalculadoCLP)}</div>
+          <div class="plan-info-value">${formatearCLP(plan.valorCalculadoCLP)}</div>
           <div class="small">${plan.valorCalculadoUF.toFixed(2)} UF</div>
         </div>
         <div class="plan-info-item">
           <div class="plan-info-label">Adicional a pagar</div>
-          <div class="plan-info-value ${adicionalCLP <= 0 ? 'verde' : 'amarillo'}">$${formatearCLP(Math.max(0, adicionalCLP))}</div>
+          <div class="plan-info-value ${adicionalCLP <= 0 ? 'verde' : 'amarillo'}">${formatearCLP(Math.max(0, adicionalCLP))}</div>
         </div>
         <div class="plan-info-item">
           <div class="plan-info-label">GES incluido</div>
-          <div class="plan-info-value verde">$${formatearCLP(plan.gesCLP)}</div>
+          <div class="plan-info-value verde">${formatearCLP(plan.gesCLP)}</div>
           <div class="small">${plan.gesUF.toFixed(2)} UF</div>
         </div>
         <div class="plan-info-item">
@@ -886,23 +659,18 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   `;
 }
 
-/*========================================================
-  GENERAR HTML DE CLÍNICAS CON TABS
-=========================================================*/
 function generarHTMLClinicas(plan, numeroPlan) {
   if (!plan.coberturas_redes) return '';
   
   const grupos = Object.keys(plan.coberturas_redes).sort();
   const planId = `plan${numeroPlan}`;
   
-  // Tabs
   let tabsHTML = grupos.map((g, i) => {
     const activeClass = i === 0 ? 'active' : '';
     const cobertura = plan.coberturas_redes[g];
     return `<button type="button" class="grupo-tab ${activeClass}" onclick="mostrarGrupo('${planId}', '${g}')">${g} (${cobertura}%)</button>`;
   }).join('');
   
-  // Contenido de cada grupo
   let contenidoHTML = grupos.map((g, i) => {
     const activeClass = i === 0 ? 'active' : '';
     const clinicas = REDES_CLINICAS[g] || [];
@@ -933,19 +701,13 @@ function generarHTMLClinicas(plan, numeroPlan) {
 }
 
 function mostrarGrupo(planId, grupo) {
-  // Ocultar todos los contenidos de este plan
-  document.querySelectorAll(`[id^="${planId}-"]`).forEach(el => {
-    el.classList.remove('active');
-  });
+  document.querySelectorAll(`[id^="${planId}-"]`).forEach(el => el.classList.remove('active'));
   
-  // Desactivar todos los tabs del plan
   const grupoContent = document.getElementById(`${planId}-${grupo}`);
   if (grupoContent) {
     const planCard = grupoContent.closest('.plan-card');
     if (planCard) {
       planCard.querySelectorAll('.grupo-tab').forEach(tab => tab.classList.remove('active'));
-      
-      // Activar el tab correspondiente
       planCard.querySelectorAll('.grupo-tab').forEach(tab => {
         if (tab.textContent.startsWith(grupo)) {
           tab.classList.add('active');
@@ -954,7 +716,6 @@ function mostrarGrupo(planId, grupo) {
     }
   }
   
-  // Activar el seleccionado
   document.getElementById(`${planId}-${grupo}`).classList.add('active');
 }
 
@@ -962,7 +723,10 @@ function mostrarGrupo(planId, grupo) {
   CALLMEBOT
 =========================================================*/
 async function enviarCallMeBot(mensaje) {
-  if (!CALLMEBOT_APIKEY) return;
+  if (!CALLMEBOT_APIKEY || CALLMEBOT_APIKEY === "9999999") {
+    console.warn('⚠️ CallMeBot no configurado para este asesor');
+    return;
+  }
   try {
     const url = `https://api.callmebot.com/whatsapp.php?phone=${CALLMEBOT_PHONE}&text=${encodeURIComponent(mensaje)}&apikey=${CALLMEBOT_APIKEY}`;
     await fetch(url, { mode: 'no-cors' });
@@ -984,8 +748,6 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
   btn.disabled = true;
   btn.textContent = "Calculando...";
   statusMsg.textContent = "";
-  
-  // Resetear contador de recálculos para nueva cotización
   contadorRecalculos = 0;
 
   const data = new FormData(this);
@@ -1007,31 +769,22 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
   const renta = Number(formularioDatos.renta);
   const edadTitular = Number(formularioDatos.edad);
   
-  // Parsear cargas
   const cargasTexto = (formularioDatos.cargas || "").replace(/\n/g, ", ").trim();
-  const edadesCargas = cargasTexto.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean).map(Number).filter(n => !isNaN(n));
+  const edadesCargas = cargasTexto.split(/[\n,;]+/)
+    .map(s => s.trim())
+    .filter(Boolean)
+    .map(Number)
+    .filter(n => !isNaN(n) && n >= 0 && n <= 120);
   
-  // Calcular 7%
   const sieteCLP = Math.round(renta * 0.07);
   const sieteUF = sieteCLP / uf;
-  
-  // Determinar zona según región
   const zona = REGION_A_ZONA[formularioDatos.region] || 'SANTIAGO';
   
-  console.log(`Región: ${formularioDatos.region} → Zona: ${zona}`);
-  console.log(`7%: $${formatearCLP(sieteCLP)} (${sieteUF.toFixed(2)} UF)`);
-  console.log(`Factor titular (${edadTitular} años): ${obtenerFactor(edadTitular)}`);
-  
-  // Seleccionar planes
   const { plan1, plan2 } = seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas);
   
-  // Guardar resultado
-  ultimoResultado = {
-    sieteCLP, sieteUF, edadesCargas, cargasTexto, zona, plan1, plan2
-  };
+  ultimoResultado = { sieteCLP, sieteUF, edadesCargas, cargasTexto, zona, plan1, plan2, edadTitular };
 
-  // ENVIAR A GOOGLE FORMS
-  console.log("Enviando a Google Forms...");
+  // ENVIAR A GOOGLE FORMS con asesorKey
   try {
     const plan1Nombre = plan1 ? plan1.plan : 'Sin plan disponible';
     const plan2Nombre = plan2 ? plan2.plan : 'Sin plan disponible';
@@ -1045,42 +798,38 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     params.append(FORM_FIELDS.isapre, formularioDatos.isapre);
     params.append(FORM_FIELDS.renta, formularioDatos.renta);
     params.append(FORM_FIELDS.region, formularioDatos.region);
-    params.append(FORM_FIELDS.cargas, cargasTexto);
+    params.append(FORM_FIELDS.cargas, cargasTexto || 'Sin cargas');
     params.append(FORM_FIELDS.mensaje, formularioDatos.mensaje || "(sin mensaje)");
     params.append(FORM_FIELDS.plan1, plan1Nombre);
     params.append(FORM_FIELDS.plan2, plan2Nombre);
+    params.append(FORM_FIELDS.asesorid, asesorKey);
 
     fetch(FORM_BASE_URL, { 
       method: "POST", 
       mode: "no-cors", 
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: params.toString()
     }).catch(() => {});
 
-    console.log("✅ Google Forms enviado");
     statusMsg.textContent = "✅ Datos enviados correctamente";
     statusMsg.className = "small success-msg";
   } catch (err) {
-    console.error("Error preparando Google Forms:", err);
     statusMsg.textContent = "⚠️ Error al enviar";
     statusMsg.className = "small error-msg";
   }
 
-  // ENVIAR CALLMEBOT
-  console.log("Enviando CallMeBot...");
+  // CALLMEBOT
   const cargasInfo = edadesCargas.length > 0 ? `${edadesCargas.length} (${edadesCargas.join(', ')} años)` : '0';
-  const msgWA = `🔔 NUEVA COTIZACIÓN
+  const msgWA = `🔔 NUEVA COTIZACIÓN - ${ASESOR_NOMBRE}
 
 👤 ${formularioDatos.nombre}
 📧 ${formularioDatos.correo}
 📞 ${formularioDatos.telefono}
 📍 ${formularioDatos.region} (${zona})
-💰 Renta: $${formatearCLP(renta)}
+💰 Renta: ${formatearCLP(renta)}
 👥 Cargas: ${cargasInfo}
 
-📊 7%: $${formatearCLP(sieteCLP)} (${sieteUF.toFixed(2)} UF)
+📊 7%: ${formatearCLP(sieteCLP)} (${sieteUF.toFixed(2)} UF)
 
 📋 Planes sugeridos:
 1) ${plan1 ? plan1.plan + ' → ' + plan1.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}
@@ -1095,7 +844,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
       <div class="resumen-grid">
         <div class="resumen-item">
           <div class="resumen-label">Tu 7% obligatorio</div>
-          <div class="resumen-value destacado">$${formatearCLP(sieteCLP)}</div>
+          <div class="resumen-value destacado">${formatearCLP(sieteCLP)}</div>
           <div class="resumen-uf">${sieteUF.toFixed(2)} UF</div>
         </div>
         <div class="resumen-item">
@@ -1112,7 +861,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     </div>
     
     <h2 class="gold" style="margin-top:30px;">🏥 Planes Recomendados</h2>
-    <p class="small">Basado en tu 7% ($${formatearCLP(sieteCLP)}), te sugerimos estos planes:</p>
+    <p class="small">Basado en tu 7% (${formatearCLP(sieteCLP)}), te sugerimos estos planes:</p>
   `;
   
   if (plan1) {
@@ -1125,7 +874,6 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     htmlResultado += generarHTMLPlan(plan2, 2, sieteUF, sieteCLP, 0);
   }
 
-  // Agregar disclaimer después de los planes
   htmlResultado += `
     <div class="disclaimer">
       <span class="disclaimer-icon">⚠️</span>
@@ -1133,7 +881,6 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     </div>
   `;
 
-  // Agregar sección para mejorar cobertura
   htmlResultado += `
     <div class="mejorar-cobertura">
       <div class="mejorar-titulo">💡 ¿Te gustaría acceder a mejores coberturas?</div>
@@ -1143,7 +890,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
       
       <div class="adicional-actual">
         <div class="adicional-label">Tu presupuesto actual (7%)</div>
-        <div class="adicional-valor">$${formatearCLP(sieteCLP)}</div>
+        <div class="adicional-valor">${formatearCLP(sieteCLP)}</div>
       </div>
       
       <div class="mejorar-input-container">
@@ -1160,7 +907,6 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
   document.getElementById("resultadoDetalle").innerHTML = htmlResultado;
   document.getElementById("resultado-preliminar").style.display = "block";
 
-  // Agregar evento al botón recalcular
   document.getElementById("btnRecalcular").addEventListener("click", recalcularConAdicional);
 
   btn.disabled = false;
@@ -1172,15 +918,12 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
 });
 
 /*========================================================
-  RECALCULAR CON MONTO ADICIONAL (máximo 2 veces)
+  RECALCULAR
 =========================================================*/
 function recalcularConAdicional() {
   try {
     const montoAdicionalInput = document.getElementById("montoAdicional");
-    if (!montoAdicionalInput) {
-      console.error("No se encontró el input de monto adicional");
-      return;
-    }
+    if (!montoAdicionalInput) return;
     
     const montoAdicional = parseInt(montoAdicionalInput.value) || 0;
     
@@ -1194,133 +937,115 @@ function recalcularConAdicional() {
       return;
     }
 
-    // Incrementar contador
     contadorRecalculos++;
-    console.log(`Recálculo #${contadorRecalculos}`);
     
     const uf = window.__UF_VALOR || 39700;
     const r = ultimoResultado;
   
-  // Nuevo presupuesto total = 7% + adicional
-  const nuevoPresupuestoCLP = r.sieteCLP + montoAdicional;
-  const nuevoPresupuestoUF = nuevoPresupuestoCLP / uf;
-  
-  console.log(`Recálculo #${contadorRecalculos} con adicional: $${montoAdicional}`);
-  console.log(`Nuevo presupuesto: $${nuevoPresupuestoCLP} (${nuevoPresupuestoUF.toFixed(2)} UF)`);
-  
-  // Seleccionar nuevos planes con el presupuesto aumentado
-  const nuevosPlanes = seleccionarPlanesConPresupuesto(nuevoPresupuestoUF, r.zona, r.edadesCargas.length + 1);
-  
-  const plan1 = nuevosPlanes.plan1;
-  const plan2 = nuevosPlanes.plan2;
-  
-  // Actualizar ultimoResultado
-  ultimoResultado.plan1 = plan1;
-  ultimoResultado.plan2 = plan2;
-  ultimoResultado.montoAdicional = montoAdicional;
-  ultimoResultado.presupuestoTotalCLP = nuevoPresupuestoCLP;
-  ultimoResultado.presupuestoTotalUF = nuevoPresupuestoUF;
-
-  // Generar nuevo HTML
-  let htmlResultado = `
-    <div class="resumen-cotizacion">
-      <div class="resumen-titulo">📊 Tu Cotización Mejorada - ${formularioDatos.nombre}</div>
-      <div class="resumen-grid">
-        <div class="resumen-item">
-          <div class="resumen-label">Tu 7% obligatorio</div>
-          <div class="resumen-value">$${formatearCLP(r.sieteCLP)}</div>
-          <div class="resumen-uf">${r.sieteUF.toFixed(2)} UF</div>
-        </div>
-        <div class="resumen-item">
-          <div class="resumen-label">Aporte adicional</div>
-          <div class="resumen-value" style="color:#4ade80;">+$${formatearCLP(montoAdicional)}</div>
-          <div class="resumen-uf">+${(montoAdicional / uf).toFixed(2)} UF</div>
-        </div>
-        <div class="resumen-item">
-          <div class="resumen-label">Presupuesto Total</div>
-          <div class="resumen-value destacado">$${formatearCLP(nuevoPresupuestoCLP)}</div>
-          <div class="resumen-uf">${nuevoPresupuestoUF.toFixed(2)} UF</div>
-        </div>
-        <div class="resumen-item">
-          <div class="resumen-label">Zona</div>
-          <div class="resumen-value" style="font-size:0.95rem;">${r.zona}</div>
-          <div class="resumen-uf">${formularioDatos.region}</div>
-        </div>
-      </div>
-    </div>
+    const nuevoPresupuestoCLP = r.sieteCLP + montoAdicional;
+    const nuevoPresupuestoUF = nuevoPresupuestoCLP / uf;
     
-    <h2 class="gold" style="margin-top:30px;">🏥 Nuevos Planes con Mayor Cobertura</h2>
-    <p class="small">Con tu presupuesto mejorado de $${formatearCLP(nuevoPresupuestoCLP)}, ahora puedes acceder a estos planes:</p>
-  `;
-  
-  if (plan1) {
-    htmlResultado += generarHTMLPlan(plan1, 1, nuevoPresupuestoUF, nuevoPresupuestoCLP, montoAdicional);
-  } else {
-    htmlResultado += `<p class="small" style="color:#fbbf24;">No se encontró un plan adicional. Solicita asesoría personalizada.</p>`;
-  }
-  
-  if (plan2) {
-    htmlResultado += generarHTMLPlan(plan2, 2, nuevoPresupuestoUF, nuevoPresupuestoCLP, montoAdicional);
-  }
+    const nuevosPlanes = seleccionarPlanesConPresupuesto(nuevoPresupuestoUF, r.zona, r.edadTitular, r.edadesCargas);
+    
+    ultimoResultado.plan1 = nuevosPlanes.plan1;
+    ultimoResultado.plan2 = nuevosPlanes.plan2;
+    ultimoResultado.montoAdicional = montoAdicional;
+    ultimoResultado.presupuestoTotalCLP = nuevoPresupuestoCLP;
+    ultimoResultado.presupuestoTotalUF = nuevoPresupuestoUF;
 
-  // Disclaimer
-  htmlResultado += `
-    <div class="disclaimer">
-      <span class="disclaimer-icon">⚠️</span>
-      Los valores presentados son referenciales y están sujetos a verificación. Un Ejecutivo de Ventas validará esta información y te contactará para formalizar tu plan de salud.
-    </div>
-  `;
-
-  // Verificar si puede seguir recalculando
-  if (contadorRecalculos < MAX_RECALCULOS) {
-    // Aún puede recalcular
-    const recalculosRestantes = MAX_RECALCULOS - contadorRecalculos;
-    htmlResultado += `
-      <div class="mejorar-cobertura">
-        <div class="mejorar-titulo">🔄 ¿Deseas ajustar tu aporte adicional?</div>
-        <p class="small" style="color:#fbbf24; margin-bottom:15px;">Te queda ${recalculosRestantes} ajuste${recalculosRestantes > 1 ? 's' : ''} disponible${recalculosRestantes > 1 ? 's' : ''}</p>
-        <div class="adicional-actual">
-          <div class="adicional-label">Aporte adicional actual</div>
-          <div class="adicional-valor">$${formatearCLP(montoAdicional)}</div>
-        </div>
-        
-        <div class="mejorar-input-container">
-          <div>
-            <label class="small" style="display:block; margin-bottom:5px; color:#ccc;">Nuevo monto adicional:</label>
-            <input type="number" id="montoAdicional" class="mejorar-input" placeholder="Ej: 50000" min="0" step="1000" value="${montoAdicional}">
+    let htmlResultado = `
+      <div class="resumen-cotizacion">
+        <div class="resumen-titulo">📊 Tu Cotización Mejorada - ${formularioDatos.nombre}</div>
+        <div class="resumen-grid">
+          <div class="resumen-item">
+            <div class="resumen-label">Tu 7% obligatorio</div>
+            <div class="resumen-value">${formatearCLP(r.sieteCLP)}</div>
+            <div class="resumen-uf">${r.sieteUF.toFixed(2)} UF</div>
           </div>
-          <button type="button" id="btnRecalcular" class="btn-recalcular">🔄 Recalcular Planes</button>
+          <div class="resumen-item">
+            <div class="resumen-label">Aporte adicional</div>
+            <div class="resumen-value" style="color:#4ade80;">+${formatearCLP(montoAdicional)}</div>
+            <div class="resumen-uf">+${(montoAdicional / uf).toFixed(2)} UF</div>
+          </div>
+          <div class="resumen-item">
+            <div class="resumen-label">Presupuesto Total</div>
+            <div class="resumen-value destacado">${formatearCLP(nuevoPresupuestoCLP)}</div>
+            <div class="resumen-uf">${nuevoPresupuestoUF.toFixed(2)} UF</div>
+          </div>
+          <div class="resumen-item">
+            <div class="resumen-label">Zona</div>
+            <div class="resumen-value" style="font-size:0.95rem;">${r.zona}</div>
+            <div class="resumen-uf">${formularioDatos.region}</div>
+          </div>
         </div>
       </div>
+      
+      <h2 class="gold" style="margin-top:30px;">🏥 Nuevos Planes con Mayor Cobertura</h2>
+      <p class="small">Con tu presupuesto mejorado de ${formatearCLP(nuevoPresupuestoCLP)}, ahora puedes acceder a estos planes:</p>
     `;
-  } else {
-    // Ya no puede recalcular - mostrar mensaje final
+    
+    if (nuevosPlanes.plan1) {
+      htmlResultado += generarHTMLPlan(nuevosPlanes.plan1, 1, nuevoPresupuestoUF, nuevoPresupuestoCLP, montoAdicional);
+    } else {
+      htmlResultado += `<p class="small" style="color:#fbbf24;">No se encontró un plan adicional. Solicita asesoría personalizada.</p>`;
+    }
+    
+    if (nuevosPlanes.plan2) {
+      htmlResultado += generarHTMLPlan(nuevosPlanes.plan2, 2, nuevoPresupuestoUF, nuevoPresupuestoCLP, montoAdicional);
+    }
+
     htmlResultado += `
-      <div class="mejorar-cobertura" style="border-color: #d4af37;">
-        <div class="mejorar-titulo" style="color:#d4af37;">✅ Has revisado tus opciones de cobertura</div>
-        <p class="mejorar-texto">
-          Ya exploraste diferentes alternativas. Ahora puedes solicitar asesoría personalizada para finalizar tu afiliación, 
-          o si conoces a alguien que necesite un plan de salud, ¡puedes referirlo!
-        </p>
-        <div class="adicional-actual">
-          <div class="adicional-label">Tu presupuesto final</div>
-          <div class="adicional-valor">$${formatearCLP(nuevoPresupuestoCLP)}</div>
-        </div>
+      <div class="disclaimer">
+        <span class="disclaimer-icon">⚠️</span>
+        Los valores presentados son referenciales y están sujetos a verificación. Un Ejecutivo de Ventas validará esta información y te contactará para formalizar tu plan de salud.
       </div>
     `;
-  }
 
-  document.getElementById("resultadoDetalle").innerHTML = htmlResultado;
-  
-  // Re-agregar evento al nuevo botón si existe
-  const btnRecalcular = document.getElementById("btnRecalcular");
-  if (btnRecalcular) {
-    btnRecalcular.addEventListener("click", recalcularConAdicional);
-  }
+    if (contadorRecalculos < MAX_RECALCULOS) {
+      const recalculosRestantes = MAX_RECALCULOS - contadorRecalculos;
+      htmlResultado += `
+        <div class="mejorar-cobertura">
+          <div class="mejorar-titulo">🔄 ¿Deseas ajustar tu aporte adicional?</div>
+          <p class="small" style="color:#fbbf24; margin-bottom:15px;">Te queda ${recalculosRestantes} ajuste${recalculosRestantes > 1 ? 's' : ''} disponible${recalculosRestantes > 1 ? 's' : ''}</p>
+          <div class="adicional-actual">
+            <div class="adicional-label">Aporte adicional actual</div>
+            <div class="adicional-valor">${formatearCLP(montoAdicional)}</div>
+          </div>
+          
+          <div class="mejorar-input-container">
+            <div>
+              <label class="small" style="display:block; margin-bottom:5px; color:#ccc;">Nuevo monto adicional:</label>
+              <input type="number" id="montoAdicional" class="mejorar-input" placeholder="Ej: 50000" min="0" step="1000" value="${montoAdicional}">
+            </div>
+            <button type="button" id="btnRecalcular" class="btn-recalcular">🔄 Recalcular Planes</button>
+          </div>
+        </div>
+      `;
+    } else {
+      htmlResultado += `
+        <div class="mejorar-cobertura" style="border-color: #d4af37;">
+          <div class="mejorar-titulo" style="color:#d4af37;">✅ Has revisado tus opciones de cobertura</div>
+          <p class="mejorar-texto">
+            Ya exploraste diferentes alternativas. Ahora puedes solicitar asesoría personalizada para finalizar tu afiliación, 
+            o si conoces a alguien que necesite un plan de salud, ¡puedes referirlo!
+          </p>
+          <div class="adicional-actual">
+            <div class="adicional-label">Tu presupuesto final</div>
+            <div class="adicional-valor">${formatearCLP(nuevoPresupuestoCLP)}</div>
+          </div>
+        </div>
+      `;
+    }
 
-  // Scroll al resultado
-  document.getElementById("resultado-preliminar").scrollIntoView({ behavior: "smooth" });
-  
+    document.getElementById("resultadoDetalle").innerHTML = htmlResultado;
+    
+    const btnRecalcular = document.getElementById("btnRecalcular");
+    if (btnRecalcular) {
+      btnRecalcular.addEventListener("click", recalcularConAdicional);
+    }
+
+    document.getElementById("resultado-preliminar").scrollIntoView({ behavior: "smooth" });
+    
   } catch (error) {
     console.error("Error en recalcularConAdicional:", error);
     alert("Ocurrió un error al recalcular. Por favor intenta de nuevo.");
@@ -1328,58 +1053,7 @@ function recalcularConAdicional() {
 }
 
 /*========================================================
-  SELECCIONAR PLANES CON PRESUPUESTO PERSONALIZADO
-=========================================================*/
-function seleccionarPlanesConPresupuesto(presupuestoUF, zona, numPersonas) {
-  const uf = window.__UF_VALOR || 39700;
-  const edadTitular = Number(formularioDatos.edad);
-  
-  // Asegurar que edadesCargas sea un array
-  let edadesCargas = ultimoResultado.edadesCargas;
-  if (!Array.isArray(edadesCargas)) {
-    edadesCargas = [];
-  }
-  
-  // Filtrar por zona
-  const planesZona = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
-  
-  console.log(`Buscando planes para zona ${zona}, presupuesto ${presupuestoUF.toFixed(2)} UF`);
-  
-  // Calcular valor para cada plan
-  const planesConValor = planesZona.map(plan => {
-    const calc = calcularValorPlan(plan.pb_uf, edadTitular, edadesCargas);
-    return { ...plan, valorCalculadoUF: calc.totalUF, valorCalculadoCLP: calc.totalCLP, gesUF: calc.gesUF, gesCLP: calc.gesCLP, sumaFactores: calc.sumaFactores };
-  });
-  
-  // Filtrar planes que estén dentro del presupuesto (hasta 110% del presupuesto)
-  const maxPresupuesto = presupuestoUF * 1.10;
-  const minPresupuesto = presupuestoUF * 0.90;
-  const planesValidos = planesConValor.filter(p => p.valorCalculadoUF <= maxPresupuesto && p.valorCalculadoUF >= minPresupuesto);
-  
-  console.log(`Planes válidos para presupuesto ${presupuestoUF.toFixed(2)} UF (rango ${minPresupuesto.toFixed(2)}-${maxPresupuesto.toFixed(2)}): ${planesValidos.length}`);
-  
-  // Si no hay planes en el rango, buscar los más cercanos
-  if (planesValidos.length === 0) {
-    const planesOrdenados = planesConValor.filter(p => p.valorCalculadoUF <= maxPresupuesto);
-    planesOrdenados.sort((a, b) => b.valorCalculadoUF - a.valorCalculadoUF);
-    return { plan1: planesOrdenados[0] || null, plan2: planesOrdenados[1] || null };
-  }
-  
-  // Ordenar por valor descendente (mejores planes primero, más cercanos al presupuesto)
-  planesValidos.sort((a, b) => b.valorCalculadoUF - a.valorCalculadoUF);
-
-  // Tomar los 2 mejores
-  const plan1 = planesValidos[0] || null;
-  const plan2 = plansValidos[1] || null;
-
-  if (plan1) console.log(`Nuevo Plan 1: ${plan1.plan} - ${plan1.valorCalculadoUF.toFixed(2)} UF`);
-  if (plan2) console.log(`Nuevo Plan 2: ${plan2.plan} - ${plan2.valorCalculadoUF.toFixed(2)} UF`);
-  
-  return { plan1, plan2 };
-}
-
-/*========================================================
-  BOTÓN ASESORÍA
+  BOTONES
 =========================================================*/
 document.getElementById("btnAsesoria").addEventListener("click", function() {
   if (!formularioDatos || !formularioDatos.nombre) {
