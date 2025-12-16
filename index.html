@@ -23,8 +23,6 @@
     .col { flex:1; min-width: 200px; }
     .success-msg { color: #4ade80; margin-top: 12px; font-weight: bold; }
     .error-msg { color: #ff8080; margin-top: 12px; }
-
-    /* Resumen cotización */
     .resumen-cotizacion { background: #0d1f2d; border: 1px solid #3a5a7a; border-radius: 10px; padding: 20px; margin-bottom: 25px; }
     .resumen-titulo { color: #d4af37; font-size: 1.3rem; margin-bottom: 15px; font-weight: bold; }
     .resumen-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; }
@@ -33,33 +31,23 @@
     .resumen-value { font-size: 1.2rem; font-weight: bold; color: #fff; }
     .resumen-value.destacado { color: #4ade80; }
     .resumen-uf { font-size: 0.85rem; color: #aaa; }
-
-    /* Card del plan */
     .plan-card { background: #112233; border: 2px solid #d4af37; border-radius: 15px; padding: 25px; margin: 25px 0; }
     .plan-card.secundario { border-color: #60a5fa; }
     .plan-badge { display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 15px; }
     .plan-badge.principal { background: #d4af37; color: #0a1a2a; }
     .plan-badge.secundario { background: #60a5fa; color: #0a1a2a; }
-    
-    /* Nombre del plan MUY DESTACADO */
     .plan-nombre-container { text-align: center; margin: 20px 0; padding: 20px; background: linear-gradient(135deg, #1a3a5a, #0d1f2d); border-radius: 12px; border: 2px solid #d4af37; }
     .plan-nombre { font-size: 1.8rem; font-weight: bold; color: #d4af37; text-shadow: 0 2px 10px rgba(212,175,55,0.3); letter-spacing: 1px; }
     .plan-nombre-estrella { color: #fbbf24; font-size: 1.5rem; }
-
-    /* Info del plan */
     .plan-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 20px 0; }
     .plan-info-item { background: #1a2a3a; padding: 15px; border-radius: 8px; text-align: center; }
     .plan-info-label { font-size: 0.8rem; color: #888; margin-bottom: 5px; }
     .plan-info-value { font-size: 1.1rem; font-weight: bold; color: #fff; }
     .plan-info-value.verde { color: #4ade80; }
     .plan-info-value.amarillo { color: #fbbf24; }
-
-    /* Coberturas */
     .coberturas-section { margin: 20px 0; padding: 15px; background: #0d1f2d; border-radius: 10px; }
     .coberturas-title { color: #d4af37; font-size: 1rem; margin-bottom: 10px; }
     .coberturas-texto { font-size: 0.9rem; line-height: 1.6; color: #ccc; }
-
-    /* Clínicas con tabs */
     .clinicas-section { margin-top: 25px; padding-top: 20px; border-top: 1px solid #3a5a7a; }
     .clinicas-title { color: #d4af37; font-size: 1.1rem; margin-bottom: 15px; }
     .grupos-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
@@ -74,12 +62,8 @@
     .clinicas-tabla tr:hover { background: #1a3a4a; }
     .grupo-content { display: none; }
     .grupo-content.active { display: block; }
-
-    /* Botón asesoría */
     .btn-asesoria { display: inline-block; background: linear-gradient(135deg, #d4af37, #f0c860); color: #0a1a2a; padding: 18px 40px; text-decoration: none; border-radius: 12px; font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 15px rgba(212,175,55,0.4); transition: all .3s ease; border: none; cursor: pointer; }
     .btn-asesoria:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,175,55,0.6); }
-
-    /* Referidos */
     .referidos-section { background: linear-gradient(135deg,#0f2640 0%,#1a3a5a 100%); padding:60px 20px; margin:40px 0; }
     .referidos-container { max-width:800px; margin:0 auto; background:#112233; padding:40px; border-radius:20px; border:1px solid #d4af37; }
     .referidos-header { text-align:center; margin-bottom:30px; }
@@ -94,110 +78,21 @@
     .mensaje-exito-referido, .mensaje-error-referido { padding:15px; border-radius:10px; margin-top:20px; display:none; font-weight:600; text-align:center; }
     .mensaje-exito-referido { background:#1a4d2e; color:#4ade80; border:1px solid #4ade80; }
     .mensaje-error-referido { background:#4a1a1a; color:#ff8080; border:1px solid #ff8080; }
-
-    /* Disclaimer */
-    .disclaimer {
-      background: #1a2a3a;
-      border-left: 4px solid #fbbf24;
-      padding: 15px 20px;
-      margin: 20px 0;
-      border-radius: 0 8px 8px 0;
-      font-size: 0.85rem;
-      color: #b8c5d6;
-      font-style: italic;
-    }
+    .disclaimer { background: #1a2a3a; border-left: 4px solid #fbbf24; padding: 15px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; font-size: 0.85rem; color: #b8c5d6; font-style: italic; }
     .disclaimer-icon { color: #fbbf24; margin-right: 8px; }
-
-    /* Sección mejorar cobertura */
-    .mejorar-cobertura {
-      background: linear-gradient(135deg, #0f2640, #1a3a5a);
-      border: 2px solid #4ade80;
-      border-radius: 15px;
-      padding: 30px;
-      margin: 30px 0;
-      text-align: center;
-    }
-    .mejorar-titulo {
-      color: #4ade80;
-      font-size: 1.3rem;
-      margin-bottom: 15px;
-    }
-    .mejorar-texto {
-      color: #b8c5d6;
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-    .mejorar-input-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
-    .mejorar-input {
-      width: 200px;
-      padding: 15px;
-      font-size: 1.1rem;
-      border: 2px solid #4ade80;
-      border-radius: 10px;
-      background: #0a1a2a;
-      color: white;
-      text-align: center;
-    }
-    .mejorar-input:focus {
-      outline: none;
-      border-color: #d4af37;
-      box-shadow: 0 0 10px rgba(212,175,55,0.3);
-    }
-    .btn-recalcular {
-      background: linear-gradient(135deg, #4ade80, #22c55e);
-      color: #0a1a2a;
-      padding: 15px 30px;
-      border: none;
-      border-radius: 10px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .btn-recalcular:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(74,222,128,0.4);
-    }
-    .adicional-actual {
-      background: #112233;
-      padding: 15px 25px;
-      border-radius: 10px;
-      margin: 15px 0;
-      display: inline-block;
-    }
+    .mejorar-cobertura { background: linear-gradient(135deg, #0f2640, #1a3a5a); border: 2px solid #4ade80; border-radius: 15px; padding: 30px; margin: 30px 0; text-align: center; }
+    .mejorar-titulo { color: #4ade80; font-size: 1.3rem; margin-bottom: 15px; }
+    .mejorar-texto { color: #b8c5d6; font-size: 1rem; line-height: 1.6; margin-bottom: 20px; }
+    .mejorar-input-container { display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
+    .mejorar-input { width: 200px; padding: 15px; font-size: 1.1rem; border: 2px solid #4ade80; border-radius: 10px; background: #0a1a2a; color: white; text-align: center; }
+    .mejorar-input:focus { outline: none; border-color: #d4af37; box-shadow: 0 0 10px rgba(212,175,55,0.3); }
+    .btn-recalcular { background: linear-gradient(135deg, #4ade80, #22c55e); color: #0a1a2a; padding: 15px 30px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; }
+    .btn-recalcular:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(74,222,128,0.4); }
+    .adicional-actual { background: #112233; padding: 15px 25px; border-radius: 10px; margin: 15px 0; display: inline-block; }
     .adicional-label { color: #888; font-size: 0.9rem; }
     .adicional-valor { color: #4ade80; font-size: 1.3rem; font-weight: bold; }
-
-    .btn-enviar-usuario {
-      background: linear-gradient(135deg, #25d366, #128c7e);
-      color: white;
-      padding: 15px 30px;
-      border: none;
-      border-radius: 10px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s;
-      margin-top: 15px;
-      display: block;
-      width: 100%;
-      max-width: 350px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .btn-enviar-usuario:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(37,211,102,0.4);
-    }
-
+    .btn-enviar-usuario { background: linear-gradient(135deg, #25d366, #128c7e); color: white; padding: 15px 30px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; margin-top: 15px; display: block; width: 100%; max-width: 350px; margin-left: auto; margin-right: auto; }
+    .btn-enviar-usuario:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(37,211,102,0.4); }
     @media (max-width: 600px) {
       .plan-nombre { font-size: 1.4rem; }
       .clinicas-tabla th, .clinicas-tabla td { padding: 8px 10px; font-size: 0.85rem; }
@@ -215,20 +110,16 @@
 
 <section id="formulario" class="card">
   <h2 class="gold">Formulario para Cálculo del Plan</h2>
-
   <form id="mainForm">
     <div class="row">
       <div class="col"><input type="text" name="nombre" id="nombre" placeholder="Nombre completo" required /></div>
       <div class="col"><input type="email" name="correo" id="correo" placeholder="Correo electrónico" required /></div>
     </div>
-
     <div class="row">
       <div class="col"><input type="tel" name="telefono" id="telefono" placeholder="Teléfono (ej: +56912345678)" required /></div>
       <div class="col"><input type="number" name="edad" id="edad" placeholder="Edad titular" min="18" max="99" required /></div>
     </div>
-
     <input type="text" name="rut" id="rut" placeholder="RUT (ej: 12.345.678-9)" required />
-
     <select name="isapre" id="isapre" required>
       <option value="">Isapre actual</option>
       <option>FONASA</option>
@@ -240,12 +131,9 @@
       <option>Nueva Masvida</option>
       <option>Esencial</option>
     </select>
-
     <input type="number" id="renta" name="renta" placeholder="Renta imponible mensual (CLP)" required />
-
     <label class="small">Edad de las cargas (separadas por coma, ej: 5, 12, 30)</label>
     <textarea name="cargas" id="cargas" placeholder="Ej: 5, 12, 30" rows="2"></textarea>
-
     <select name="region" id="region" required>
       <option value="">Selecciona tu Región</option>
       <option value="Arica y Parinacota">Región de Arica y Parinacota</option>
@@ -265,9 +153,7 @@
       <option value="Aysén">Región de Aysén</option>
       <option value="Magallanes">Región de Magallanes</option>
     </select>
-
     <textarea name="mensaje" id="mensaje" placeholder="Mensaje adicional (opcional)" rows="2"></textarea>
-
     <button type="submit" id="submitBtn">Cotizar Ahora</button>
     <p id="statusMsg" class="small" style="margin-top:10px;"></p>
   </form>
@@ -278,27 +164,22 @@
   <p class="small">UF: <span id="ufValor">cargando…</span> — Fecha: <span id="ufFecha">-</span></p>
 </section>
 
-<!-- RESULTADO -->
 <section id="resultado-preliminar" class="card" style="display:none">
   <div id="resultadoDetalle"></div>
-
   <div style="text-align:center;margin-top:30px;">
     <button id="btnAsesoria" class="btn-asesoria">📋 Solicitar Asesoría Personalizada</button>
     <p class="small" style="margin-top:10px;">Un asesor te contactará a la brevedad.</p>
-    
     <button id="btnEnviarUsuario" class="btn-enviar-usuario">📲 Recibir Resumen por WhatsApp</button>
     <p class="small" style="margin-top:10px;">Recibirás los planes cotizados y documentos requeridos.</p>
   </div>
 </section>
 
-<!-- REFERIDOS -->
 <section class="referidos-section" id="referidos" style="display:none">
   <div class="referidos-container">
     <div class="referidos-header">
       <h2>¿Quieres que asesoremos a un amigo?</h2>
       <p>Ingresa los datos y nos comunicaremos con tu referido.</p>
     </div>
-
     <form id="formReferidos">
       <div class="form-section">
         <h3>👤 Tus Datos</h3>
@@ -307,7 +188,6 @@
           <input type="text" id="nombreUsuario" required>
         </div>
       </div>
-
       <div class="form-section">
         <h3>🎯 Datos del Referido</h3>
         <div class="form-group-referidos">
@@ -323,7 +203,6 @@
           <input type="email" id="correoReferido" required>
         </div>
       </div>
-
       <button type="submit" class="btn-enviar-referido">📤 Enviar Referido</button>
       <div id="mensajeExitoReferido" class="mensaje-exito-referido">✅ ¡Referido Enviado!</div>
       <div id="mensajeErrorReferido" class="mensaje-error-referido">❌ Error al enviar.</div>
@@ -338,7 +217,7 @@
 </footer>
 
 <script>
-/*========================================================
+  /*========================================================
   SISTEMA DE ASESORES MULTI-URL
 =========================================================*/
 const ASESORES = {
@@ -353,7 +232,7 @@ const ASESORES = {
     nombre: "Betty González",
     telefono: "+56983899232",
     whatsapp: "56983899232",
-    callmebot_apikey: "9999999", // ⚠️ ACTUALIZA CON LA APIKEY REAL
+    callmebot_apikey: "PENDIENTE", // ⚠️ ACTUALIZAR CON APIKEY REAL
     correo: "betty.gonzalez@colmena.cl"
   },
   jose_mora: {
@@ -380,7 +259,6 @@ const ASESOR_NOMBRE = asesor.nombre;
 const ASESOR_TELEFONO = asesor.telefono;
 const ASESOR_CORREO = asesor.correo;
 
-// Actualizar botón WhatsApp dinámicamente
 window.addEventListener("DOMContentLoaded", function() {
   const btnWA = document.getElementById("btnWAAsesor");
   if (btnWA) {
@@ -421,11 +299,9 @@ const REFERIDOS_FIELDS = {
   asesorid_referidos: "entry.683967436"
 };
 
-// URLs de datos
 const URL_PLANES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/planes_completos.json';
 const URL_REDES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/redes_clinicas.json';
 
-// Contador de recálculos (máximo 2)
 let contadorRecalculos = 0;
 const MAX_RECALCULOS = 2;
 
@@ -593,7 +469,7 @@ function seleccionarPlanesConPresupuesto(presupuestoUF, zona, edadTitular, edade
 }
 
 /*========================================================
-  GENERAR HTML
+  GENERAR HTML DE UN PLAN
 =========================================================*/
 function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   if (!plan) return '';
@@ -635,16 +511,16 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
       <div class="plan-info">
         <div class="plan-info-item">
           <div class="plan-info-label">Valor del Plan</div>
-          <div class="plan-info-value">${formatearCLP(plan.valorCalculadoCLP)}</div>
+          <div class="plan-info-value">$${formatearCLP(plan.valorCalculadoCLP)}</div>
           <div class="small">${plan.valorCalculadoUF.toFixed(2)} UF</div>
         </div>
         <div class="plan-info-item">
           <div class="plan-info-label">Adicional a pagar</div>
-          <div class="plan-info-value ${adicionalCLP <= 0 ? 'verde' : 'amarillo'}">${formatearCLP(Math.max(0, adicionalCLP))}</div>
+          <div class="plan-info-value ${adicionalCLP <= 0 ? 'verde' : 'amarillo'}">$${formatearCLP(Math.max(0, adicionalCLP))}</div>
         </div>
         <div class="plan-info-item">
           <div class="plan-info-label">GES incluido</div>
-          <div class="plan-info-value verde">${formatearCLP(plan.gesCLP)}</div>
+          <div class="plan-info-value verde">$${formatearCLP(plan.gesCLP)}</div>
           <div class="small">${plan.gesUF.toFixed(2)} UF</div>
         </div>
         <div class="plan-info-item">
@@ -659,6 +535,9 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   `;
 }
 
+/*========================================================
+  GENERAR HTML DE CLÍNICAS CON TABS
+=========================================================*/
 function generarHTMLClinicas(plan, numeroPlan) {
   if (!plan.coberturas_redes) return '';
   
@@ -723,7 +602,7 @@ function mostrarGrupo(planId, grupo) {
   CALLMEBOT
 =========================================================*/
 async function enviarCallMeBot(mensaje) {
-  if (!CALLMEBOT_APIKEY || CALLMEBOT_APIKEY === "9999999") {
+  if (!CALLMEBOT_APIKEY || CALLMEBOT_APIKEY === "PENDIENTE") {
     console.warn('⚠️ CallMeBot no configurado para este asesor');
     return;
   }
@@ -735,8 +614,7 @@ async function enviarCallMeBot(mensaje) {
     console.error('Error CallMeBot:', err);
   }
 }
-
-/*========================================================
+  /*========================================================
   FORMULARIO PRINCIPAL
 =========================================================*/
 document.getElementById("mainForm").addEventListener("submit", async function(e) {
@@ -784,7 +662,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
   
   ultimoResultado = { sieteCLP, sieteUF, edadesCargas, cargasTexto, zona, plan1, plan2, edadTitular };
 
-  // ENVIAR A GOOGLE FORMS con asesorKey
+  // ENVIAR A GOOGLE FORMS
   try {
     const plan1Nombre = plan1 ? plan1.plan : 'Sin plan disponible';
     const plan2Nombre = plan2 ? plan2.plan : 'Sin plan disponible';
@@ -826,10 +704,10 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
 📧 ${formularioDatos.correo}
 📞 ${formularioDatos.telefono}
 📍 ${formularioDatos.region} (${zona})
-💰 Renta: ${formatearCLP(renta)}
+💰 Renta: $${formatearCLP(renta)}
 👥 Cargas: ${cargasInfo}
 
-📊 7%: ${formatearCLP(sieteCLP)} (${sieteUF.toFixed(2)} UF)
+📊 7%: $${formatearCLP(sieteCLP)} (${sieteUF.toFixed(2)} UF)
 
 📋 Planes sugeridos:
 1) ${plan1 ? plan1.plan + ' → ' + plan1.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}
@@ -844,7 +722,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
       <div class="resumen-grid">
         <div class="resumen-item">
           <div class="resumen-label">Tu 7% obligatorio</div>
-          <div class="resumen-value destacado">${formatearCLP(sieteCLP)}</div>
+          <div class="resumen-value destacado">$${formatearCLP(sieteCLP)}</div>
           <div class="resumen-uf">${sieteUF.toFixed(2)} UF</div>
         </div>
         <div class="resumen-item">
@@ -861,7 +739,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     </div>
     
     <h2 class="gold" style="margin-top:30px;">🏥 Planes Recomendados</h2>
-    <p class="small">Basado en tu 7% (${formatearCLP(sieteCLP)}), te sugerimos estos planes:</p>
+    <p class="small">Basado en tu 7% ($${formatearCLP(sieteCLP)}), te sugerimos estos planes:</p>
   `;
   
   if (plan1) {
@@ -890,7 +768,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
       
       <div class="adicional-actual">
         <div class="adicional-label">Tu presupuesto actual (7%)</div>
-        <div class="adicional-valor">${formatearCLP(sieteCLP)}</div>
+        <div class="adicional-valor">$${formatearCLP(sieteCLP)}</div>
       </div>
       
       <div class="mejorar-input-container">
@@ -918,7 +796,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
 });
 
 /*========================================================
-  RECALCULAR
+  RECALCULAR CON MONTO ADICIONAL
 =========================================================*/
 function recalcularConAdicional() {
   try {
@@ -959,17 +837,17 @@ function recalcularConAdicional() {
         <div class="resumen-grid">
           <div class="resumen-item">
             <div class="resumen-label">Tu 7% obligatorio</div>
-            <div class="resumen-value">${formatearCLP(r.sieteCLP)}</div>
+            <div class="resumen-value">$${formatearCLP(r.sieteCLP)}</div>
             <div class="resumen-uf">${r.sieteUF.toFixed(2)} UF</div>
           </div>
           <div class="resumen-item">
             <div class="resumen-label">Aporte adicional</div>
-            <div class="resumen-value" style="color:#4ade80;">+${formatearCLP(montoAdicional)}</div>
+            <div class="resumen-value" style="color:#4ade80;">+$${formatearCLP(montoAdicional)}</div>
             <div class="resumen-uf">+${(montoAdicional / uf).toFixed(2)} UF</div>
           </div>
           <div class="resumen-item">
             <div class="resumen-label">Presupuesto Total</div>
-            <div class="resumen-value destacado">${formatearCLP(nuevoPresupuestoCLP)}</div>
+            <div class="resumen-value destacado">$${formatearCLP(nuevoPresupuestoCLP)}</div>
             <div class="resumen-uf">${nuevoPresupuestoUF.toFixed(2)} UF</div>
           </div>
           <div class="resumen-item">
@@ -981,7 +859,7 @@ function recalcularConAdicional() {
       </div>
       
       <h2 class="gold" style="margin-top:30px;">🏥 Nuevos Planes con Mayor Cobertura</h2>
-      <p class="small">Con tu presupuesto mejorado de ${formatearCLP(nuevoPresupuestoCLP)}, ahora puedes acceder a estos planes:</p>
+      <p class="small">Con tu presupuesto mejorado de $${formatearCLP(nuevoPresupuestoCLP)}, ahora puedes acceder a estos planes:</p>
     `;
     
     if (nuevosPlanes.plan1) {
@@ -1006,10 +884,10 @@ function recalcularConAdicional() {
       htmlResultado += `
         <div class="mejorar-cobertura">
           <div class="mejorar-titulo">🔄 ¿Deseas ajustar tu aporte adicional?</div>
-          <p class="small" style="color:#fbbf24; margin-bottom:15px;">Te queda ${recalculosRestantes} ajuste${recalculosRestantes > 1 ? 's' : ''} disponible${recalculosRestantes > 1 ? 's' : ''}</p>
+          <p class="small" style="color:#fbbf24; margin-bottom:15px;">Te queda${recalculosRestantes > 1 ? 'n' : ''} ${recalculosRestantes} ajuste${recalculosRestantes > 1 ? 's' : ''} disponible${recalculosRestantes > 1 ? 's' : ''}</p>
           <div class="adicional-actual">
             <div class="adicional-label">Aporte adicional actual</div>
-            <div class="adicional-valor">${formatearCLP(montoAdicional)}</div>
+            <div class="adicional-valor">$${formatearCLP(montoAdicional)}</div>
           </div>
           
           <div class="mejorar-input-container">
@@ -1031,7 +909,7 @@ function recalcularConAdicional() {
           </p>
           <div class="adicional-actual">
             <div class="adicional-label">Tu presupuesto final</div>
-            <div class="adicional-valor">${formatearCLP(nuevoPresupuestoCLP)}</div>
+            <div class="adicional-valor">$${formatearCLP(nuevoPresupuestoCLP)}</div>
           </div>
         </div>
       `;
@@ -1053,7 +931,7 @@ function recalcularConAdicional() {
 }
 
 /*========================================================
-  BOTONES
+  BOTÓN ASESORÍA
 =========================================================*/
 document.getElementById("btnAsesoria").addEventListener("click", function() {
   if (!formularioDatos || !formularioDatos.nombre) {
@@ -1067,31 +945,29 @@ document.getElementById("btnAsesoria").addEventListener("click", function() {
   const plan1Valor = r.plan1 ? `${r.plan1.valorCalculadoUF.toFixed(2)} UF` : '-';
   const plan2Valor = r.plan2 ? `${r.plan2.valorCalculadoUF.toFixed(2)} UF` : '-';
   
-  // Info de cargas con edades
   const cargasInfo = r.edadesCargas.length > 0 ? `${r.edadesCargas.length} (${r.edadesCargas.join(', ')} años)` : '0';
   
-  // Verificar si hay monto adicional
   const tieneAdicional = r.montoAdicional && r.montoAdicional > 0;
   const textoAdicional = tieneAdicional 
     ? `• Aporte adicional: $${formatearCLP(r.montoAdicional)}
-• Presupuesto total: $${formatearCLP(r.presupuestoTotalCLP)} (${r.presupuestoTotalUF.toFixed(2)} UF)`
+- Presupuesto total: $${formatearCLP(r.presupuestoTotalCLP)} (${r.presupuestoTotalUF.toFixed(2)} UF)`
     : ''; 
 
   const mensaje = `🔔 SOLICITUD DE ASESORÍA
 
 👤 Datos del cliente:
-• Nombre: ${formularioDatos.nombre}
-• Correo: ${formularioDatos.correo}
-• RUT: ${formularioDatos.rut}
-• Teléfono: ${formularioDatos.telefono}
-• Edad: ${formularioDatos.edad} años
-• Isapre actual: ${formularioDatos.isapre}
-• Región: ${formularioDatos.region} (${r.zona})
-• Renta: $${formatearCLP(Number(formularioDatos.renta))}
-• Cargas: ${cargasInfo}
+- Nombre: ${formularioDatos.nombre}
+- Correo: ${formularioDatos.correo}
+- RUT: ${formularioDatos.rut}
+- Teléfono: ${formularioDatos.telefono}
+- Edad: ${formularioDatos.edad} años
+- Isapre actual: ${formularioDatos.isapre}
+- Región: ${formularioDatos.region} (${r.zona})
+- Renta: $${formatearCLP(Number(formularioDatos.renta))}
+- Cargas: ${cargasInfo}
 
 💰 Cotización:
-• Tu 7%: $${formatearCLP(r.sieteCLP)} (${r.sieteUF.toFixed(2)} UF)
+- Tu 7%: $${formatearCLP(r.sieteCLP)} (${r.sieteUF.toFixed(2)} UF)
 ${textoAdicional}
 
 📋 Planes sugeridos:
@@ -1100,10 +976,8 @@ ${textoAdicional}
 
 ⚡ SOLICITA CONTACTO URGENTE`;
 
-  // Enviar por CallMeBot directamente
   enviarCallMeBot(mensaje);
   
-  // Mostrar confirmación
   alert("✅ Solicitud enviada. Un asesor te contactará a la brevedad.");
 
   document.getElementById("referidos").style.display = "block";
@@ -1113,7 +987,7 @@ ${textoAdicional}
 });
 
 /*========================================================
-  BOTÓN ENVIAR RESUMEN AL USUARIO POR WHATSAPP
+  BOTÓN ENVIAR RESUMEN AL USUARIO
 =========================================================*/
 document.getElementById("btnEnviarUsuario").addEventListener("click", function() {
   if (!formularioDatos || !formularioDatos.nombre) {
@@ -1131,9 +1005,15 @@ document.getElementById("btnEnviarUsuario").addEventListener("click", function()
 
 Gracias por tu interés en *Colmena Golden Cross*
 
-📋 *Resumen de tu cotización:*\n• Plan 1: ${plan1Nombre} → ${plan1Valor}\n• Plan 2: ${plan2Nombre} → ${plan2Valor}\n• Tu 7%: $${formatearCLP(r.sieteCLP)} (${r.sieteUF.toFixed(2)} UF)
+📋 *Resumen de tu cotización:*
+- Plan 1: ${plan1Nombre} → ${plan1Valor}
+- Plan 2: ${plan2Nombre} → ${plan2Valor}
+- Tu 7%: $${formatearCLP(r.sieteCLP)} (${r.sieteUF.toFixed(2)} UF)
 
-📄 *Documentos para iniciar tu afiliación:*\n1. Última liquidación de sueldo\n2. 12 últimas cotizaciones AFP\n3. Foto RUT (ambos lados)
+📄 *Documentos para iniciar tu afiliación:*
+1. Última liquidación de sueldo
+2. 12 últimas cotizaciones AFP
+3. Foto RUT (ambos lados)
 
 Puedes enviarlos por este medio.
 
@@ -1141,14 +1021,13 @@ Puedes enviarlos por este medio.
 Ejecutivo de Ventas - Colmena Golden Cross
 📞 ${ASESOR_TELEFONO}`;
 
-  // Enviar por CallMeBot al asesor
   enviarCallMeBot(mensaje);
   
   alert("✅ Resumen enviado a tu WhatsApp. Reenvíalo al cliente.");
 });
 
 /*========================================================
-  REFERIDOS
+  FORMULARIO REFERIDOS
 =========================================================*/
 document.getElementById("formReferidos").addEventListener("submit", async function(e) {
   e.preventDefault();
@@ -1159,18 +1038,19 @@ document.getElementById("formReferidos").addEventListener("submit", async functi
   const correoReferido = document.getElementById("correoReferido").value;
 
   const f = new FormData();
-  f.append("entry.1664559901", nombreUsuario);
-  f.append("entry.715463265", nombreReferido);
-  f.append("entry.1382714918", telefonoReferido);
-  f.append("entry.897178414", correoReferido);
-  f.append("entry.178502788", "Referido enviado desde landing");
+  f.append(REFERIDOS_FIELDS.tu_nombre, nombreUsuario);
+  f.append(REFERIDOS_FIELDS.nombre_referido, nombreReferido);
+  f.append(REFERIDOS_FIELDS.telefono_referido, telefonoReferido);
+  f.append(REFERIDOS_FIELDS.correo_referido, correoReferido);
+  f.append(REFERIDOS_FIELDS.mensaje_adicional, "Referido enviado desde landing");
+  f.append(REFERIDOS_FIELDS.asesorid_referidos, asesorKey);
 
   try {
     await fetch(GOOGLE_FORM_REFERIDOS_URL, { method: "POST", mode: "no-cors", body: f });
     document.getElementById("mensajeExitoReferido").style.display = "block";
     document.getElementById("mensajeErrorReferido").style.display = "none";
 
-    const msgRef = `🎯 NUEVO REFERIDO
+    const msgRef = `🎯 NUEVO REFERIDO - ${ASESOR_NOMBRE}
 
 Referido por: ${nombreUsuario}
 Nombre: ${nombreReferido}
@@ -1178,12 +1058,11 @@ Tel: ${telefonoReferido}
 Correo: ${correoReferido}`;
     enviarCallMeBot(msgRef);
 
-    // Reset
     setTimeout(() => {
       document.getElementById("mainForm").reset();
       formularioDatos = {};
       ultimoResultado = null;
-      contadorRecalculos = 0; // Resetear contador de recálculos
+      contadorRecalculos = 0;
       document.getElementById("resultado-preliminar").style.display = "none";
       document.getElementById("referidos").style.display = "none";
       window.scrollTo({ top: 0, behavior: 'smooth' });
