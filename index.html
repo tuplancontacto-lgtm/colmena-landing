@@ -11,68 +11,127 @@
     h1 { color: #d4af37; font-size: 2.5rem; margin: 0; }
     h2 { color: #d4af37; }
     section { padding: 40px 20px; max-width: 900px; margin: auto; }
+    .gold { color: #d4af37; }
     .card { background: #112233; border: 1px solid #d4af37; padding: 25px; border-radius: 15px; margin-bottom: 25px; }
     button { background: #d4af37; color: #0a1a2a; padding: 15px 25px; border: none; border-radius: 10px; font-size: 1.1rem; cursor: pointer; }
     button:hover { opacity: 0.85; }
     button:disabled { opacity: 0.6; cursor: not-allowed; }
     form input, form select, form textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: none; }
+    .whatsapp { display: block; background: #25D366; text-align: center; padding: 15px; color: white; text-decoration: none; border-radius: 10px; font-size: 1.2rem; font-weight: bold; margin-top: 20px; max-width: 300px; margin-left: auto; margin-right: auto; }
     .small { font-size: 0.9rem; color: #ccc; }
     .row { display:flex; gap:16px; flex-wrap: wrap; }
     .col { flex:1; min-width: 200px; }
     .success-msg { color: #4ade80; margin-top: 12px; font-weight: bold; }
     .error-msg { color: #ff8080; margin-top: 12px; }
+    .resumen-cotizacion { background: #0d1f2d; border: 1px solid #3a5a7a; border-radius: 10px; padding: 20px; margin-bottom: 25px; }
+    .resumen-titulo { color: #d4af37; font-size: 1.3rem; margin-bottom: 15px; font-weight: bold; }
+    .resumen-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; }
+    .resumen-item { text-align: center; padding: 15px; background: #112233; border-radius: 8px; }
+    .resumen-label { font-size: 0.85rem; color: #888; margin-bottom: 5px; }
+    .resumen-value { font-size: 1.2rem; font-weight: bold; color: #fff; }
+    .resumen-value.destacado { color: #4ade80; }
+    .resumen-uf { font-size: 0.85rem; color: #aaa; }
     .plan-card { background: #112233; border: 2px solid #d4af37; border-radius: 15px; padding: 25px; margin: 25px 0; }
-    .plan-nombre { font-size: 1.8rem; font-weight: bold; color: #d4af37; text-align: center; }
+    .plan-card.secundario { border-color: #60a5fa; }
+    .plan-badge { display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 15px; }
+    .plan-badge.principal { background: #d4af37; color: #0a1a2a; }
+    .plan-badge.secundario { background: #60a5fa; color: #0a1a2a; }
+    .plan-nombre-container { text-align: center; margin: 20px 0; padding: 20px; background: linear-gradient(135deg, #1a3a5a, #0d1f2d); border-radius: 12px; border: 2px solid #d4af37; }
+    .plan-nombre { font-size: 1.8rem; font-weight: bold; color: #d4af37; text-shadow: 0 2px 10px rgba(212,175,55,0.3); letter-spacing: 1px; }
+    .plan-nombre-estrella { color: #fbbf24; font-size: 1.5rem; }
     .plan-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 20px 0; }
     .plan-info-item { background: #1a2a3a; padding: 15px; border-radius: 8px; text-align: center; }
-    .plan-info-label { font-size: 0.8rem; color: #888; }
+    .plan-info-label { font-size: 0.8rem; color: #888; margin-bottom: 5px; }
     .plan-info-value { font-size: 1.1rem; font-weight: bold; color: #fff; }
-    .btn-asesoria { display: inline-block; background: linear-gradient(135deg, #d4af37, #f0c860); color: #0a1a2a; padding: 18px 40px; border-radius: 12px; font-size: 1.2rem; font-weight: bold; border: none; cursor: pointer; }
-    .btn-asesoria:hover { opacity: 0.9; }
+    .plan-info-value.verde { color: #4ade80; }
+    .plan-info-value.amarillo { color: #fbbf24; }
+    .coberturas-section { margin: 20px 0; padding: 15px; background: #0d1f2d; border-radius: 10px; }
+    .coberturas-title { color: #d4af37; font-size: 1rem; margin-bottom: 10px; }
+    .coberturas-texto { font-size: 0.9rem; line-height: 1.6; color: #ccc; }
+    .clinicas-section { margin-top: 25px; padding-top: 20px; border-top: 1px solid #3a5a7a; }
+    .clinicas-title { color: #d4af37; font-size: 1.1rem; margin-bottom: 15px; }
+    .grupos-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+    .grupo-tab { background: #1a2a3a; border: 1px solid #3a5a7a; color: #ccc; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s; }
+    .grupo-tab:hover { border-color: #d4af37; color: #d4af37; }
+    .grupo-tab.active { background: #d4af37; color: #0a1a2a; border-color: #d4af37; font-weight: bold; }
+    .clinicas-tabla { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .clinicas-tabla th { background: #1a3a5a; color: #d4af37; padding: 12px 15px; text-align: left; }
+    .clinicas-tabla td { padding: 10px 15px; border-bottom: 1px solid #2a3a4a; }
+    .clinicas-tabla tr:nth-child(even) { background: #0d1f2d; }
+    .clinicas-tabla tr:nth-child(odd) { background: #112233; }
+    .clinicas-tabla tr:hover { background: #1a3a4a; }
+    .grupo-content { display: none; }
+    .grupo-content.active { display: block; }
+    .btn-asesoria { display: inline-block; background: linear-gradient(135deg, #d4af37, #f0c860); color: #0a1a2a; padding: 18px 40px; text-decoration: none; border-radius: 12px; font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 15px rgba(212,175,55,0.4); transition: all .3s ease; border: none; cursor: pointer; }
+    .btn-asesoria:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,175,55,0.6); }
     .referidos-section { background: linear-gradient(135deg,#0f2640 0%,#1a3a5a 100%); padding:60px 20px; margin:40px 0; }
     .referidos-container { max-width:800px; margin:0 auto; background:#112233; padding:40px; border-radius:20px; border:1px solid #d4af37; }
+    .referidos-header { text-align:center; margin-bottom:30px; }
+    .referidos-header h2 { color:#d4af37; font-size:28px; margin-bottom:15px; }
+    .referidos-header p { color:#b8c5d6; font-size:16px; }
     .form-section { background:#1a2a3a; padding:25px; border-radius:15px; border-left:4px solid #d4af37; margin-bottom: 20px; }
     .form-section h3 { color:#d4af37; font-size:18px; margin-bottom:15px; margin-top: 0; }
+    .form-group-referidos { margin-bottom: 15px; }
+    .form-group-referidos label { display:block; color:#b8c5d6; margin-bottom:8px; font-size:14px; }
+    .form-group-referidos input { width:100%; padding:12px; border:2px solid #2a3a4a; border-radius:8px; background:#0a1a2a; color:white; }
     .btn-enviar-referido { background:linear-gradient(135deg,#d4af37,#f0c860); color:#0a1a2a; padding:15px 40px; border:none; border-radius:10px; font-size:16px; font-weight:700; cursor:pointer; width:100%; }
-    .mensaje-exito, .mensaje-error { padding:15px; border-radius:10px; margin-top:20px; display:none; font-weight:600; text-align:center; }
-    .mensaje-exito { background:#1a4d2e; color:#4ade80; border:1px solid #4ade80; }
-    .mensaje-error { background:#4a1a1a; color:#ff8080; border:1px solid #ff8080; }
-    .disclaimer { background: #1a2a3a; border-left: 4px solid #fbbf24; padding: 15px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; font-size: 0.85rem; color: #b8c5d6; }
-    #resultado-preliminar { display: none; }
-    #referidos { display: none; }
+    .mensaje-exito-referido, .mensaje-error-referido { padding:15px; border-radius:10px; margin-top:20px; display:none; font-weight:600; text-align:center; }
+    .mensaje-exito-referido { background:#1a4d2e; color:#4ade80; border:1px solid #4ade80; }
+    .mensaje-error-referido { background:#4a1a1a; color:#ff8080; border:1px solid #ff8080; }
+    .disclaimer { background: #1a2a3a; border-left: 4px solid #fbbf24; padding: 15px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; font-size: 0.85rem; color: #b8c5d6; font-style: italic; }
+    .disclaimer-icon { color: #fbbf24; margin-right: 8px; }
+    .mejorar-cobertura { background: linear-gradient(135deg, #0f2640, #1a3a5a); border: 2px solid #4ade80; border-radius: 15px; padding: 30px; margin: 30px 0; text-align: center; }
+    .mejorar-titulo { color: #4ade80; font-size: 1.3rem; margin-bottom: 15px; }
+    .mejorar-texto { color: #b8c5d6; font-size: 1rem; line-height: 1.6; margin-bottom: 20px; }
+    .mejorar-input-container { display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
+    .mejorar-input { width: 200px; padding: 15px; font-size: 1.1rem; border: 2px solid #4ade80; border-radius: 10px; background: #0a1a2a; color: white; text-align: center; }
+    .mejorar-input:focus { outline: none; border-color: #d4af37; box-shadow: 0 0 10px rgba(212,175,55,0.3); }
+    .btn-recalcular { background: linear-gradient(135deg, #4ade80, #22c55e); color: #0a1a2a; padding: 15px 30px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; }
+    .btn-recalcular:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(74,222,128,0.4); }
+    .adicional-actual { background: #112233; padding: 15px 25px; border-radius: 10px; margin: 15px 0; display: inline-block; }
+    .adicional-label { color: #888; font-size: 0.9rem; }
+    .adicional-valor { color: #4ade80; font-size: 1.3rem; font-weight: bold; }
+    .btn-enviar-usuario { background: linear-gradient(135deg, #25d366, #128c7e); color: white; padding: 15px 30px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; margin-top: 15px; display: block; width: 100%; max-width: 350px; margin-left: auto; margin-right: auto; }
+    .btn-enviar-usuario:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(37,211,102,0.4); }
     @media (max-width: 600px) {
-      button { padding: 12px 15px; font-size: 1rem; }
+      .plan-nombre { font-size: 1.4rem; }
+      .clinicas-tabla th, .clinicas-tabla td { padding: 8px 10px; font-size: 0.85rem; }
+      .mejorar-input { width: 100%; }
     }
   </style>
 </head>
 <body>
-
 <header>
   <h1>Asesoría en Planes de Salud Colmena</h1>
-  <p style="color: #d4af37;">Atención premium para clientes exigentes</p>
-  <p class="small">Completa el formulario y elige tu camino.</p>
+  <p class="gold">Atención premium para clientes exigentes</p>
+  <p class="small">Completa el formulario para obtener una cotización exacta en UF y CLP.</p>
 </header>
-
 <section id="formulario" class="card">
-  <h2 style="color: #d4af37;">Formulario para Cálculo del Plan</h2>
+  <h2 class="gold">Formulario para Cálculo del Plan</h2>
   <form id="mainForm">
     <div class="row">
       <div class="col"><input type="text" name="nombre" id="nombre" placeholder="Nombre completo" required /></div>
       <div class="col"><input type="email" name="correo" id="correo" placeholder="Correo electrónico" required /></div>
     </div>
     <div class="row">
-      <div class="col"><input type="tel" name="telefono" id="telefono" placeholder="Teléfono" required /></div>
-      <div class="col"><input type="number" name="edad" id="edad" placeholder="Edad" min="18" max="99" required /></div>
+      <div class="col"><input type="tel" name="telefono" id="telefono" placeholder="Teléfono (ej: +56912345678)" required /></div>
+      <div class="col"><input type="number" name="edad" id="edad" placeholder="Edad titular" min="18" max="99" required /></div>
     </div>
     <input type="text" name="rut" id="rut" placeholder="RUT (ej: 12.345.678-9)" required />
     <select name="isapre" id="isapre" required>
       <option value="">Isapre actual</option>
-      <option>FONASA</option><option>Colmena</option><option>Cruz Blanca</option>
-      <option>Consalud</option><option>Banmédica</option><option>Vida Tres</option>
-      <option>Nueva Masvida</option><option>Esencial</option>
+      <option>FONASA</option>
+      <option>Colmena</option>
+      <option>Cruz Blanca</option>
+      <option>Consalud</option>
+      <option>Banmédica</option>
+      <option>Vida Tres</option>
+      <option>Nueva Masvida</option>
+      <option>Esencial</option>
     </select>
     <input type="number" id="renta" name="renta" placeholder="Renta imponible mensual (CLP)" required />
-    <textarea name="cargas" id="cargas" placeholder="Edades de cargas (ej: 5, 12, 30)" rows="2"></textarea>
+    <label class="small">Edad de las cargas (separadas por coma, ej: 5, 12, 30)</label>
+    <textarea name="cargas" id="cargas" placeholder="Ej: 5, 12, 30" rows="2"></textarea>
     <select name="region" id="region" required>
       <option value="">Selecciona tu Región</option>
       <option value="Arica y Parinacota">Región de Arica y Parinacota</option>
@@ -93,355 +152,763 @@
       <option value="Magallanes">Región de Magallanes</option>
     </select>
     <textarea name="mensaje" id="mensaje" placeholder="Mensaje adicional (opcional)" rows="2"></textarea>
-    
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
-      <button type="submit" id="submitBtn" style="background: linear-gradient(135deg, #d4af37, #f0c860); color: #0a1a2a;">📋 Cotizar Ahora</button>
-      <button type="button" id="btnBuscarClinicaInicio" style="background: linear-gradient(135deg, #4ade80, #22c55e); color: white;">🏥 Buscar por Clínica</button>
-    </div>
-    
+    <button type="submit" id="submitBtn">Cotizar Ahora</button>
     <p id="statusMsg" class="small" style="margin-top:10px;"></p>
   </form>
 </section>
-
-<section id="resultado-preliminar" class="card">
+<section class="card">
+  <h2 class="gold">UF del día</h2>
+  <p class="small">UF: <span id="ufValor">cargando…</span> — Fecha: <span id="ufFecha">-</span></p>
+</section>
+<section id="resultado-preliminar" class="card" style="display:none">
   <div id="resultadoDetalle"></div>
   <div style="text-align:center;margin-top:30px;">
     <button id="btnAsesoria" class="btn-asesoria">📋 Solicitar Asesoría Personalizada</button>
     <p class="small" style="margin-top:10px;">Un asesor te contactará a la brevedad.</p>
+    <button id="btnEnviarUsuario" class="btn-enviar-usuario">📲 Recibir Resumen por WhatsApp</button>
+    <p class="small" style="margin-top:10px;">Recibirás los planes cotizados y documentos requeridos.</p>
   </div>
 </section>
-
-<section class="referidos-section" id="referidos">
+<section class="referidos-section" id="referidos" style="display:none">
   <div class="referidos-container">
-    <div style="text-align:center; margin-bottom:30px;">
-      <h2 style="color:#d4af37; font-size:28px; margin-bottom:15px;">¿Quieres que asesoremos a un amigo?</h2>
-      <p style="color:#b8c5d6; font-size:16px;">Ingresa los datos y nos comunicaremos con tu referido.</p>
+    <div class="referidos-header">
+      <h2>¿Quieres que asesoremos a un amigo?</h2>
+      <p>Ingresa los datos y nos comunicaremos con tu referido.</p>
     </div>
     <form id="formReferidos">
       <div class="form-section">
         <h3>👤 Tus Datos</h3>
-        <div style="margin-bottom: 15px;">
-          <label style="display:block; color:#b8c5d6; margin-bottom:8px;">Tu Nombre *</label>
-          <input type="text" id="nombreUsuario" required style="width:100%; padding:12px; border:2px solid #2a3a4a; border-radius:8px; background:#0a1a2a; color:white;">
+        <div class="form-group-referidos">
+          <label for="nombreUsuario">Tu Nombre *</label>
+          <input type="text" id="nombreUsuario" required>
         </div>
       </div>
       <div class="form-section">
         <h3>🎯 Datos del Referido</h3>
-        <div style="margin-bottom: 15px;">
-          <label style="display:block; color:#b8c5d6; margin-bottom:8px;">Nombre Completo *</label>
-          <input type="text" id="nombreReferido" required style="width:100%; padding:12px; border:2px solid #2a3a4a; border-radius:8px; background:#0a1a2a; color:white;">
+        <div class="form-group-referidos">
+          <label>Nombre Completo *</label>
+          <input type="text" id="nombreReferido" required>
         </div>
-        <div style="margin-bottom: 15px;">
-          <label style="display:block; color:#b8c5d6; margin-bottom:8px;">Teléfono *</label>
-          <input type="tel" id="telefonoReferido" required style="width:100%; padding:12px; border:2px solid #2a3a4a; border-radius:8px; background:#0a1a2a; color:white;">
+        <div class="form-group-referidos">
+          <label>Teléfono *</label>
+          <input type="tel" id="telefonoReferido" required>
         </div>
-        <div style="margin-bottom: 15px;">
-          <label style="display:block; color:#b8c5d6; margin-bottom:8px;">Correo *</label>
-          <input type="email" id="correoReferido" required style="width:100%; padding:12px; border:2px solid #2a3a4a; border-radius:8px; background:#0a1a2a; color:white;">
+        <div class="form-group-referidos">
+          <label>Correo *</label>
+          <input type="email" id="correoReferido" required>
         </div>
       </div>
       <button type="submit" class="btn-enviar-referido">📤 Enviar Referido</button>
-      <div id="mensajeExitoReferido" class="mensaje-exito">✅ ¡Referido Enviado!</div>
-      <div id="mensajeErrorReferido" class="mensaje-error">❌ Error al enviar.</div>
+      <div id="mensajeExitoReferido" class="mensaje-exito-referido">✅ ¡Referido Enviado!</div>
+      <div id="mensajeErrorReferido" class="mensaje-error-referido">❌ Error al enviar.</div>
     </form>
   </div>
 </section>
-
+<a class="whatsapp" id="btnWAAsesor" href="#" target="_blank">Contactar por WhatsApp</a>
 <footer style="text-align:center; padding:30px; color:#666; font-size:0.85rem;">
   © 2025 Colmena Golden Cross - Asesoría en Planes de Salud
 </footer>
-
 <script>
-// ════════════════════════════════════════════════════════════════════════════
-// CONFIGURACIÓN
-// ════════════════════════════════════════════════════════════════════════════
+const ASESORES = {
+  jose_pepe: {
+    nombre: "José Pepe",
+    telefono: "+56990701837",
+    whatsapp: "56990701837",
+    callmebot_apikey: "5088331",
+    correo: "voz.josemora@gmail.com"
+  },
+  betty: {
+    nombre: "Betty González",
+    telefono: "+56983899232",
+    whatsapp: "56983899232",
+    callmebot_apikey: "PENDIENTE",
+    correo: "betty.gonzalez@colmena.cl"
+  },
+  jose_mora: {
+    nombre: "José Mora",
+    telefono: "+56975356696",
+    whatsapp: "56975356696",
+    callmebot_apikey: "7360481",
+    correo: "jose.mora@colmena.cl"
+  }
+};
 
-const FORM_URL_COTIZACION = 'https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/formResponse';
-const FORM_FIELDS_COTIZACION = {
-  nombre: 'entry.1455181501', rut: 'entry.1514828805', correo: 'entry.1253669566',
-  telefono: 'entry.1927631596', edad: 'entry.1515225692', isapre: 'entry.1312575017',
-  renta: 'entry.1350273122', region: 'entry.1283417188', cargas: 'entry.6457415',
-  mensaje: 'entry.860152674', plan1: 'entry.1176082335', plan2: 'entry.1798986413',
+function getQueryParam(param) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(param);
+}
+
+const asesorKey = getQueryParam("asesor") || "jose_mora";
+const asesor = ASESORES[asesorKey] || ASESORES["jose_mora"];
+const WHATSAPP_ASESORIA = asesor.whatsapp;
+const CALLMEBOT_PHONE = asesor.whatsapp;
+const CALLMEBOT_APIKEY = asesor.callmebot_apikey;
+const ASESOR_NOMBRE = asesor.nombre;
+const ASESOR_TELEFONO = asesor.telefono;
+const ASESOR_CORREO = asesor.correo;
+
+window.addEventListener("DOMContentLoaded", function() {
+  const btnWA = document.getElementById("btnWAAsesor");
+  if (btnWA) {
+    btnWA.href = `https://wa.me/${WHATSAPP_ASESORIA}`;
+    btnWA.innerText = `Contactar a ${ASESOR_NOMBRE} por WhatsApp`;
+  }
+});
+
+const FORM_BASE_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/formResponse';
+const FORM_FIELDS = {
+  nombre: 'entry.1455181501',
+  rut: 'entry.1514828805',
+  correo: 'entry.1253669566',
+  telefono: 'entry.1927631596',
+  edad: 'entry.1515225692',
+  isapre: 'entry.1312575017',
+  renta: 'entry.1350273122',
+  region: 'entry.1283417188',
+  cargas: 'entry.6457415',
+  mensaje: 'entry.860152674',
+  plan1: 'entry.1176082335',
+  plan2: 'entry.1798986413',
   asesorid: 'entry.1496988494'
 };
 
-const FORM_URL_REFERIDOS = 'https://docs.google.com/forms/d/e/1FAIpQLSeIppjYB0Vgc6RsJ3AM0HcAVhLaxAT6ZZ_MxdPhmuwRkwLT-A/formResponse';
-const FORM_FIELDS_REFERIDOS = {
-  tu_nombre: "entry.1664559901", nombre_referido: "entry.715463265",
-  telefono_referido: "entry.1382714918", correo_referido: "entry.897178414",
+const GOOGLE_FORM_REFERIDOS_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeIppjYB0Vgc6RsJ3AM0HcAVhLaxAT6ZZ_MxdPhmuwRkwLT-A/formResponse';
+const REFERIDOS_FIELDS = {
+  tu_nombre: "entry.1664559901",
+  nombre_referido: "entry.715463265",
+  telefono_referido: "entry.1382714918",
+  correo_referido: "entry.897178414",
+  mensaje_adicional: "entry.178502788",
   asesorid_referidos: "entry.683967436"
 };
 
-const ASESORES = {
-  jose_mora: { nombre: "José Mora", whatsapp: "56975356696", apikey: "7360481" }
+const URL_PLANES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/planes_completos.json';
+const URL_REDES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/redes_clinicas.json';
+
+let contadorRecalculos = 0;
+const MAX_RECALCULOS = 2;
+
+const REGION_A_ZONA = {
+  'Arica y Parinacota': 'NORTE',
+  'Tarapacá': 'NORTE',
+  'Antofagasta': 'NORTE',
+  'Atacama': 'NORTE',
+  'Coquimbo': 'NORTE',
+  'Valparaíso': 'CENTRO',
+  "O'Higgins": 'CENTRO',
+  'Maule': 'CENTRO',
+  'Metropolitana': 'SANTIAGO',
+  'Ñuble': 'SUR',
+  'Bío-Bío': 'SUR',
+  'La Araucanía': 'SUR',
+  'Los Ríos': 'SUR',
+  'Los Lagos': 'SUR',
+  'Aysén': 'SUR',
+  'Magallanes': 'SUR'
 };
 
-const asesorKey = "jose_mora";
-const asesor = ASESORES[asesorKey];
-const WHATSAPP_ASESORIA = asesor.whatsapp;
-const CALLMEBOT_APIKEY = asesor.apikey;
-const ASESOR_NOMBRE = asesor.nombre;
+function obtenerFactor(edad) {
+  if (edad < 2) return 0.0;
+  if (edad < 20) return 0.6;
+  if (edad < 25) return 0.9;
+  if (edad < 35) return 1.0;
+  if (edad < 45) return 1.3;
+  if (edad < 55) return 1.4;
+  if (edad < 65) return 2.0;
+  return 2.4;
+}
 
-// ⚠️ ACTUALIZAR AQUÍ cuando cambie la RTI
-const RTI_UF = 87.8; // Renta Tope Imponible en UF (actualizar manualmente)
+function obtenerFactorCarga(edad) {
+  if (edad < 2) return 0.0;
+  if (edad < 20) return 0.6;
+  if (edad < 25) return 0.7;
+  if (edad < 35) return 0.7;
+  if (edad < 45) return 0.9;
+  if (edad < 55) return 1.0;
+  if (edad < 65) return 1.4;
+  return 2.2;
+}
 
 let formularioDatos = {};
 let ultimoResultado = null;
+let PLANES = [];
+let REDES_CLINICAS = {};
 
-function formatearCLP(n) { return (n || 0).toLocaleString("es-CL"); }
-
-// Calcular 7% considerando RTI
-function calcularSietePorCiento(rentaMensual, ufValor) {
-  const rentaEnUF = rentaMensual / ufValor;
-  const rentaAUsar = Math.min(rentaEnUF, RTI_UF); // Usar RTI si renta es mayor
-  return {
-    rentaEnUF: rentaEnUF,
-    rentaAUsar: rentaAUsar,
-    sieteCLP: Math.round(rentaAUsar * 0.07 * ufValor),
-    sieteUF: rentaAUsar * 0.07
-  };
-}
-
-// ════════════════════════════════════════════════════════════════════════════
-// ENVÍO A GOOGLE FORMS
-// ════════════════════════════════════════════════════════════════════════════
-
-function enviarAGoogleForms(datos, esReferido = false) {
-  const url = esReferido ? FORM_URL_REFERIDOS : FORM_URL_COTIZACION;
-  const fields = esReferido ? FORM_FIELDS_REFERIDOS : FORM_FIELDS_COTIZACION;
-  const params = new URLSearchParams();
-  
-  Object.keys(datos).forEach(key => {
-    if (fields[key]) params.append(fields[key], datos[key] || '');
-  });
-  
-  fetch(url, { 
-    method: "POST", 
-    mode: "no-cors",
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: params.toString()
-  }).then(() => console.log('✅ Datos enviados a Google Forms')).catch(err => console.error('Error:', err));
-}
-
-// ════════════════════════════════════════════════════════════════════════════
-// ENVÍO A WHATSAPP
-// ════════════════════════════════════════════════════════════════════════════
-
-async function enviarCallMeBot(mensaje) {
+async function cargarUF() {
   try {
-    const url = `https://api.callmebot.com/whatsapp.php?phone=${WHATSAPP_ASESORIA}&text=${encodeURIComponent(mensaje)}&apikey=${CALLMEBOT_APIKEY}`;
-    await fetch(url, { mode: 'no-cors' });
-    console.log('✅ WhatsApp enviado');
-  } catch (err) { 
-    console.error('Error WhatsApp:', err); 
+    const r = await fetch("https://mindicador.cl/api/");
+    const j = await r.json();
+    const uf = j.uf.valor;
+    window.__UF_VALOR = uf;
+    document.getElementById("ufValor").innerText = "$" + uf.toLocaleString("es-CL", { minimumFractionDigits: 2 });
+    document.getElementById("ufFecha").innerText = new Date(j.uf.fecha).toLocaleDateString("es-CL", { year: "numeric", month: "long", day: "numeric" });
+  } catch (err) {
+    window.__UF_VALOR = 39700;
+    document.getElementById("ufValor").innerText = "$39.700 (estimado)";
+    document.getElementById("ufFecha").innerText = "No disponible";
   }
 }
 
-// ════════════════════════════════════════════════════════════════════════════
-// EVENTO COTIZAR AHORA
-// ════════════════════════════════════════════════════════════════════════════
+async function cargarPlanes() {
+  try {
+    const r = await fetch(URL_PLANES);
+    PLANES = await r.json();
+    console.log('✅ Planes cargados:', PLANES.length);
+  } catch (err) {
+    console.error('Error cargando planes:', err);
+  }
+}
+
+async function cargarRedesClincias() {
+  try {
+    const r = await fetch(URL_REDES);
+    REDES_CLINICAS = await r.json();
+    console.log('✅ Redes de clínicas cargadas');
+  } catch (err) {
+    console.error('Error cargando redes:', err);
+  }
+}
+
+function formatearCLP(n) {
+  return (n || 0).toLocaleString("es-CL");
+}
+
+function calcularValorPlan(pbUF, edadTitular, edadesCargas) {
+  const uf = window.__UF_VALOR || 39700;
+  let sumaFactores = obtenerFactor(edadTitular);
+  edadesCargas.forEach(e => sumaFactores += obtenerFactorCarga(e));
+  const valorPlanUF = pbUF * sumaFactores;
+  const valorPlanCLP = Math.round(valorPlanUF * uf);
+  let personasGES = edadTitular >= 2 ? 1 : 0;
+  edadesCargas.forEach(e => { if (e >= 2) personasGES++; });
+  const gesUF = 0.77 * personasGES;
+  const gesCLP = Math.round(gesUF * uf);
+  const totalUF = valorPlanUF + gesUF;
+  const totalCLP = valorPlanCLP + gesCLP;
+  return { valorPlanUF, valorPlanCLP, gesUF, gesCLP, totalUF, totalCLP, sumaFactores };
+}
+
+function seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas) {
+  const minimo95 = sieteUF * 0.95;
+  const planesZona = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
+  const planesConValor = planesZona.map(p => {
+    const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
+    return { ...p, valorCalculadoUF: calc.totalUF, valorCalculadoCLP: calc.totalCLP, gesUF: calc.gesUF, gesCLP: calc.gesCLP, sumaFactores: calc.sumaFactores };
+  });
+  const planesValidos = planesConValor.filter(p => p.valorCalculadoUF >= minimo95);
+  planesValidos.sort((a, b) => Math.abs(a.valorCalculadoUF - sieteUF) - Math.abs(b.valorCalculadoUF - sieteUF));
+  return { plan1: planesValidos[0] || null, plan2: planesValidos[1] || null };
+}
+
+function seleccionarPlanesConPresupuesto(presupuestoUF, zona, edadTitular, edadesCargas) {
+  const planesZona = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
+  const planesConValor = planesZona.map(p => {
+    const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
+    return { ...p, valorCalculadoUF: calc.totalUF, valorCalculadoCLP: calc.totalCLP, gesUF: calc.gesUF, gesCLP: calc.gesCLP };
+  });
+  const maxPresupuesto = presupuestoUF * 1.10;
+  const minPresupuesto = presupuestoUF * 0.90;
+  let planesValidos = planesConValor.filter(p => p.valorCalculadoUF <= maxPresupuesto && p.valorCalculadoUF >= minPresupuesto);
+  if (planesValidos.length === 0) {
+    planesValidos = planesConValor.filter(p => p.valorCalculadoUF <= maxPresupuesto);
+    planesValidos.sort((a, b) => b.valorCalculadoUF - a.valorCalculadoUF);
+  } else {
+    planesValidos.sort((a, b) => b.valorCalculadoUF - a.valorCalculadoUF);
+  }
+  return { plan1: planesValidos[0] || null, plan2: planesValidos[1] || null };
+}
+  function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
+  if (!plan) return '';
+  const uf = window.__UF_VALOR || 39700;
+  const adicionalUF = Math.max(0, plan.valorCalculadoUF - sieteUF - (montoAdicional / uf));
+  const adicionalCLP = Math.round(adicionalUF * uf);
+  const esPrincipal = numero === 1;
+  const badgeClass = esPrincipal ? 'principal' : 'secundario';
+  const cardClass = esPrincipal ? '' : 'secundario';
+  const badgeText = esPrincipal ? '✨ PLAN RECOMENDADO 1' : '🔷 PLAN RECOMENDADO 2';
+  let coberturasHTML = '';
+  if (plan.hospitalizacion) {
+    coberturasHTML = `
+      <div class="coberturas-section">
+        <div class="coberturas-title">📊 Cobertura Hospitalaria</div>
+        <div class="coberturas-texto">${plan.hospitalizacion.replace(/\n/g, '<br>')}</div>
+      </div>
+    `;
+  }
+  let clinicasHTML = '';
+  if (plan.coberturas_redes && Object.keys(REDES_CLINICAS).length > 0) {
+    clinicasHTML = generarHTMLClinicas(plan, numero);
+  }
+  return `
+    <div class="plan-card ${cardClass}">
+      <span class="plan-badge ${badgeClass}">${badgeText}</span>
+      <div class="plan-nombre-container">
+        <span class="plan-nombre-estrella">★</span>
+        <span class="plan-nombre">${plan.plan}</span>
+        <span class="plan-nombre-estrella">★</span>
+      </div>
+      <div class="plan-info">
+        <div class="plan-info-item">
+          <div class="plan-info-label">Valor del Plan</div>
+          <div class="plan-info-value">$${formatearCLP(plan.valorCalculadoCLP)}</div>
+          <div class="small">${plan.valorCalculadoUF.toFixed(2)} UF</div>
+        </div>
+        <div class="plan-info-item">
+          <div class="plan-info-label">Adicional a pagar</div>
+          <div class="plan-info-value ${adicionalCLP <= 0 ? 'verde' : 'amarillo'}">$${formatearCLP(Math.max(0, adicionalCLP))}</div>
+        </div>
+        <div class="plan-info-item">
+          <div class="plan-info-label">GES incluido</div>
+          <div class="plan-info-value verde">$${formatearCLP(plan.gesCLP)}</div>
+          <div class="small">${plan.gesUF.toFixed(2)} UF</div>
+        </div>
+        <div class="plan-info-item">
+          <div class="plan-info-label">Tope anual</div>
+          <div class="plan-info-value">${formatearCLP(plan.tope_anual_uf || 7000)} UF</div>
+        </div>
+      </div>
+      ${coberturasHTML}
+      ${clinicasHTML}
+    </div>
+  `;
+}
+
+function generarHTMLClinicas(plan, numeroPlan) {
+  if (!plan.coberturas_redes) return '';
+  const grupos = Object.keys(plan.coberturas_redes).sort();
+  const planId = `plan${numeroPlan}`;
+  let tabsHTML = grupos.map((g, i) => {
+    const activeClass = i === 0 ? 'active' : '';
+    const cobertura = plan.coberturas_redes[g];
+    return `<button type="button" class="grupo-tab ${activeClass}" onclick="mostrarGrupo('${planId}', '${g}')">${g} (${cobertura}%)</button>`;
+  }).join('');
+  let contenidoHTML = grupos.map((g, i) => {
+    const activeClass = i === 0 ? 'active' : '';
+    const clinicas = REDES_CLINICAS[g] || [];
+    let filas = clinicas.map(c => `<tr><td>${c.nombre}</td><td>${c.ciudad}</td></tr>`).join('');
+    return `
+      <div id="${planId}-${g}" class="grupo-content ${activeClass}">
+        <table class="clinicas-tabla">
+          <thead>
+            <tr><th>Nombre Prestador</th><th>Ciudad</th></tr>
+          </thead>
+          <tbody>${filas}</tbody>
+        </table>
+      </div>
+    `;
+  }).join('');
+  return `
+    <div class="clinicas-section">
+      <div class="clinicas-title">🏨 Red de Clínicas</div>
+      <div class="grupos-tabs">${tabsHTML}</div>
+      ${contenidoHTML}
+    </div>
+  `;
+}
+
+function mostrarGrupo(planId, grupo) {
+  document.querySelectorAll(`[id^="${planId}-"]`).forEach(el => el.classList.remove('active'));
+  const grupoContent = document.getElementById(`${planId}-${grupo}`);
+  if (grupoContent) {
+    const planCard = grupoContent.closest('.plan-card');
+    if (planCard) {
+      planCard.querySelectorAll('.grupo-tab').forEach(tab => tab.classList.remove('active'));
+      planCard.querySelectorAll('.grupo-tab').forEach(tab => {
+        if (tab.textContent.startsWith(grupo)) {
+          tab.classList.add('active');
+        }
+      });
+    }
+  }
+  document.getElementById(`${planId}-${grupo}`).classList.add('active');
+}
+
+async function enviarCallMeBot(mensaje) {
+  if (!CALLMEBOT_APIKEY || CALLMEBOT_APIKEY === "PENDIENTE") {
+    console.warn('⚠️ CallMeBot no configurado para este asesor');
+    return;
+  }
+  try {
+    const url = `https://api.callmebot.com/whatsapp.php?phone=${CALLMEBOT_PHONE}&text=${encodeURIComponent(mensaje)}&apikey=${CALLMEBOT_APIKEY}`;
+    await fetch(url, { mode: 'no-cors' });
+    console.log('✅ CallMeBot enviado');
+  } catch (err) {
+    console.error('Error CallMeBot:', err);
+  }
+}
 
 document.getElementById("mainForm").addEventListener("submit", async function(e) {
   e.preventDefault();
-
   const btn = document.getElementById("submitBtn");
   const statusMsg = document.getElementById("statusMsg");
-  
   btn.disabled = true;
   btn.textContent = "Calculando...";
-
+  statusMsg.textContent = "";
+  contadorRecalculos = 0;
+  const data = new FormData(this);
   formularioDatos = {
-    nombre: document.getElementById("nombre").value,
-    correo: document.getElementById("correo").value,
-    telefono: document.getElementById("telefono").value,
-    edad: document.getElementById("edad").value,
-    rut: document.getElementById("rut").value,
-    isapre: document.getElementById("isapre").value,
-    renta: document.getElementById("renta").value,
-    cargas: document.getElementById("cargas").value || 'Sin cargas',
-    region: document.getElementById("region").value,
-    mensaje: document.getElementById("mensaje").value || '(sin mensaje)'
+    nombre: data.get("nombre"),
+    correo: data.get("correo"),
+    telefono: data.get("telefono"),
+    edad: data.get("edad"),
+    rut: data.get("rut"),
+    isapre: data.get("isapre"),
+    renta: data.get("renta"),
+    cargas: data.get("cargas"),
+    region: data.get("region"),
+    mensaje: data.get("mensaje")
   };
-
+  const uf = window.__UF_VALOR || 39700;
+  const renta = Number(formularioDatos.renta);
+  const edadTitular = Number(formularioDatos.edad);
+  const cargasTexto = (formularioDatos.cargas || "").replace(/\n/g, ", ").trim();
+  const edadesCargas = cargasTexto.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean).map(Number).filter(n => !isNaN(n) && n >= 0 && n <= 120);
+  const sieteCLP = Math.round(renta * 0.07);
+  const sieteUF = sieteCLP / uf;
+  const zona = REGION_A_ZONA[formularioDatos.region] || 'SANTIAGO';
+  const { plan1, plan2 } = seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas);
+  ultimoResultado = { sieteCLP, sieteUF, edadesCargas, cargasTexto, zona, plan1, plan2, edadTitular };
   try {
-    // Cargar UF actual
-    let ufValor = 39700;
-    try {
-      const r = await fetch("https://mindicador.cl/api/");
-      const j = await r.json();
-      ufValor = j.uf.valor;
-    } catch (err) {
-      console.log('Usando UF estimado');
-    }
-
-    // Calcular 7% considerando RTI
-    const calcSiete = calcularSietePorCiento(Number(formularioDatos.renta), ufValor);
-    
-    ultimoResultado = {
-      sieteCLP: calcSiete.sieteCLP,
-      sieteUF: calcSiete.sieteUF,
-      rentaMensual: Number(formularioDatos.renta),
-      ufValor: ufValor
-    };
-
-    // ENVIAR A GOOGLE FORMS
-    enviarAGoogleForms({
-      nombre: formularioDatos.nombre,
-      rut: formularioDatos.rut,
-      correo: formularioDatos.correo,
-      telefono: formularioDatos.telefono,
-      edad: formularioDatos.edad,
-      isapre: formularioDatos.isapre,
-      renta: formularioDatos.renta,
-      region: formularioDatos.region,
-      cargas: formularioDatos.cargas,
-      mensaje: formularioDatos.mensaje,
-      plan1: 'Por calcular',
-      plan2: 'Por calcular',
-      asesorid: asesorKey
-    });
-
-    // ENVIAR A WHATSAPP
-    const msgWA = `🔔 NUEVA COTIZACIÓN\n\n👤 Cliente: ${formularioDatos.nombre}\n📞 Teléfono: ${formularioDatos.telefono}\n📧 Correo: ${formularioDatos.correo}\n\n📊 DATOS:\n• Edad: ${formularioDatos.edad} años\n• RUT: ${formularioDatos.rut}\n• Isapre: ${formularioDatos.isapre}\n• Región: ${formularioDatos.region}\n• Renta: $${formatearCLP(formularioDatos.renta)}\n• 7% Obligatorio: $${formatearCLP(calcSiete.sieteCLP)}\n• Cargas: ${formularioDatos.cargas}\n\n📍 Asesor: ${ASESOR_NOMBRE}`;
-    
-    enviarCallMeBot(msgWA);
-
+    const plan1Nombre = plan1 ? plan1.plan : 'Sin plan disponible';
+    const plan2Nombre = plan2 ? plan2.plan : 'Sin plan disponible';
+    const params = new URLSearchParams();
+    params.append(FORM_FIELDS.nombre, formularioDatos.nombre);
+    params.append(FORM_FIELDS.rut, formularioDatos.rut);
+    params.append(FORM_FIELDS.correo, formularioDatos.correo);
+    params.append(FORM_FIELDS.telefono, formularioDatos.telefono);
+    params.append(FORM_FIELDS.edad, formularioDatos.edad);
+    params.append(FORM_FIELDS.isapre, formularioDatos.isapre);
+    params.append(FORM_FIELDS.renta, formularioDatos.renta);
+    params.append(FORM_FIELDS.region, formularioDatos.region);
+    params.append(FORM_FIELDS.cargas, cargasTexto || 'Sin cargas');
+    params.append(FORM_FIELDS.mensaje, formularioDatos.mensaje || "(sin mensaje)");
+    params.append(FORM_FIELDS.plan1, plan1Nombre);
+    params.append(FORM_FIELDS.plan2, plan2Nombre);
+    params.append(FORM_FIELDS.asesorid, asesorKey);
+    fetch(FORM_BASE_URL, { method: "POST", mode: "no-cors", headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: params.toString() }).catch(() => {});
     statusMsg.textContent = "✅ Datos enviados correctamente";
     statusMsg.className = "small success-msg";
-
   } catch (err) {
     statusMsg.textContent = "⚠️ Error al enviar";
     statusMsg.className = "small error-msg";
-    console.error('Error:', err);
   }
+  const cargasInfo = edadesCargas.length > 0 ? `${edadesCargas.length} (${edadesCargas.join(', ')} años)` : '0';
+  const msgWA = `🔔 NUEVA COTIZACIÓN - ${ASESOR_NOMBRE}
 
+👤 ${formularioDatos.nombre}
+📧 ${formularioDatos.correo}
+📞 ${formularioDatos.telefono}
+📍 ${formularioDatos.region} (${zona})
+💰 Renta: $${formatearCLP(renta)}
+👥 Cargas: ${cargasInfo}
+
+📊 7%: $${formatearCLP(sieteCLP)} (${sieteUF.toFixed(2)} UF)
+
+📋 Planes sugeridos:
+1) ${plan1 ? plan1.plan + ' → ' + plan1.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}
+2) ${plan2 ? plan2.plan + ' → ' + plan2.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}`;
+  enviarCallMeBot(msgWA);
   let htmlResultado = `
-    <div style="background: #0d1f2d; border: 1px solid #3a5a7a; border-radius: 10px; padding: 20px; margin-bottom: 25px;">
-      <div style="color: #d4af37; font-size: 1.3rem; margin-bottom: 15px; font-weight: bold;">📊 Tu Cotización - ${formularioDatos.nombre}</div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px;">
-        <div style="text-align: center; padding: 15px; background: #112233; border-radius: 8px;">
-          <div style="font-size: 0.85rem; color: #888; margin-bottom: 5px;">Tu 7% obligatorio</div>
-          <div style="font-size: 1.2rem; font-weight: bold; color: #4ade80;">$${formatearCLP(ultimoResultado.sieteCLP)}</div>
-          <div style="font-size: 0.75rem; color: #aaa;">${ultimoResultado.sieteUF.toFixed(2)} UF</div>
+    <div class="resumen-cotizacion">
+      <div class="resumen-titulo">📊 Tu Cotización - ${formularioDatos.nombre}</div>
+      <div class="resumen-grid">
+        <div class="resumen-item">
+          <div class="resumen-label">Tu 7% obligatorio</div>
+          <div class="resumen-value destacado">$${formatearCLP(sieteCLP)}</div>
+          <div class="resumen-uf">${sieteUF.toFixed(2)} UF</div>
         </div>
-        <div style="text-align: center; padding: 15px; background: #112233; border-radius: 8px;">
-          <div style="font-size: 0.85rem; color: #888; margin-bottom: 5px;">Edad</div>
-          <div style="font-size: 1.2rem; font-weight: bold; color: #fff;">${formularioDatos.edad} años</div>
+        <div class="resumen-item">
+          <div class="resumen-label">Cargas</div>
+          <div class="resumen-value">${edadesCargas.length}</div>
+          <div class="resumen-uf">${edadesCargas.length > 0 ? '(' + edadesCargas.join(', ') + ' años)' : 'Sin cargas'}</div>
         </div>
-        <div style="text-align: center; padding: 15px; background: #112233; border-radius: 8px;">
-          <div style="font-size: 0.85rem; color: #888; margin-bottom: 5px;">Región</div>
-          <div style="font-size: 1.2rem; font-weight: bold; color: #fff;">${formularioDatos.region}</div>
+        <div class="resumen-item">
+          <div class="resumen-label">Zona</div>
+          <div class="resumen-value" style="font-size:0.95rem;">${zona}</div>
+          <div class="resumen-uf">${formularioDatos.region}</div>
         </div>
       </div>
     </div>
-    <h2 style="color: #d4af37; margin-top:30px;">✅ Cotización Recibida</h2>
-    <p class="small">Tu solicitud ha sido enviada exitosamente. Nuestro asesor ${ASESOR_NOMBRE} se comunicará contigo en breve a través de WhatsApp y correo electrónico.</p>
-    <div class="disclaimer"><span style="color: #fbbf24; margin-right: 8px;">⚠️</span>Recibirás un mensaje de WhatsApp con tus planes recomendados.</div>
+    <h2 class="gold" style="margin-top:30px;">🏥 Planes Recomendados</h2>
+    <p class="small">Basado en tu 7% ($${formatearCLP(sieteCLP)}), te sugerimos estos planes:</p>
   `;
-
-  document.getElementById("resultado-preliminar").style.display = "block";
+  if (plan1) {
+    htmlResultado += generarHTMLPlan(plan1, 1, sieteUF, sieteCLP, 0);
+  } else {
+    htmlResultado += `<p class="small" style="color:#fbbf24;">No se encontró un plan que cumpla con el criterio para tu 7%. Solicita asesoría personalizada.</p>`;
+  }
+  if (plan2) {
+    htmlResultado += generarHTMLPlan(plan2, 2, sieteUF, sieteCLP, 0);
+  }
+  htmlResultado += `
+    <div class="disclaimer">
+      <span class="disclaimer-icon">⚠️</span>
+      Los valores presentados son referenciales y están sujetos a verificación. Un Ejecutivo de Ventas validará esta información y te contactará para formalizar tu plan de salud.
+    </div>
+  `;
+  htmlResultado += `
+    <div class="mejorar-cobertura">
+      <div class="mejorar-titulo">💡 ¿Te gustaría acceder a mejores coberturas?</div>
+      <div class="mejorar-texto">
+        Puedes complementar tu 7% legal con un aporte adicional mensual para obtener planes con mayores beneficios, mejor red de clínicas y mayor protección para ti y tu familia.
+      </div>
+      <div class="adicional-actual">
+        <div class="adicional-label">Tu presupuesto actual (7%)</div>
+        <div class="adicional-valor">$${formatearCLP(sieteCLP)}</div>
+      </div>
+      <div class="mejorar-input-container">
+        <div>
+          <label class="small" style="display:block; margin-bottom:5px; color:#ccc;">Monto adicional mensual:</label>
+          <input type="number" id="montoAdicional" class="mejorar-input" placeholder="Ej: 50000" min="0" step="1000">
+        </div>
+        <button type="button" id="btnRecalcular" class="btn-recalcular">🔄 Recalcular Planes</button>
+      </div>
+      <p class="small" style="margin-top:15px; color:#888;">Ingresa un monto en pesos chilenos para ver planes con mejores coberturas.</p>
+    </div>
+  `;
   document.getElementById("resultadoDetalle").innerHTML = htmlResultado;
-
+  document.getElementById("resultado-preliminar").style.display = "block";
+  document.getElementById("btnRecalcular").addEventListener("click", recalcularConAdicional);
   btn.disabled = false;
   btn.textContent = "Cotizar Ahora";
-
   setTimeout(() => {
     document.getElementById("resultado-preliminar").scrollIntoView({ behavior: "smooth" });
   }, 300);
 });
 
-// ════════════════════════════════════════════════════════════════════════════
-// BOTÓN SOLICITAR ASESORÍA
-// ════════════════════════════════════════════════════════════════════════════
-
-document.getElementById("btnAsesoria").addEventListener("click", function() {
-  if (!formularioDatos || !formularioDatos.nombre) { 
-    alert("Primero completa la cotización"); 
-    return; 
-  }
-  document.getElementById("referidos").style.display = "block";
-  document.getElementById("referidos").scrollIntoView({ behavior: "smooth" });
-});
-
-// ════════════════════════════════════════════════════════════════════════════
-// BOTÓN BUSCAR POR CLÍNICA
-// ════════════════════════════════════════════════════════════════════════════
-
-document.getElementById("btnBuscarClinicaInicio").addEventListener("click", async function(e) {
-  e.preventDefault();
-  const campos = ['nombre', 'correo', 'telefono', 'edad', 'rut', 'isapre', 'renta', 'region'];
-  if (campos.some(c => !document.getElementById(c).value.trim())) { 
-    alert("Por favor llena todos los campos requeridos"); 
-    return; 
-  }
-  
-  formularioDatos = {
-    nombre: document.getElementById("nombre").value.trim(),
-    correo: document.getElementById("correo").value.trim(),
-    telefono: document.getElementById("telefono").value.trim(),
-    edad: document.getElementById("edad").value.trim(),
-    rut: document.getElementById("rut").value.trim(),
-    isapre: document.getElementById("isapre").value.trim(),
-    renta: document.getElementById("renta").value.trim(),
-    cargas: document.getElementById("cargas").value.trim(),
-    region: document.getElementById("region").value.trim(),
-    mensaje: document.getElementById("mensaje").value.trim()
-  };
-  
-  // Cargar UF
-  let ufValor = 39700;
+function recalcularConAdicional() {
   try {
-    const r = await fetch("https://mindicador.cl/api/");
-    const j = await r.json();
-    ufValor = j.uf.valor;
-  } catch (err) {
-    console.log('Usando UF estimado');
+    const montoAdicionalInput = document.getElementById("montoAdicional");
+    if (!montoAdicionalInput) return;
+    const montoAdicional = parseInt(montoAdicionalInput.value) || 0;
+    if (montoAdicional <= 0) {
+      alert("Por favor ingresa un monto adicional mayor a 0");
+      return;
+    }
+    if (!ultimoResultado) {
+      alert("Primero realiza una cotización");
+      return;
+    }
+    contadorRecalculos++;
+    const uf = window.__UF_VALOR || 39700;
+    const r = ultimoResultado;
+    const nuevoPresupuestoCLP = r.sieteCLP + montoAdicional;
+    const nuevoPresupuestoUF = nuevoPresupuestoCLP / uf;
+    const nuevosPlanes = seleccionarPlanesConPresupuesto(nuevoPresupuestoUF, r.zona, r.edadTitular, r.edadesCargas);
+    ultimoResultado.plan1 = nuevosPlanes.plan1;
+    ultimoResultado.plan2 = nuevosPlanes.plan2;
+    ultimoResultado.montoAdicional = montoAdicional;
+    ultimoResultado.presupuestoTotalCLP = nuevoPresupuestoCLP;
+    ultimoResultado.presupuestoTotalUF = nuevoPresupuestoUF;
+    let htmlResultado = `
+      <div class="resumen-cotizacion">
+        <div class="resumen-titulo">📊 Tu Cotización Mejorada - ${formularioDatos.nombre}</div>
+        <div class="resumen-grid">
+          <div class="resumen-item">
+            <div class="resumen-label">Tu 7% obligatorio</div>
+            <div class="resumen-value">$${formatearCLP(r.sieteCLP)}</div>
+            <div class="resumen-uf">${r.sieteUF.toFixed(2)} UF</div>
+          </div>
+          <div class="resumen-item">
+            <div class="resumen-label">Aporte adicional</div>
+            <div class="resumen-value" style="color:#4ade80;">+$${formatearCLP(montoAdicional)}</div>
+            <div class="resumen-uf">+${(montoAdicional / uf).toFixed(2)} UF</div>
+          </div>
+          <div class="resumen-item">
+            <div class="resumen-label">Presupuesto Total</div>
+            <div class="resumen-value destacado">$${formatearCLP(nuevoPresupuestoCLP)}</div>
+            <div class="resumen-uf">${nuevoPresupuestoUF.toFixed(2)} UF</div>
+          </div>
+          <div class="resumen-item">
+            <div class="resumen-label">Zona</div>
+            <div class="resumen-value" style="font-size:0.95rem;">${r.zona}</div>
+            <div class="resumen-uf">${formularioDatos.region}</div>
+          </div>
+        </div>
+      </div>
+      <h2 class="gold" style="margin-top:30px;">🏥 Nuevos Planes con Mayor Cobertura</h2>
+      <p class="small">Con tu presupuesto mejorado de $${formatearCLP(nuevoPresupuestoCLP)}, ahora puedes acceder a estos planes:</p>
+    `;
+    if (nuevosPlanes.plan1) {
+      htmlResultado += generarHTMLPlan(nuevosPlanes.plan1, 1, nuevoPresupuestoUF, nuevoPresupuestoCLP, montoAdicional);
+    } else {
+      htmlResultado += `<p class="small" style="color:#fbbf24;">No se encontró un plan adicional. Solicita asesoría personalizada.</p>`;
+    }
+    if (nuevosPlanes.plan2) {
+      htmlResultado += generarHTMLPlan(nuevosPlanes.plan2, 2, nuevoPresupuestoUF, nuevoPresupuestoCLP, montoAdicional);
+    }
+    htmlResultado += `
+      <div class="disclaimer">
+        <span class="disclaimer-icon">⚠️</span>
+        Los valores presentados son referenciales y están sujetos a verificación. Un Ejecutivo de Ventas validará esta información y te contactará para formalizar tu plan de salud.
+      </div>
+    `;
+    if (contadorRecalculos < MAX_RECALCULOS) {
+      const recalculosRestantes = MAX_RECALCULOS - contadorRecalculos;
+      htmlResultado += `
+        <div class="mejorar-cobertura">
+          <div class="mejorar-titulo">🔄 ¿Deseas ajustar tu aporte adicional?</div>
+          <p class="small" style="color:#fbbf24; margin-bottom:15px;">Te queda${recalculosRestantes > 1 ? 'n' : ''} ${recalculosRestantes} ajuste${recalculosRestantes > 1 ? 's' : ''} disponible${recalculosRestantes > 1 ? 's' : ''}</p>
+          <div class="adicional-actual">
+            <div class="adicional-label">Aporte adicional actual</div>
+            <div class="adicional-valor">$${formatearCLP(montoAdicional)}</div>
+          </div>
+          <div class="mejorar-input-container">
+            <div>
+              <label class="small" style="display:block; margin-bottom:5px; color:#ccc;">Nuevo monto adicional:</label>
+              <input type="number" id="montoAdicional" class="mejorar-input" placeholder="Ej: 50000" min="0" step="1000" value="${montoAdicional}">
+            </div>
+            <button type="button" id="btnRecalcular" class="btn-recalcular">🔄 Recalcular Planes</button>
+          </div>
+        </div>
+      `;
+    } else {
+      htmlResultado += `
+        <div class="mejorar-cobertura" style="border-color: #d4af37;">
+          <div class="mejorar-titulo" style="color:#d4af37;">✅ Has revisado tus opciones de cobertura</div>
+          <p class="mejorar-texto">
+            Ya exploraste diferentes alternativas. Ahora puedes solicitar asesoría personalizada para finalizar tu afiliación, 
+            o si conoces a alguien que necesite un plan de salud, ¡puedes referirlo!
+          </p>
+          <div class="adicional-actual">
+            <div class="adicional-label">Tu presupuesto final</div>
+            <div class="adicional-valor">$${formatearCLP(nuevoPresupuestoCLP)}</div>
+          </div>
+        </div>
+      `;
+    }
+    document.getElementById("resultadoDetalle").innerHTML = htmlResultado;
+    const btnRecalcular = document.getElementById("btnRecalcular");
+    if (btnRecalcular) {
+      btnRecalcular.addEventListener("click", recalcularConAdicional);
+    }
+    document.getElementById("resultado-preliminar").scrollIntoView({ behavior: "smooth" });
+  } catch (error) {
+    console.error("Error en recalcularConAdicional:", error);
+    alert("Ocurrió un error al recalcular. Por favor intenta de nuevo.");
   }
+}
+  document.getElementById("btnAsesoria").addEventListener("click", function() {
+  if (!formularioDatos || !formularioDatos.nombre) {
+    alert("Primero completa y envía la cotización.");
+    return;
+  }
+  const r = ultimoResultado;
+  const plan1Nombre = r.plan1 ? r.plan1.plan : '-';
+  const plan2Nombre = r.plan2 ? r.plan2.plan : '-';
+  const plan1Valor = r.plan1 ? `${r.plan1.valorCalculadoUF.toFixed(2)} UF` : '-';
+  const plan2Valor = r.plan2 ? `${r.plan2.valorCalculadoUF.toFixed(2)} UF` : '-';
+  const cargasInfo = r.edadesCargas.length > 0 ? `${r.edadesCargas.length} (${r.edadesCargas.join(', ')} años)` : '0';
+  const tieneAdicional = r.montoAdicional && r.montoAdicional > 0;
+  const textoAdicional = tieneAdicional ? `• Aporte adicional: $${formatearCLP(r.montoAdicional)}
+- Presupuesto total: $${formatearCLP(r.presupuestoTotalCLP)} (${r.presupuestoTotalUF.toFixed(2)} UF)` : ''; 
+  const mensaje = `🔔 SOLICITUD DE ASESORÍA
 
-  const calcSiete = calcularSietePorCiento(Number(formularioDatos.renta), ufValor);
-  
-  ultimoResultado = {
-    sieteCLP: calcSiete.sieteCLP,
-    sieteUF: calcSiete.sieteUF,
-    rentaMensual: Number(formularioDatos.renta),
-    ufValor: ufValor
-  };
-  
-  alert("✅ Datos validados. Ahora ingresa el nombre de tu clínica favorita.");
-  document.getElementById("resultado-preliminar").style.display = "none";
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+👤 Datos del cliente:
+- Nombre: ${formularioDatos.nombre}
+- Correo: ${formularioDatos.correo}
+- RUT: ${formularioDatos.rut}
+- Teléfono: ${formularioDatos.telefono}
+- Edad: ${formularioDatos.edad} años
+- Isapre actual: ${formularioDatos.isapre}
+- Región: ${formularioDatos.region} (${r.zona})
+- Renta: $${formatearCLP(Number(formularioDatos.renta))}
+- Cargas: ${cargasInfo}
+
+💰 Cotización:
+- Tu 7%: $${formatearCLP(r.sieteCLP)} (${r.sieteUF.toFixed(2)} UF)
+${textoAdicional}
+
+📋 Planes sugeridos:
+1) ${plan1Nombre} → ${plan1Valor}
+2) ${plan2Nombre} → ${plan2Valor}
+
+⚡ SOLICITA CONTACTO URGENTE`;
+  enviarCallMeBot(mensaje);
+  alert("✅ Solicitud enviada. Un asesor te contactará a la brevedad.");
+  document.getElementById("referidos").style.display = "block";
+  setTimeout(() => {
+    document.getElementById("referidos").scrollIntoView({ behavior: "smooth" });
+  }, 400);
 });
 
-// ════════════════════════════════════════════════════════════════════════════
-// FORMULARIO REFERIDOS
-// ════════════════════════════════════════════════════════════════════════════
+document.getElementById("btnEnviarUsuario").addEventListener("click", function() {
+  if (!formularioDatos || !formularioDatos.nombre) {
+    alert("Primero completa y envía la cotización.");
+    return;
+  }
+  const r = ultimoResultado;
+  const plan1Nombre = r.plan1 ? r.plan1.plan : '-';
+  const plan2Nombre = r.plan2 ? r.plan2.plan : '-';
+  const plan1Valor = r.plan1 ? `${r.plan1.valorCalculadoUF.toFixed(2)} UF` : '-';
+  const plan2Valor = r.plan2 ? `${r.plan2.valorCalculadoUF.toFixed(2)} UF` : '-';
+  const mensaje = `Estimado/a ${formularioDatos.nombre} 👋
+
+Gracias por tu interés en *Colmena Golden Cross*
+
+📋 *Resumen de tu cotización:*
+- Plan 1: ${plan1Nombre} → ${plan1Valor}
+- Plan 2: ${plan2Nombre} → ${plan2Valor}
+- Tu 7%: $${formatearCLP(r.sieteCLP)} (${r.sieteUF.toFixed(2)} UF)
+
+📄 *Documentos para iniciar tu afiliación:*
+1. Última liquidación de sueldo
+2. 12 últimas cotizaciones AFP
+3. Foto RUT (ambos lados)
+
+Puedes enviarlos por este medio.
+
+*${ASESOR_NOMBRE}*
+Ejecutivo de Ventas - Colmena Golden Cross
+📞 ${ASESOR_TELEFONO}`;
+  enviarCallMeBot(mensaje);
+  alert("✅ Resumen enviado a tu WhatsApp. Reenvíalo al cliente.");
+});
 
 document.getElementById("formReferidos").addEventListener("submit", async function(e) {
   e.preventDefault();
-  
   const nombreUsuario = document.getElementById("nombreUsuario").value;
   const nombreReferido = document.getElementById("nombreReferido").value;
   const telefonoReferido = document.getElementById("telefonoReferido").value;
   const correoReferido = document.getElementById("correoReferido").value;
+  const f = new FormData();
+  f.append(REFERIDOS_FIELDS.tu_nombre, nombreUsuario);
+  f.append(REFERIDOS_FIELDS.nombre_referido, nombreReferido);
+  f.append(REFERIDOS_FIELDS.telefono_referido, telefonoReferido);
+  f.append(REFERIDOS_FIELDS.correo_referido, correoReferido);
+  f.append(REFERIDOS_FIELDS.mensaje_adicional, "Referido enviado desde landing");
+  f.append(REFERIDOS_FIELDS.asesorid_referidos, asesorKey);
+  try {
+    await fetch(GOOGLE_FORM_REFERIDOS_URL, { method: "POST", mode: "no-cors", body: f });
+    document.getElementById("mensajeExitoReferido").style.display = "block";
+    document.getElementById("mensajeErrorReferido").style.display = "none";
+    const msgRef = `🎯 NUEVO REFERIDO - ${ASESOR_NOMBRE}
 
-  enviarAGoogleForms({
-    tu_nombre: nombreUsuario,
-    nombre_referido: nombreReferido,
-    telefono_referido: telefonoReferido,
-    correo_referido: correoReferido,
-    asesorid_referidos: asesorKey
-  }, true);
-
-  document.getElementById("mensajeExitoReferido").style.display = "block";
-  setTimeout(() => {
-    document.getElementById("mainForm").reset();
-    formularioDatos = {};
-    document.getElementById("resultado-preliminar").style.display = "none";
-    document.getElementById("referidos").style.display = "none";
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, 2000);
+Referido por: ${nombreUsuario}
+Nombre: ${nombreReferido}
+Tel: ${telefonoReferido}
+Correo: ${correoReferido}`;
+    enviarCallMeBot(msgRef);
+    setTimeout(() => {
+      document.getElementById("mainForm").reset();
+      formularioDatos = {};
+      ultimoResultado = null;
+      contadorRecalculos = 0;
+      document.getElementById("resultado-preliminar").style.display = "none";
+      document.getElementById("referidos").style.display = "none";
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 2000);
+  } catch (err) {
+    document.getElementById("mensajeErrorReferido").style.display = "block";
+    document.getElementById("mensajeExitoReferido").style.display = "none";
+  }
 });
 
+window.addEventListener("load", () => {
+  cargarUF();
+  cargarPlanes();
+  cargarRedesClincias();
+});
 </script>
 
 </body>
