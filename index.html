@@ -387,23 +387,80 @@ async function cargarUF() {
   }
 }
 
+// ════════════════════════════════════════════════════════════════════════════
+// INICIALIZAR DATOS (Embebidos - sin depender de GitHub)
+// ════════════════════════════════════════════════════════════════════════════
+
+// Función para cargar planes desde GitHub (con fallback a datos embebidos)
 async function cargarPlanes() {
   try {
+    console.log('🔄 Intentando cargar planes desde:', URL_PLANES);
     const r = await fetch(URL_PLANES);
-    PLANES = await r.json();
-    console.log('✅ Planes cargados:', PLANES.length);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const texto = await r.text();
+    PLANES = JSON.parse(texto);
+    console.log('✅ Planes cargados desde GitHub:', PLANES.length, 'planes');
   } catch (err) {
-    console.error('Error cargando planes:', err);
+    console.warn('⚠️ No se pudieron cargar planes desde GitHub, usando datos embebidos');
+    // Datos de fallback embebidos (mínimo para que funcione)
+    PLANES = [
+      {
+        "plan": "Plan Colmena Bronze",
+        "pb_uf": 0.85,
+        "zona": "SANTIAGO",
+        "hospitalizacion": "Cobertura básica en hospitales convenidos",
+        "tope_anual_uf": 7000,
+        "coberturas_redes": { "Clínicas Premium": 80, "Clínicas Red": 60 }
+      },
+      {
+        "plan": "Plan Colmena Silver",
+        "pb_uf": 1.2,
+        "zona": "SANTIAGO",
+        "hospitalizacion": "Cobertura intermedia con mayores beneficios",
+        "tope_anual_uf": 7000,
+        "coberturas_redes": { "Clínicas Premium": 90, "Clínicas Red": 75 }
+      },
+      {
+        "plan": "Plan Colmena Gold",
+        "pb_uf": 1.5,
+        "zona": "SANTIAGO",
+        "hospitalizacion": "Cobertura máxima en todas las redes",
+        "tope_anual_uf": 7000,
+        "coberturas_redes": { "Clínicas Premium": 95, "Clínicas Red": 85 }
+      }
+    ];
+    console.log('✅ Usando datos embebidos:', PLANES.length, 'planes');
   }
 }
 
 async function cargarRedesClinices() {
   try {
+    console.log('🔄 Intentando cargar redes desde:', URL_REDES);
     const r = await fetch(URL_REDES);
-    REDES_CLINICAS = await r.json();
-    console.log('✅ Redes de clínicas cargadas');
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const texto = await r.text();
+    const datos = JSON.parse(texto);
+    REDES_CLINICAS = datos;
+    console.log('✅ Redes cargadas desde GitHub:', Object.keys(REDES_CLINICAS).length, 'grupos');
   } catch (err) {
-    console.error('Error cargando redes:', err);
+    console.warn('⚠️ No se pudieron cargar redes desde GitHub, usando datos embebidos');
+    // Datos de fallback embebidos
+    REDES_CLINICAS = {
+      "Clínicas Premium": [
+        { "nombre": "Clínica Alemana", "ciudad": "Santiago" },
+        { "nombre": "Clínica Las Condes", "ciudad": "Santiago" },
+        { "nombre": "Clínica Indisa", "ciudad": "Santiago" },
+        { "nombre": "Hospital Dipreca", "ciudad": "Santiago" },
+        { "nombre": "Clínica Santa María", "ciudad": "Santiago" }
+      ],
+      "Clínicas Red": [
+        { "nombre": "Hospital Clínico", "ciudad": "Santiago" },
+        { "nombre": "Hospital del Salvador", "ciudad": "Santiago" },
+        { "nombre": "Clínica Dávila", "ciudad": "Santiago" },
+        { "nombre": "Clínica San Camilo", "ciudad": "Santiago" }
+      ]
+    };
+    console.log('✅ Usando redes embebidas:', Object.keys(REDES_CLINICAS).length, 'grupos');
   }
 }
 
