@@ -116,6 +116,11 @@
       <div class="col"><input type="tel" name="telefono" id="telefono" placeholder="Teléfono" required /></div>
       <div class="col"><input type="number" name="edad" id="edad" placeholder="Edad" min="18" max="99" required /></div>
     </div>
+    <div id="seccionClinica" style="display:none; background:#1a3a5a; padding:20px; border-radius:10px; margin:20px 0;">
+      <label style="color:#d4af37; font-weight:bold; display:block; margin-bottom:10px;">🏥 ¿Tienes una clínica favorita?</label>
+      <input type="text" id="clinicaBuscada" placeholder="Escribe el nombre de tu clínica (ej: Clínica Alemana)" style="margin-bottom:10px;">
+      <div id="resultadosClinicas" style="margin-top:10px;"></div>
+    </div>
     <input type="text" name="rut" id="rut" placeholder="RUT (ej: 12.345.678-9)" required />
     <select name="isapre" id="isapre" required>
       <option value="">Isapre actual</option>
@@ -146,7 +151,10 @@
       <option value="Magallanes">Región de Magallanes</option>
     </select>
     <textarea name="mensaje" id="mensaje" placeholder="Mensaje adicional (opcional)" rows="2"></textarea>
-    <button type="submit" id="submitBtn">Cotizar Ahora</button>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+      <button type="submit" id="submitBtn">📋 Cotizar Ahora</button>
+      <button type="button" id="btnBuscarClinica" style="background: linear-gradient(135deg, #4ade80, #22c55e); color: white;">🏥 Buscar por Clínica</button>
+    </div>
     <p id="statusMsg" class="small" style="margin-top:10px;"></p>
   </form>
 </section>
@@ -287,8 +295,8 @@ const REFERIDOS_FIELDS = {
 // URLs DE DATOS
 // ════════════════════════════════════════════════════════════════════════════
 
-const URL_PLANES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/planes_completos.json';
-const URL_REDES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/redes_clinicas.json';
+const URL_PLANES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/Data/planes_completos.json';
+const URL_REDES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/Data/redes_clinicas.json';
 
 // ════════════════════════════════════════════════════════════════════════════
 // VARIABLES GLOBALES
@@ -565,6 +573,92 @@ function enviarAGoogleFormsReferidos(datos) {
     console.error('Error Google Forms Referidos:', err);
   });
 }
+
+// ════════════════════════════════════════════════════════════════════════════
+// BÚSQUEDA DE CLÍNICAS
+// ════════════════════════════════════════════════════════════════════════════
+
+function buscarClinicasQueCubren(nombreClinica) {
+  const clinicaBuscada = nombreClinica.toLowerCase().trim();
+  const planesTodas = PLANES;
+  const resultados = [];
+
+  planesTodas.forEach(plan => {
+    if (plan.coberturas_redes) {
+      Object.keys(plan.coberturas_redes).forEach(grupo => {
+        const clinicasDelGrupo = REDES_CLINICAS[grupo] || [];
+        clinicasDelGrupo.forEach(clinica => {
+          if (clinica.nombre.toLowerCase().includes(clinicaBuscada)) {
+            const cobertura = plan.coberturas_redes[grupo];
+            resultados.push({
+              plan: plan.plan,
+              clinica: clinica.nombre,
+              ciudad: clinica.ciudad,
+              grupo: grupo,
+              cobertura: cobertura + '%'
+            });
+          }
+        });
+      });
+    }
+  });
+
+  return resultados;
+}
+
+document.getElementById("btnBuscarClinica").addEventListener("click", function(e) {
+  e.preventDefault();
+  
+  const campos = ['nombre', 'correo', 'telefono', 'edad', 'rut', 'isapre', 'renta', 'region'];
+  const faltanCampos = campos.filter(c => !document.getElementById(c).value.trim());
+  
+  if (faltanCampos.length > 0) {
+    alert("Por favor llena todos los campos requeridos antes de buscar clínicas.");
+    return;
+  }
+  
+  // Mostrar sección de búsqueda
+  document.getElementById("seccionClinica").style.display = "block";
+  document.getElementById("clinicaBuscada").focus();
+  
+  // Agregar evento para buscar en tiempo real
+  document.getElementById("clinicaBuscada").addEventListener("keyup", function() {
+    const busqueda = this.value.trim();
+    const resultadosDiv = document.getElementById("resultadosClinicas");
+    
+    if (busqueda.length < 2) {
+      resultadosDiv.innerHTML = '<p class="small" style="color:#aaa;">Escribe al menos 2 caracteres...</p>';
+      return;
+    }
+    
+    const resultados = buscarClinicasQueCubren(busqueda);
+    
+    if (resultados.length === 0) {
+      resultadosDiv.innerHTML = '<p class="small" style="color:#ff8080;">❌ No encontramos clínicas con ese nombre.</p>';
+      return;
+    }
+    
+    let html = `<p class="small" style="color:#4ade80;">✅ Encontramos ${resultados.length} clínica${resultados.length > 1 ? 's' : ''}:</p>`;
+    html += '<div style="max-height:200px; overflow-y:auto;">';
+    
+    resultados.slice(0, 10).forEach(r => {
+      html += `
+        <div style="background:#0d1f2d; padding:10px; border-radius:8px; margin:8px 0; border-left:3px solid #4ade80;">
+          <div style="color:#d4af37; font-weight:bold;">${r.plan}</div>
+          <div style="color:#ccc; font-size:0.9rem;">📍 ${r.clinica}, ${r.ciudad}</div>
+          <div style="color:#4ade80; font-size:0.85rem;">Red: ${r.grupo} (${r.cobertura})</div>
+        </div>
+      `;
+    });
+    
+    html += '</div>';
+    resultadosDiv.innerHTML = html;
+  });
+  
+  setTimeout(() => {
+    document.getElementById("seccionClinica").scrollIntoView({ behavior: "smooth" });
+  }, 200);
+});
 
 // ════════════════════════════════════════════════════════════════════════════
 // EVENTO PRINCIPAL: COTIZAR AHORA
