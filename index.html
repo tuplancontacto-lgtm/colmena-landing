@@ -96,6 +96,7 @@
     
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
       <button type="submit" id="submitBtn" style="background: linear-gradient(135deg, #d4af37, #f0c860); color: #0a1a2a;">📋 Cotizar Ahora</button>
+      <button type="button" id="btnBuscarClinicaInicio" style="background: linear-gradient(135deg, #4ade80, #22c55e); color: white;">🏥 Buscar por Clínica</button>
     </div>
     
     <p id="statusMsg" class="small" style="margin-top:10px;"></p>
@@ -181,9 +182,25 @@ const WHATSAPP_ASESORIA = asesor.whatsapp;
 const CALLMEBOT_APIKEY = asesor.apikey;
 const ASESOR_NOMBRE = asesor.nombre;
 
+// ⚠️ ACTUALIZAR AQUÍ cuando cambie la RTI
+const RTI_UF = 87.8; // Renta Tope Imponible en UF (actualizar manualmente)
+
 let formularioDatos = {};
+let ultimoResultado = null;
 
 function formatearCLP(n) { return (n || 0).toLocaleString("es-CL"); }
+
+// Calcular 7% considerando RTI
+function calcularSietePorCiento(rentaMensual, ufValor) {
+  const rentaEnUF = rentaMensual / ufValor;
+  const rentaAUsar = Math.min(rentaEnUF, RTI_UF); // Usar RTI si renta es mayor
+  return {
+    rentaEnUF: rentaEnUF,
+    rentaAUsar: rentaAUsar,
+    sieteCLP: Math.round(rentaAUsar * 0.07 * ufValor),
+    sieteUF: rentaAUsar * 0.07
+  };
+}
 
 // ════════════════════════════════════════════════════════════════════════════
 // ENVÍO A GOOGLE FORMS
@@ -247,6 +264,26 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
   };
 
   try {
+    // Cargar UF actual
+    let ufValor = 39700;
+    try {
+      const r = await fetch("https://mindicador.cl/api/");
+      const j = await r.json();
+      ufValor = j.uf.valor;
+    } catch (err) {
+      console.log('Usando UF estimado');
+    }
+
+    // Calcular 7% considerando RTI
+    const calcSiete = calcularSietePorCiento(Number(formularioDatos.renta), ufValor);
+    
+    ultimoResultado = {
+      sieteCLP: calcSiete.sieteCLP,
+      sieteUF: calcSiete.sieteUF,
+      rentaMensual: Number(formularioDatos.renta),
+      ufValor: ufValor
+    };
+
     // ENVIAR A GOOGLE FORMS
     enviarAGoogleForms({
       nombre: formularioDatos.nombre,
@@ -265,7 +302,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     });
 
     // ENVIAR A WHATSAPP
-    const msgWA = `🔔 NUEVA COTIZACIÓN\n\n👤 Cliente: ${formularioDatos.nombre}\n📞 Teléfono: ${formularioDatos.telefono}\n📧 Correo: ${formularioDatos.correo}\n\n📊 DATOS:\n• Edad: ${formularioDatos.edad} años\n• RUT: ${formularioDatos.rut}\n• Isapre: ${formularioDatos.isapre}\n• Región: ${formularioDatos.region}\n• Renta: $${formatearCLP(formularioDatos.renta)}\n• Cargas: ${formularioDatos.cargas}\n\n📍 Asesor: ${ASESOR_NOMBRE}`;
+    const msgWA = `🔔 NUEVA COTIZACIÓN\n\n👤 Cliente: ${formularioDatos.nombre}\n📞 Teléfono: ${formularioDatos.telefono}\n📧 Correo: ${formularioDatos.correo}\n\n📊 DATOS:\n• Edad: ${formularioDatos.edad} años\n• RUT: ${formularioDatos.rut}\n• Isapre: ${formularioDatos.isapre}\n• Región: ${formularioDatos.region}\n• Renta: $${formatearCLP(formularioDatos.renta)}\n• 7% Obligatorio: $${formatearCLP(calcSiete.sieteCLP)}\n• Cargas: ${formularioDatos.cargas}\n\n📍 Asesor: ${ASESOR_NOMBRE}`;
     
     enviarCallMeBot(msgWA);
 
@@ -284,7 +321,8 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px;">
         <div style="text-align: center; padding: 15px; background: #112233; border-radius: 8px;">
           <div style="font-size: 0.85rem; color: #888; margin-bottom: 5px;">Tu 7% obligatorio</div>
-          <div style="font-size: 1.2rem; font-weight: bold; color: #4ade80;">$${formatearCLP(formularioDatos.renta * 0.07)}</div>
+          <div style="font-size: 1.2rem; font-weight: bold; color: #4ade80;">$${formatearCLP(ultimoResultado.sieteCLP)}</div>
+          <div style="font-size: 0.75rem; color: #aaa;">${ultimoResultado.sieteUF.toFixed(2)} UF</div>
         </div>
         <div style="text-align: center; padding: 15px; background: #112233; border-radius: 8px;">
           <div style="font-size: 0.85rem; color: #888; margin-bottom: 5px;">Edad</div>
@@ -323,6 +361,55 @@ document.getElementById("btnAsesoria").addEventListener("click", function() {
   }
   document.getElementById("referidos").style.display = "block";
   document.getElementById("referidos").scrollIntoView({ behavior: "smooth" });
+});
+
+// ════════════════════════════════════════════════════════════════════════════
+// BOTÓN BUSCAR POR CLÍNICA
+// ════════════════════════════════════════════════════════════════════════════
+
+document.getElementById("btnBuscarClinicaInicio").addEventListener("click", async function(e) {
+  e.preventDefault();
+  const campos = ['nombre', 'correo', 'telefono', 'edad', 'rut', 'isapre', 'renta', 'region'];
+  if (campos.some(c => !document.getElementById(c).value.trim())) { 
+    alert("Por favor llena todos los campos requeridos"); 
+    return; 
+  }
+  
+  formularioDatos = {
+    nombre: document.getElementById("nombre").value.trim(),
+    correo: document.getElementById("correo").value.trim(),
+    telefono: document.getElementById("telefono").value.trim(),
+    edad: document.getElementById("edad").value.trim(),
+    rut: document.getElementById("rut").value.trim(),
+    isapre: document.getElementById("isapre").value.trim(),
+    renta: document.getElementById("renta").value.trim(),
+    cargas: document.getElementById("cargas").value.trim(),
+    region: document.getElementById("region").value.trim(),
+    mensaje: document.getElementById("mensaje").value.trim()
+  };
+  
+  // Cargar UF
+  let ufValor = 39700;
+  try {
+    const r = await fetch("https://mindicador.cl/api/");
+    const j = await r.json();
+    ufValor = j.uf.valor;
+  } catch (err) {
+    console.log('Usando UF estimado');
+  }
+
+  const calcSiete = calcularSietePorCiento(Number(formularioDatos.renta), ufValor);
+  
+  ultimoResultado = {
+    sieteCLP: calcSiete.sieteCLP,
+    sieteUF: calcSiete.sieteUF,
+    rentaMensual: Number(formularioDatos.renta),
+    ufValor: ufValor
+  };
+  
+  alert("✅ Datos validados. Ahora ingresa el nombre de tu clínica favorita.");
+  document.getElementById("resultado-preliminar").style.display = "none";
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 // ════════════════════════════════════════════════════════════════════════════
