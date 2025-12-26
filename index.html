@@ -401,15 +401,44 @@ function calcularValorPlan(pbUF, edadTitular, edadesCargas) {
 // ════════════════════════════════════════════════════════════════════════════
 
 function seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas) {
-  const minimo95 = sieteUF * 0.95;
-  const planesZona = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
-  const planesConValor = planesZona.map(p => {
+  // Obtener planes de la zona especificada + planes LIBRE_ELECCION
+  const planesDisponibles = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
+  
+  if (planesDisponibles.length === 0) {
+    console.log('⚠️ No hay planes para zona:', zona);
+    return { plan1: null, plan2: null, plan3: null };
+  }
+  
+  // Calcular valor para cada plan
+  const planesConValor = planesDisponibles.map(p => {
     const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
-    return { ...p, valorCalculadoUF: calc.totalUF, valorCalculadoCLP: calc.totalCLP, gesUF: calc.gesUF, gesCLP: calc.gesCLP };
+    return { 
+      ...p, 
+      valorCalculadoUF: calc.totalUF, 
+      valorCalculadoCLP: calc.totalCLP, 
+      gesUF: calc.gesUF, 
+      gesCLP: calc.gesCLP 
+    };
   });
-  const planesValidos = planesConValor.filter(p => p.valorCalculadoUF >= minimo95);
-  planesValidos.sort((a, b) => Math.abs(a.valorCalculadoUF - sieteUF) - Math.abs(b.valorCalculadoUF - sieteUF));
-  return { plan1: planesValidos[0] || null, plan2: planesValidos[1] || null, plan3: planesValidos[2] || null };
+  
+  // Ordenar por distancia al 7% (los más cercanos primero)
+  planesConValor.sort((a, b) => {
+    const distA = Math.abs(parseFloat(a.valorCalculadoUF) - sieteUF);
+    const distB = Math.abs(parseFloat(b.valorCalculadoUF) - sieteUF);
+    return distA - distB;
+  });
+  
+  console.log('✅ Planes encontrados para zona', zona, ':', planesConValor.length);
+  console.log('🏆 Top 3:');
+  planesConValor.slice(0, 3).forEach((p, i) => {
+    console.log(`${i + 1}. ${p.plan} - ${p.valorCalculadoUF} UF (distancia: ${Math.abs(parseFloat(p.valorCalculadoUF) - sieteUF).toFixed(2)} UF)`);
+  });
+  
+  return { 
+    plan1: planesConValor[0] || null, 
+    plan2: planesConValor[1] || null, 
+    plan3: planesConValor[2] || null 
+  };
 }
 
 // ════════════════════════════════════════════════════════════════════════════
