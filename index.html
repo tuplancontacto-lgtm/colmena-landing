@@ -495,6 +495,27 @@ function calcularValorPlan(pbUF, edadTitular, edadesCargas) {
   return { valorPlanUF, valorPlanCLP, gesUF, gesCLP, totalUF, totalCLP, sumaFactores };
 }
 
+// ════════════════════════════════════════════════════════════════════════════
+// CALCULAR 7% CON VALIDACIÓN RTI
+// ════════════════════════════════════════════════════════════════════════════
+
+function calcularSietePorCiento(rentaMensual, ufValor) {
+  const RTI_UF = 87.8; // Renta Tope Imponible - Actualizar si cambia
+  const rentaEnUF = rentaMensual / ufValor;
+  
+  // Si renta es mayor al tope, usar el tope para calcular el 7%
+  const rentaAUsar = Math.min(rentaEnUF, RTI_UF);
+  const sietePorCientoUF = rentaAUsar * 0.07;
+  const sietePorCientoCLP = Math.round(sietePorCientoUF * ufValor);
+  const rtiAplicado = rentaEnUF > RTI_UF;
+  
+  return {
+    sietePorCientoCLP,
+    sietePorCientoUF,
+    rtiAplicado
+  };
+}
+
 /*========================================================
   SELECCIÓN DE PLANES
 =========================================================*/
@@ -710,6 +731,21 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     region: data.get("region"),
     mensaje: data.get("mensaje")
   };
+  
+  // VALIDAR CAMPOS OBLIGATORIOS
+  const camposObligatorios = ['nombre', 'correo', 'telefono', 'edad', 'rut', 'isapre', 'renta', 'region'];
+  const faltanCampos = camposObligatorios.filter(campo => !formularioDatos[campo]);
+  
+  if (faltanCampos.length > 0) {
+    statusMsg.textContent = "❌ Por favor completa todos los campos requeridos";
+    statusMsg.className = "small error-msg";
+    btn.disabled = false;
+    btn.textContent = "Cotizar Ahora";
+    return;
+  }
+    region: data.get("region"),
+    mensaje: data.get("mensaje")
+  };
 
   const uf = window.__UF_VALOR || 39700;
   const renta = Number(formularioDatos.renta);
@@ -722,8 +758,12 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     .map(Number)
     .filter(n => !isNaN(n) && n >= 0 && n <= 120);
   
-  const sieteCLP = Math.round(renta * 0.07);
-  const sieteUF = sieteCLP / uf;
+  // CALCULAR 7% CON VALIDACIÓN RTI
+  const calcSiete = calcularSietePorCiento(renta, uf);
+  const sieteCLP = calcSiete.sietePorCientoCLP;
+  const sieteUF = calcSiete.sietePorCientoUF;
+  const rtiAplicado = calcSiete.rtiAplicado;
+  
   const zona = REGION_A_ZONA[formularioDatos.region] || 'SANTIAGO';
   
   const { plan1, plan2 } = seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas);
