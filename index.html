@@ -191,7 +191,10 @@
       <option value="Magallanes">Región de Magallanes</option>
     </select>
     <textarea name="mensaje" id="mensaje" placeholder="Mensaje adicional (opcional)" rows="2"></textarea>
-    <button type="submit" id="submitBtn">Cotizar Ahora</button>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px;">
+      <button type="submit" id="submitBtn" style="flex: 1; min-width: 140px;">Cotizar Ahora</button>
+      <button type="button" id="btnBuscarClinicaFormulario" style="flex: 1; min-width: 140px; background: #4ade80; color: #0a1a2a;">🏥 Buscar por Clínica</button>
+    </div>
     <p id="statusMsg" class="small" style="margin-top:10px;"></p>
   </form>
 </section>
@@ -1417,6 +1420,29 @@ function inicializarBusquedaClinica() {
   const btnBuscar = document.getElementById("btnBuscarClinica");
   if (btnBuscar) {
     btnBuscar.addEventListener('click', manejarBusquedaClinica);
+  }
+  
+  // Botón del formulario principal
+  const btnBuscarFormulario = document.getElementById("btnBuscarClinicaFormulario");
+  if (btnBuscarFormulario) {
+    btnBuscarFormulario.addEventListener('click', function(e) {
+      e.preventDefault();
+      // Validar que tenga datos básicos
+      const nombre = document.getElementById("nombre").value;
+      const edad = document.getElementById("edad").value;
+      const renta = document.getElementById("renta").value;
+      const region = document.getElementById("region").value;
+      
+      if (!nombre || !edad || !renta || !region) {
+        alert("Por favor completa: Nombre, Edad, Renta y Región");
+        return;
+      }
+      
+      // Mostrar sección de búsqueda
+      document.getElementById("seccionBusquedaClinica").style.display = "block";
+      document.getElementById("inputBuscadorClinica").focus();
+      document.getElementById("seccionBusquedaClinica").scrollIntoView({ behavior: 'smooth' });
+    });
   }
   
   const inputClinica = document.getElementById("inputBuscadorClinica");
