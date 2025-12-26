@@ -93,45 +93,6 @@
     .adicional-valor { color: #4ade80; font-size: 1.3rem; font-weight: bold; }
     .btn-enviar-usuario { background: linear-gradient(135deg, #25d366, #128c7e); color: white; padding: 15px 30px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; margin-top: 15px; display: block; width: 100%; max-width: 350px; margin-left: auto; margin-right: auto; }
     .btn-enviar-usuario:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(37,211,102,0.4); }
-    .btn-buscar-clinica { background: linear-gradient(135deg, #60a5fa, #3b82f6); color: white; padding: 15px 30px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; display: inline-block; }
-    .btn-buscar-clinica:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(96,165,250,0.4); }
-    
-    /* ESTILOS BÚSQUEDA POR CLÍNICA */
-    #seccionBusquedaClinica { 
-      border: 2px solid #4ade80 !important; 
-      border-radius: 15px;
-      background: linear-gradient(135deg, rgba(15, 38, 64, 0.5), rgba(26, 58, 90, 0.5));
-    }
-    
-    #seccionBusquedaClinica h2 { 
-      color: #4ade80;
-      margin-bottom: 10px;
-    }
-    
-    .busqueda-clinica-resultado { 
-      animation: slideIn 0.3s ease-out; 
-    }
-    
-    @keyframes slideIn { 
-      from { 
-        opacity: 0; 
-        transform: translateY(10px); 
-      } 
-      to { 
-        opacity: 1; 
-        transform: translateY(0); 
-      } 
-    }
-    
-    .btn-enviar-clinica { 
-      transition: all 0.3s ease;
-    }
-    
-    .btn-enviar-clinica:hover { 
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(74,222,128,0.4);
-    }
-    
     @media (max-width: 600px) {
       .plan-nombre { font-size: 1.4rem; }
       .clinicas-tabla th, .clinicas-tabla td { padding: 8px 10px; font-size: 0.85rem; }
@@ -140,13 +101,11 @@
   </style>
 </head>
 <body>
-
 <header>
   <h1>Asesoría en Planes de Salud Colmena</h1>
   <p class="gold">Atención premium para clientes exigentes</p>
   <p class="small">Completa el formulario para obtener una cotización exacta en UF y CLP.</p>
 </header>
-
 <section id="formulario" class="card">
   <h2 class="gold">Formulario para Cálculo del Plan</h2>
   <form id="mainForm">
@@ -193,59 +152,23 @@
       <option value="Magallanes">Región de Magallanes</option>
     </select>
     <textarea name="mensaje" id="mensaje" placeholder="Mensaje adicional (opcional)" rows="2"></textarea>
-    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px;">
-      <button type="submit" id="submitBtn" style="flex: 1; min-width: 140px;">Cotizar Ahora</button>
-      <button type="button" id="btnBuscarClinicaFormulario" style="flex: 1; min-width: 140px; background: #4ade80; color: #0a1a2a;">🏥 Buscar por Clínica</button>
-    </div>
+    <button type="submit" id="submitBtn">Cotizar Ahora</button>
     <p id="statusMsg" class="small" style="margin-top:10px;"></p>
   </form>
 </section>
-
 <section class="card">
   <h2 class="gold">UF del día</h2>
   <p class="small">UF: <span id="ufValor">cargando…</span> — Fecha: <span id="ufFecha">-</span></p>
 </section>
-
 <section id="resultado-preliminar" class="card" style="display:none">
   <div id="resultadoDetalle"></div>
-  <div style="text-align:center;margin-top:30px; display:flex; gap:15px; flex-wrap:wrap; justify-content:center;">
-    <button id="btnAsesoria" class="btn-asesoria">📋 Solicitar Asesoría</button>
-    <button id="btnBuscarClinicaDesdeResultados" class="btn-buscar-clinica">🏥 Buscar por Clínica</button>
-  </div>
-  <p class="small" style="margin-top:10px; text-align:center;">Selecciona una opción para continuar.</p>
-  <div style="text-align:center;margin-top:20px;">
+  <div style="text-align:center;margin-top:30px;">
+    <button id="btnAsesoria" class="btn-asesoria">📋 Solicitar Asesoría Personalizada</button>
+    <p class="small" style="margin-top:10px;">Un asesor te contactará a la brevedad.</p>
     <button id="btnEnviarUsuario" class="btn-enviar-usuario">📲 Recibir Resumen por WhatsApp</button>
     <p class="small" style="margin-top:10px;">Recibirás los planes cotizados y documentos requeridos.</p>
   </div>
 </section>
-
-<!-- SECCIÓN DE BÚSQUEDA POR CLÍNICA FAVORITA -->
-<section id="seccionBusquedaClinica" class="card" style="display:none; margin-top:40px; border: 2px solid #4ade80;">
-  <h2 class="gold">🏥 Buscar Cotización por Clínica Favorita</h2>
-  <p class="small">¿Tienes una clínica preferida? Ingresa su nombre y te mostraremos qué planes disponibles te ofrecen cobertura en esa clínica.</p>
-  
-  <div style="background: linear-gradient(135deg, #0f2640, #1a3a5a); border-radius: 15px; padding: 25px; margin: 20px 0; border: 1px solid #4ade80;">
-    <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
-      <input 
-        type="text" 
-        id="inputBuscadorClinica" 
-        placeholder="Ej: Clínica Dávila, Hospital Clínico, Clínica Las Condes..." 
-        style="flex: 1; min-width: 200px; padding: 12px; border: 2px solid #4ade80; border-radius: 8px; background: #0a1a2a; color: white; font-size: 1rem;"
-      />
-      <button 
-        type="button" 
-        id="btnBuscarClinica" 
-        style="background: linear-gradient(135deg, #4ade80, #22c55e); color: white; padding: 12px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s; font-size: 1rem;"
-      >
-        🔍 Buscar
-      </button>
-    </div>
-    <p class="small" style="color: #888; margin: 0;">Comienza a escribir el nombre de la clínica y presiona Enter o haz clic en Buscar.</p>
-  </div>
-  
-  <div id="resultadoBusquedaClinica"></div>
-</section>
-
 <section class="referidos-section" id="referidos" style="display:none">
   <div class="referidos-container">
     <div class="referidos-header">
@@ -281,17 +204,11 @@
     </form>
   </div>
 </section>
-
 <a class="whatsapp" id="btnWAAsesor" href="#" target="_blank">Contactar por WhatsApp</a>
-
 <footer style="text-align:center; padding:30px; color:#666; font-size:0.85rem;">
   © 2025 Colmena Golden Cross - Asesoría en Planes de Salud
 </footer>
-
 <script>
-  /*========================================================
-  SISTEMA DE ASESORES MULTI-URL
-=========================================================*/
 const ASESORES = {
   jose_pepe: {
     nombre: "José Pepe",
@@ -323,7 +240,6 @@ function getQueryParam(param) {
 
 const asesorKey = getQueryParam("asesor") || "jose_mora";
 const asesor = ASESORES[asesorKey] || ASESORES["jose_mora"];
-
 const WHATSAPP_ASESORIA = asesor.whatsapp;
 const CALLMEBOT_PHONE = asesor.whatsapp;
 const CALLMEBOT_APIKEY = asesor.callmebot_apikey;
@@ -339,11 +255,7 @@ window.addEventListener("DOMContentLoaded", function() {
   }
 });
 
-/*========================================================
-  CONFIGURACIÓN GOOGLE FORMS
-=========================================================*/
 const FORM_BASE_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/formResponse';
-
 const FORM_FIELDS = {
   nombre: 'entry.1455181501',
   rut: 'entry.1514828805',
@@ -361,7 +273,6 @@ const FORM_FIELDS = {
 };
 
 const GOOGLE_FORM_REFERIDOS_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeIppjYB0Vgc6RsJ3AM0HcAVhLaxAT6ZZ_MxdPhmuwRkwLT-A/formResponse';
-
 const REFERIDOS_FIELDS = {
   tu_nombre: "entry.1664559901",
   nombre_referido: "entry.715463265",
@@ -374,51 +285,9 @@ const REFERIDOS_FIELDS = {
 const URL_PLANES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/planes_completos.json';
 const URL_REDES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/redes_clinicas.json';
 
-// ════════════════════════════════════════════════════════════════════════════
-// GRUPOS GX (REDES CLÍNICAS) - Definidos localmente
-// ════════════════════════════════════════════════════════════════════════════
-
-const GRUPOS_GX = {
-  "Grupo 46 - GX Premium": [
-    { nombre: "CLÍNICA ALEMANA", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA LAS CONDES", ciudad: "SANTIAGO" },
-    { nombre: "TODOS LOS NO INCLUIDOS EN OTROS GRUPOS", ciudad: "NACIONAL" }
-  ],
-  "Grupo 45 - GX Plus": [
-    { nombre: "CLÍNICA SAN CARLOS APOQUINDO", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA UNIVERSIDAD CATÓLICA", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA UNIVERSIDAD DE LOS ANDES", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA MEDS", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA SANTA MARÍA", ciudad: "SANTIAGO" }
-  ],
-  "Grupo 44 - GX Red": [
-    { nombre: "CLÍNICA REDSALUD VITACURA", ciudad: "SANTIAGO" }
-  ],
-  "Grupo 42 - GX Ampliada": [
-    { nombre: "CLÍNICA DÁVILA RECOLETA", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA REDSALUD PROVIDENCIA", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA REDSALUD SANTIAGO", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA DÁVILA VESPUCIO", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA SAN JOSE", ciudad: "ARICA" },
-    { nombre: "CLÍNICA REDSALUD IQUIQUE", ciudad: "IQUIQUE" },
-    { nombre: "CLÍNICA EL LOA", ciudad: "CALAMA" },
-    { nombre: "CLÍNICA PORTADA", ciudad: "ANTOFAGASTA" },
-    { nombre: "CLÍNICA CUMBRES DEL NORTE", ciudad: "ANTOFAGASTA" },
-    { nombre: "HOSPITAL MILITAR DEL NORTE", ciudad: "ANTOFAGASTA" },
-    { nombre: "CLÍNICA RCR ATACAMA", ciudad: "COPIAPÓ" },
-    { nombre: "CLÍNICA REDSALUD ELQUI", ciudad: "LA SERENA" },
-    { nombre: "HOSPITAL CLÍNICO DE VIÑA DEL MAR", ciudad: "VIÑA DEL MAR" },
-    { nombre: "HOSPITAL NAVAL ALMIRANTE NEF", ciudad: "VIÑA DEL MAR" },
-    { nombre: "CLÍNICA REDSALUD VALPARAISO", ciudad: "VALPARAISO" }
-  ]
-};
-
 let contadorRecalculos = 0;
 const MAX_RECALCULOS = 2;
 
-/*========================================================
-  MAPEO DE REGIONES A ZONAS
-=========================================================*/
 const REGION_A_ZONA = {
   'Arica y Parinacota': 'NORTE',
   'Tarapacá': 'NORTE',
@@ -438,9 +307,6 @@ const REGION_A_ZONA = {
   'Magallanes': 'SUR'
 };
 
-/*========================================================
-  TABLA DE FACTORES DE EDAD
-=========================================================*/
 function obtenerFactor(edad) {
   if (edad < 2) return 0.0;
   if (edad < 20) return 0.6;
@@ -463,17 +329,11 @@ function obtenerFactorCarga(edad) {
   return 2.2;
 }
 
-/*========================================================
-  VARIABLES GLOBALES
-=========================================================*/
 let formularioDatos = {};
 let ultimoResultado = null;
 let PLANES = [];
 let REDES_CLINICAS = {};
 
-/*========================================================
-  CARGAR DATOS
-=========================================================*/
 async function cargarUF() {
   try {
     const r = await fetch("https://mindicador.cl/api/");
@@ -509,112 +369,63 @@ async function cargarRedesClincias() {
   }
 }
 
-/*========================================================
-  FORMATEO
-=========================================================*/
 function formatearCLP(n) {
   return (n || 0).toLocaleString("es-CL");
 }
 
-/*========================================================
-  CÁLCULO DEL VALOR DEL PLAN
-=========================================================*/
 function calcularValorPlan(pbUF, edadTitular, edadesCargas) {
   const uf = window.__UF_VALOR || 39700;
-  
   let sumaFactores = obtenerFactor(edadTitular);
   edadesCargas.forEach(e => sumaFactores += obtenerFactorCarga(e));
-  
   const valorPlanUF = pbUF * sumaFactores;
   const valorPlanCLP = Math.round(valorPlanUF * uf);
-  
   let personasGES = edadTitular >= 2 ? 1 : 0;
   edadesCargas.forEach(e => { if (e >= 2) personasGES++; });
   const gesUF = 0.77 * personasGES;
   const gesCLP = Math.round(gesUF * uf);
-  
   const totalUF = valorPlanUF + gesUF;
   const totalCLP = valorPlanCLP + gesCLP;
-  
   return { valorPlanUF, valorPlanCLP, gesUF, gesCLP, totalUF, totalCLP, sumaFactores };
 }
 
-// ════════════════════════════════════════════════════════════════════════════
-// CALCULAR 7% CON VALIDACIÓN RTI
-// ════════════════════════════════════════════════════════════════════════════
-
-function calcularSietePorCiento(rentaMensual, ufValor) {
-  const RTI_UF = 87.8; // Renta Tope Imponible - Actualizar si cambia
-  const rentaEnUF = rentaMensual / ufValor;
-  
-  // Si renta es mayor al tope, usar el tope para calcular el 7%
-  const rentaAUsar = Math.min(rentaEnUF, RTI_UF);
-  const sietePorCientoUF = rentaAUsar * 0.07;
-  const sietePorCientoCLP = Math.round(sietePorCientoUF * ufValor);
-  const rtiAplicado = rentaEnUF > RTI_UF;
-  
-  return {
-    sietePorCientoCLP,
-    sietePorCientoUF,
-    rtiAplicado
-  };
-}
-
-/*========================================================
-  SELECCIÓN DE PLANES
-=========================================================*/
 function seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas) {
   const minimo95 = sieteUF * 0.95;
   const planesZona = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
-  
   const planesConValor = planesZona.map(p => {
     const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
     return { ...p, valorCalculadoUF: calc.totalUF, valorCalculadoCLP: calc.totalCLP, gesUF: calc.gesUF, gesCLP: calc.gesCLP, sumaFactores: calc.sumaFactores };
   });
-  
   const planesValidos = planesConValor.filter(p => p.valorCalculadoUF >= minimo95);
   planesValidos.sort((a, b) => Math.abs(a.valorCalculadoUF - sieteUF) - Math.abs(b.valorCalculadoUF - sieteUF));
-  
   return { plan1: planesValidos[0] || null, plan2: planesValidos[1] || null };
 }
 
 function seleccionarPlanesConPresupuesto(presupuestoUF, zona, edadTitular, edadesCargas) {
   const planesZona = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
-  
   const planesConValor = planesZona.map(p => {
     const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
     return { ...p, valorCalculadoUF: calc.totalUF, valorCalculadoCLP: calc.totalCLP, gesUF: calc.gesUF, gesCLP: calc.gesCLP };
   });
-  
   const maxPresupuesto = presupuestoUF * 1.10;
   const minPresupuesto = presupuestoUF * 0.90;
   let planesValidos = planesConValor.filter(p => p.valorCalculadoUF <= maxPresupuesto && p.valorCalculadoUF >= minPresupuesto);
-  
   if (planesValidos.length === 0) {
     planesValidos = planesConValor.filter(p => p.valorCalculadoUF <= maxPresupuesto);
     planesValidos.sort((a, b) => b.valorCalculadoUF - a.valorCalculadoUF);
   } else {
     planesValidos.sort((a, b) => b.valorCalculadoUF - a.valorCalculadoUF);
   }
-  
   return { plan1: planesValidos[0] || null, plan2: planesValidos[1] || null };
 }
-
-/*========================================================
-  GENERAR HTML DE UN PLAN
-=========================================================*/
-function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
+  function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   if (!plan) return '';
-  
   const uf = window.__UF_VALOR || 39700;
   const adicionalUF = Math.max(0, plan.valorCalculadoUF - sieteUF - (montoAdicional / uf));
   const adicionalCLP = Math.round(adicionalUF * uf);
-
   const esPrincipal = numero === 1;
   const badgeClass = esPrincipal ? 'principal' : 'secundario';
   const cardClass = esPrincipal ? '' : 'secundario';
   const badgeText = esPrincipal ? '✨ PLAN RECOMENDADO 1' : '🔷 PLAN RECOMENDADO 2';
-  
   let coberturasHTML = '';
   if (plan.hospitalizacion) {
     coberturasHTML = `
@@ -624,20 +435,18 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
       </div>
     `;
   }
-  
   let clinicasHTML = '';
-  clinicasHTML = generarHTMLClinicas(plan, numero);
-  
+  if (plan.coberturas_redes && Object.keys(REDES_CLINICAS).length > 0) {
+    clinicasHTML = generarHTMLClinicas(plan, numero);
+  }
   return `
     <div class="plan-card ${cardClass}">
       <span class="plan-badge ${badgeClass}">${badgeText}</span>
-      
       <div class="plan-nombre-container">
         <span class="plan-nombre-estrella">★</span>
         <span class="plan-nombre">${plan.plan}</span>
         <span class="plan-nombre-estrella">★</span>
       </div>
-      
       <div class="plan-info">
         <div class="plan-info-item">
           <div class="plan-info-label">Valor del Plan</div>
@@ -658,390 +467,62 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
           <div class="plan-info-value">${formatearCLP(plan.tope_anual_uf || 7000)} UF</div>
         </div>
       </div>
-      
       ${coberturasHTML}
       ${clinicasHTML}
     </div>
   `;
 }
 
-/*========================================================
-  GENERAR HTML DE CLÍNICAS - REDES GX (G41, G42, G43, G44)
-=========================================================*/
-/*========================================================
-  GENERAR HTML DE CLÍNICAS - 3 FORMATOS
-=========================================================*/
 function generarHTMLClinicas(plan, numeroPlan) {
-  // PRIORIDAD 1: coberturas_redes (% por grupo)
-  if (plan.coberturas_redes && Object.keys(plan.coberturas_redes).length > 0) {
-    return generarHTMLGruposGX(plan, numeroPlan);
-  }
-  
-  // PRIORIDAD 2: hospitalizacion con %GXX=NN% (desde planes_completos)
-  if (plan.hospitalizacion && plan.hospitalizacion.includes('%G')) {
-    return generarHTMLGruposDesdeHospitalizacion(plan, numeroPlan);
-  }
-  
-  // PRIORIDAD 3: texto_completo con regex (desde texto recomendación)
-  if (plan.texto_completo) {
-    return generarHTMLDesdeTextoCompleto(plan, numeroPlan);
-  }
-  
-  // PRIORIDAD 4: hospitalizacion con clínicas (texto descriptivo)
-  if (plan.hospitalizacion) {
-    return generarHTMLClinicasDesdeHospitalizacion(plan, numeroPlan);
-  }
-  
-  return '';
-}
-
-/*========================================================
-  MÉTODO 1: coberturas_redes (% por grupo GX)
-=========================================================*/
-function generarHTMLGruposGX(plan, numeroPlan) {
+  if (!plan.coberturas_redes) return '';
+  const grupos = Object.keys(plan.coberturas_redes).sort();
   const planId = `plan${numeroPlan}`;
-  const grupos = ['G41', 'G42', 'G43', 'G44', 'G45', 'G46'];
-  
-  let gruposHTML = grupos
-    .filter(g => plan.coberturas_redes[g] !== undefined)
-    .map((g, i) => {
-      const cobertura = plan.coberturas_redes[g];
-      const grupoId = `${planId}-${g}`;
-      const flecha = i === 0 ? '▼' : '►';
-      const colorCobertura = cobertura >= 90 ? '#4ade80' : cobertura >= 80 ? '#fbbf24' : cobertura >= 60 ? '#60a5fa' : '#ff8080';
-      
-      return `
-        <div style="margin-bottom: 12px;">
-          <button type="button" class="grupo-boton-expandible" onclick="toggleClinicasGrupo('${grupoId}', this)" style="
-            width: 100%;
-            background: #1a3a5a;
-            border: 1px solid #3a5a7a;
-            color: #d4af37;
-            padding: 12px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            text-align: left;
-            transition: all 0.3s;
-            font-size: 0.95rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          ">
-            <span>${flecha} ${g}</span>
-            <span style="color: ${colorCobertura}; font-weight: bold;">${cobertura}%</span>
-          </button>
-          <div id="${grupoId}" class="clinicas-grupo-content" style="
-            display: ${i === 0 ? 'block' : 'none'};
-            background: #0d1f2d;
-            border: 1px solid #2a3a4a;
-            border-top: none;
-            border-radius: 0 0 8px 8px;
-            overflow: hidden;
-            padding: 15px;
-            color: #999;
-            font-size: 0.9rem;
-          ">
-            Red de clínicas con ${cobertura}% de cobertura
-          </div>
-        </div>
-      `;
-    })
-    .join('');
-  
-  return gruposHTML ? `
-    <div class="clinicas-section" style="margin-top: 20px; border-top: 1px solid #3a5a7a; padding-top: 20px;">
-      <div style="color: #d4af37; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;">🏥 Redes de Clínicas GX</div>
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        ${gruposHTML}
-      </div>
-    </div>
-  ` : '';
-}
-
-/*========================================================
-  MÉTODO 2: hospitalizacion con %GXX=NN%
-=========================================================*/
-function generarHTMLGruposDesdeHospitalizacion(plan, numeroPlan) {
-  const planId = `plan${numeroPlan}`;
-  const regex = /%G(\d+)=(\d+)%/g;
-  const grupos = {};
-  let match;
-  
-  while ((match = regex.exec(plan.hospitalizacion)) !== null) {
-    const grupoNum = match[1];
-    const cobertura = parseInt(match[2]);
-    grupos[`G${grupoNum}`] = cobertura;
-  }
-  
-  if (Object.keys(grupos).length === 0) {
-    return '';
-  }
-  
-  let gruposHTML = Object.entries(grupos)
-    .map(([g, cobertura], i) => {
-      const grupoId = `${planId}-${g}`;
-      const flecha = i === 0 ? '▼' : '►';
-      const colorCobertura = cobertura >= 90 ? '#4ade80' : cobertura >= 80 ? '#fbbf24' : cobertura >= 60 ? '#60a5fa' : '#ff8080';
-      
-      return `
-        <div style="margin-bottom: 12px;">
-          <button type="button" class="grupo-boton-expandible" onclick="toggleClinicasGrupo('${grupoId}', this)" style="
-            width: 100%;
-            background: #1a3a5a;
-            border: 1px solid #3a5a7a;
-            color: #d4af37;
-            padding: 12px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            text-align: left;
-            transition: all 0.3s;
-            font-size: 0.95rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          ">
-            <span>${flecha} ${g}</span>
-            <span style="color: ${colorCobertura}; font-weight: bold;">${cobertura}%</span>
-          </button>
-          <div id="${grupoId}" class="clinicas-grupo-content" style="
-            display: ${i === 0 ? 'block' : 'none'};
-            background: #0d1f2d;
-            border: 1px solid #2a3a4a;
-            border-top: none;
-            border-radius: 0 0 8px 8px;
-            overflow: hidden;
-            padding: 15px;
-            color: #999;
-            font-size: 0.9rem;
-          ">
-            Red de clínicas con ${cobertura}% de cobertura
-          </div>
-        </div>
-      `;
-    })
-    .join('');
-  
-  return `
-    <div class="clinicas-section" style="margin-top: 20px; border-top: 1px solid #3a5a7a; padding-top: 20px;">
-      <div style="color: #d4af37; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;">🏥 Redes de Clínicas GX</div>
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        ${gruposHTML}
-      </div>
-    </div>
-  `;
-}
-
-/*========================================================
-  MÉTODO 3: texto_completo con "Red de Clínicas Gxx"
-=========================================================*/
-function generarHTMLDesdeTextoCompleto(plan, numeroPlan) {
-  const texto = plan.texto_completo;
-  const planId = `plan${numeroPlan}`;
-  const regexRedes = /(\d+)%\s*cobertura\s*–\s*Red de Clínicas\s*(G\d+)\s*\(([^)]+)\)/gi;
-  
-  const redes = {};
-  let match;
-  
-  while ((match = regexRedes.exec(texto)) !== null) {
-    const cobertura = match[1];
-    const grupo = match[2];
-    const clinicasTexto = match[3];
-    
-    const clinicas = clinicasTexto.split(',').map(c => {
-      const partes = c.trim().split(' – ');
-      return {
-        nombre: partes[0].trim(),
-        ciudad: partes[1] ? partes[1].trim() : ''
-      };
-    });
-    
-    redes[grupo] = {
-      cobertura: parseInt(cobertura),
-      clinicas: clinicas
-    };
-  }
-  
-  if (Object.keys(redes).length === 0) {
-    return '';
-  }
-  
-  const gruposOrdenados = ['G41', 'G42', 'G43', 'G44', 'G45', 'G46'].filter(g => redes[g]);
-  
-  let gruposHTML = gruposOrdenados.map((grupo, i) => {
-    const flecha = i === 0 ? '▼' : '►';
-    const data = redes[grupo];
-    const grupoId = `${planId}-${grupo}`;
-    const colorCobertura = data.cobertura >= 90 ? '#4ade80' : data.cobertura >= 80 ? '#fbbf24' : data.cobertura >= 60 ? '#60a5fa' : '#ff8080';
-    
-    let clinicasListado = data.clinicas.map(c => 
-      `<div style="padding: 8px 15px; border-bottom: 1px solid #1a3a5a; font-size: 0.9rem;">
-        <span style="color: #4ade80;">✓</span> ${c.nombre} <span style="color: #888; font-size: 0.85rem;">${c.ciudad ? '(' + c.ciudad + ')' : ''}</span>
-      </div>`
-    ).join('');
-    
+  let tabsHTML = grupos.map((g, i) => {
+    const activeClass = i === 0 ? 'active' : '';
+    const cobertura = plan.coberturas_redes[g];
+    return `<button type="button" class="grupo-tab ${activeClass}" onclick="mostrarGrupo('${planId}', '${g}')">${g} (${cobertura}%)</button>`;
+  }).join('');
+  let contenidoHTML = grupos.map((g, i) => {
+    const activeClass = i === 0 ? 'active' : '';
+    const clinicas = REDES_CLINICAS[g] || [];
+    let filas = clinicas.map(c => `<tr><td>${c.nombre}</td><td>${c.ciudad}</td></tr>`).join('');
     return `
-      <div style="margin-bottom: 12px;">
-        <button type="button" class="grupo-boton-expandible" onclick="toggleClinicasGrupo('${grupoId}', this)" style="
-          width: 100%;
-          background: #1a3a5a;
-          border: 1px solid #3a5a7a;
-          color: #d4af37;
-          padding: 12px 15px;
-          border-radius: 8px;
-          cursor: pointer;
-          font-weight: bold;
-          text-align: left;
-          transition: all 0.3s;
-          font-size: 0.95rem;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        ">
-          <span>${flecha} ${grupo} - ${data.clinicas.length} prestadores</span>
-          <span style="color: ${colorCobertura}; font-weight: bold;">${data.cobertura}%</span>
-        </button>
-        <div id="${grupoId}" class="clinicas-grupo-content" style="
-          display: ${i === 0 ? 'block' : 'none'};
-          background: #0d1f2d;
-          border: 1px solid #2a3a4a;
-          border-top: none;
-          border-radius: 0 0 8px 8px;
-          overflow: hidden;
-        ">
-          ${clinicasListado}
-        </div>
+      <div id="${planId}-${g}" class="grupo-content ${activeClass}">
+        <table class="clinicas-tabla">
+          <thead>
+            <tr><th>Nombre Prestador</th><th>Ciudad</th></tr>
+          </thead>
+          <tbody>${filas}</tbody>
+        </table>
       </div>
     `;
   }).join('');
-  
   return `
-    <div class="clinicas-section" style="margin-top: 20px; border-top: 1px solid #3a5a7a; padding-top: 20px;">
-      <div style="color: #d4af37; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;">🏥 Redes de Clínicas</div>
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        ${gruposHTML}
-      </div>
+    <div class="clinicas-section">
+      <div class="clinicas-title">🏨 Red de Clínicas</div>
+      <div class="grupos-tabs">${tabsHTML}</div>
+      ${contenidoHTML}
     </div>
   `;
 }
 
-/*========================================================
-  MÉTODO 4: hospitalizacion con clínicas (texto descriptivo)
-=========================================================*/
-function generarHTMLClinicasDesdeHospitalizacion(plan, numeroPlan) {
-  const planId = `plan${numeroPlan}`;
-  const lineas = plan.hospitalizacion.split('\n').filter(l => l.trim());
-  
-  let seccionesHTML = '';
-  let porcentajeActual = null;
-  let clinicasActuales = [];
-  
-  for (const linea of lineas) {
-    const match = linea.match(/^(\d+)%\s*(.*)/);
-    
-    if (match) {
-      if (porcentajeActual !== null && clinicasActuales.length > 0) {
-        seccionesHTML += generarSeccionClinicas(planId, porcentajeActual, clinicasActuales);
-      }
-      
-      porcentajeActual = match[1];
-      const textClinicas = match[2].trim();
-      clinicasActuales = textClinicas ? [textClinicas] : [];
-    } else if (porcentajeActual !== null && linea.trim()) {
-      clinicasActuales.push(linea.trim());
+function mostrarGrupo(planId, grupo) {
+  document.querySelectorAll(`[id^="${planId}-"]`).forEach(el => el.classList.remove('active'));
+  const grupoContent = document.getElementById(`${planId}-${grupo}`);
+  if (grupoContent) {
+    const planCard = grupoContent.closest('.plan-card');
+    if (planCard) {
+      planCard.querySelectorAll('.grupo-tab').forEach(tab => tab.classList.remove('active'));
+      planCard.querySelectorAll('.grupo-tab').forEach(tab => {
+        if (tab.textContent.startsWith(grupo)) {
+          tab.classList.add('active');
+        }
+      });
     }
   }
-  
-  if (porcentajeActual !== null && clinicasActuales.length > 0) {
-    seccionesHTML += generarSeccionClinicas(planId, porcentajeActual, clinicasActuales);
-  }
-  
-  return seccionesHTML ? `
-    <div class="clinicas-section" style="margin-top: 20px; border-top: 1px solid #3a5a7a; padding-top: 20px;">
-      <div style="color: #d4af37; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;">🏥 Cobertura Hospitalaria</div>
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        ${seccionesHTML}
-      </div>
-    </div>
-  ` : '';
+  document.getElementById(`${planId}-${grupo}`).classList.add('active');
 }
 
-function generarSeccionClinicas(planId, porcentaje, clinicasTexto) {
-  const seccionId = `${planId}-cobertura-${porcentaje}`;
-  const colorCobertura = porcentaje >= 90 ? '#4ade80' : porcentaje >= 80 ? '#fbbf24' : porcentaje >= 70 ? '#60a5fa' : '#ff8080';
-  
-  let clinicasListado = '';
-  for (const texto of clinicasTexto) {
-    const clinicas = texto.split(/[,]+/).map(c => c.trim()).filter(c => c);
-    clinicasListado += clinicas.map(c => 
-      `<div style="padding: 8px 15px; border-bottom: 1px solid #1a3a5a; font-size: 0.9rem;">
-        <span style="color: #4ade80;">✓</span> ${c}
-      </div>`
-    ).join('');
-  }
-  
-  return `
-    <div style="margin-bottom: 12px;">
-      <button type="button" class="grupo-boton-expandible" onclick="toggleClinicasGrupo('${seccionId}', this)" style="
-        width: 100%;
-        background: #1a3a5a;
-        border: 1px solid #3a5a7a;
-        color: #d4af37;
-        padding: 12px 15px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: bold;
-        text-align: left;
-        transition: all 0.3s;
-        font-size: 0.95rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      ">
-        <span>► ${porcentaje}% Cobertura</span>
-        <span style="color: ${colorCobertura}; font-weight: bold; font-size: 1rem;">${porcentaje}%</span>
-      </button>
-      <div id="${seccionId}" class="clinicas-grupo-content" style="
-        display: none;
-        background: #0d1f2d;
-        border: 1px solid #2a3a4a;
-        border-top: none;
-        border-radius: 0 0 8px 8px;
-        overflow: hidden;
-      ">
-        ${clinicasListado}
-      </div>
-    </div>
-  `;
-}
-
-// Función para toggle de grupos de clínicas
-function toggleClinicasGrupo(grupoId, boton) {
-  const contenido = document.getElementById(grupoId);
-  if (!contenido) return;
-  
-  // Toggle display
-  const isActive = contenido.style.display === 'block';
-  contenido.style.display = isActive ? 'none' : 'block';
-  
-  // Cambiar flecha
-  const textoActual = boton.textContent;
-  const nuevaFlecha = isActive ? '►' : '▼';
-  const textSinFlecha = textoActual.substring(3);
-  boton.textContent = nuevaFlecha + ' ' + textSinFlecha;
-  
-  // Cambiar clase active
-  if (isActive) {
-    boton.classList.remove('active');
-  } else {
-    boton.classList.add('active');
-  }
-}
-
-/*========================================================
-  CALLMEBOT
-=========================================================*/
 async function enviarCallMeBot(mensaje) {
   if (!CALLMEBOT_APIKEY || CALLMEBOT_APIKEY === "PENDIENTE") {
     console.warn('⚠️ CallMeBot no configurado para este asesor');
@@ -1056,22 +537,15 @@ async function enviarCallMeBot(mensaje) {
   }
 }
 
-  /*========================================================
-  FORMULARIO PRINCIPAL
-=========================================================*/
 document.getElementById("mainForm").addEventListener("submit", async function(e) {
   e.preventDefault();
-
   const btn = document.getElementById("submitBtn");
   const statusMsg = document.getElementById("statusMsg");
-  
   btn.disabled = true;
   btn.textContent = "Calculando...";
   statusMsg.textContent = "";
   contadorRecalculos = 0;
-
   const data = new FormData(this);
-
   formularioDatos = {
     nombre: data.get("nombre"),
     correo: data.get("correo"),
@@ -1084,47 +558,19 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     region: data.get("region"),
     mensaje: data.get("mensaje")
   };
-  
-  // VALIDAR CAMPOS OBLIGATORIOS
-  const camposObligatorios = ['nombre', 'correo', 'telefono', 'edad', 'rut', 'isapre', 'renta', 'region'];
-  const faltanCampos = camposObligatorios.filter(campo => !formularioDatos[campo]);
-  
-  if (faltanCampos.length > 0) {
-    statusMsg.textContent = "❌ Por favor completa todos los campos requeridos";
-    statusMsg.className = "small error-msg";
-    btn.disabled = false;
-    btn.textContent = "Cotizar Ahora";
-    return;
-  }
-
   const uf = window.__UF_VALOR || 39700;
   const renta = Number(formularioDatos.renta);
   const edadTitular = Number(formularioDatos.edad);
-  
   const cargasTexto = (formularioDatos.cargas || "").replace(/\n/g, ", ").trim();
-  const edadesCargas = cargasTexto.split(/[\n,;]+/)
-    .map(s => s.trim())
-    .filter(Boolean)
-    .map(Number)
-    .filter(n => !isNaN(n) && n >= 0 && n <= 120);
-  
-  // CALCULAR 7% CON VALIDACIÓN RTI
-  const calcSiete = calcularSietePorCiento(renta, uf);
-  const sieteCLP = calcSiete.sietePorCientoCLP;
-  const sieteUF = calcSiete.sietePorCientoUF;
-  const rtiAplicado = calcSiete.rtiAplicado;
-  
+  const edadesCargas = cargasTexto.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean).map(Number).filter(n => !isNaN(n) && n >= 0 && n <= 120);
+  const sieteCLP = Math.round(renta * 0.07);
+  const sieteUF = sieteCLP / uf;
   const zona = REGION_A_ZONA[formularioDatos.region] || 'SANTIAGO';
-  
   const { plan1, plan2 } = seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas);
-  
   ultimoResultado = { sieteCLP, sieteUF, edadesCargas, cargasTexto, zona, plan1, plan2, edadTitular };
-
-  // ENVIAR A GOOGLE FORMS
   try {
     const plan1Nombre = plan1 ? plan1.plan : 'Sin plan disponible';
     const plan2Nombre = plan2 ? plan2.plan : 'Sin plan disponible';
-    
     const params = new URLSearchParams();
     params.append(FORM_FIELDS.nombre, formularioDatos.nombre);
     params.append(FORM_FIELDS.rut, formularioDatos.rut);
@@ -1139,22 +585,13 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     params.append(FORM_FIELDS.plan1, plan1Nombre);
     params.append(FORM_FIELDS.plan2, plan2Nombre);
     params.append(FORM_FIELDS.asesorid, asesorKey);
-
-    fetch(FORM_BASE_URL, { 
-      method: "POST", 
-      mode: "no-cors", 
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: params.toString()
-    }).catch(() => {});
-
+    fetch(FORM_BASE_URL, { method: "POST", mode: "no-cors", headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: params.toString() }).catch(() => {});
     statusMsg.textContent = "✅ Datos enviados correctamente";
     statusMsg.className = "small success-msg";
   } catch (err) {
     statusMsg.textContent = "⚠️ Error al enviar";
     statusMsg.className = "small error-msg";
   }
-
-  // CALLMEBOT
   const cargasInfo = edadesCargas.length > 0 ? `${edadesCargas.length} (${edadesCargas.join(', ')} años)` : '0';
   const msgWA = `🔔 NUEVA COTIZACIÓN - ${ASESOR_NOMBRE}
 
@@ -1170,10 +607,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
 📋 Planes sugeridos:
 1) ${plan1 ? plan1.plan + ' → ' + plan1.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}
 2) ${plan2 ? plan2.plan + ' → ' + plan2.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}`;
-  
   enviarCallMeBot(msgWA);
-
-  // MOSTRAR RESULTADO
   let htmlResultado = `
     <div class="resumen-cotizacion">
       <div class="resumen-titulo">📊 Tu Cotización - ${formularioDatos.nombre}</div>
@@ -1195,40 +629,33 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
         </div>
       </div>
     </div>
-    
     <h2 class="gold" style="margin-top:30px;">🏥 Planes Recomendados</h2>
     <p class="small">Basado en tu 7% ($${formatearCLP(sieteCLP)}), te sugerimos estos planes:</p>
   `;
-  
   if (plan1) {
     htmlResultado += generarHTMLPlan(plan1, 1, sieteUF, sieteCLP, 0);
   } else {
     htmlResultado += `<p class="small" style="color:#fbbf24;">No se encontró un plan que cumpla con el criterio para tu 7%. Solicita asesoría personalizada.</p>`;
   }
-  
   if (plan2) {
     htmlResultado += generarHTMLPlan(plan2, 2, sieteUF, sieteCLP, 0);
   }
-
   htmlResultado += `
     <div class="disclaimer">
       <span class="disclaimer-icon">⚠️</span>
       Los valores presentados son referenciales y están sujetos a verificación. Un Ejecutivo de Ventas validará esta información y te contactará para formalizar tu plan de salud.
     </div>
   `;
-
   htmlResultado += `
     <div class="mejorar-cobertura">
       <div class="mejorar-titulo">💡 ¿Te gustaría acceder a mejores coberturas?</div>
       <div class="mejorar-texto">
         Puedes complementar tu 7% legal con un aporte adicional mensual para obtener planes con mayores beneficios, mejor red de clínicas y mayor protección para ti y tu familia.
       </div>
-      
       <div class="adicional-actual">
         <div class="adicional-label">Tu presupuesto actual (7%)</div>
         <div class="adicional-valor">$${formatearCLP(sieteCLP)}</div>
       </div>
-      
       <div class="mejorar-input-container">
         <div>
           <label class="small" style="display:block; margin-bottom:5px; color:#ccc;">Monto adicional mensual:</label>
@@ -1239,56 +666,40 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
       <p class="small" style="margin-top:15px; color:#888;">Ingresa un monto en pesos chilenos para ver planes con mejores coberturas.</p>
     </div>
   `;
-
   document.getElementById("resultadoDetalle").innerHTML = htmlResultado;
   document.getElementById("resultado-preliminar").style.display = "block";
-
   document.getElementById("btnRecalcular").addEventListener("click", recalcularConAdicional);
-
   btn.disabled = false;
   btn.textContent = "Cotizar Ahora";
-
   setTimeout(() => {
     document.getElementById("resultado-preliminar").scrollIntoView({ behavior: "smooth" });
   }, 300);
 });
 
-/*========================================================
-  RECALCULAR CON MONTO ADICIONAL
-=========================================================*/
 function recalcularConAdicional() {
   try {
     const montoAdicionalInput = document.getElementById("montoAdicional");
     if (!montoAdicionalInput) return;
-    
     const montoAdicional = parseInt(montoAdicionalInput.value) || 0;
-    
     if (montoAdicional <= 0) {
       alert("Por favor ingresa un monto adicional mayor a 0");
       return;
     }
-
     if (!ultimoResultado) {
       alert("Primero realiza una cotización");
       return;
     }
-
     contadorRecalculos++;
-    
     const uf = window.__UF_VALOR || 39700;
     const r = ultimoResultado;
-  
     const nuevoPresupuestoCLP = r.sieteCLP + montoAdicional;
     const nuevoPresupuestoUF = nuevoPresupuestoCLP / uf;
-    
     const nuevosPlanes = seleccionarPlanesConPresupuesto(nuevoPresupuestoUF, r.zona, r.edadTitular, r.edadesCargas);
-    
     ultimoResultado.plan1 = nuevosPlanes.plan1;
     ultimoResultado.plan2 = nuevosPlanes.plan2;
     ultimoResultado.montoAdicional = montoAdicional;
     ultimoResultado.presupuestoTotalCLP = nuevoPresupuestoCLP;
     ultimoResultado.presupuestoTotalUF = nuevoPresupuestoUF;
-
     let htmlResultado = `
       <div class="resumen-cotizacion">
         <div class="resumen-titulo">📊 Tu Cotización Mejorada - ${formularioDatos.nombre}</div>
@@ -1315,28 +726,23 @@ function recalcularConAdicional() {
           </div>
         </div>
       </div>
-      
       <h2 class="gold" style="margin-top:30px;">🏥 Nuevos Planes con Mayor Cobertura</h2>
       <p class="small">Con tu presupuesto mejorado de $${formatearCLP(nuevoPresupuestoCLP)}, ahora puedes acceder a estos planes:</p>
     `;
-    
     if (nuevosPlanes.plan1) {
       htmlResultado += generarHTMLPlan(nuevosPlanes.plan1, 1, nuevoPresupuestoUF, nuevoPresupuestoCLP, montoAdicional);
     } else {
       htmlResultado += `<p class="small" style="color:#fbbf24;">No se encontró un plan adicional. Solicita asesoría personalizada.</p>`;
     }
-    
     if (nuevosPlanes.plan2) {
       htmlResultado += generarHTMLPlan(nuevosPlanes.plan2, 2, nuevoPresupuestoUF, nuevoPresupuestoCLP, montoAdicional);
     }
-
     htmlResultado += `
       <div class="disclaimer">
         <span class="disclaimer-icon">⚠️</span>
         Los valores presentados son referenciales y están sujetos a verificación. Un Ejecutivo de Ventas validará esta información y te contactará para formalizar tu plan de salud.
       </div>
     `;
-
     if (contadorRecalculos < MAX_RECALCULOS) {
       const recalculosRestantes = MAX_RECALCULOS - contadorRecalculos;
       htmlResultado += `
@@ -1347,7 +753,6 @@ function recalcularConAdicional() {
             <div class="adicional-label">Aporte adicional actual</div>
             <div class="adicional-valor">$${formatearCLP(montoAdicional)}</div>
           </div>
-          
           <div class="mejorar-input-container">
             <div>
               <label class="small" style="display:block; margin-bottom:5px; color:#ccc;">Nuevo monto adicional:</label>
@@ -1372,45 +777,31 @@ function recalcularConAdicional() {
         </div>
       `;
     }
-
     document.getElementById("resultadoDetalle").innerHTML = htmlResultado;
-    
     const btnRecalcular = document.getElementById("btnRecalcular");
     if (btnRecalcular) {
       btnRecalcular.addEventListener("click", recalcularConAdicional);
     }
-
     document.getElementById("resultado-preliminar").scrollIntoView({ behavior: "smooth" });
-    
   } catch (error) {
     console.error("Error en recalcularConAdicional:", error);
     alert("Ocurrió un error al recalcular. Por favor intenta de nuevo.");
   }
 }
-
-/*========================================================
-  BOTÓN ASESORÍA
-=========================================================*/
-document.getElementById("btnAsesoria").addEventListener("click", function() {
+  document.getElementById("btnAsesoria").addEventListener("click", function() {
   if (!formularioDatos || !formularioDatos.nombre) {
     alert("Primero completa y envía la cotización.");
     return;
   }
-
   const r = ultimoResultado;
   const plan1Nombre = r.plan1 ? r.plan1.plan : '-';
   const plan2Nombre = r.plan2 ? r.plan2.plan : '-';
   const plan1Valor = r.plan1 ? `${r.plan1.valorCalculadoUF.toFixed(2)} UF` : '-';
   const plan2Valor = r.plan2 ? `${r.plan2.valorCalculadoUF.toFixed(2)} UF` : '-';
-  
   const cargasInfo = r.edadesCargas.length > 0 ? `${r.edadesCargas.length} (${r.edadesCargas.join(', ')} años)` : '0';
-  
   const tieneAdicional = r.montoAdicional && r.montoAdicional > 0;
-  const textoAdicional = tieneAdicional 
-    ? `• Aporte adicional: $${formatearCLP(r.montoAdicional)}
-- Presupuesto total: $${formatearCLP(r.presupuestoTotalCLP)} (${r.presupuestoTotalUF.toFixed(2)} UF)`
-    : ''; 
-
+  const textoAdicional = tieneAdicional ? `• Aporte adicional: $${formatearCLP(r.montoAdicional)}
+- Presupuesto total: $${formatearCLP(r.presupuestoTotalCLP)} (${r.presupuestoTotalUF.toFixed(2)} UF)` : ''; 
   const mensaje = `🔔 SOLICITUD DE ASESORÍA
 
 👤 Datos del cliente:
@@ -1433,46 +824,24 @@ ${textoAdicional}
 2) ${plan2Nombre} → ${plan2Valor}
 
 ⚡ SOLICITA CONTACTO URGENTE`;
-
   enviarCallMeBot(mensaje);
-  
   alert("✅ Solicitud enviada. Un asesor te contactará a la brevedad.");
-
-  document.getElementById("seccionBusquedaClinica").style.display = "block";
-
   document.getElementById("referidos").style.display = "block";
   setTimeout(() => {
     document.getElementById("referidos").scrollIntoView({ behavior: "smooth" });
   }, 400);
 });
 
-/*========================================================
-  BOTÓN BUSCAR POR CLÍNICA DESDE RESULTADOS
-=========================================================*/
-document.getElementById("btnBuscarClinicaDesdeResultados").addEventListener("click", function() {
-  // Mostrar sección de búsqueda por clínica sin requerir cotización adicional
-  document.getElementById("seccionBusquedaClinica").style.display = "block";
-  document.getElementById("inputBuscadorClinica").focus();
-  setTimeout(() => {
-    document.getElementById("seccionBusquedaClinica").scrollIntoView({ behavior: "smooth" });
-  }, 100);
-});
-
-/*========================================================
-  BOTÓN ENVIAR RESUMEN AL USUARIO
-=========================================================*/
 document.getElementById("btnEnviarUsuario").addEventListener("click", function() {
   if (!formularioDatos || !formularioDatos.nombre) {
     alert("Primero completa y envía la cotización.");
     return;
   }
-
   const r = ultimoResultado;
   const plan1Nombre = r.plan1 ? r.plan1.plan : '-';
   const plan2Nombre = r.plan2 ? r.plan2.plan : '-';
   const plan1Valor = r.plan1 ? `${r.plan1.valorCalculadoUF.toFixed(2)} UF` : '-';
   const plan2Valor = r.plan2 ? `${r.plan2.valorCalculadoUF.toFixed(2)} UF` : '-';
-
   const mensaje = `Estimado/a ${formularioDatos.nombre} 👋
 
 Gracias por tu interés en *Colmena Golden Cross*
@@ -1492,23 +861,16 @@ Puedes enviarlos por este medio.
 *${ASESOR_NOMBRE}*
 Ejecutivo de Ventas - Colmena Golden Cross
 📞 ${ASESOR_TELEFONO}`;
-
   enviarCallMeBot(mensaje);
-  
   alert("✅ Resumen enviado a tu WhatsApp. Reenvíalo al cliente.");
 });
 
-/*========================================================
-  FORMULARIO REFERIDOS
-=========================================================*/
 document.getElementById("formReferidos").addEventListener("submit", async function(e) {
   e.preventDefault();
-
   const nombreUsuario = document.getElementById("nombreUsuario").value;
   const nombreReferido = document.getElementById("nombreReferido").value;
   const telefonoReferido = document.getElementById("telefonoReferido").value;
   const correoReferido = document.getElementById("correoReferido").value;
-
   const f = new FormData();
   f.append(REFERIDOS_FIELDS.tu_nombre, nombreUsuario);
   f.append(REFERIDOS_FIELDS.nombre_referido, nombreReferido);
@@ -1516,12 +878,10 @@ document.getElementById("formReferidos").addEventListener("submit", async functi
   f.append(REFERIDOS_FIELDS.correo_referido, correoReferido);
   f.append(REFERIDOS_FIELDS.mensaje_adicional, "Referido enviado desde landing");
   f.append(REFERIDOS_FIELDS.asesorid_referidos, asesorKey);
-
   try {
     await fetch(GOOGLE_FORM_REFERIDOS_URL, { method: "POST", mode: "no-cors", body: f });
     document.getElementById("mensajeExitoReferido").style.display = "block";
     document.getElementById("mensajeErrorReferido").style.display = "none";
-
     const msgRef = `🎯 NUEVO REFERIDO - ${ASESOR_NOMBRE}
 
 Referido por: ${nombreUsuario}
@@ -1529,456 +889,21 @@ Nombre: ${nombreReferido}
 Tel: ${telefonoReferido}
 Correo: ${correoReferido}`;
     enviarCallMeBot(msgRef);
-
-    // RESETEAR DATOS DESPUÉS DE ENVIAR Y ESPERAR 10 SEGUNDOS ANTES DE SUBIR
     setTimeout(() => {
-      // Resetear formulario de referidos
-      document.getElementById("formReferidos").reset();
-      
-      // Resetear datos de cotización
       document.getElementById("mainForm").reset();
       formularioDatos = {};
       ultimoResultado = null;
       contadorRecalculos = 0;
-      
-      // Ocultar secciones
       document.getElementById("resultado-preliminar").style.display = "none";
       document.getElementById("referidos").style.display = "none";
-      document.getElementById("mensajeExitoReferido").style.display = "none";
-      
-      // Subir al inicio después de 10 segundos
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 10000);
-
+    }, 2000);
   } catch (err) {
     document.getElementById("mensajeErrorReferido").style.display = "block";
     document.getElementById("mensajeExitoReferido").style.display = "none";
   }
 });
 
-/*========================================================
-  MÓDULO: BÚSQUEDA POR CLÍNICA FAVORITA
-=========================================================*/
-
-let datosBusquedaClinica = {
-  clinicaSeleccionada: null,
-  redEncontrada: null,
-  planSeleccionado: null,
-  cobertura: null
-};
-
-function buscarClinicaEnRedes(nombreClinica) {
-  const nombreNormalizado = nombreClinica.toLowerCase().trim();
-  
-  for (const [grupoRed, clinicas] of Object.entries(REDES_CLINICAS)) {
-    for (const clinica of clinicas) {
-      if (clinica.nombre.toLowerCase().includes(nombreNormalizado)) {
-        return { grupoRed, clinica };
-      }
-    }
-  }
-  
-  return null;
-}
-
-// ════════════════════════════════════════════════════════════════════════════
-// BUSCAR 4 PLANES POR CLÍNICA - DIFERENCIADOS POR COBERTURA
-// ════════════════════════════════════════════════════════════════════════════
-
-function obtenerPlanesConClinica(nombreClinica) {
-  if (!PLANES || PLANES.length === 0) {
-    console.warn('No hay planes cargados');
-    return [];
-  }
-  
-  const uf = window.__UF_VALOR || 39700;
-  const sieteUF = ultimoResultado ? ultimoResultado.sieteUF : 0;
-  
-  // Buscar clínica en TODOS los grupos GX
-  let grupoClinicaEncontrado = null;
-  let clinicaEncontrada = null;
-  
-  for (const [grupoNombre, clinicas] of Object.entries(GRUPOS_GX)) {
-    const clinica = clinicas.find(c => c.nombre.toUpperCase().includes(nombreClinica.toUpperCase()));
-    if (clinica) {
-      grupoClinicaEncontrado = grupoNombre;
-      clinicaEncontrada = clinica;
-      break;
-    }
-  }
-  
-  if (!clinicaEncontrada) {
-    return [];
-  }
-  
-  // Filtrar planes que incluyen este grupo
-  const planesQueCubren = PLANES.filter(plan => {
-    // Verificar si el plan tiene acceso a este grupo
-    return plan.coberturas_redes && plan.coberturas_redes[grupoClinicaEncontrado];
-  });
-  
-  if (planesQueCubren.length === 0) {
-    return [];
-  }
-  
-  // Calcular valor de cada plan y agregar cobertura del grupo
-  const planesConValor = planesQueCubren.map(plan => {
-    const calc = calcularValorPlan(plan.pb_uf, ultimoResultado.edadTitular, ultimoResultado.edadesCargas);
-    return {
-      ...plan,
-      valorCalculadoUF: calc.totalUF,
-      valorCalculadoCLP: calc.totalCLP,
-      gesUF: calc.gesUF,
-      gesCLP: calc.gesCLP,
-      coberturaGrupo: plan.coberturas_redes[grupoClinicaEncontrado],
-      grupoClinica: grupoClinicaEncontrado
-    };
-  });
-  
-  // Ordenar por distancia al 7% (más cercanos primero)
-  planesConValor.sort((a, b) => 
-    Math.abs(a.valorCalculadoUF - sieteUF) - Math.abs(b.valorCalculadoUF - sieteUF)
-  );
-  
-  // Obtener máximo 4 planes y asegurar que tengan % de cobertura DIFERENTES
-  const planesFinales = [];
-  const coberturaUsadas = new Set();
-  
-  for (const plan of planesConValor) {
-    if (planesFinales.length >= 4) break;
-    
-    const cobertura = plan.coberturaGrupo;
-    if (!coberturaUsadas.has(cobertura)) {
-      coberturaUsadas.add(cobertura);
-      planesFinales.push(plan);
-    }
-  }
-  
-  // Si no tenemos 4 y hay más planes, agregar aunque tengan cobertura igual (hasta 4 total)
-  if (planesFinales.length < 4) {
-    for (const plan of planesConValor) {
-      if (planesFinales.length >= 4) break;
-      if (!planesFinales.includes(plan)) {
-        planesFinales.push(plan);
-      }
-    }
-  }
-  
-  return {
-    clinicaEncontrada,
-    grupoClinica: grupoClinicaEncontrado,
-    planesDisponibles: planesFinales.slice(0, 4)
-  };
-}
-
-function generarResultadoBusquedaClinica(clinicaEncontrada, grupoRed, planesDisponibles) {
-  const uf = window.__UF_VALOR || 39700;
-  
-  if (planesDisponibles.length === 0) {
-    return `
-      <div class="busqueda-clinica-resultado">
-        <div style="background: #4a1a1a; border: 2px solid #ff8080; border-radius: 10px; padding: 20px; margin: 20px 0;">
-          <div style="color: #ff8080; font-size: 1.2rem; font-weight: bold; margin-bottom: 10px;">❌ Clínica no disponible en planes actuales</div>
-          <p style="color: #ccc; margin-bottom: 15px;">
-            La clínica <strong>"${clinicaEncontrada.nombre}"</strong> en <strong>${clinicaEncontrada.ciudad}</strong> 
-            no está disponible en los planes que cotizaste (${ultimoResultado.plan1?.plan || ''} y ${ultimoResultado.plan2?.plan || ''}).
-          </p>
-          <p style="color: #888; font-size: 0.9rem;">
-            💡 Sugerencia: Ajusta tu presupuesto hacia arriba para acceder a planes con mejores redes de clínicas.
-          </p>
-        </div>
-      </div>
-    `;
-  }
-  
-  let html = `
-    <div class="busqueda-clinica-resultado">
-      <div style="background: linear-gradient(135deg, #0f2640, #1a3a5a); border: 2px solid #4ade80; border-radius: 10px; padding: 25px; margin: 20px 0;">
-        <div style="color: #4ade80; font-size: 1.3rem; font-weight: bold; margin-bottom: 15px;">✅ ¡Clínica encontrada!</div>
-        
-        <div style="background: #112233; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #d4af37;">
-          <div style="color: #d4af37; font-weight: bold; font-size: 1.1rem;">${clinicaEncontrada.nombre}</div>
-          <div style="color: #888; font-size: 0.9rem; margin-top: 5px;">📍 ${clinicaEncontrada.ciudad}</div>
-          <div style="color: #888; font-size: 0.9rem; margin-top: 5px;">🏢 Red: <strong>${grupoRed}</strong></div>
-        </div>
-  `;
-  
-  planesDisponibles.forEach((plan, index) => {
-    const esDeSegundo = plan.plan === ultimoResultado.plan2?.plan;
-    const cobertura = plan.cobertura;
-    const badgeColor = esDeSegundo ? '#60a5fa' : '#d4af37';
-    const badgeText = esDeSegundo ? '🔷 PLAN 2' : '✨ PLAN 1';
-    
-    html += `
-      <div style="background: #1a2a3a; border: 1px solid ${badgeColor}; border-radius: 10px; padding: 20px; margin-bottom: 15px;">
-        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px;">
-          <div>
-            <div style="color: ${badgeColor}; font-size: 0.85rem; font-weight: bold; margin-bottom: 5px;">${badgeText}</div>
-            <div style="color: #d4af37; font-size: 1.2rem; font-weight: bold;">${plan.plan}</div>
-          </div>
-        </div>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-bottom: 15px;">
-          <div style="background: #0d1f2d; padding: 12px; border-radius: 8px; text-align: center;">
-            <div style="color: #888; font-size: 0.8rem; margin-bottom: 5px;">Cobertura en esta clínica</div>
-            <div style="color: #4ade80; font-size: 1.3rem; font-weight: bold;">${cobertura}%</div>
-          </div>
-          
-          <div style="background: #0d1f2d; padding: 12px; border-radius: 8px; text-align: center;">
-            <div style="color: #888; font-size: 0.8rem; margin-bottom: 5px;">Valor del plan</div>
-            <div style="color: #fff; font-size: 1.1rem; font-weight: bold;">$${formatearCLP(plan.valorCalculadoCLP)}</div>
-            <div style="color: #aaa; font-size: 0.8rem;">${plan.valorCalculadoUF.toFixed(2)} UF</div>
-          </div>
-          
-          <div style="background: #0d1f2d; padding: 12px; border-radius: 8px; text-align: center;">
-            <div style="color: #888; font-size: 0.8rem; margin-bottom: 5px;">Aporte GES</div>
-            <div style="color: #4ade80; font-size: 1.1rem; font-weight: bold;">$${formatearCLP(plan.gesCLP)}</div>
-            <div style="color: #aaa; font-size: 0.8rem;">${plan.gesUF.toFixed(2)} UF</div>
-          </div>
-        </div>
-        
-        <div style="background: #0d1f2d; padding: 12px; border-radius: 8px; margin-bottom: 15px;">
-          <div style="color: #d4af37; font-weight: bold; margin-bottom: 8px;">🏨 Otras clínicas disponibles en la red ${grupoRed}:</div>
-          <div style="max-height: 150px; overflow-y: auto;">
-            ${generarListaClinicasRed(grupoRed)}
-          </div>
-        </div>
-        
-        <button type="button" class="btn-enviar-clinica" data-plan-nombre="${plan.plan}" data-clinica="${clinicaEncontrada.nombre}" data-cobertura="${cobertura}" style="width: 100%; background: linear-gradient(135deg, #4ade80, #22c55e); color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s;">
-          📤 Enviar esta cotización por WhatsApp y Email
-        </button>
-      </div>
-    `;
-  });
-  
-  html += `
-    </div>
-  </div>`;
-  
-  return html;
-}
-
-function generarListaClinicasRed(grupoRed) {
-  const clinicas = REDES_CLINICAS[grupoRed] || [];
-  
-  if (clinicas.length === 0) return '<p style="color: #888;">No hay clínicas registradas</p>';
-  
-  return `
-    <ul style="list-style: none; padding: 0; margin: 0; color: #ccc; font-size: 0.9rem;">
-      ${clinicas.slice(0, 8).map(c => `
-        <li style="padding: 5px 0; border-bottom: 1px solid #2a3a4a;">
-          • ${c.nombre} <span style="color: #888;">(${c.ciudad})</span>
-        </li>
-      `).join('')}
-      ${clinicas.length > 8 ? `<li style="padding: 5px 0; color: #888;">+ ${clinicas.length - 8} clínicas más...</li>` : ''}
-    </ul>
-  `;
-}
-
-async function enviarCotizacionConClinica(nombrePlan, nombreClinica, cobertura) {
-  if (!formularioDatos || !formularioDatos.nombre) {
-    alert("Por favor, completa primero la cotización principal.");
-    return;
-  }
-  
-  const r = ultimoResultado;
-  
-  const mensajeAsesor = `🔔 COTIZACIÓN CON CLÍNICA FAVORITA
-
-👤 Cliente: ${formularioDatos.nombre}
-📞 Teléfono: ${formularioDatos.telefono}
-📧 Correo: ${formularioDatos.correo}
-📍 Región: ${formularioDatos.region}
-
-🏥 CLÍNICA SELECCIONADA: ${nombreClinica}
-📋 Plan: ${nombrePlan}
-✅ Cobertura: ${cobertura}%
-
-💰 Detalles económicos:
-- 7% obligatorio: $${formatearCLP(r.sieteCLP)} (${r.sieteUF.toFixed(2)} UF)
-${r.montoAdicional ? `- Aporte adicional: $${formatearCLP(r.montoAdicional)}
-- Presupuesto total: $${formatearCLP(r.presupuestoTotalCLP)} (${r.presupuestoTotalUF.toFixed(2)} UF)` : ''}
-- Valor plan: $${formatearCLP(r.plan1?.valorCalculadoCLP || r.plan2?.valorCalculadoCLP)}
-- GES incluido: $${formatearCLP(r.plan1?.gesCLP || r.plan2?.gesCLP)}
-
-⚡ REQUIERE CONTACTO URGENTE`;
-
-  enviarCallMeBot(mensajeAsesor);
-  
-  try {
-    const sheetParams = new URLSearchParams();
-    sheetParams.append('entry.1455181501', formularioDatos.nombre);
-    sheetParams.append('entry.1514828805', formularioDatos.rut);
-    sheetParams.append('entry.1253669566', formularioDatos.correo);
-    sheetParams.append('entry.1927631596', formularioDatos.telefono);
-    sheetParams.append('entry.1515225692', formularioDatos.edad);
-    sheetParams.append('entry.1312575017', formularioDatos.isapre);
-    sheetParams.append('entry.1350273122', formularioDatos.renta);
-    sheetParams.append('entry.1283417188', formularioDatos.region);
-    sheetParams.append('entry.6457415', ultimoResultado.cargasTexto || 'Sin cargas');
-    sheetParams.append('entry.860152674', `BÚSQUEDA POR CLÍNICA: ${nombreClinica} | Cobertura: ${cobertura}%`);
-    sheetParams.append('entry.1176082335', nombrePlan);
-    sheetParams.append('entry.1798986413', `Búsqueda por clínica: ${nombreClinica}`);
-    sheetParams.append('entry.1496988494', asesorKey);
-
-    fetch(FORM_BASE_URL, { 
-      method: "POST", 
-      mode: "no-cors", 
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: sheetParams.toString()
-    }).catch(() => {});
-
-    alert(`✅ Cotización enviada:\n\n• WhatsApp: ${ASESOR_NOMBRE}\n• Google Sheets: Registrado\n• Email: Se enviará a ${ASESOR_CORREO}\n\nEl asesor te contactará a la brevedad.`);
-    
-  } catch (err) {
-    console.error('Error enviando cotización:', err);
-    alert('⚠️ Hubo un error al enviar. Intenta de nuevo.');
-  }
-}
-
-function manejarBusquedaClinica() {
-  const inputClinica = document.getElementById("inputBuscadorClinica");
-  
-  if (!inputClinica || !inputClinica.value.trim()) {
-    alert("Por favor ingresa el nombre de una clínica.");
-    return;
-  }
-  
-  if (!ultimoResultado) {
-    alert("Primero debes realizar una cotización de planes.");
-    return;
-  }
-  
-  const nombreClinica = inputClinica.value.trim();
-  const resultado = obtenerPlanesConClinica(nombreClinica);
-  
-  if (!resultado || resultado.planesDisponibles.length === 0) {
-    alert(`❌ No encontramos la clínica "${nombreClinica}" o no está disponible en nuestros planes.`);
-    return;
-  }
-  
-  const { clinicaEncontrada, grupoClinica, planesDisponibles } = resultado;
-  
-  const resultadoHTML = generarResultadoBusquedaClinicaNew(clinicaEncontrada, grupoClinica, planesDisponibles);
-  
-  const contenedorResultado = document.getElementById("resultadoBusquedaClinica");
-  if (contenedorResultado) {
-    contenedorResultado.innerHTML = resultadoHTML;
-  }
-  
-  document.getElementById("seccionBusquedaClinica").scrollIntoView({ behavior: 'smooth' });
-}
-
-// ════════════════════════════════════════════════════════════════════════════
-// GENERAR RESULTADO DE BÚSQUEDA POR CLÍNICA - 4 PLANES DIFERENCIADOS
-// ════════════════════════════════════════════════════════════════════════════
-
-function generarResultadoBusquedaClinicaNew(clinica, grupo, planes) {
-  if (!planes || planes.length === 0) {
-    return `
-      <div style="background: #4a1a1a; border: 2px solid #ff8080; border-radius: 10px; padding: 20px; margin: 20px 0;">
-        <div style="color: #ff8080; font-size: 1.2rem; font-weight: bold;">❌ No hay planes disponibles</div>
-        <p style="color: #ccc; margin-top: 10px;">La clínica ${clinica.nombre} no está disponible en planes actualmente.</p>
-      </div>
-    `;
-  }
-  
-  const uf = window.__UF_VALOR || 39700;
-  const r = ultimoResultado;
-  
-  let planesHTML = planes.map((plan, i) => {
-    const numero = i + 1;
-    const badge = numero === 1 ? '🥇 MEJOR OPCIÓN' : numero === 2 ? '🥈 ALTERNATIVA 2' : numero === 3 ? '🥉 ALTERNATIVA 3' : '⭐ ALTERNATIVA 4';
-    const adicional = Math.max(0, plan.valorCalculadoUF - r.sieteUF);
-    const adicionalCLP = Math.round(adicional * uf);
-    
-    return `
-      <div style="background: #112233; border: 2px solid #d4af37; border-radius: 15px; padding: 25px; margin: 20px 0;">
-        <span style="display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; background: #d4af37; color: #0a1a2a; margin-bottom: 15px;">${badge}</span>
-        
-        <div style="font-size: 1.5rem; font-weight: bold; color: #d4af37; margin: 15px 0; text-align: center;">${plan.plan}</div>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 20px 0;">
-          <div style="background: #1a2a3a; padding: 15px; border-radius: 8px; text-align: center;">
-            <div style="font-size: 0.8rem; color: #888; margin-bottom: 5px;">Valor del Plan</div>
-            <div style="font-size: 1.1rem; font-weight: bold; color: #fbbf24;">$${formatearCLP(plan.valorCalculadoCLP)}</div>
-            <div style="font-size: 0.85rem; color: #aaa;">${plan.valorCalculadoUF.toFixed(2)} UF</div>
-          </div>
-          <div style="background: #1a2a3a; padding: 15px; border-radius: 8px; text-align: center;">
-            <div style="font-size: 0.8rem; color: #888; margin-bottom: 5px;">Cobertura en ${grupo}</div>
-            <div style="font-size: 1.1rem; font-weight: bold; color: #4ade80;">${plan.coberturaGrupo}%</div>
-          </div>
-          <div style="background: #1a2a3a; padding: 15px; border-radius: 8px; text-align: center;">
-            <div style="font-size: 0.8rem; color: #888; margin-bottom: 5px;">Aporte Adicional</div>
-            <div style="font-size: 1.1rem; font-weight: bold; color: ${adicionalCLP > 0 ? '#fbbf24' : '#4ade80'};">$${formatearCLP(adicionalCLP)}</div>
-          </div>
-        </div>
-        
-        <div style="background: #0d1f2d; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 3px solid #4ade80;">
-          <div style="color: #4ade80; font-weight: bold; margin-bottom: 10px;">✓ Cobertura: ${plan.coberturaGrupo}%</div>
-          <div style="color: #b8c5d6; font-size: 0.9rem;">GES incluido: $${formatearCLP(plan.gesCLP)}</div>
-        </div>
-      </div>
-    `;
-  }).join('');
-  
-  return `
-    <div style="background: linear-gradient(135deg, #0f2640, #1a3a5a); padding: 25px; border-radius: 15px; border: 1px solid #4ade80; margin: 20px 0;">
-      <div style="color: #4ade80; font-size: 1.3rem; font-weight: bold; margin-bottom: 10px;">
-        ✅ Planes disponibles para ${clinica.nombre} (${clinica.ciudad})
-      </div>
-      <div style="color: #b8c5d6; font-size: 0.9rem; margin-bottom: 20px;">
-        Mostramos los ${planes.length} mejores planes diferenciados por cobertura en esta clínica
-      </div>
-      ${planesHTML}
-    </div>
-  `;
-}
-
-function inicializarBusquedaClinica() {
-  const btnBuscar = document.getElementById("btnBuscarClinica");
-  if (btnBuscar) {
-    btnBuscar.addEventListener('click', manejarBusquedaClinica);
-  }
-  
-  // Botón del formulario principal
-  const btnBuscarFormulario = document.getElementById("btnBuscarClinicaFormulario");
-  if (btnBuscarFormulario) {
-    btnBuscarFormulario.addEventListener('click', function(e) {
-      e.preventDefault();
-      // Validar que tenga datos básicos
-      const nombre = document.getElementById("nombre").value;
-      const edad = document.getElementById("edad").value;
-      const renta = document.getElementById("renta").value;
-      const region = document.getElementById("region").value;
-      
-      if (!nombre || !edad || !renta || !region) {
-        alert("Por favor completa: Nombre, Edad, Renta y Región");
-        return;
-      }
-      
-      // Mostrar sección de búsqueda
-      document.getElementById("seccionBusquedaClinica").style.display = "block";
-      document.getElementById("inputBuscadorClinica").focus();
-      document.getElementById("seccionBusquedaClinica").scrollIntoView({ behavior: 'smooth' });
-    });
-  }
-  
-  const inputClinica = document.getElementById("inputBuscadorClinica");
-  if (inputClinica) {
-    inputClinica.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        manejarBusquedaClinica();
-      }
-    });
-  }
-}
-
-window.addEventListener('DOMContentLoaded', inicializarBusquedaClinica);
-
-/*========================================================
-  INICIO
-=========================================================*/
 window.addEventListener("load", () => {
   cargarUF();
   cargarPlanes();
