@@ -269,56 +269,34 @@ const URL_REDES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena
 // ════════════════════════════════════════════════════════════════════════════
 
 const PLANES_EMBEBIDOS = [
-  {
-    id: 1,
-    plan: "Colmena Bronze",
-    pb_uf: 0.95,
-    cobertura_hospitalizacion: 80,
-    clinicas: ["Hospital Clínico", "Hospital del Salvador"],
-    zona: "SANTIAGO",
-    gesIncluido: true,
-    topeAnual: 7000
-  },
-  {
-    id: 2,
-    plan: "Colmena Silver",
-    pb_uf: 1.25,
-    cobertura_hospitalizacion: 90,
-    clinicas: ["Clínica Alemana", "Clínica Las Condes", "Clínica Dávila"],
-    zona: "SANTIAGO",
-    gesIncluido: true,
-    topeAnual: 7000
-  },
-  {
-    id: 3,
-    plan: "Colmena Gold",
-    pb_uf: 1.55,
-    cobertura_hospitalizacion: 95,
-    clinicas: ["Clínica Alemana", "Clínica Las Condes", "Clínica Indisa", "Hospital Dipreca"],
-    zona: "SANTIAGO",
-    gesIncluido: true,
-    topeAnual: 7000
-  },
-  {
-    id: 4,
-    plan: "Colmena Platinum",
-    pb_uf: 1.85,
-    cobertura_hospitalizacion: 100,
-    clinicas: ["Clínica Alemana", "Clínica Las Condes", "Clínica Indisa", "Hospital Dipreca", "Clínica Santa María"],
-    zona: "SANTIAGO",
-    gesIncluido: true,
-    topeAnual: 10000
-  },
-  {
-    id: 5,
-    plan: "Colmena Plus",
-    pb_uf: 1.40,
-    cobertura_hospitalizacion: 92,
-    clinicas: ["Clínica Indisa", "Hospital del Salvador", "Clínica San Camilo"],
-    zona: "SANTIAGO",
-    gesIncluido: true,
-    topeAnual: 7000
-  }
+  // ZONA NORTE
+  { id: 1, plan: "Colmena Bronze NORTE", pb_uf: 0.95, cobertura_hospitalizacion: 80, clinicas: ["Hospital Antofagasta", "Clínica del Norte"], zona: "NORTE", gesIncluido: true, topeAnual: 7000 },
+  { id: 2, plan: "Colmena Silver NORTE", pb_uf: 1.25, cobertura_hospitalizacion: 90, clinicas: ["Hospital Iquique", "Clínica Arica"], zona: "NORTE", gesIncluido: true, topeAnual: 7000 },
+  { id: 3, plan: "Colmena Gold NORTE", pb_uf: 1.55, cobertura_hospitalizacion: 95, clinicas: ["Hospital Regional", "Clínica NORTE Premium"], zona: "NORTE", gesIncluido: true, topeAnual: 7000 },
+  
+  // ZONA CENTRO
+  { id: 4, plan: "Colmena Bronze CENTRO", pb_uf: 0.95, cobertura_hospitalizacion: 80, clinicas: ["Hospital Valparaíso", "Clínica Viña"], zona: "CENTRO", gesIncluido: true, topeAnual: 7000 },
+  { id: 5, plan: "Colmena Silver CENTRO", pb_uf: 1.25, cobertura_hospitalizacion: 90, clinicas: ["Clínica Concepción", "Hospital Quilpué"], zona: "CENTRO", gesIncluido: true, topeAnual: 7000 },
+  { id: 6, plan: "Colmena Gold CENTRO", pb_uf: 1.55, cobertura_hospitalizacion: 95, clinicas: ["Hospital Ovalle", "Clínica CENTRO Premium"], zona: "CENTRO", gesIncluido: true, topeAnual: 7000 },
+  { id: 7, plan: "Colmena Platinum CENTRO", pb_uf: 1.85, cobertura_hospitalizacion: 100, clinicas: ["Clínica La Serena", "Hospital Coquimbo"], zona: "CENTRO", gesIncluido: true, topeAnual: 10000 },
+  
+  // ZONA SANTIAGO (Preferentes)
+  { id: 8, plan: "Colmena Bronze Santiago", pb_uf: 0.92, cobertura_hospitalizacion: 85, clinicas: ["Hospital Clínico", "Hospital del Salvador"], zona: "SANTIAGO", gesIncluido: true, topeAnual: 7000 },
+  { id: 9, plan: "Colmena Silver Santiago", pb_uf: 1.22, cobertura_hospitalizacion: 92, clinicas: ["Clínica Alemana", "Clínica Las Condes", "Clínica Dávila"], zona: "SANTIAGO", gesIncluido: true, topeAnual: 7000 },
+  { id: 10, plan: "Colmena Gold Santiago", pb_uf: 1.52, cobertura_hospitalizacion: 96, clinicas: ["Clínica Alemana", "Clínica Las Condes", "Clínica Indisa", "Hospital Dipreca"], zona: "SANTIAGO", gesIncluido: true, topeAnual: 7000 },
+  { id: 11, plan: "Colmena Platinum Santiago", pb_uf: 1.82, cobertura_hospitalizacion: 100, clinicas: ["Clínica Alemana", "Clínica Las Condes", "Clínica Indisa", "Hospital Dipreca", "Clínica Santa María"], zona: "SANTIAGO", gesIncluido: true, topeAnual: 10000 },
+  { id: 12, plan: "Colmena Plus Santiago", pb_uf: 1.37, cobertura_hospitalizacion: 93, clinicas: ["Clínica Indisa", "Hospital del Salvador", "Clínica San Camilo"], zona: "SANTIAGO", gesIncluido: true, topeAnual: 7000 },
+  
+  // ZONA SUR
+  { id: 13, plan: "Colmena Bronze SUR", pb_uf: 0.95, cobertura_hospitalizacion: 80, clinicas: ["Hospital Concepción", "Clínica del Bío-Bío"], zona: "SUR", gesIncluido: true, topeAnual: 7000 },
+  { id: 14, plan: "Colmena Silver SUR", pb_uf: 1.25, cobertura_hospitalizacion: 90, clinicas: ["Hospital Los Ángeles", "Clínica Temuco"], zona: "SUR", gesIncluido: true, topeAnual: 7000 },
+  { id: 15, plan: "Colmena Gold SUR", pb_uf: 1.55, cobertura_hospitalizacion: 95, clinicas: ["Hospital Valdivia", "Clínica Puerto Montt"], zona: "SUR", gesIncluido: true, topeAnual: 7000 },
+  { id: 16, plan: "Colmena Platinum SUR", pb_uf: 1.85, cobertura_hospitalizacion: 100, clinicas: ["Hospital Punta Arenas", "Clínica SUR Premium"], zona: "SUR", gesIncluido: true, topeAnual: 10000 },
+  
+  // PLANES LIBRE ELECCIÓN (disponibles en todas partes)
+  { id: 17, plan: "Colmena Basic Libre", pb_uf: 0.88, cobertura_hospitalizacion: 75, clinicas: ["Red Nacional de Clínicas"], zona: "LIBRE_ELECCION", gesIncluido: true, topeAnual: 6000 },
+  { id: 18, plan: "Colmena Standard Libre", pb_uf: 1.18, cobertura_hospitalizacion: 88, clinicas: ["Red Ampliada Nacional"], zona: "LIBRE_ELECCION", gesIncluido: true, topeAnual: 7000 },
+  { id: 19, plan: "Colmena Premium Libre", pb_uf: 1.48, cobertura_hospitalizacion: 94, clinicas: ["Red Premium Nacional"], zona: "LIBRE_ELECCION", gesIncluido: true, topeAnual: 8000 }
 ];
 
 const REGION_A_ZONA = {
