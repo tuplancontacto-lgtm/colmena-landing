@@ -672,22 +672,22 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   GENERAR HTML DE CLÍNICAS - 3 FORMATOS
 =========================================================*/
 function generarHTMLClinicas(plan, numeroPlan) {
-  // PRIORIDAD 1: coberturas_redes (% por grupo)
+  // PRIORIDAD 1: coberturas_redes (% por grupo) - Mostrar SOLO esto, no combinar
   if (plan.coberturas_redes && Object.keys(plan.coberturas_redes).length > 0) {
     return generarHTMLGruposGX(plan, numeroPlan);
   }
   
-  // PRIORIDAD 2: hospitalizacion con %GXX=NN% (desde planes_completos)
+  // PRIORIDAD 2: hospitalizacion con %GXX=NN% - Mostrar SOLO esto, no combinar
   if (plan.hospitalizacion && plan.hospitalizacion.includes('%G')) {
     return generarHTMLGruposDesdeHospitalizacion(plan, numeroPlan);
   }
   
-  // PRIORIDAD 3: texto_completo con regex (desde texto recomendación)
+  // PRIORIDAD 3: texto_completo con regex - Mostrar SOLO esto, no combinar
   if (plan.texto_completo) {
     return generarHTMLDesdeTextoCompleto(plan, numeroPlan);
   }
   
-  // PRIORIDAD 4: hospitalizacion con clínicas (texto descriptivo)
+  // PRIORIDAD 4: hospitalizacion con clínicas (SOLO si no cumple 1-3)
   if (plan.hospitalizacion) {
     return generarHTMLClinicasDesdeHospitalizacion(plan, numeroPlan);
   }
@@ -710,6 +710,19 @@ function generarHTMLGruposGX(plan, numeroPlan) {
       const flecha = i === 0 ? '▼' : '►';
       const colorCobertura = cobertura >= 90 ? '#4ade80' : cobertura >= 80 ? '#fbbf24' : cobertura >= 60 ? '#60a5fa' : '#ff8080';
       
+      // Obtener clínicas reales del grupo
+      let clinicasHTML = '';
+      const grupoNombre = `Grupo ${g.substring(1)} - GX ${g === 'G41' ? 'Ampliada' : g === 'G42' ? 'Ampliada' : g === 'G43' ? 'Red' : g === 'G44' ? 'Red' : g === 'G45' ? 'Plus' : 'Premium'}`;
+      const clinicasDelGrupo = GRUPOS_GX[grupoNombre] || [];
+      
+      if (clinicasDelGrupo.length > 0) {
+        clinicasHTML = clinicasDelGrupo.map(c => 
+          `<div style="padding: 8px 15px; border-bottom: 1px solid #1a3a5a; font-size: 0.9rem;">
+            <span style="color: #4ade80;">✓</span> ${c.nombre} <span style="color: #888; font-size: 0.85rem;">(${c.ciudad})</span>
+          </div>`
+        ).join('');
+      }
+      
       return `
         <div style="margin-bottom: 12px;">
           <button type="button" class="grupo-boton-expandible" onclick="toggleClinicasGrupo('${grupoId}', this)" style="
@@ -728,7 +741,7 @@ function generarHTMLGruposGX(plan, numeroPlan) {
             justify-content: space-between;
             align-items: center;
           ">
-            <span>${flecha} ${g}</span>
+            <span>${flecha} ${g} - ${clinicasDelGrupo.length} prestadores</span>
             <span style="color: ${colorCobertura}; font-weight: bold;">${cobertura}%</span>
           </button>
           <div id="${grupoId}" class="clinicas-grupo-content" style="
@@ -738,11 +751,8 @@ function generarHTMLGruposGX(plan, numeroPlan) {
             border-top: none;
             border-radius: 0 0 8px 8px;
             overflow: hidden;
-            padding: 15px;
-            color: #999;
-            font-size: 0.9rem;
           ">
-            Red de clínicas con ${cobertura}% de cobertura
+            ${clinicasHTML || '<div style="padding: 15px; color: #888;">Sin clínicas registradas</div>'}
           </div>
         </div>
       `;
@@ -1955,6 +1965,46 @@ function inicializarBusquedaClinica() {
       if (!nombre || !edad || !renta || !region) {
         alert("Por favor completa: Nombre, Edad, Renta y Región");
         return;
+      }
+      
+      // Si no hay cotización, inicializar datos básicos
+      if (!ultimoResultado) {
+        const uf = window.__UF_VALOR || 39700;
+        const edadTitular = Number(edad);
+        const cargasTexto = (document.getElementById("cargas").value || "").replace(/\n/g, ", ").trim();
+        const edadesCargas = cargasTexto.split(/[\n,;]+/)
+          .map(s => s.trim())
+          .filter(Boolean)
+          .map(Number)
+          .filter(n => !isNaN(n) && n >= 0 && n <= 120);
+        
+        const calcSiete = calcularSietePorCiento(Number(renta), uf);
+        const zona = REGION_A_ZONA[region] || 'SANTIAGO';
+        
+        ultimoResultado = {
+          sieteCLP: calcSiete.sietePorCientoCLP,
+          sieteUF: calcSiete.sietePorCientoUF,
+          edadesCargas: edadesCargas,
+          cargasTexto: cargasTexto,
+          zona: zona,
+          edadTitular: edadTitular,
+          plan1: null,
+          plan2: null
+        };
+        
+        // Guardar TODOS los datos del formulario
+        formularioDatos = {
+          nombre: nombre,
+          edad: edad,
+          renta: renta,
+          region: region,
+          cargas: cargasTexto,
+          correo: document.getElementById("correo").value,
+          telefono: document.getElementById("telefono").value,
+          rut: document.getElementById("rut").value,
+          isapre: document.getElementById("isapre").value,
+          mensaje: document.getElementById("mensaje").value
+        };
       }
       
       // Mostrar sección de búsqueda
