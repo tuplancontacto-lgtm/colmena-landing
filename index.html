@@ -621,7 +621,7 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   }
   
   let clinicasHTML = '';
-  if (plan.hospitalizacion) {
+  if (plan.texto_completo) {
     clinicasHTML = generarHTMLClinicas(plan, numero);
   }
   
@@ -663,19 +663,272 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
 }
 
 /*========================================================
-  GENERAR HTML DE CLÍNICAS - MOSTRAR INFORMACIÓN DE HOSPITALIZACIÓN
+  GENERAR HTML DE CLÍNICAS - REDES GX (G41, G42, G43, G44)
+=========================================================*/
+/*========================================================
+  GENERAR HTML DE CLÍNICAS - 3 FORMATOS
 =========================================================*/
 function generarHTMLClinicas(plan, numeroPlan) {
-  // Si no hay información de hospitalización, no mostrar nada
-  if (!plan.hospitalizacion) {
+  // PRIORIDAD 1: coberturas_redes (% por grupo)
+  if (plan.coberturas_redes && Object.keys(plan.coberturas_redes).length > 0) {
+    return generarHTMLGruposGX(plan, numeroPlan);
+  }
+  
+  // PRIORIDAD 2: hospitalizacion con %GXX=NN% (desde planes_completos)
+  if (plan.hospitalizacion && plan.hospitalizacion.includes('%G')) {
+    return generarHTMLGruposDesdeHospitalizacion(plan, numeroPlan);
+  }
+  
+  // PRIORIDAD 3: texto_completo con regex (desde texto recomendación)
+  if (plan.texto_completo) {
+    return generarHTMLDesdeTextoCompleto(plan, numeroPlan);
+  }
+  
+  // PRIORIDAD 4: hospitalizacion con clínicas (texto descriptivo)
+  if (plan.hospitalizacion) {
+    return generarHTMLClinicasDesdeHospitalizacion(plan, numeroPlan);
+  }
+  
+  return '';
+}
+
+/*========================================================
+  MÉTODO 1: coberturas_redes (% por grupo GX)
+=========================================================*/
+function generarHTMLGruposGX(plan, numeroPlan) {
+  const planId = `plan${numeroPlan}`;
+  const grupos = ['G41', 'G42', 'G43', 'G44', 'G45', 'G46'];
+  
+  let gruposHTML = grupos
+    .filter(g => plan.coberturas_redes[g] !== undefined)
+    .map((g, i) => {
+      const cobertura = plan.coberturas_redes[g];
+      const grupoId = `${planId}-${g}`;
+      const flecha = i === 0 ? '▼' : '►';
+      const colorCobertura = cobertura >= 90 ? '#4ade80' : cobertura >= 80 ? '#fbbf24' : cobertura >= 60 ? '#60a5fa' : '#ff8080';
+      
+      return `
+        <div style="margin-bottom: 12px;">
+          <button type="button" class="grupo-boton-expandible" onclick="toggleClinicasGrupo('${grupoId}', this)" style="
+            width: 100%;
+            background: #1a3a5a;
+            border: 1px solid #3a5a7a;
+            color: #d4af37;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: left;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          ">
+            <span>${flecha} ${g}</span>
+            <span style="color: ${colorCobertura}; font-weight: bold;">${cobertura}%</span>
+          </button>
+          <div id="${grupoId}" class="clinicas-grupo-content" style="
+            display: ${i === 0 ? 'block' : 'none'};
+            background: #0d1f2d;
+            border: 1px solid #2a3a4a;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+            padding: 15px;
+            color: #999;
+            font-size: 0.9rem;
+          ">
+            Red de clínicas con ${cobertura}% de cobertura
+          </div>
+        </div>
+      `;
+    })
+    .join('');
+  
+  return gruposHTML ? `
+    <div class="clinicas-section" style="margin-top: 20px; border-top: 1px solid #3a5a7a; padding-top: 20px;">
+      <div style="color: #d4af37; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;">🏥 Redes de Clínicas GX</div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        ${gruposHTML}
+      </div>
+    </div>
+  ` : '';
+}
+
+/*========================================================
+  MÉTODO 2: hospitalizacion con %GXX=NN%
+=========================================================*/
+function generarHTMLGruposDesdeHospitalizacion(plan, numeroPlan) {
+  const planId = `plan${numeroPlan}`;
+  const regex = /%G(\d+)=(\d+)%/g;
+  const grupos = {};
+  let match;
+  
+  while ((match = regex.exec(plan.hospitalizacion)) !== null) {
+    const grupoNum = match[1];
+    const cobertura = parseInt(match[2]);
+    grupos[`G${grupoNum}`] = cobertura;
+  }
+  
+  if (Object.keys(grupos).length === 0) {
     return '';
   }
   
-  const hospitalizacion = plan.hospitalizacion;
-  const planId = `plan${numeroPlan}`;
+  let gruposHTML = Object.entries(grupos)
+    .map(([g, cobertura], i) => {
+      const grupoId = `${planId}-${g}`;
+      const flecha = i === 0 ? '▼' : '►';
+      const colorCobertura = cobertura >= 90 ? '#4ade80' : cobertura >= 80 ? '#fbbf24' : cobertura >= 60 ? '#60a5fa' : '#ff8080';
+      
+      return `
+        <div style="margin-bottom: 12px;">
+          <button type="button" class="grupo-boton-expandible" onclick="toggleClinicasGrupo('${grupoId}', this)" style="
+            width: 100%;
+            background: #1a3a5a;
+            border: 1px solid #3a5a7a;
+            color: #d4af37;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: left;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          ">
+            <span>${flecha} ${g}</span>
+            <span style="color: ${colorCobertura}; font-weight: bold;">${cobertura}%</span>
+          </button>
+          <div id="${grupoId}" class="clinicas-grupo-content" style="
+            display: ${i === 0 ? 'block' : 'none'};
+            background: #0d1f2d;
+            border: 1px solid #2a3a4a;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+            padding: 15px;
+            color: #999;
+            font-size: 0.9rem;
+          ">
+            Red de clínicas con ${cobertura}% de cobertura
+          </div>
+        </div>
+      `;
+    })
+    .join('');
   
-  // Parsear la información de hospitalización para extraer % y clínicas
-  const lineas = hospitalizacion.split('\n').filter(l => l.trim());
+  return `
+    <div class="clinicas-section" style="margin-top: 20px; border-top: 1px solid #3a5a7a; padding-top: 20px;">
+      <div style="color: #d4af37; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;">🏥 Redes de Clínicas GX</div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        ${gruposHTML}
+      </div>
+    </div>
+  `;
+}
+
+/*========================================================
+  MÉTODO 3: texto_completo con "Red de Clínicas Gxx"
+=========================================================*/
+function generarHTMLDesdeTextoCompleto(plan, numeroPlan) {
+  const texto = plan.texto_completo;
+  const planId = `plan${numeroPlan}`;
+  const regexRedes = /(\d+)%\s*cobertura\s*–\s*Red de Clínicas\s*(G\d+)\s*\(([^)]+)\)/gi;
+  
+  const redes = {};
+  let match;
+  
+  while ((match = regexRedes.exec(texto)) !== null) {
+    const cobertura = match[1];
+    const grupo = match[2];
+    const clinicasTexto = match[3];
+    
+    const clinicas = clinicasTexto.split(',').map(c => {
+      const partes = c.trim().split(' – ');
+      return {
+        nombre: partes[0].trim(),
+        ciudad: partes[1] ? partes[1].trim() : ''
+      };
+    });
+    
+    redes[grupo] = {
+      cobertura: parseInt(cobertura),
+      clinicas: clinicas
+    };
+  }
+  
+  if (Object.keys(redes).length === 0) {
+    return '';
+  }
+  
+  const gruposOrdenados = ['G41', 'G42', 'G43', 'G44', 'G45', 'G46'].filter(g => redes[g]);
+  
+  let gruposHTML = gruposOrdenados.map((grupo, i) => {
+    const flecha = i === 0 ? '▼' : '►';
+    const data = redes[grupo];
+    const grupoId = `${planId}-${grupo}`;
+    const colorCobertura = data.cobertura >= 90 ? '#4ade80' : data.cobertura >= 80 ? '#fbbf24' : data.cobertura >= 60 ? '#60a5fa' : '#ff8080';
+    
+    let clinicasListado = data.clinicas.map(c => 
+      `<div style="padding: 8px 15px; border-bottom: 1px solid #1a3a5a; font-size: 0.9rem;">
+        <span style="color: #4ade80;">✓</span> ${c.nombre} <span style="color: #888; font-size: 0.85rem;">${c.ciudad ? '(' + c.ciudad + ')' : ''}</span>
+      </div>`
+    ).join('');
+    
+    return `
+      <div style="margin-bottom: 12px;">
+        <button type="button" class="grupo-boton-expandible" onclick="toggleClinicasGrupo('${grupoId}', this)" style="
+          width: 100%;
+          background: #1a3a5a;
+          border: 1px solid #3a5a7a;
+          color: #d4af37;
+          padding: 12px 15px;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: bold;
+          text-align: left;
+          transition: all 0.3s;
+          font-size: 0.95rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        ">
+          <span>${flecha} ${grupo} - ${data.clinicas.length} prestadores</span>
+          <span style="color: ${colorCobertura}; font-weight: bold;">${data.cobertura}%</span>
+        </button>
+        <div id="${grupoId}" class="clinicas-grupo-content" style="
+          display: ${i === 0 ? 'block' : 'none'};
+          background: #0d1f2d;
+          border: 1px solid #2a3a4a;
+          border-top: none;
+          border-radius: 0 0 8px 8px;
+          overflow: hidden;
+        ">
+          ${clinicasListado}
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  return `
+    <div class="clinicas-section" style="margin-top: 20px; border-top: 1px solid #3a5a7a; padding-top: 20px;">
+      <div style="color: #d4af37; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;">🏥 Redes de Clínicas</div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        ${gruposHTML}
+      </div>
+    </div>
+  `;
+}
+
+/*========================================================
+  MÉTODO 4: hospitalizacion con clínicas (texto descriptivo)
+=========================================================*/
+function generarHTMLClinicasDesdeHospitalizacion(plan, numeroPlan) {
+  const planId = `plan${numeroPlan}`;
+  const lineas = plan.hospitalizacion.split('\n').filter(l => l.trim());
   
   let seccionesHTML = '';
   let porcentajeActual = null;
@@ -685,9 +938,7 @@ function generarHTMLClinicas(plan, numeroPlan) {
     const match = linea.match(/^(\d+)%\s*(.*)/);
     
     if (match) {
-      // Nueva línea con porcentaje
       if (porcentajeActual !== null && clinicasActuales.length > 0) {
-        // Guardar sección anterior
         seccionesHTML += generarSeccionClinicas(planId, porcentajeActual, clinicasActuales);
       }
       
@@ -695,39 +946,31 @@ function generarHTMLClinicas(plan, numeroPlan) {
       const textClinicas = match[2].trim();
       clinicasActuales = textClinicas ? [textClinicas] : [];
     } else if (porcentajeActual !== null && linea.trim()) {
-      // Continuar añadiendo clínicas a la línea actual
       clinicasActuales.push(linea.trim());
     }
   }
   
-  // Guardar última sección
   if (porcentajeActual !== null && clinicasActuales.length > 0) {
     seccionesHTML += generarSeccionClinicas(planId, porcentajeActual, clinicasActuales);
   }
   
-  if (!seccionesHTML) {
-    return '';
-  }
-  
-  return `
+  return seccionesHTML ? `
     <div class="clinicas-section" style="margin-top: 20px; border-top: 1px solid #3a5a7a; padding-top: 20px;">
-      <div style="color: #d4af37; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;">🏥 Redes de Clínicas</div>
+      <div style="color: #d4af37; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;">🏥 Cobertura Hospitalaria</div>
       <div style="display: flex; flex-direction: column; gap: 8px;">
         ${seccionesHTML}
       </div>
     </div>
-  `;
+  ` : '';
 }
 
 function generarSeccionClinicas(planId, porcentaje, clinicasTexto) {
   const seccionId = `${planId}-cobertura-${porcentaje}`;
   const colorCobertura = porcentaje >= 90 ? '#4ade80' : porcentaje >= 80 ? '#fbbf24' : porcentaje >= 70 ? '#60a5fa' : '#ff8080';
   
-  // Parsear lista de clínicas
   let clinicasListado = '';
   for (const texto of clinicasTexto) {
-    // Separar por comas, guiones o "y"
-    const clinicas = texto.split(/[,\n]+/).map(c => c.trim()).filter(c => c);
+    const clinicas = texto.split(/[,]+/).map(c => c.trim()).filter(c => c);
     clinicasListado += clinicas.map(c => 
       `<div style="padding: 8px 15px; border-bottom: 1px solid #1a3a5a; font-size: 0.9rem;">
         <span style="color: #4ade80;">✓</span> ${c}
