@@ -621,7 +621,7 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   }
   
   let clinicasHTML = '';
-  if (plan.coberturas_redes && Object.keys(REDES_CLINICAS).length > 0) {
+  if (plan.hospitalizacion) {
     clinicasHTML = generarHTMLClinicas(plan, numero);
   }
   
@@ -663,62 +663,108 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
 }
 
 /*========================================================
-  GENERAR HTML DE CLÍNICAS - LISTADO CON BOTONES EXPANDIBLES
+  GENERAR HTML DE CLÍNICAS - MOSTRAR INFORMACIÓN DE HOSPITALIZACIÓN
 =========================================================*/
 function generarHTMLClinicas(plan, numeroPlan) {
-  const grupos = Object.keys(GRUPOS_GX);
+  // Si no hay información de hospitalización, no mostrar nada
+  if (!plan.hospitalizacion) {
+    return '';
+  }
+  
+  const hospitalizacion = plan.hospitalizacion;
   const planId = `plan${numeroPlan}`;
   
-  // Generar HTML para cada grupo como botón expandible
-  let gruposHTML = grupos.map((g, i) => {
-    const flecha = i === 0 ? '▼' : '►';
-    const activeClass = i === 0 ? 'active' : '';
-    const grupoId = g.replace(/\s+/g, '-');
-    const clinicas = GRUPOS_GX[g] || [];
+  // Parsear la información de hospitalización para extraer % y clínicas
+  const lineas = hospitalizacion.split('\n').filter(l => l.trim());
+  
+  let seccionesHTML = '';
+  let porcentajeActual = null;
+  let clinicasActuales = [];
+  
+  for (const linea of lineas) {
+    const match = linea.match(/^(\d+)%\s*(.*)/);
     
-    // Listado de clínicas dentro del grupo
-    let clinicasListado = clinicas.map(c => 
-      `<div style="padding: 8px 15px; border-bottom: 1px solid #1a3a5a; font-size: 0.9rem;">
-        <span style="color: #4ade80;">✓</span> ${c.nombre} <span style="color: #888; font-size: 0.85rem;">(${c.ciudad})</span>
-      </div>`
-    ).join('');
-    
-    return `
-      <div style="margin-bottom: 12px;">
-        <button type="button" class="grupo-boton-expandible ${activeClass}" onclick="toggleClinicasGrupo('${planId}-${grupoId}', this)" style="
-          width: 100%;
-          background: #1a3a5a;
-          border: 1px solid #3a5a7a;
-          color: #d4af37;
-          padding: 12px 15px;
-          border-radius: 8px;
-          cursor: pointer;
-          font-weight: bold;
-          text-align: left;
-          transition: all 0.3s;
-          font-size: 0.95rem;
-        ">
-          ${flecha} ${g} (${clinicas.length} prestadores)
-        </button>
-        <div id="${planId}-${grupoId}" class="clinicas-grupo-content ${activeClass}" style="
-          display: ${i === 0 ? 'block' : 'none'};
-          background: #0d1f2d;
-          border: 1px solid #2a3a4a;
-          border-top: none;
-          border-radius: 0 0 8px 8px;
-          overflow: hidden;
-        ">
-          ${clinicasListado}
-        </div>
-      </div>
-    `;
-  }).join('');
+    if (match) {
+      // Nueva línea con porcentaje
+      if (porcentajeActual !== null && clinicasActuales.length > 0) {
+        // Guardar sección anterior
+        seccionesHTML += generarSeccionClinicas(planId, porcentajeActual, clinicasActuales);
+      }
+      
+      porcentajeActual = match[1];
+      const textClinicas = match[2].trim();
+      clinicasActuales = textClinicas ? [textClinicas] : [];
+    } else if (porcentajeActual !== null && linea.trim()) {
+      // Continuar añadiendo clínicas a la línea actual
+      clinicasActuales.push(linea.trim());
+    }
+  }
+  
+  // Guardar última sección
+  if (porcentajeActual !== null && clinicasActuales.length > 0) {
+    seccionesHTML += generarSeccionClinicas(planId, porcentajeActual, clinicasActuales);
+  }
+  
+  if (!seccionesHTML) {
+    return '';
+  }
   
   return `
     <div class="clinicas-section" style="margin-top: 20px; border-top: 1px solid #3a5a7a; padding-top: 20px;">
       <div style="color: #d4af37; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;">🏥 Redes de Clínicas</div>
       <div style="display: flex; flex-direction: column; gap: 8px;">
-        ${gruposHTML}
+        ${seccionesHTML}
+      </div>
+    </div>
+  `;
+}
+
+function generarSeccionClinicas(planId, porcentaje, clinicasTexto) {
+  const seccionId = `${planId}-cobertura-${porcentaje}`;
+  const colorCobertura = porcentaje >= 90 ? '#4ade80' : porcentaje >= 80 ? '#fbbf24' : porcentaje >= 70 ? '#60a5fa' : '#ff8080';
+  
+  // Parsear lista de clínicas
+  let clinicasListado = '';
+  for (const texto of clinicasTexto) {
+    // Separar por comas, guiones o "y"
+    const clinicas = texto.split(/[,\n]+/).map(c => c.trim()).filter(c => c);
+    clinicasListado += clinicas.map(c => 
+      `<div style="padding: 8px 15px; border-bottom: 1px solid #1a3a5a; font-size: 0.9rem;">
+        <span style="color: #4ade80;">✓</span> ${c}
+      </div>`
+    ).join('');
+  }
+  
+  return `
+    <div style="margin-bottom: 12px;">
+      <button type="button" class="grupo-boton-expandible" onclick="toggleClinicasGrupo('${seccionId}', this)" style="
+        width: 100%;
+        background: #1a3a5a;
+        border: 1px solid #3a5a7a;
+        color: #d4af37;
+        padding: 12px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        text-align: left;
+        transition: all 0.3s;
+        font-size: 0.95rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      ">
+        <span>► ${porcentaje}% Cobertura</span>
+        <span style="color: ${colorCobertura}; font-weight: bold; font-size: 1rem;">${porcentaje}%</span>
+      </button>
+      <div id="${seccionId}" class="clinicas-grupo-content" style="
+        display: none;
+        background: #0d1f2d;
+        border: 1px solid #2a3a4a;
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+        overflow: hidden;
+      ">
+        ${clinicasListado}
       </div>
     </div>
   `;
@@ -1226,12 +1272,25 @@ Tel: ${telefonoReferido}
 Correo: ${correoReferido}`;
     enviarCallMeBot(msgRef);
 
-    // RESETEAR SOLO EL FORMULARIO DE REFERIDOS DESPUÉS DE ENVIAR
+    // RESETEAR DATOS DESPUÉS DE ENVIAR Y ESPERAR 10 SEGUNDOS ANTES DE SUBIR
     setTimeout(() => {
+      // Resetear formulario de referidos
       document.getElementById("formReferidos").reset();
+      
+      // Resetear datos de cotización
+      document.getElementById("mainForm").reset();
+      formularioDatos = {};
+      ultimoResultado = null;
+      contadorRecalculos = 0;
+      
+      // Ocultar secciones
+      document.getElementById("resultado-preliminar").style.display = "none";
+      document.getElementById("referidos").style.display = "none";
       document.getElementById("mensajeExitoReferido").style.display = "none";
-      // NO resetear mainForm ni otros datos
-    }, 2000);
+      
+      // Subir al inicio después de 10 segundos
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 10000);
 
   } catch (err) {
     document.getElementById("mensajeErrorReferido").style.display = "block";
