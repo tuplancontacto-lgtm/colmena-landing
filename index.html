@@ -93,6 +93,8 @@
     .adicional-valor { color: #4ade80; font-size: 1.3rem; font-weight: bold; }
     .btn-enviar-usuario { background: linear-gradient(135deg, #25d366, #128c7e); color: white; padding: 15px 30px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; margin-top: 15px; display: block; width: 100%; max-width: 350px; margin-left: auto; margin-right: auto; }
     .btn-enviar-usuario:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(37,211,102,0.4); }
+    .btn-buscar-clinica { background: linear-gradient(135deg, #60a5fa, #3b82f6); color: white; padding: 15px 30px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; display: inline-block; }
+    .btn-buscar-clinica:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(96,165,250,0.4); }
     
     /* ESTILOS BÚSQUEDA POR CLÍNICA */
     #seccionBusquedaClinica { 
@@ -206,9 +208,12 @@
 
 <section id="resultado-preliminar" class="card" style="display:none">
   <div id="resultadoDetalle"></div>
-  <div style="text-align:center;margin-top:30px;">
-    <button id="btnAsesoria" class="btn-asesoria">📋 Solicitar Asesoría Personalizada</button>
-    <p class="small" style="margin-top:10px;">Un asesor te contactará a la brevedad.</p>
+  <div style="text-align:center;margin-top:30px; display:flex; gap:15px; flex-wrap:wrap; justify-content:center;">
+    <button id="btnAsesoria" class="btn-asesoria">📋 Solicitar Asesoría</button>
+    <button id="btnBuscarClinicaDesdeResultados" class="btn-buscar-clinica">🏥 Buscar por Clínica</button>
+  </div>
+  <p class="small" style="margin-top:10px; text-align:center;">Selecciona una opción para continuar.</p>
+  <div style="text-align:center;margin-top:20px;">
     <button id="btnEnviarUsuario" class="btn-enviar-usuario">📲 Recibir Resumen por WhatsApp</button>
     <p class="small" style="margin-top:10px;">Recibirás los planes cotizados y documentos requeridos.</p>
   </div>
@@ -621,9 +626,7 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   }
   
   let clinicasHTML = '';
-  if (plan.texto_completo) {
-    clinicasHTML = generarHTMLClinicas(plan, numero);
-  }
+  clinicasHTML = generarHTMLClinicas(plan, numero);
   
   return `
     <div class="plan-card ${cardClass}">
@@ -1441,6 +1444,18 @@ ${textoAdicional}
   setTimeout(() => {
     document.getElementById("referidos").scrollIntoView({ behavior: "smooth" });
   }, 400);
+});
+
+/*========================================================
+  BOTÓN BUSCAR POR CLÍNICA DESDE RESULTADOS
+=========================================================*/
+document.getElementById("btnBuscarClinicaDesdeResultados").addEventListener("click", function() {
+  // Mostrar sección de búsqueda por clínica sin requerir cotización adicional
+  document.getElementById("seccionBusquedaClinica").style.display = "block";
+  document.getElementById("inputBuscadorClinica").focus();
+  setTimeout(() => {
+    document.getElementById("seccionBusquedaClinica").scrollIntoView({ behavior: "smooth" });
+  }, 100);
 });
 
 /*========================================================
