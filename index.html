@@ -369,6 +369,45 @@ const REFERIDOS_FIELDS = {
 const URL_PLANES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/planes_completos.json';
 const URL_REDES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/redes_clinicas.json';
 
+// ════════════════════════════════════════════════════════════════════════════
+// GRUPOS GX (REDES CLÍNICAS) - Definidos localmente
+// ════════════════════════════════════════════════════════════════════════════
+
+const GRUPOS_GX = {
+  "Grupo 46 - GX Premium": [
+    { nombre: "CLÍNICA ALEMANA", ciudad: "SANTIAGO" },
+    { nombre: "CLÍNICA LAS CONDES", ciudad: "SANTIAGO" },
+    { nombre: "TODOS LOS NO INCLUIDOS EN OTROS GRUPOS", ciudad: "NACIONAL" }
+  ],
+  "Grupo 45 - GX Plus": [
+    { nombre: "CLÍNICA SAN CARLOS APOQUINDO", ciudad: "SANTIAGO" },
+    { nombre: "CLÍNICA UNIVERSIDAD CATÓLICA", ciudad: "SANTIAGO" },
+    { nombre: "CLÍNICA UNIVERSIDAD DE LOS ANDES", ciudad: "SANTIAGO" },
+    { nombre: "CLÍNICA MEDS", ciudad: "SANTIAGO" },
+    { nombre: "CLÍNICA SANTA MARÍA", ciudad: "SANTIAGO" }
+  ],
+  "Grupo 44 - GX Red": [
+    { nombre: "CLÍNICA REDSALUD VITACURA", ciudad: "SANTIAGO" }
+  ],
+  "Grupo 42 - GX Ampliada": [
+    { nombre: "CLÍNICA DÁVILA RECOLETA", ciudad: "SANTIAGO" },
+    { nombre: "CLÍNICA REDSALUD PROVIDENCIA", ciudad: "SANTIAGO" },
+    { nombre: "CLÍNICA REDSALUD SANTIAGO", ciudad: "SANTIAGO" },
+    { nombre: "CLÍNICA DÁVILA VESPUCIO", ciudad: "SANTIAGO" },
+    { nombre: "CLÍNICA SAN JOSE", ciudad: "ARICA" },
+    { nombre: "CLÍNICA REDSALUD IQUIQUE", ciudad: "IQUIQUE" },
+    { nombre: "CLÍNICA EL LOA", ciudad: "CALAMA" },
+    { nombre: "CLÍNICA PORTADA", ciudad: "ANTOFAGASTA" },
+    { nombre: "CLÍNICA CUMBRES DEL NORTE", ciudad: "ANTOFAGASTA" },
+    { nombre: "HOSPITAL MILITAR DEL NORTE", ciudad: "ANTOFAGASTA" },
+    { nombre: "CLÍNICA RCR ATACAMA", ciudad: "COPIAPÓ" },
+    { nombre: "CLÍNICA REDSALUD ELQUI", ciudad: "LA SERENA" },
+    { nombre: "HOSPITAL CLÍNICO DE VIÑA DEL MAR", ciudad: "VIÑA DEL MAR" },
+    { nombre: "HOSPITAL NAVAL ALMIRANTE NEF", ciudad: "VIÑA DEL MAR" },
+    { nombre: "CLÍNICA REDSALUD VALPARAISO", ciudad: "VALPARAISO" }
+  ]
+};
+
 let contadorRecalculos = 0;
 const MAX_RECALCULOS = 2;
 
@@ -624,66 +663,81 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
 }
 
 /*========================================================
-  GENERAR HTML DE CLÍNICAS CON TABS
+  GENERAR HTML DE CLÍNICAS CON TODOS LOS GX - TABS EXPANDIBLES
 =========================================================*/
 function generarHTMLClinicas(plan, numeroPlan) {
-  if (!plan.coberturas_redes) return '';
-  
-  const grupos = Object.keys(plan.coberturas_redes).sort();
+  const grupos = Object.keys(GRUPOS_GX);
   const planId = `plan${numeroPlan}`;
   
+  // Botones con flechas: ▼ para primero (abierto), ► para resto (cerrados)
   let tabsHTML = grupos.map((g, i) => {
+    const flecha = i === 0 ? '▼' : '►';
     const activeClass = i === 0 ? 'active' : '';
-    const cobertura = plan.coberturas_redes[g];
-    return `<button type="button" class="grupo-tab ${activeClass}" onclick="mostrarGrupo('${planId}', '${g}')">${g} (${cobertura}%)</button>`;
+    const grupoId = g.replace(/\s+/g, '-');
+    return `<button type="button" class="grupo-tab ${activeClass}" onclick="toggleGrupoGX('${planId}', '${grupoId}', this)">${flecha} ${g}</button>`;
   }).join('');
   
+  // Contenido de cada grupo
   let contenidoHTML = grupos.map((g, i) => {
     const activeClass = i === 0 ? 'active' : '';
-    const clinicas = REDES_CLINICAS[g] || [];
+    const clinicas = GRUPOS_GX[g] || [];
+    const grupoId = g.replace(/\s+/g, '-');
     
-    let filas = clinicas.map(c => 
-      `<tr><td>${c.nombre}</td><td>${c.ciudad}</td></tr>`
+    let filasClinicas = clinicas.map(c => 
+      `<tr style="border-bottom: 1px solid #2a3a4a;"><td style="padding: 10px; text-align: left;">✓ ${c.nombre}</td><td style="padding: 10px; text-align: left;">${c.ciudad}</td></tr>`
     ).join('');
     
     return `
-      <div id="${planId}-${g}" class="grupo-content ${activeClass}">
-        <table class="clinicas-tabla">
+      <div id="${planId}-${grupoId}" class="grupo-content ${activeClass}">
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
           <thead>
-            <tr><th>Nombre Prestador</th><th>Ciudad</th></tr>
+            <tr style="border-bottom: 2px solid #d4af37;">
+              <th style="text-align: left; padding: 10px; color: #d4af37;">Prestador</th>
+              <th style="text-align: left; padding: 10px; color: #d4af37;">Ciudad</th>
+            </tr>
           </thead>
-          <tbody>${filas}</tbody>
+          <tbody style="background: #0d1f2d;">
+            ${filasClinicas}
+          </tbody>
         </table>
       </div>
     `;
   }).join('');
   
   return `
-    <div class="clinicas-section">
-      <div class="clinicas-title">🏨 Red de Clínicas</div>
-      <div class="grupos-tabs">${tabsHTML}</div>
-      ${contenidoHTML}
+    <div class="clinicas-section" style="margin-top: 20px; border-top: 1px solid #3a5a7a; padding-top: 20px;">
+      <div style="color: #d4af37; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;">🏥 Redes de Clínicas</div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        ${tabsHTML}
+      </div>
+      <div style="margin-top: 15px; background: #0d1f2d; padding: 15px; border-radius: 8px; border-left: 3px solid #4ade80;">
+        ${contenidoHTML}
+      </div>
     </div>
   `;
 }
 
-function mostrarGrupo(planId, grupo) {
-  document.querySelectorAll(`[id^="${planId}-"]`).forEach(el => el.classList.remove('active'));
+// Función para toggle de grupos GX
+function toggleGrupoGX(planId, grupoId, boton) {
+  const grupoElement = document.getElementById(`${planId}-${grupoId}`);
+  if (!grupoElement) return;
   
-  const grupoContent = document.getElementById(`${planId}-${grupo}`);
-  if (grupoContent) {
-    const planCard = grupoContent.closest('.plan-card');
-    if (planCard) {
-      planCard.querySelectorAll('.grupo-tab').forEach(tab => tab.classList.remove('active'));
-      planCard.querySelectorAll('.grupo-tab').forEach(tab => {
-        if (tab.textContent.startsWith(grupo)) {
-          tab.classList.add('active');
-        }
-      });
-    }
-  }
+  // Encontrar la tarjeta del plan
+  const planCard = grupoElement.closest('.plan-card');
+  if (!planCard) return;
   
-  document.getElementById(`${planId}-${grupo}`).classList.add('active');
+  // Cerrar todos los grupos
+  planCard.querySelectorAll('.grupo-content').forEach(el => el.classList.remove('active'));
+  planCard.querySelectorAll('.grupo-tab').forEach(btn => {
+    const flecha = btn.textContent.startsWith('▼') ? '►' : '►';
+    btn.textContent = flecha + ' ' + btn.textContent.substring(2);
+    btn.classList.remove('active');
+  });
+  
+  // Abrir el seleccionado
+  grupoElement.classList.add('active');
+  boton.classList.add('active');
+  boton.textContent = '▼ ' + boton.textContent.substring(2);
 }
 
 /*========================================================
