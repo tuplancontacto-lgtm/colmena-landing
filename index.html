@@ -743,9 +743,6 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     btn.textContent = "Cotizar Ahora";
     return;
   }
-    region: data.get("region"),
-    mensaje: data.get("mensaje")
-  };
 
   const uf = window.__UF_VALOR || 39700;
   const renta = Number(formularioDatos.renta);
