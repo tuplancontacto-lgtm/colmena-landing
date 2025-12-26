@@ -414,30 +414,38 @@ function seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas) {
     const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
     return { 
       ...p, 
-      valorCalculadoUF: calc.totalUF, 
+      valorCalculadoUF: parseFloat(calc.totalUF),
       valorCalculadoCLP: calc.totalCLP, 
       gesUF: calc.gesUF, 
       gesCLP: calc.gesCLP 
     };
   });
   
+  // FILTRO: Solo planes que NO EXCEDAN 95% del 7% (garantiza estar dentro de lo legal)
+  const minimo95 = sieteUF * 0.95;
+  const planesValidos = planesConValor.filter(p => p.valorCalculadoUF >= minimo95);
+  
+  // Si NO hay planes válidos, buscar los MÁS CERCANOS sin filtro
+  let planesFinal = planesValidos.length > 0 ? planesValidos : planesConValor;
+  
   // Ordenar por distancia al 7% (los más cercanos primero)
-  planesConValor.sort((a, b) => {
-    const distA = Math.abs(parseFloat(a.valorCalculadoUF) - sieteUF);
-    const distB = Math.abs(parseFloat(b.valorCalculadoUF) - sieteUF);
+  planesFinal.sort((a, b) => {
+    const distA = Math.abs(a.valorCalculadoUF - sieteUF);
+    const distB = Math.abs(b.valorCalculadoUF - sieteUF);
     return distA - distB;
   });
   
   console.log('✅ Planes encontrados para zona', zona, ':', planesConValor.length);
-  console.log('🏆 Top 3:');
-  planesConValor.slice(0, 3).forEach((p, i) => {
-    console.log(`${i + 1}. ${p.plan} - ${p.valorCalculadoUF} UF (distancia: ${Math.abs(parseFloat(p.valorCalculadoUF) - sieteUF).toFixed(2)} UF)`);
+  console.log('📊 7% del usuario:', sieteUF.toFixed(2), 'UF | Mínimo 95%:', minimo95.toFixed(2), 'UF');
+  console.log('🏆 Top 3 seleccionados:', planesFinal.length);
+  planesFinal.slice(0, 3).forEach((p, i) => {
+    console.log(`${i + 1}. ${p.plan} - ${p.valorCalculadoUF.toFixed(2)} UF (diferencia: ${(p.valorCalculadoUF - sieteUF).toFixed(2)} UF)`);
   });
   
   return { 
-    plan1: planesConValor[0] || null, 
-    plan2: planesConValor[1] || null, 
-    plan3: planesConValor[2] || null 
+    plan1: planesFinal[0] || null, 
+    plan2: planesFinal[1] || null, 
+    plan3: planesFinal[2] || null 
   };
 }
 
