@@ -2032,6 +2032,30 @@ function buscarClinicaEnRedes(nombreClinica) {
 // BUSCAR 4 PLANES POR CLÍNICA - DIFERENCIADOS POR COBERTURA
 // ════════════════════════════════════════════════════════════════════════════
 
+// ════════════════════════════════════════════════════════════════════════════
+// MAPEO DE CÓDIGOS DE GRUPO
+// ════════════════════════════════════════════════════════════════════════════
+const MAPEO_CODIGOS_GRUPO = {
+  'G41': 'Grupo 41 - GX Preferente',
+  'G42': 'Grupo 42 - GX Ampliada',
+  'G43': 'Grupo 43 - GX Red',
+  'G44': 'Grupo 44 - GX Red',
+  'G45': 'Grupo 45 - GX Plus',
+  'G46': 'Grupo 46 - GX Premium',
+  'G55': 'GC1 (G55)',
+  'G56': 'GC2 (G56)',
+  'G57': 'GC3 (G57)',
+  'G63': 'GS1 (G63)',
+  'G64': 'GS2 (G64)',
+  'G65': 'GS3 (G65)'
+};
+
+// Mapeo inverso: De nombre de grupo a código
+const MAPEO_GRUPO_A_CODIGO = {};
+for (const [codigo, nombre] of Object.entries(MAPEO_CODIGOS_GRUPO)) {
+  MAPEO_GRUPO_A_CODIGO[nombre] = codigo;
+}
+
 function obtenerPlanesConClinica(nombreClinica) {
   console.log('🔍 obtenerPlanesConClinica INICIADA');
   console.log('   Buscando:', nombreClinica);
@@ -2074,25 +2098,16 @@ function obtenerPlanesConClinica(nombreClinica) {
   console.log('✅ Clínica encontrada:', clinicaEncontrada.nombre);
   console.log('   Grupo:', grupoClinicaEncontrado);
   
-  // PASO 2: Extraer código del grupo (G41, G42, etc o GC1, GS1, etc)
-  let codigoGrupo = null;
+  // PASO 2: Convertir nombre de grupo a código (G41, G42, etc)
+  let codigoGrupo = MAPEO_GRUPO_A_CODIGO[grupoClinicaEncontrado];
   
-  // Intentar extraer de formato "Grupo 42 - ..." → "G42"
-  const match = grupoClinicaEncontrado.match(/Grupo (\d+)/);
-  if (match) {
-    codigoGrupo = 'G' + match[1];
-  } else {
-    // Para GC1, GC2, GS1, etc
-    const matchGX = grupoClinicaEncontrado.match(/(G[CSA]\d+)/);
-    if (matchGX) {
-      codigoGrupo = matchGX[1];
-    }
-  }
-  
-  console.log('   Código grupo extraído:', codigoGrupo);
+  console.log('   Código grupo mapeado:', codigoGrupo);
+  console.log('   Códigos disponibles en planes:', ['G41', 'G42', 'G43', 'G44', 'G45', 'G46']);
   
   if (!codigoGrupo) {
-    console.error('❌ No se pudo extraer código del grupo:', grupoClinicaEncontrado);
+    console.warn('   ⚠️ Grupo no mapeado:', grupoClinicaEncontrado);
+    // Los grupos GC1, GC2, GS1, etc no están en los planes actuales
+    // Solo G41-G46 están disponibles
     return { planesDisponibles: [] };
   }
   
