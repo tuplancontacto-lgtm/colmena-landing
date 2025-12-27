@@ -1,0 +1,466 @@
+{
+  "Grupo 46 - GX Premium": [
+    {
+      "nombre": "CLÍNICA ALEMANA",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA LAS CONDES",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    }
+  ],
+  "Grupo 45 - GX Plus": [
+    {
+      "nombre": "CLÍNICA SAN CARLOS APOQUINDO",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA UNIVERSIDAD CATÓLICA",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA UNIVERSIDAD DE LOS ANDES",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA MEDS",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA SANTA MARÍA",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    }
+  ],
+  "Grupo 44 - GX Red": [
+    {
+      "nombre": "CLÍNICA REDSALUD VITACURA",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "HOSPITAL CLÍNICO UNIVERSIDAD CATÓLICA",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "FUNDACIÓN ARTURO LOPEZ PEREZ",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "HOSPITAL CLÍNICO DE LA FUERZA AÉREA DE CHILE",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA INDISA",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA BUPA ANTOFAGASTA",
+      "ciudad": "ANTOFAGASTA",
+      "region": "Región de Antofagasta"
+    },
+    {
+      "nombre": "CLÍNICA BUPA REÑACA",
+      "ciudad": "VIÑA DEL MAR",
+      "region": "Región de Valparaíso"
+    },
+    {
+      "nombre": "CLÍNICA SANATORIO ALEMÁN",
+      "ciudad": "CONCEPCIÓN",
+      "region": "Región del Bío-Bío"
+    },
+    {
+      "nombre": "CLÍNICA LOS ANDES",
+      "ciudad": "LOS ANGELES",
+      "region": "Región del Bío-Bío"
+    },
+    {
+      "nombre": "CLÍNICA ALEMANA DE TEMUCO",
+      "ciudad": "TEMUCO",
+      "region": "Región de La Araucanía"
+    },
+    {
+      "nombre": "CLÍNICA ALEMANA DE VALDIVIA",
+      "ciudad": "VALDIVIA",
+      "region": "Región de Los Rios"
+    },
+    {
+      "nombre": "CLÍNICA ALEMANA DE OSORNO",
+      "ciudad": "OSORNO",
+      "region": "Región de Los Rios"
+    },
+    {
+      "nombre": "CLÍNICA REDSALUD MAGALLANES",
+      "ciudad": "PUNTA ARENAS",
+      "region": "Región de Magallanes"
+    }
+  ],
+  "Grupo 43 - GX Red": [
+    {
+      "nombre": "HOSPITAL DEL NIÑO",
+      "ciudad": "VIÑA DEL MAR",
+      "region": "Región de Valparaíso"
+    },
+    {
+      "nombre": "CLÍNICA CHILLAN",
+      "ciudad": "CHILLAN",
+      "region": "Región de Ñuble"
+    },
+    {
+      "nombre": "CLÍNICA BÍO BÍO",
+      "ciudad": "CONCEPCIÓN",
+      "region": "Región del Bío-Bío"
+    },
+    {
+      "nombre": "CLÍNICA ANDES SALUD CONCEPCIÓN",
+      "ciudad": "CONCEPCIÓN",
+      "region": "Región del Bío-Bío"
+    },
+    {
+      "nombre": "HOSPITAL CLÍNICO DEL SUR",
+      "ciudad": "CONCEPCIÓN",
+      "region": "Región del Bío-Bío"
+    }
+  ],
+  "Grupo 42 - GX Ampliada": [
+    {
+      "nombre": "CLÍNICA DÁVILA RECOLETA",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA REDSALUD PROVIDENCIA",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA REDSALUD SANTIAGO",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA EL LOA",
+      "ciudad": "CALAMA",
+      "region": "Región de Antofagasta"
+    },
+    {
+      "nombre": "CLÍNICA PORTADA",
+      "ciudad": "ANTOFAGASTA",
+      "region": "Región de Antofagasta"
+    },
+    {
+      "nombre": "CLÍNICA CUMBRES DEL NORTE",
+      "ciudad": "ANTOFAGASTA",
+      "region": "Región de Antofagasta"
+    },
+    {
+      "nombre": "HOSPITAL MILITAR DEL NORTE",
+      "ciudad": "ANTOFAGASTA",
+      "region": "Región de Antofagasta"
+    },
+    {
+      "nombre": "CLÍNICA RCR ATACAMA",
+      "ciudad": "COPIAPÓ",
+      "region": "Región de Atacama"
+    },
+    {
+      "nombre": "CLÍNICA REDSALUD ELQUI",
+      "ciudad": "LA SERENA",
+      "region": "Región de Coquimbo"
+    },
+    {
+      "nombre": "HOSPITAL CLÍNICO DE VIÑA DEL MAR",
+      "ciudad": "VIÑA DEL MAR",
+      "region": "Región de Valparaíso"
+    },
+    {
+      "nombre": "HOSPITAL NAVAL ALMIRANTE NEF",
+      "ciudad": "VIÑA DEL MAR",
+      "region": "Región de Valparaíso"
+    },
+    {
+      "nombre": "CLÍNICA REDSALUD VALPARAISO",
+      "ciudad": "VALPARAISO",
+      "region": "Región de Valparaíso"
+    },
+    {
+      "nombre": "CLÍNICA LOS CARRERA",
+      "ciudad": "QUILPUÉ",
+      "region": "Región de Valparaíso"
+    },
+    {
+      "nombre": "CLÍNICA ISAMEDICA",
+      "ciudad": "RANCAGUA",
+      "region": "Región de O'Higgins"
+    },
+    {
+      "nombre": "HOSPITAL CLÍNICO FUSAT",
+      "ciudad": "RANCAGUA",
+      "region": "Región de O'Higgins"
+    },
+    {
+      "nombre": "CLINICA RED SALUD RANCAGUA (INTEGRAL)",
+      "ciudad": "RANCAGUA",
+      "region": "Región de O'Higgins"
+    },
+    {
+      "nombre": "CLÍNICA LIRCAY",
+      "ciudad": "TALCA",
+      "region": ""
+    },
+    {
+      "nombre": "CLÍNICA LAS AMAPOLAS",
+      "ciudad": "CHILLÁN",
+      "region": ""
+    },
+    {
+      "nombre": "CLÍNICA REDSALUD MAYOR",
+      "ciudad": "TEMUCO",
+      "region": "Región de La Araucanía"
+    },
+    {
+      "nombre": "CLÍNICA PUERTO VARAS",
+      "ciudad": "PUERTO VARAS",
+      "region": "Región de Los Lagos"
+    },
+    {
+      "nombre": "CLÍNICA ANDES SALUD PUERTO MONTT",
+      "ciudad": "PUERTO MONTT",
+      "region": "Región de Los Lagos"
+    },
+    {
+      "nombre": "CLÍNICA PUERTO MONTT",
+      "ciudad": "PUERTO MONTT",
+      "region": "Región de Los Lagos"
+    }
+  ],
+  "Grupo 41 - GX Preferente": [
+    {
+      "nombre": "CLÍNICA JUAN PABLO II",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA SIERRA BELLA",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "HOSPITAL DEL PROFESOR",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "HOSPITAL PARROQUIAL SAN BERNARDO",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA FLEMING ARICA",
+      "ciudad": "ARICA",
+      "region": "Región de Arica y Parinacota"
+    },
+    {
+      "nombre": "CLÍNICA RÍO BLANCO",
+      "ciudad": "LOS ANDES",
+      "region": "Región de Valparaíso"
+    },
+    {
+      "nombre": "CLÍNICA SAN ANTONIO",
+      "ciudad": "SAN ANTONIO",
+      "region": "Región de Valparaíso"
+    },
+    {
+      "nombre": "CLÍNICA ADVENTISTA LOS ANGELES",
+      "ciudad": "LOS ANGELES",
+      "region": "Región del Bío-Bío"
+    },
+    {
+      "nombre": "HOSPITAL DE LAS FFAA CIRUJANO GUZMÁN",
+      "ciudad": "PUNTA ARENAS",
+      "region": "Región de Magallanes"
+    }
+  ],
+  "GC1 (G55)": [
+    {
+      "nombre": "CLÍNICA RÍO BLANCO",
+      "ciudad": "LOS ANDES",
+      "region": "Región de Valparaíso"
+    },
+    {
+      "nombre": "CLÍNICA LOS CARRERA",
+      "ciudad": "QUILPUÉ",
+      "region": "Región de Valparaíso"
+    },
+    {
+      "nombre": "HOSPITAL NAVAL ALMIRANTE NEF",
+      "ciudad": "VIÑA DEL MAR",
+      "region": "Región de Valparaíso"
+    },
+    {
+      "nombre": "CLÍNICA REDSALUD RANCAGUA (INTEGRAL)",
+      "ciudad": "RANCAGUA",
+      "region": "Región de O'Higgins"
+    },
+    {
+      "nombre": "CLÍNICA DÁVILA RECOLETA",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA DÁVILA VESPUCIO",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA REDSALUD SANTIAGO",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA REDSALUD PROVIDENCIA",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    }
+  ],
+  "GC2 (G56)": [
+    {
+      "nombre": "CLÍNICA LOS LEONES",
+      "ciudad": "LA CALERA",
+      "region": "Región de Valparaíso"
+    },
+    {
+      "nombre": "CLÍNICA REDSALUD VALPARAÍSO",
+      "ciudad": "VALPARAÍSO",
+      "region": "Región de Valparaíso"
+    },
+    {
+      "nombre": "HOSPITAL CLÍNICO DE VIÑA DEL MAR",
+      "ciudad": "VIÑA DEL MAR",
+      "region": "Región de Valparaíso"
+    },
+    {
+      "nombre": "CLÍNICA ISAMEDICA",
+      "ciudad": "RANCAGUA",
+      "region": "Región de O'Higgins"
+    },
+    {
+      "nombre": "HOSPITAL CLÍNICO FUSAT",
+      "ciudad": "RANCAGUA",
+      "region": "Región de O'Higgins"
+    },
+    {
+      "nombre": "CLÍNICA BUPA SANTIAGO",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    }
+  ],
+  "GC3 (G57)": [
+    {
+      "nombre": "CLÍNICA BUPA REÑACA",
+      "ciudad": "VIÑA DEL MAR",
+      "region": "Región de Valparaíso"
+    },
+    {
+      "nombre": "CLÍNICA CIUDAD DEL MAR",
+      "ciudad": "VIÑA DEL MAR",
+      "region": "Región de Valparaíso"
+    },
+    {
+      "nombre": "CLÍNICA INDISA",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    }
+  ],
+  "GS1 (G63)": [
+    {
+      "nombre": "CLÍNICA PUERTO VARAS",
+      "ciudad": "PUERTO VARAS",
+      "region": "Región de Los Lagos"
+    },
+    {
+      "nombre": "CLÍNICA PUERTO MONTT",
+      "ciudad": "PUERTO MONTT",
+      "region": "Región de Los Lagos"
+    },
+    {
+      "nombre": "HOSPITAL DE LAS FFAA CIRUJANO GUZMÁN",
+      "ciudad": "PUNTA ARENAS",
+      "region": "Región de Magallanes"
+    },
+    {
+      "nombre": "CLÍNICA DÁVILA RECOLETA",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA DÁVILA VESPUCIO",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA REDSALUD SANTIAGO",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    },
+    {
+      "nombre": "CLÍNICA REDSALUD PROVIDENCIA",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    }
+  ],
+  "GS2 (G64)": [
+    {
+      "nombre": "CLÍNICA REDSALUD MAYOR",
+      "ciudad": "TEMUCO",
+      "region": "Región de La Araucanía"
+    },
+    {
+      "nombre": "CLÍNICA ALEMANA DE OSORNO",
+      "ciudad": "OSORNO",
+      "region": "Región de Los Rios"
+    },
+    {
+      "nombre": "CLÍNICA ANDES SALUD PUERTO MONTT",
+      "ciudad": "PUERTO MONTT",
+      "region": "Región de Los Lagos"
+    },
+    {
+      "nombre": "CLÍNICA REDSALUD MAGALLANES",
+      "ciudad": "PUNTA ARENAS",
+      "region": "Región de Magallanes"
+    },
+    {
+      "nombre": "CLÍNICA BUPA SANTIAGO",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    }
+  ],
+  "GS3 (G65)": [
+    {
+      "nombre": "CLÍNICA ALEMANA DE TEMUCO",
+      "ciudad": "TEMUCO",
+      "region": "Región de La Araucanía"
+    },
+    {
+      "nombre": "CLÍNICA ALEMANA DE VALDIVIA",
+      "ciudad": "VALDIVIA",
+      "region": "Región de Los Ríos"
+    },
+    {
+      "nombre": "CLÍNICA INDISA",
+      "ciudad": "SANTIAGO",
+      "region": "Región Metropolitana"
+    }
+  ]
+}
