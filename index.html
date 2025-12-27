@@ -2074,9 +2074,27 @@ function obtenerPlanesConClinica(nombreClinica) {
   console.log('✅ Clínica encontrada:', clinicaEncontrada.nombre);
   console.log('   Grupo:', grupoClinicaEncontrado);
   
-  // PASO 2: Extraer código del grupo (G41, G42, etc)
-  const codigoGrupo = grupoClinicaEncontrado.split(' - ')[0].match(/G\d+/)[0];
-  console.log('   Código grupo:', codigoGrupo);
+  // PASO 2: Extraer código del grupo (G41, G42, etc o GC1, GS1, etc)
+  let codigoGrupo = null;
+  
+  // Intentar extraer de formato "Grupo 42 - ..." → "G42"
+  const match = grupoClinicaEncontrado.match(/Grupo (\d+)/);
+  if (match) {
+    codigoGrupo = 'G' + match[1];
+  } else {
+    // Para GC1, GC2, GS1, etc
+    const matchGX = grupoClinicaEncontrado.match(/(G[CSA]\d+)/);
+    if (matchGX) {
+      codigoGrupo = matchGX[1];
+    }
+  }
+  
+  console.log('   Código grupo extraído:', codigoGrupo);
+  
+  if (!codigoGrupo) {
+    console.error('❌ No se pudo extraer código del grupo:', grupoClinicaEncontrado);
+    return { planesDisponibles: [] };
+  }
   
   // PASO 3: Filtrar planes que cubren este grupo
   const planesQueCubren = PLANES.filter(plan => {
