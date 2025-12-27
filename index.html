@@ -625,6 +625,18 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
     `;
   }
   
+  // CONSULTA PREFERENTE O LIBRE ELECCIÓN
+  let consultaHTML = '';
+  if (plan.consulta) {
+    const consultaTipo = plan.consulta.tipo === 'preferente' ? 'Consulta Preferente Ambulatoria' : 'Consulta Libre Elección';
+    consultaHTML = `
+      <div class="coberturas-section">
+        <div class="coberturas-title">🏥 ${consultaTipo}</div>
+        <div class="coberturas-texto">${plan.consulta.valor}</div>
+      </div>
+    `;
+  }
+  
   let clinicasHTML = '';
   clinicasHTML = generarHTMLClinicas(plan, numero);
   
@@ -634,7 +646,7 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
       
       <div class="plan-nombre-container">
         <span class="plan-nombre-estrella">★</span>
-        <span class="plan-nombre">${plan.plan}</span>
+        <span class="plan-nombre">${plan.plan} <span style="font-size: 0.8rem; color: #aaa;">(${plan.codigo})</span></span>
         <span class="plan-nombre-estrella">★</span>
       </div>
       
@@ -660,6 +672,7 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
       </div>
       
       ${coberturasHTML}
+      ${consultaHTML}
       ${clinicasHTML}
     </div>
   `;
