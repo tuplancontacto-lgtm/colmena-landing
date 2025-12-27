@@ -1979,10 +1979,23 @@ function generarResultadoBusquedaClinicaNew(clinica, grupo, planes) {
 }
 
 function inicializarBusquedaClinica() {
-  const btnBuscar = document.getElementById("btnBuscarClinica");
-  if (btnBuscar) {
-    btnBuscar.addEventListener('click', manejarBusquedaClinica);
-  }
+  console.log('🔧 Inicializando búsqueda por clínica...');
+  
+  // Esperar a que el DOM esté completamente cargado
+  setTimeout(() => {
+    const btnBuscar = document.getElementById("btnBuscarClinica");
+    console.log('Buscando btnBuscarClinica:', btnBuscar);
+    
+    if (btnBuscar) {
+      console.log('✅ Agregando event listener a btnBuscar');
+      btnBuscar.addEventListener('click', function(e) {
+        console.log('🔍 BOTÓN PRESIONADO');
+        manejarBusquedaClinica();
+      });
+    } else {
+      console.error('❌ btnBuscarClinica NO ENCONTRADO');
+    }
+  }, 500);
   
   // Botón del formulario principal
   const btnBuscarFormulario = document.getElementById("btnBuscarClinicaFormulario");
@@ -2066,6 +2079,11 @@ window.addEventListener("load", () => {
   cargarUF();
   cargarPlanes();
   cargarRedesClincias();
+  
+  // Inicializar búsqueda por clínica
+  setTimeout(() => {
+    inicializarBusquedaClinica();
+  }, 1000);
 });
 </script>
 
