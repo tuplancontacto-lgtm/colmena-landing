@@ -1893,9 +1893,17 @@ function manejarBusquedaClinica() {
   }
   
   const nombreClinica = inputClinica.value.trim();
+  console.log('📋 Llamando obtenerPlanesConClinica con:', nombreClinica);
   const resultado = obtenerPlanesConClinica(nombreClinica);
+  console.log('Resultado:', resultado);
   
-  if (!resultado || resultado.planesDisponibles.length === 0) {
+  if (!resultado) {
+    console.error('❌ obtenerPlanesConClinica retornó undefined');
+    alert('Error: No se pudo procesar la búsqueda');
+    return;
+  }
+  
+  if (!resultado.planesDisponibles || resultado.planesDisponibles.length === 0) {
     alert(`❌ No encontramos la clínica "${nombreClinica}" o no está disponible en nuestros planes.`);
     return;
   }
