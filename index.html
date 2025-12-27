@@ -371,7 +371,7 @@ const REFERIDOS_FIELDS = {
   asesorid_referidos: "entry.683967436"
 };
 
-const URL_PLANES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/planes_completos.json';
+const URL_PLANES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/planes.json';
 const URL_REDES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/redes_clinicas.json';
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -379,37 +379,66 @@ const URL_REDES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena
 // ════════════════════════════════════════════════════════════════════════════
 
 const GRUPOS_GX = {
-  "Grupo 46 - GX Premium": [
-    { nombre: "CLÍNICA ALEMANA", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA LAS CONDES", ciudad: "SANTIAGO" },
-    { nombre: "TODOS LOS NO INCLUIDOS EN OTROS GRUPOS", ciudad: "NACIONAL" }
-  ],
-  "Grupo 45 - GX Plus": [
-    { nombre: "CLÍNICA SAN CARLOS APOQUINDO", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA UNIVERSIDAD CATÓLICA", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA UNIVERSIDAD DE LOS ANDES", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA MEDS", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA SANTA MARÍA", ciudad: "SANTIAGO" }
-  ],
-  "Grupo 44 - GX Red": [
-    { nombre: "CLÍNICA REDSALUD VITACURA", ciudad: "SANTIAGO" }
+  "Grupo 41 - GX Preferente": [
+    { nombre: "CLÍNICA JUAN PABLO II", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "CLÍNICA SIERRA BELLA", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "HOSPITAL DEL PROFESOR", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "CENTROS MÉDICOS REDSALUD", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "CENTROS MÉDICOS VIDAINTEGRA", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "CLÍNICA BUPA SANTIAGO", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "HOSPITAL CLÍNICO UNIVERSIDAD DE CHILE", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "CLÍNICA CORDILLERA", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "CLÍNICA INDISA", ciudad: "SANTIAGO", region: "Región Metropolitana" }
   ],
   "Grupo 42 - GX Ampliada": [
-    { nombre: "CLÍNICA DÁVILA RECOLETA", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA REDSALUD PROVIDENCIA", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA REDSALUD SANTIAGO", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA DÁVILA VESPUCIO", ciudad: "SANTIAGO" },
-    { nombre: "CLÍNICA SAN JOSE", ciudad: "ARICA" },
-    { nombre: "CLÍNICA REDSALUD IQUIQUE", ciudad: "IQUIQUE" },
-    { nombre: "CLÍNICA EL LOA", ciudad: "CALAMA" },
-    { nombre: "CLÍNICA PORTADA", ciudad: "ANTOFAGASTA" },
-    { nombre: "CLÍNICA CUMBRES DEL NORTE", ciudad: "ANTOFAGASTA" },
-    { nombre: "HOSPITAL MILITAR DEL NORTE", ciudad: "ANTOFAGASTA" },
-    { nombre: "CLÍNICA RCR ATACAMA", ciudad: "COPIAPÓ" },
-    { nombre: "CLÍNICA REDSALUD ELQUI", ciudad: "LA SERENA" },
-    { nombre: "HOSPITAL CLÍNICO DE VIÑA DEL MAR", ciudad: "VIÑA DEL MAR" },
-    { nombre: "HOSPITAL NAVAL ALMIRANTE NEF", ciudad: "VIÑA DEL MAR" },
-    { nombre: "CLÍNICA REDSALUD VALPARAISO", ciudad: "VALPARAISO" }
+    { nombre: "CLÍNICA DÁVILA RECOLETA", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "CLÍNICA REDSALUD PROVIDENCIA", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "CLÍNICA REDSALUD SANTIAGO", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "CLÍNICA DÁVILA VESPUCIO", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "CLÍNICA SAN JOSE", ciudad: "ARICA", region: "Región de Arica y Parinacota" },
+    { nombre: "CLÍNICA REDSALUD IQUIQUE", ciudad: "IQUIQUE", region: "Región de Tarapacá" },
+    { nombre: "CLÍNICA EL LOA", ciudad: "CALAMA", region: "Región de Antofagasta" },
+    { nombre: "CLÍNICA PORTADA", ciudad: "ANTOFAGASTA", region: "Región de Antofagasta" },
+    { nombre: "CLÍNICA CUMBRES DEL NORTE", ciudad: "ANTOFAGASTA", region: "Región de Antofagasta" },
+    { nombre: "HOSPITAL MILITAR DEL NORTE", ciudad: "ANTOFAGASTA", region: "Región de Antofagasta" },
+    { nombre: "CLÍNICA RCR ATACAMA", ciudad: "COPIAPÓ", region: "Región de Atacama" },
+    { nombre: "CLÍNICA REDSALUD ELQUI", ciudad: "LA SERENA", region: "Región de Coquimbo" },
+    { nombre: "HOSPITAL CLÍNICO DE VIÑA DEL MAR", ciudad: "VIÑA DEL MAR", region: "Región de Valparaíso" },
+    { nombre: "HOSPITAL NAVAL ALMIRANTE NEF", ciudad: "VIÑA DEL MAR", region: "Región de Valparaíso" },
+    { nombre: "CLÍNICA REDSALUD VALPARAISO", ciudad: "VALPARAISO", region: "Región de Valparaíso" },
+    { nombre: "CLÍNICA BUPA ANTOFAGASTA", ciudad: "ANTOFAGASTA", region: "Región de Antofagasta" },
+    { nombre: "CLÍNICA BUPA REÑACA", ciudad: "VIÑA DEL MAR", region: "Región de Valparaíso" },
+    { nombre: "CLÍNICA SANATORIO ALEMÁN", ciudad: "CONCEPCIÓN", region: "Región del Bío-Bío" },
+    { nombre: "CLÍNICA LOS ANDES", ciudad: "LOS ANGELES", region: "Región del Bío-Bío" },
+    { nombre: "CLÍNICA ALEMANA DE TEMUCO", ciudad: "TEMUCO", region: "Región de La Araucanía" },
+    { nombre: "CLÍNICA ALEMANA DE VALDIVIA", ciudad: "VALDIVIA", region: "Región de Los Ríos" },
+    { nombre: "CLÍNICA ALEMANA DE OSORNO", ciudad: "OSORNO", region: "Región de Los Rios" }
+  ],
+  "Grupo 44 - GX Red": [
+    { nombre: "CLÍNICA REDSALUD VITACURA", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "HOSPITAL CLÍNICO UNIVERSIDAD CATÓLICA", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "FUNDACIÓN ARTURO LOPEZ PEREZ", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "HOSPITAL CLÍNICO DE LA FUERZA AÉREA DE CHILE", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "CLÍNICA INDISA", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "CLÍNICA BUPA ANTOFAGASTA", ciudad: "ANTOFAGASTA", region: "Región de Antofagasta" },
+    { nombre: "CLÍNICA BUPA REÑACA", ciudad: "VIÑA DEL MAR", region: "Región de Valparaíso" },
+    { nombre: "CLÍNICA SANATORIO ALEMÁN", ciudad: "CONCEPCIÓN", region: "Región del Bío-Bío" },
+    { nombre: "CLÍNICA LOS ANDES", ciudad: "LOS ANGELES", region: "Región del Bío-Bío" },
+    { nombre: "CLÍNICA ALEMANA DE TEMUCO", ciudad: "TEMUCO", region: "Región de La Araucanía" },
+    { nombre: "CLÍNICA ALEMANA DE VALDIVIA", ciudad: "VALDIVIA", region: "Región de Los Ríos" },
+    { nombre: "CLÍNICA ALEMANA DE OSORNO", ciudad: "OSORNO", region: "Región de Los Rios" },
+    { nombre: "HOSPITAL DEL PROFESOR", ciudad: "SANTIAGO", region: "Región Metropolitana" }
+  ],
+  "Grupo 45 - GX Plus": [
+    { nombre: "CLÍNICA SAN CARLOS APOQUINDO", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "CLÍNICA UNIVERSIDAD CATÓLICA", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "CLÍNICA UNIVERSIDAD DE LOS ANDES", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "CLÍNICA MEDS", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "CLÍNICA SANTA MARÍA", ciudad: "SANTIAGO", region: "Región Metropolitana" }
+  ],
+  "Grupo 46 - GX Premium": [
+    { nombre: "CLÍNICA ALEMANA", ciudad: "SANTIAGO", region: "Región Metropolitana" },
+    { nombre: "CLÍNICA LAS CONDES", ciudad: "SANTIAGO", region: "Región Metropolitana" }
   ]
 };
 
@@ -685,22 +714,12 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   GENERAR HTML DE CLÍNICAS - 3 FORMATOS
 =========================================================*/
 function generarHTMLClinicas(plan, numeroPlan) {
-  // PRIORIDAD 1: coberturas_redes (% por grupo) - Mostrar SOLO esto, no combinar
+  // PRIORIDAD 1: coberturas_redes (% por grupo) - Mostrar SOLO esto
   if (plan.coberturas_redes && Object.keys(plan.coberturas_redes).length > 0) {
     return generarHTMLGruposGX(plan, numeroPlan);
   }
   
-  // PRIORIDAD 2: hospitalizacion con %GXX=NN% - Mostrar SOLO esto, no combinar
-  if (plan.hospitalizacion && plan.hospitalizacion.includes('%G')) {
-    return generarHTMLGruposDesdeHospitalizacion(plan, numeroPlan);
-  }
-  
-  // PRIORIDAD 3: texto_completo con regex - Mostrar SOLO esto, no combinar
-  if (plan.texto_completo) {
-    return generarHTMLDesdeTextoCompleto(plan, numeroPlan);
-  }
-  
-  // PRIORIDAD 4: hospitalizacion con clínicas (SOLO si no cumple 1-3)
+  // PRIORIDAD 2: hospitalizacion con clínicas (SOLO si NO tiene coberturas_redes)
   if (plan.hospitalizacion) {
     return generarHTMLClinicasDesdeHospitalizacion(plan, numeroPlan);
   }
