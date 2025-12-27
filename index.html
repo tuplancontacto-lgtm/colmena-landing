@@ -1196,10 +1196,11 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
 
     fetch(FORM_BASE_URL, { 
       method: "POST", 
-      mode: "no-cors", 
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: params.toString()
-    }).catch(() => {});
+    })
+    .then(r => console.log('✅ Datos enviados a Planes Sheet'))
+    .catch(err => console.error('⚠️ Error enviando a Planes:', err));
 
     statusMsg.textContent = "✅ Datos enviados correctamente";
     statusMsg.className = "small success-msg";
@@ -1572,7 +1573,7 @@ document.getElementById("formReferidos").addEventListener("submit", async functi
   f.append(REFERIDOS_FIELDS.asesorid_referidos, asesorKey);
 
   try {
-    await fetch(GOOGLE_FORM_REFERIDOS_URL, { method: "POST", mode: "no-cors", body: f });
+    await fetch(GOOGLE_FORM_REFERIDOS_URL, { method: "POST", body: f });
     document.getElementById("mensajeExitoReferido").style.display = "block";
     document.getElementById("mensajeErrorReferido").style.display = "none";
 
@@ -1640,8 +1641,12 @@ function buscarClinicaEnRedes(nombreClinica) {
 // ════════════════════════════════════════════════════════════════════════════
 
 function obtenerPlanesConClinica(nombreClinica) {
+  console.log('📋 obtenerPlanesConClinica llamada con:', nombreClinica);
+  console.log('PLANES disponibles:', PLANES ? PLANES.length : 0);
+  console.log('GRUPOS_GX disponibles:', Object.keys(GRUPOS_GX).length);
+  
   if (!PLANES || PLANES.length === 0) {
-    console.warn('No hay planes cargados');
+    console.warn('❌ No hay planes cargados');
     return [];
   }
   
@@ -1877,7 +1882,6 @@ ${r.montoAdicional ? `- Aporte adicional: $${formatearCLP(r.montoAdicional)}
 
     fetch(FORM_BASE_URL, { 
       method: "POST", 
-      mode: "no-cors", 
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: sheetParams.toString()
     }).catch(() => {});
@@ -1891,12 +1895,17 @@ ${r.montoAdicional ? `- Aporte adicional: $${formatearCLP(r.montoAdicional)}
 }
 
 function manejarBusquedaClinica() {
+  console.log('🔍 manejarBusquedaClinica EJECUTADA');
   const inputClinica = document.getElementById("inputBuscadorClinica");
+  console.log('inputClinica:', inputClinica);
+  console.log('ultimoResultado:', ultimoResultado);
   
   if (!inputClinica || !inputClinica.value.trim()) {
     alert("Por favor ingresa el nombre de una clínica.");
     return;
   }
+  
+  console.log('Búsqueda iniciada para:', inputClinica.value);
   
   if (!ultimoResultado) {
     alert("Primero debes realizar una cotización de planes.");
