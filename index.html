@@ -1647,7 +1647,7 @@ function obtenerPlanesConClinica(nombreClinica) {
   
   if (!PLANES || PLANES.length === 0) {
     console.warn('❌ No hay planes cargados');
-    return [];
+    return { planesDisponibles: [] };
   }
   
   const uf = window.__UF_VALOR || 39700;
@@ -1662,26 +1662,31 @@ function obtenerPlanesConClinica(nombreClinica) {
     if (clinica) {
       grupoClinicaEncontrado = grupoNombre;
       clinicaEncontrada = clinica;
+      console.log('✅ Clínica encontrada:', clinicaEncontrada.nombre, 'en', grupoClinicaEncontrado);
       break;
     }
   }
   
   if (!clinicaEncontrada) {
-    return [];
+    console.warn('❌ Clínica no encontrada');
+    return { planesDisponibles: [] };
   }
   
   // Filtrar planes que incluyen este grupo
   const planesQueCubren = PLANES.filter(plan => {
-    // Verificar si el plan tiene acceso a este grupo
-    return plan.coberturas_redes && plan.coberturas_redes[grupoClinicaEncontrado];
+    return plan.coberturas_redes && plan.coberturas_redes[grupoClinicaEncontrado.substring(7)];
   });
   
+  console.log('Planes que cubren:', planesQueCubren.length);
+  
   if (planesQueCubren.length === 0) {
-    return [];
+    console.warn('❌ No hay planes que cubran esta clínica');
+    return { planesDisponibles: [] };
   }
   
-  // Calcular valor de cada plan y agregar cobertura del grupo
+  // Calcular valor de cada plan
   const planesConValor = planesQueCubren.map(plan => {
+    const codigoGrupo = grupoClinicaEncontrado.substring(7);
     const calc = calcularValorPlan(plan.pb_uf, ultimoResultado.edadTitular, ultimoResultado.edadesCargas);
     return {
       ...plan,
@@ -1689,23 +1694,22 @@ function obtenerPlanesConClinica(nombreClinica) {
       valorCalculadoCLP: calc.totalCLP,
       gesUF: calc.gesUF,
       gesCLP: calc.gesCLP,
-      coberturaGrupo: plan.coberturas_redes[grupoClinicaEncontrado],
+      coberturaGrupo: plan.coberturas_redes[codigoGrupo],
       grupoClinica: grupoClinicaEncontrado
     };
   });
   
-  // Ordenar por distancia al 7% (más cercanos primero)
+  // Ordenar por distancia al 7%
   planesConValor.sort((a, b) => 
     Math.abs(a.valorCalculadoUF - sieteUF) - Math.abs(b.valorCalculadoUF - sieteUF)
   );
   
-  // Obtener máximo 4 planes y asegurar que tengan % de cobertura DIFERENTES
+  // Obtener máximo 4 planes con % diferentes
   const planesFinales = [];
   const coberturaUsadas = new Set();
   
   for (const plan of planesConValor) {
     if (planesFinales.length >= 4) break;
-    
     const cobertura = plan.coberturaGrupo;
     if (!coberturaUsadas.has(cobertura)) {
       coberturaUsadas.add(cobertura);
@@ -1713,7 +1717,7 @@ function obtenerPlanesConClinica(nombreClinica) {
     }
   }
   
-  // Si no tenemos 4 y hay más planes, agregar aunque tengan cobertura igual (hasta 4 total)
+  // Si no tenemos 4 y hay más, agregar igual
   if (planesFinales.length < 4) {
     for (const plan of planesConValor) {
       if (planesFinales.length >= 4) break;
@@ -1723,12 +1727,14 @@ function obtenerPlanesConClinica(nombreClinica) {
     }
   }
   
+  console.log('✅ Planes filtrados:', planesFinales.length);
+  
   return {
     clinicaEncontrada,
     grupoClinica: grupoClinicaEncontrado,
     planesDisponibles: planesFinales.slice(0, 4)
   };
-}
+}}
 
 function generarResultadoBusquedaClinica(clinicaEncontrada, grupoRed, planesDisponibles) {
   const uf = window.__UF_VALOR || 39700;
