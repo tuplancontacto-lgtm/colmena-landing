@@ -535,16 +535,10 @@ async function cargarPlanes() {
 }
 
 async function cargarRedesClincias() {
-  try {
-    const r = await fetch(URL_REDES);
-    if (!r.ok) throw new Error('No disponible');
-    REDES_CLINICAS = await r.json();
-    console.log('✅ Redes de clínicas cargadas desde GitHub');
-  } catch (err) {
-    console.log('⚠️ GitHub no disponible, usando redes locales');
-    REDES_CLINICAS = REDES_DATA;
-    console.log('✅ Redes de clínicas cargadas localmente:', Object.keys(REDES_DATA).length, 'grupos');
-  }
+  // Usar SIEMPRE datos locales para redes (GitHub no disponible)
+  console.log('📍 Usando datos locales de redes');
+  REDES_CLINICAS = REDES_DATA;
+  console.log('✅ Redes de clínicas cargadas:', Object.keys(REDES_CLINICAS).length, 'grupos');
 }
 
 /*========================================================
