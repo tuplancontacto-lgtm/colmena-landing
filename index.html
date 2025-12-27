@@ -523,13 +523,11 @@ async function cargarUF() {
 
 async function cargarPlanes() {
   try {
-    // Intentar cargar desde GitHub
     const r = await fetch(URL_PLANES);
     const data = await r.json();
     PLANES = data.planes || data;
     console.log('✅ Planes cargados desde GitHub:', PLANES.length);
   } catch (err) {
-    // Si falla, usar datos locales
     console.log('⚠️ GitHub no disponible, usando datos locales');
     PLANES = PLANES_DATA;
     console.log('✅ Planes cargados localmente:', PLANES.length);
@@ -538,15 +536,13 @@ async function cargarPlanes() {
 
 async function cargarRedesClincias() {
   try {
-    // Intentar cargar desde GitHub
     const r = await fetch(URL_REDES);
     REDES_CLINICAS = await r.json();
     console.log('✅ Redes de clínicas cargadas desde GitHub');
   } catch (err) {
-    // Si falla, usar datos locales
     console.log('⚠️ GitHub no disponible, usando redes locales');
     REDES_CLINICAS = REDES_DATA;
-    console.log('✅ Redes de clínicas cargadas localmente:', Object.keys(REDES_CLINICAS).length);
+    console.log('✅ Redes de clínicas cargadas localmente');
   }
 }
 
@@ -1198,9 +1194,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
       method: "POST", 
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: params.toString()
-    })
-    .then(r => console.log('✅ Datos enviados a Planes Sheet'))
-    .catch(err => console.error('⚠️ Error enviando a Planes:', err));
+    }).catch(() => {});
 
     statusMsg.textContent = "✅ Datos enviados correctamente";
     statusMsg.className = "small success-msg";
@@ -1641,13 +1635,9 @@ function buscarClinicaEnRedes(nombreClinica) {
 // ════════════════════════════════════════════════════════════════════════════
 
 function obtenerPlanesConClinica(nombreClinica) {
-  console.log('📋 obtenerPlanesConClinica llamada con:', nombreClinica);
-  console.log('PLANES disponibles:', PLANES ? PLANES.length : 0);
-  console.log('GRUPOS_GX disponibles:', Object.keys(GRUPOS_GX).length);
-  
   if (!PLANES || PLANES.length === 0) {
-    console.warn('❌ No hay planes cargados');
-    return { planesDisponibles: [] };
+    console.warn('No hay planes cargados');
+    return [];
   }
   
   const uf = window.__UF_VALOR || 39700;
@@ -1662,31 +1652,26 @@ function obtenerPlanesConClinica(nombreClinica) {
     if (clinica) {
       grupoClinicaEncontrado = grupoNombre;
       clinicaEncontrada = clinica;
-      console.log('✅ Clínica encontrada:', clinicaEncontrada.nombre, 'en', grupoClinicaEncontrado);
       break;
     }
   }
   
   if (!clinicaEncontrada) {
-    console.warn('❌ Clínica no encontrada');
-    return { planesDisponibles: [] };
+    return [];
   }
   
   // Filtrar planes que incluyen este grupo
   const planesQueCubren = PLANES.filter(plan => {
-    return plan.coberturas_redes && plan.coberturas_redes[grupoClinicaEncontrado.substring(7)];
+    // Verificar si el plan tiene acceso a este grupo
+    return plan.coberturas_redes && plan.coberturas_redes[grupoClinicaEncontrado];
   });
   
-  console.log('Planes que cubren:', planesQueCubren.length);
-  
   if (planesQueCubren.length === 0) {
-    console.warn('❌ No hay planes que cubran esta clínica');
-    return { planesDisponibles: [] };
+    return [];
   }
   
-  // Calcular valor de cada plan
+  // Calcular valor de cada plan y agregar cobertura del grupo
   const planesConValor = planesQueCubren.map(plan => {
-    const codigoGrupo = grupoClinicaEncontrado.substring(7);
     const calc = calcularValorPlan(plan.pb_uf, ultimoResultado.edadTitular, ultimoResultado.edadesCargas);
     return {
       ...plan,
@@ -1694,22 +1679,23 @@ function obtenerPlanesConClinica(nombreClinica) {
       valorCalculadoCLP: calc.totalCLP,
       gesUF: calc.gesUF,
       gesCLP: calc.gesCLP,
-      coberturaGrupo: plan.coberturas_redes[codigoGrupo],
+      coberturaGrupo: plan.coberturas_redes[grupoClinicaEncontrado],
       grupoClinica: grupoClinicaEncontrado
     };
   });
   
-  // Ordenar por distancia al 7%
+  // Ordenar por distancia al 7% (más cercanos primero)
   planesConValor.sort((a, b) => 
     Math.abs(a.valorCalculadoUF - sieteUF) - Math.abs(b.valorCalculadoUF - sieteUF)
   );
   
-  // Obtener máximo 4 planes con % diferentes
+  // Obtener máximo 4 planes y asegurar que tengan % de cobertura DIFERENTES
   const planesFinales = [];
   const coberturaUsadas = new Set();
   
   for (const plan of planesConValor) {
     if (planesFinales.length >= 4) break;
+    
     const cobertura = plan.coberturaGrupo;
     if (!coberturaUsadas.has(cobertura)) {
       coberturaUsadas.add(cobertura);
@@ -1717,7 +1703,7 @@ function obtenerPlanesConClinica(nombreClinica) {
     }
   }
   
-  // Si no tenemos 4 y hay más, agregar igual
+  // Si no tenemos 4 y hay más planes, agregar aunque tengan cobertura igual (hasta 4 total)
   if (planesFinales.length < 4) {
     for (const plan of planesConValor) {
       if (planesFinales.length >= 4) break;
@@ -1727,14 +1713,12 @@ function obtenerPlanesConClinica(nombreClinica) {
     }
   }
   
-  console.log('✅ Planes filtrados:', planesFinales.length);
-  
   return {
     clinicaEncontrada,
     grupoClinica: grupoClinicaEncontrado,
     planesDisponibles: planesFinales.slice(0, 4)
   };
-}}
+}
 
 function generarResultadoBusquedaClinica(clinicaEncontrada, grupoRed, planesDisponibles) {
   const uf = window.__UF_VALOR || 39700;
@@ -1901,17 +1885,12 @@ ${r.montoAdicional ? `- Aporte adicional: $${formatearCLP(r.montoAdicional)}
 }
 
 function manejarBusquedaClinica() {
-  console.log('🔍 manejarBusquedaClinica EJECUTADA');
   const inputClinica = document.getElementById("inputBuscadorClinica");
-  console.log('inputClinica:', inputClinica);
-  console.log('ultimoResultado:', ultimoResultado);
   
   if (!inputClinica || !inputClinica.value.trim()) {
     alert("Por favor ingresa el nombre de una clínica.");
     return;
   }
-  
-  console.log('Búsqueda iniciada para:', inputClinica.value);
   
   if (!ultimoResultado) {
     alert("Primero debes realizar una cotización de planes.");
