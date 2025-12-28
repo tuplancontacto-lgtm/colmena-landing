@@ -210,7 +210,7 @@
   <div id="resultadoDetalle"></div>
   <div style="text-align:center;margin-top:30px; display:flex; gap:15px; flex-wrap:wrap; justify-content:center;">
     <button id="btnAsesoria" class="btn-asesoria">📋 Solicitar Asesoría</button>
-    <button id="btnBuscarClinicaDesdeResultados" class="btn-buscar-clinica">🏥 Buscar por Clínica</button>
+    <button id="btnBuscarClinicaDesdeResultados" class="btn-buscar-clinica" onclick="window.location.href='buscar_clinica.html'">🏥 Buscar por Clínica Favorita</button>
   </div>
   <p class="small" style="margin-top:10px; text-align:center;">Selecciona una opción para continuar.</p>
   <div style="text-align:center;margin-top:20px;">
@@ -1579,12 +1579,11 @@ ${textoAdicional}
 /*========================================================
   BOTÓN BUSCAR POR CLÍNICA DESDE RESULTADOS
 =========================================================*/
-document.getElementById("btnBuscarClinicaDesdeResultados").addEventListener("click", function() {
-  // Mostrar sección de búsqueda por clínica sin requerir cotización adicional
-  document.getElementById("seccionBusquedaClinica").style.display = "block";
-  document.getElementById("inputBuscadorClinica").focus();
-  setTimeout(() => {
-    document.getElementById("seccionBusquedaClinica").scrollIntoView({ behavior: "smooth" });
+if (document.getElementById("btnBuscarClinicaDesdeResultados")) {
+  document.getElementById("btnBuscarClinicaDesdeResultados").addEventListener("click", function() {
+    window.location.href = 'buscar_clinica.html';
+  });
+}
   }, 100);
 });
 
