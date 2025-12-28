@@ -289,1403 +289,781 @@
 </footer>
 
 <script>
-  /*========================================================
-  SISTEMA DE ASESORES MULTI-URL
-=========================================================*/
-const ASESORES = {
-  jose_pepe: {
-    nombre: "José Pepe",
-    telefono: "+56990701837",
-    whatsapp: "56990701837",
-    callmebot_apikey: "5088331",
-    correo: "voz.josemora@gmail.com"
-  },
-  betty: {
-    nombre: "Betty González",
-    telefono: "+56983899232",
-    whatsapp: "56983899232",
-    callmebot_apikey: "PENDIENTE",
-    correo: "betty.gonzalez@colmena.cl"
-  },
-  jose_mora: {
-    nombre: "José Mora",
-    telefono: "+56975356696",
-    whatsapp: "56975356696",
-    callmebot_apikey: "7360481",
-    correo: "jose.mora@colmena.cl"
+  const ASESORES = {
+    jose_pepe: {
+      nombre: "José Pepe",
+      telefono: "+56990701837",
+      whatsapp: "56990701837",
+      callmebot_apikey: "5088331",
+      correo: "voz.josemora@gmail.com"
+    },
+    betty: {
+      nombre: "Betty González",
+      telefono: "+56983899232",
+      whatsapp: "56983899232",
+      callmebot_apikey: "PENDIENTE",
+      correo: "betty.gonzalez@colmena.cl"
+    },
+    jose_mora: {
+      nombre: "José Mora",
+      telefono: "+56975356696",
+      whatsapp: "56975356696",
+      callmebot_apikey: "7360481",
+      correo: "jose.mora@colmena.cl"
+    }
+  };
+
+  function getQueryParam(param) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(param);
   }
-};
 
-function getQueryParam(param) {
-  const params = new URLSearchParams(window.location.search);
-  return params.get(param);
-}
+  const asesorKey = getQueryParam("asesor") || "jose_mora";
+  const asesor = ASESORES[asesorKey] || ASESORES["jose_mora"];
 
-const asesorKey = getQueryParam("asesor") || "jose_mora";
-const asesor = ASESORES[asesorKey] || ASESORES["jose_mora"];
+  const WHATSAPP_ASESORIA = asesor.whatsapp;
+  const CALLMEBOT_PHONE = asesor.whatsapp;
+  const CALLMEBOT_APIKEY = asesor.callmebot_apikey;
+  const ASESOR_NOMBRE = asesor.nombre;
+  const ASESOR_TELEFONO = asesor.telefono;
+  const ASESOR_CORREO = asesor.correo;
 
-const WHATSAPP_ASESORIA = asesor.whatsapp;
-const CALLMEBOT_PHONE = asesor.whatsapp;
-const CALLMEBOT_APIKEY = asesor.callmebot_apikey;
-const ASESOR_NOMBRE = asesor.nombre;
-const ASESOR_TELEFONO = asesor.telefono;
-const ASESOR_CORREO = asesor.correo;
+  window.addEventListener("DOMContentLoaded", function() {
+    const btnWA = document.getElementById("btnWAAsesor");
+    if (btnWA) {
+      btnWA.href = `https://wa.me/${WHATSAPP_ASESORIA}`;
+      btnWA.innerText = `Contactar a ${ASESOR_NOMBRE} por WhatsApp`;
+    }
+  });
 
-window.addEventListener("DOMContentLoaded", function() {
-  const btnWA = document.getElementById("btnWAAsesor");
-  if (btnWA) {
-    btnWA.href = `https://wa.me/${WHATSAPP_ASESORIA}`;
-    btnWA.innerText = `Contactar a ${ASESOR_NOMBRE} por WhatsApp`;
+  const FORM_BASE_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/formResponse';
+
+  const FORM_FIELDS = {
+    nombre: 'entry.1455181501',
+    rut: 'entry.1514828805',
+    correo: 'entry.1253669566',
+    telefono: 'entry.1927631596',
+    edad: 'entry.1515225692',
+    isapre: 'entry.1312575017',
+    renta: 'entry.1350273122',
+    region: 'entry.1283417188',
+    cargas: 'entry.6457415',
+    mensaje: 'entry.860152674',
+    plan1: 'entry.1176082335',
+    plan2: 'entry.1798986413',
+    asesorid: 'entry.1496988494'
+  };
+
+  const GOOGLE_FORM_REFERIDOS_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeIppjYB0Vgc6RsJ3AM0HcAVhLaxAT6ZZ_MxdPhmuwRkwLT-A/formResponse';
+
+  const REFERIDOS_FIELDS = {
+    tu_nombre: "entry.1664559901",
+    nombre_referido: "entry.715463265",
+    telefono_referido: "entry.1382714918",
+    correo_referido: "entry.897178414",
+    mensaje_adicional: "entry.178502788",
+    asesorid_referidos: "entry.683967436"
+  };
+
+  const URL_PLANES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/planes.json';
+  const URL_REDES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/redes_clinicas.json';
+
+  const GRUPOS_GX = {
+    "Grupo 46 - GX Premium": [
+      { "nombre": "CLÍNICA ALEMANA", "ciudad": "SANTIAGO", "region": "Región Metropolitana" },
+      { "nombre": "CLÍNICA LAS CONDES", "ciudad": "SANTIAGO", "region": "Región Metropolitana" }
+    ],
+    "Grupo 45 - GX Plus": [
+      { "nombre": "CLÍNICA SAN CARLOS APOQUINDO", "ciudad": "SANTIAGO", "region": "Región Metropolitana" },
+      { "nombre": "CLÍNICA UNIVERSIDAD CATÓLICA", "ciudad": "SANTIAGO", "region": "Región Metropolitana" },
+      { "nombre": "CLÍNICA UNIVERSIDAD DE LOS ANDES", "ciudad": "SANTIAGO", "region": "Región Metropolitana" },
+      { "nombre": "CLÍNICA MEDS", "ciudad": "SANTIAGO", "region": "Región Metropolitana" },
+      { "nombre": "CLÍNICA SANTA MARÍA", "ciudad": "SANTIAGO", "region": "Región Metropolitana" }
+    ],
+    "Grupo 44 - GX Red": [
+      { "nombre": "CLÍNICA REDSALUD VITACURA", "ciudad": "SANTIAGO", "region": "Región Metropolitana" },
+      { "nombre": "HOSPITAL CLÍNICO UNIVERSIDAD CATÓLICA", "ciudad": "SANTIAGO", "region": "Región Metropolitana" },
+      { "nombre": "FUNDACIÓN ARTURO LOPEZ PEREZ", "ciudad": "SANTIAGO", "region": "Región Metropolitana" },
+      { "nombre": "HOSPITAL CLÍNICO DE LA FUERZA AÉREA DE CHILE", "ciudad": "SANTIAGO", "region": "Región Metropolitana" },
+      { "nombre": "CLÍNICA INDISA", "ciudad": "SANTIAGO", "region": "Región Metropolitana" }
+    ],
+    "Grupo 43 - GX Red": [
+      { "nombre": "HOSPITAL DEL NIÑO", "ciudad": "VIÑA DEL MAR", "region": "Región de Valparaíso" },
+      { "nombre": "CLÍNICA CHILLAN", "ciudad": "CHILLAN", "region": "Región de Ñuble" },
+      { "nombre": "CLÍNICA BÍO BÍO", "ciudad": "CONCEPCIÓN", "region": "Región del Bío-Bío" }
+    ],
+    "Grupo 42 - GX Ampliada": [
+      { "nombre": "CLÍNICA DÁVILA RECOLETA", "ciudad": "SANTIAGO", "region": "Región Metropolitana" },
+      { "nombre": "CLÍNICA REDSALUD PROVIDENCIA", "ciudad": "SANTIAGO", "region": "Región Metropolitana" }
+    ],
+    "Grupo 41 - GX Preferente": [
+      { "nombre": "CLÍNICA JUAN PABLO II", "ciudad": "SANTIAGO", "region": "Región Metropolitana" },
+      { "nombre": "CLÍNICA SIERRA BELLA", "ciudad": "SANTIAGO", "region": "Región Metropolitana" }
+    ]
+  };
+
+  const PLANES_DATA = [
+    {"plan": "COLMENA MAX 2245050", "codigo": 10101, "pb_uf": 2.22, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 60, "G42": 50, "G43": 40, "G44": 30, "G45": 25, "G46": 25}, "tope_anual_uf": 7000, "hospitalizacion": "%G41=60%  %G42 =50%  %G43=40% %G44=30%  %G45=25%  %G46=25%", "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,50 UF)"}},
+    {"plan": "COLMENA MAX 2246050", "codigo": 10102, "pb_uf": 2.3, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 70, "G42": 60, "G43": 50, "G44": 40, "G45": 30, "G46": 30}, "tope_anual_uf": 7000, "hospitalizacion": "%G41=70%  %G42 =60%  %G43=50% %G44=40%  %G45=30%  %G46=30%", "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,55 UF)"}},
+    {"plan": "COLMENA MAX 2246060", "codigo": 10103, "pb_uf": 2.4, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 70, "G42": 60, "G43": 50, "G44": 40, "G45": 30, "G46": 30}, "tope_anual_uf": 7000, "hospitalizacion": "%G41=70%  %G42 =60%  %G43=50% %G44=40%  %G45=30%  %G46=30%", "consulta": {"tipo": "libre_eleccion", "valor": "60% (0,60 UF)"}},
+    {"plan": "COLMENA MAX 2247050", "codigo": 10104, "pb_uf": 2.5, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 80, "G42": 70, "G43": 60, "G44": 50, "G45": 30, "G46": 30}, "tope_anual_uf": 7000, "hospitalizacion": "%G41=80%  %G42 =70%  %G43=60% %G44=50%  %G45=30%  %G46=30%", "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,65 UF)"}},
+    {"plan": "COLMENA MAX 2247060", "codigo": 10105, "pb_uf": 2.6, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 80, "G42": 70, "G44": 60, "G45": 50, "G46": 35}, "tope_anual_uf": 7000, "hospitalizacion": "%G41=80%  %G42 =70%  %G44=60% %G45=50%  %G46=35%", "consulta": {"tipo": "libre_eleccion", "valor": "60% (0,70 UF)"}},
+    {"plan": "COLMENA MAX 2247070", "codigo": 10106, "pb_uf": 2.7, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 80, "G42": 70, "G44": 60, "G45": 50, "G46": 35}, "tope_anual_uf": 7000, "hospitalizacion": "%G41=80%  %G42 =70%  %G44=60% %G45=50%  %G46=35%", "consulta": {"tipo": "libre_eleccion", "valor": "70% (0,75 UF)"}},
+    {"plan": "COLMENA MAX 2248050", "codigo": 10107, "pb_uf": 2.7, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 90, "G42": 80, "G44": 60, "G45": 50, "G46": 35}, "tope_anual_uf": 7000, "hospitalizacion": "%G41=90%  %G42 =80%  %G44=60% %G45=50%  %G46=35%", "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,80 UF)"}},
+    {"plan": "COLMENA MAX 2248060", "codigo": 10108, "pb_uf": 2.8, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 90, "G42": 80, "G44": 70, "G45": 60, "G46": 35}, "tope_anual_uf": 7000, "hospitalizacion": "%G41=90%  %G42 =80%  %G44=70% %G45=60%  %G46=35%", "consulta": {"tipo": "libre_eleccion", "valor": "60% (0,85 UF)"}},
+    {"plan": "COLMENA MAX 2248070", "codigo": 10109, "pb_uf": 3.0, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 90, "G42": 80, "G44": 70, "G45": 60, "G46": 35}, "tope_anual_uf": 7000, "hospitalizacion": "%G41=90%  %G42 =80%  %G44=70% %G45=60%  %G46=35%", "consulta": {"tipo": "libre_eleccion", "valor": "70% (0,90 UF)"}},
+    {"plan": "COLMENA MAX 2249050", "codigo": 10110, "pb_uf": 3.0, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 100, "G42": 90, "G44": 80, "G45": 70, "G46": 35}, "tope_anual_uf": 7000, "hospitalizacion": "%G41=100%  %G42 =90%  %G44=80% %G45=70%  %G46=35%", "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,95 UF)"}},
+    {"plan": "COLMENA PLUS 2244040", "codigo": 10637, "pb_uf": 1.58, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=50%  %G42 =40%  %G43=30% %G44=25%  %G45=25%  %G46=25%", "consulta": {"tipo": "libre_eleccion", "valor": "40% (0,30 UF)"}},
+    {"plan": "COLMENA PLUS 2244050", "codigo": 10638, "pb_uf": 1.66, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=50%  %G42 =40%  %G43=30% %G44=25%  %G45=25%  %G46=25%", "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,30 UF)"}},
+    {"plan": "COLMENA PLUS 2245040", "codigo": 10639, "pb_uf": 1.69, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=60%  %G42 =50%  %G43=40% %G44=30%  %G45=25%  %G46=25%", "consulta": {"tipo": "libre_eleccion", "valor": "40% (0,30 UF)"}},
+    {"plan": "COLMENA PLUS 2245050", "codigo": 10640, "pb_uf": 1.82, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=60%  %G42 =50%  %G43=40% %G44=30%  %G45=25%  %G46=25%", "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,30 UF)"}},
+    {"plan": "COLMENA PLUS 2245060", "codigo": 10641, "pb_uf": 1.88, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=60%  %G42 =50%  %G43=40% %G44=30%  %G45=25%  %G46=25%", "consulta": {"tipo": "libre_eleccion", "valor": "60% (0,34 UF)"}},
+    {"plan": "COLMENA PLUS 2245070", "codigo": 10642, "pb_uf": 1.95, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=60%  %G42 =50%  %G43=40% %G44=30%  %G45=25%  %G46=25%", "consulta": {"tipo": "libre_eleccion", "valor": "70% (0,37 UF)"}},
+    {"plan": "COLMENA PLUS 2245080", "codigo": 10643, "pb_uf": 2.0, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=60%  %G42 =50%  %G43=40% %G44=30%  %G45=25%  %G46=25%", "consulta": {"tipo": "libre_eleccion", "valor": "80% (0,37 UF)"}},
+    {"plan": "COLMENA PLUS 2246050", "codigo": 10644, "pb_uf": 2.04, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=70%  %G42 =60%  %G43=50% %G44=40%  %G45=30%  %G46=30%", "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,34 UF)"}},
+    {"plan": "COLMENA PLUS 2246060", "codigo": 10645, "pb_uf": 2.12, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=70%  %G42 =60%  %G43=50% %G44=40%  %G45=30%  %G46=30%", "consulta": {"tipo": "libre_eleccion", "valor": "60% (0,38 UF)"}},
+    {"plan": "COLMENA PLUS 2246070", "codigo": 10646, "pb_uf": 2.15, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=70%  %G42 =60%  %G43=50% %G44=40%  %G45=30%  %G46=30%", "consulta": {"tipo": "libre_eleccion", "valor": "70% (0,44 UF)"}},
+    {"plan": "COLMENA PLUS 2246080", "codigo": 10647, "pb_uf": 2.2, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=70%  %G42 =60%  %G43=50% %G44=40%  %G45=30%  %G46=30%", "consulta": {"tipo": "libre_eleccion", "valor": "80% (0,44 UF)"}}
+  ];
+
+  let contadorRecalculos = 0;
+  const MAX_RECALCULOS = 2;
+
+  const REGION_A_ZONA = {
+    'Arica y Parinacota': 'NORTE',
+    'Tarapacá': 'NORTE',
+    'Antofagasta': 'NORTE',
+    'Atacama': 'NORTE',
+    'Coquimbo': 'NORTE',
+    'Valparaíso': 'CENTRO',
+    "O'Higgins": 'CENTRO',
+    'Maule': 'CENTRO',
+    'Metropolitana': 'SANTIAGO',
+    'Ñuble': 'SUR',
+    'Bío-Bío': 'SUR',
+    'La Araucanía': 'SUR',
+    'Los Ríos': 'SUR',
+    'Los Lagos': 'SUR',
+    'Aysén': 'SUR',
+    'Magallanes': 'SUR'
+  };
+
+  function obtenerFactor(edad) {
+    if (edad < 2) return 0.0;
+    if (edad < 20) return 0.6;
+    if (edad < 25) return 0.9;
+    if (edad < 35) return 1.0;
+    if (edad < 45) return 1.3;
+    if (edad < 55) return 1.4;
+    if (edad < 65) return 2.0;
+    return 2.4;
   }
-});
 
-/*========================================================
-  CONFIGURACIÓN GOOGLE FORMS
-=========================================================*/
-const FORM_BASE_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/formResponse';
-
-const FORM_FIELDS = {
-  nombre: 'entry.1455181501',
-  rut: 'entry.1514828805',
-  correo: 'entry.1253669566',
-  telefono: 'entry.1927631596',
-  edad: 'entry.1515225692',
-  isapre: 'entry.1312575017',
-  renta: 'entry.1350273122',
-  region: 'entry.1283417188',
-  cargas: 'entry.6457415',
-  mensaje: 'entry.860152674',
-  plan1: 'entry.1176082335',
-  plan2: 'entry.1798986413',
-  asesorid: 'entry.1496988494'
-};
-
-const GOOGLE_FORM_REFERIDOS_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeIppjYB0Vgc6RsJ3AM0HcAVhLaxAT6ZZ_MxdPhmuwRkwLT-A/formResponse';
-
-const REFERIDOS_FIELDS = {
-  tu_nombre: "entry.1664559901",
-  nombre_referido: "entry.715463265",
-  telefono_referido: "entry.1382714918",
-  correo_referido: "entry.897178414",
-  mensaje_adicional: "entry.178502788",
-  asesorid_referidos: "entry.683967436"
-};
-
-const URL_PLANES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/planes.json';
-const URL_REDES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/redes_clinicas.json';
-
-// ════════════════════════════════════════════════════════════════════════════
-// GRUPOS GX (REDES CLÍNICAS) - Definidos localmente
-// ════════════════════════════════════════════════════════════════════════════
-
-const GRUPOS_GX = {
-  "Grupo 46 - GX Premium": [
-    {
-      "nombre": "CLÍNICA ALEMANA",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA LAS CONDES",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    }
-  ],
-  "Grupo 45 - GX Plus": [
-    {
-      "nombre": "CLÍNICA SAN CARLOS APOQUINDO",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA UNIVERSIDAD CATÓLICA",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA UNIVERSIDAD DE LOS ANDES",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA MEDS",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA SANTA MARÍA",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    }
-  ],
-  "Grupo 44 - GX Red": [
-    {
-      "nombre": "CLÍNICA REDSALUD VITACURA",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "HOSPITAL CLÍNICO UNIVERSIDAD CATÓLICA",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "FUNDACIÓN ARTURO LOPEZ PEREZ",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "HOSPITAL CLÍNICO DE LA FUERZA AÉREA DE CHILE",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA INDISA",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA BUPA ANTOFAGASTA",
-      "ciudad": "ANTOFAGASTA",
-      "region": "Región de Antofagasta"
-    },
-    {
-      "nombre": "CLÍNICA BUPA REÑACA",
-      "ciudad": "VIÑA DEL MAR",
-      "region": "Región de Valparaíso"
-    },
-    {
-      "nombre": "CLÍNICA SANATORIO ALEMÁN",
-      "ciudad": "CONCEPCIÓN",
-      "region": "Región del Bío-Bío"
-    },
-    {
-      "nombre": "CLÍNICA LOS ANDES",
-      "ciudad": "LOS ANGELES",
-      "region": "Región del Bío-Bío"
-    },
-    {
-      "nombre": "CLÍNICA ALEMANA DE TEMUCO",
-      "ciudad": "TEMUCO",
-      "region": "Región de La Araucanía"
-    },
-    {
-      "nombre": "CLÍNICA ALEMANA DE VALDIVIA",
-      "ciudad": "VALDIVIA",
-      "region": "Región de Los Rios"
-    },
-    {
-      "nombre": "CLÍNICA ALEMANA DE OSORNO",
-      "ciudad": "OSORNO",
-      "region": "Región de Los Rios"
-    },
-    {
-      "nombre": "CLÍNICA REDSALUD MAGALLANES",
-      "ciudad": "PUNTA ARENAS",
-      "region": "Región de Magallanes"
-    }
-  ],
-  "Grupo 43 - GX Red": [
-    {
-      "nombre": "HOSPITAL DEL NIÑO",
-      "ciudad": "VIÑA DEL MAR",
-      "region": "Región de Valparaíso"
-    },
-    {
-      "nombre": "CLÍNICA CHILLAN",
-      "ciudad": "CHILLAN",
-      "region": "Región de Ñuble"
-    },
-    {
-      "nombre": "CLÍNICA BÍO BÍO",
-      "ciudad": "CONCEPCIÓN",
-      "region": "Región del Bío-Bío"
-    },
-    {
-      "nombre": "CLÍNICA ANDES SALUD CONCEPCIÓN",
-      "ciudad": "CONCEPCIÓN",
-      "region": "Región del Bío-Bío"
-    },
-    {
-      "nombre": "HOSPITAL CLÍNICO DEL SUR",
-      "ciudad": "CONCEPCIÓN",
-      "region": "Región del Bío-Bío"
-    }
-  ],
-  "Grupo 42 - GX Ampliada": [
-    {
-      "nombre": "CLÍNICA DÁVILA RECOLETA",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA REDSALUD PROVIDENCIA",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA REDSALUD SANTIAGO",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA EL LOA",
-      "ciudad": "CALAMA",
-      "region": "Región de Antofagasta"
-    },
-    {
-      "nombre": "CLÍNICA PORTADA",
-      "ciudad": "ANTOFAGASTA",
-      "region": "Región de Antofagasta"
-    },
-    {
-      "nombre": "CLÍNICA CUMBRES DEL NORTE",
-      "ciudad": "ANTOFAGASTA",
-      "region": "Región de Antofagasta"
-    },
-    {
-      "nombre": "HOSPITAL MILITAR DEL NORTE",
-      "ciudad": "ANTOFAGASTA",
-      "region": "Región de Antofagasta"
-    },
-    {
-      "nombre": "CLÍNICA RCR ATACAMA",
-      "ciudad": "COPIAPÓ",
-      "region": "Región de Atacama"
-    },
-    {
-      "nombre": "CLÍNICA REDSALUD ELQUI",
-      "ciudad": "LA SERENA",
-      "region": "Región de Coquimbo"
-    },
-    {
-      "nombre": "HOSPITAL CLÍNICO DE VIÑA DEL MAR",
-      "ciudad": "VIÑA DEL MAR",
-      "region": "Región de Valparaíso"
-    },
-    {
-      "nombre": "HOSPITAL NAVAL ALMIRANTE NEF",
-      "ciudad": "VIÑA DEL MAR",
-      "region": "Región de Valparaíso"
-    },
-    {
-      "nombre": "CLÍNICA REDSALUD VALPARAISO",
-      "ciudad": "VALPARAISO",
-      "region": "Región de Valparaíso"
-    },
-    {
-      "nombre": "CLÍNICA LOS CARRERA",
-      "ciudad": "QUILPUÉ",
-      "region": "Región de Valparaíso"
-    },
-    {
-      "nombre": "CLÍNICA ISAMEDICA",
-      "ciudad": "RANCAGUA",
-      "region": "Región de O'Higgins"
-    },
-    {
-      "nombre": "HOSPITAL CLÍNICO FUSAT",
-      "ciudad": "RANCAGUA",
-      "region": "Región de O'Higgins"
-    },
-    {
-      "nombre": "CLINICA RED SALUD RANCAGUA (INTEGRAL)",
-      "ciudad": "RANCAGUA",
-      "region": "Región de O'Higgins"
-    },
-    {
-      "nombre": "CLÍNICA LIRCAY",
-      "ciudad": "TALCA",
-      "region": ""
-    },
-    {
-      "nombre": "CLÍNICA LAS AMAPOLAS",
-      "ciudad": "CHILLÁN",
-      "region": ""
-    },
-    {
-      "nombre": "CLÍNICA REDSALUD MAYOR",
-      "ciudad": "TEMUCO",
-      "region": "Región de La Araucanía"
-    },
-    {
-      "nombre": "CLÍNICA PUERTO VARAS",
-      "ciudad": "PUERTO VARAS",
-      "region": "Región de Los Lagos"
-    },
-    {
-      "nombre": "CLÍNICA ANDES SALUD PUERTO MONTT",
-      "ciudad": "PUERTO MONTT",
-      "region": "Región de Los Lagos"
-    },
-    {
-      "nombre": "CLÍNICA PUERTO MONTT",
-      "ciudad": "PUERTO MONTT",
-      "region": "Región de Los Lagos"
-    }
-  ],
-  "Grupo 41 - GX Preferente": [
-    {
-      "nombre": "CLÍNICA JUAN PABLO II",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA SIERRA BELLA",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "HOSPITAL DEL PROFESOR",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "HOSPITAL PARROQUIAL SAN BERNARDO",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA FLEMING ARICA",
-      "ciudad": "ARICA",
-      "region": "Región de Arica y Parinacota"
-    },
-    {
-      "nombre": "CLÍNICA RÍO BLANCO",
-      "ciudad": "LOS ANDES",
-      "region": "Región de Valparaíso"
-    },
-    {
-      "nombre": "CLÍNICA SAN ANTONIO",
-      "ciudad": "SAN ANTONIO",
-      "region": "Región de Valparaíso"
-    },
-    {
-      "nombre": "CLÍNICA ADVENTISTA LOS ANGELES",
-      "ciudad": "LOS ANGELES",
-      "region": "Región del Bío-Bío"
-    },
-    {
-      "nombre": "HOSPITAL DE LAS FFAA CIRUJANO GUZMÁN",
-      "ciudad": "PUNTA ARENAS",
-      "region": "Región de Magallanes"
-    }
-  ],
-  "GC1 (G55)": [
-    {
-      "nombre": "CLÍNICA RÍO BLANCO",
-      "ciudad": "LOS ANDES",
-      "region": "Región de Valparaíso"
-    },
-    {
-      "nombre": "CLÍNICA LOS CARRERA",
-      "ciudad": "QUILPUÉ",
-      "region": "Región de Valparaíso"
-    },
-    {
-      "nombre": "HOSPITAL NAVAL ALMIRANTE NEF",
-      "ciudad": "VIÑA DEL MAR",
-      "region": "Región de Valparaíso"
-    },
-    {
-      "nombre": "CLÍNICA REDSALUD RANCAGUA (INTEGRAL)",
-      "ciudad": "RANCAGUA",
-      "region": "Región de O'Higgins"
-    },
-    {
-      "nombre": "CLÍNICA DÁVILA RECOLETA",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA DÁVILA VESPUCIO",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA REDSALUD SANTIAGO",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA REDSALUD PROVIDENCIA",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    }
-  ],
-  "GC2 (G56)": [
-    {
-      "nombre": "CLÍNICA LOS LEONES",
-      "ciudad": "LA CALERA",
-      "region": "Región de Valparaíso"
-    },
-    {
-      "nombre": "CLÍNICA REDSALUD VALPARAÍSO",
-      "ciudad": "VALPARAÍSO",
-      "region": "Región de Valparaíso"
-    },
-    {
-      "nombre": "HOSPITAL CLÍNICO DE VIÑA DEL MAR",
-      "ciudad": "VIÑA DEL MAR",
-      "region": "Región de Valparaíso"
-    },
-    {
-      "nombre": "CLÍNICA ISAMEDICA",
-      "ciudad": "RANCAGUA",
-      "region": "Región de O'Higgins"
-    },
-    {
-      "nombre": "HOSPITAL CLÍNICO FUSAT",
-      "ciudad": "RANCAGUA",
-      "region": "Región de O'Higgins"
-    },
-    {
-      "nombre": "CLÍNICA BUPA SANTIAGO",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    }
-  ],
-  "GC3 (G57)": [
-    {
-      "nombre": "CLÍNICA BUPA REÑACA",
-      "ciudad": "VIÑA DEL MAR",
-      "region": "Región de Valparaíso"
-    },
-    {
-      "nombre": "CLÍNICA CIUDAD DEL MAR",
-      "ciudad": "VIÑA DEL MAR",
-      "region": "Región de Valparaíso"
-    },
-    {
-      "nombre": "CLÍNICA INDISA",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    }
-  ],
-  "GS1 (G63)": [
-    {
-      "nombre": "CLÍNICA PUERTO VARAS",
-      "ciudad": "PUERTO VARAS",
-      "region": "Región de Los Lagos"
-    },
-    {
-      "nombre": "CLÍNICA PUERTO MONTT",
-      "ciudad": "PUERTO MONTT",
-      "region": "Región de Los Lagos"
-    },
-    {
-      "nombre": "HOSPITAL DE LAS FFAA CIRUJANO GUZMÁN",
-      "ciudad": "PUNTA ARENAS",
-      "region": "Región de Magallanes"
-    },
-    {
-      "nombre": "CLÍNICA DÁVILA RECOLETA",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA DÁVILA VESPUCIO",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA REDSALUD SANTIAGO",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    },
-    {
-      "nombre": "CLÍNICA REDSALUD PROVIDENCIA",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    }
-  ],
-  "GS2 (G64)": [
-    {
-      "nombre": "CLÍNICA REDSALUD MAYOR",
-      "ciudad": "TEMUCO",
-      "region": "Región de La Araucanía"
-    },
-    {
-      "nombre": "CLÍNICA ALEMANA DE OSORNO",
-      "ciudad": "OSORNO",
-      "region": "Región de Los Rios"
-    },
-    {
-      "nombre": "CLÍNICA ANDES SALUD PUERTO MONTT",
-      "ciudad": "PUERTO MONTT",
-      "region": "Región de Los Lagos"
-    },
-    {
-      "nombre": "CLÍNICA REDSALUD MAGALLANES",
-      "ciudad": "PUNTA ARENAS",
-      "region": "Región de Magallanes"
-    },
-    {
-      "nombre": "CLÍNICA BUPA SANTIAGO",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    }
-  ],
-  "GS3 (G65)": [
-    {
-      "nombre": "CLÍNICA ALEMANA DE TEMUCO",
-      "ciudad": "TEMUCO",
-      "region": "Región de La Araucanía"
-    },
-    {
-      "nombre": "CLÍNICA ALEMANA DE VALDIVIA",
-      "ciudad": "VALDIVIA",
-      "region": "Región de Los Ríos"
-    },
-    {
-      "nombre": "CLÍNICA INDISA",
-      "ciudad": "SANTIAGO",
-      "region": "Región Metropolitana"
-    }
-  ]
-};
-
-const PLANES_DATA = [{"plan": "COLMENA MAX 2245050", "codigo": 10101, "pb_uf": 2.22, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 60, "G42": 50, "G43": 40, "G44": 30, "G45": 25, "G46": 25}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,50 UF)"}}, {"plan": "COLMENA MAX 2246050", "codigo": 10102, "pb_uf": 2.3, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 70, "G42": 60, "G43": 50, "G44": 40, "G45": 30, "G46": 30}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,55 UF)"}}, {"plan": "COLMENA MAX 2246060", "codigo": 10103, "pb_uf": 2.4, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 70, "G42": 60, "G43": 50, "G44": 40, "G45": 30, "G46": 30}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "60% (0,60 UF)"}}, {"plan": "COLMENA MAX 2247050", "codigo": 10104, "pb_uf": 2.5, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 80, "G42": 70, "G43": 60, "G44": 50, "G45": 30, "G46": 30}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,65 UF)"}}, {"plan": "COLMENA MAX 2247060", "codigo": 10105, "pb_uf": 2.6, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 80, "G42": 70, "G44": 60, "G45": 50, "G46": 35}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "60% (0,70 UF)"}}, {"plan": "COLMENA MAX 2247070", "codigo": 10106, "pb_uf": 2.7, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 80, "G42": 70, "G44": 60, "G45": 50, "G46": 35}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "70% (0,75 UF)"}}, {"plan": "COLMENA MAX 2248050", "codigo": 10107, "pb_uf": 2.7, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 90, "G42": 80, "G44": 60, "G45": 50, "G46": 35}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,80 UF)"}}, {"plan": "COLMENA MAX 2248060", "codigo": 10108, "pb_uf": 2.8, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 90, "G42": 80, "G44": 70, "G45": 60, "G46": 35}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "60% (0,85 UF)"}}, {"plan": "COLMENA MAX 2248070", "codigo": 10109, "pb_uf": 3.0, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 90, "G42": 80, "G44": 70, "G45": 60, "G46": 35}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "70% (0,90 UF)"}}, {"plan": "COLMENA MAX 2249050", "codigo": 10110, "pb_uf": 3.0, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 100, "G42": 90, "G44": 80, "G45": 70, "G46": 35}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,95 UF)"}}, {"plan": "COLMENA MAX 2249060", "codigo": 10111, "pb_uf": 3.3, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 100, "G42": 90, "G45": 80, "G46": 35}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "60% (1,00 UF)"}}, {"plan": "COLMENA MAX 2249070", "codigo": 10112, "pb_uf": 3.6, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 100, "G42": 90, "G45": 80, "G46": 35}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "70% (1,05 UF)"}}, {"plan": "COLMENA MAX 22410050", "codigo": 10113, "pb_uf": 3.8, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 100, "G44": 90, "G45": 80, "G46": 40}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "50% (1,10 UF)"}}, {"plan": "COLMENA MAX 22410060", "codigo": 10114, "pb_uf": 4.0, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 100, "G45": 90, "G46": 40}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "60% (1,15 UF)"}}, {"plan": "COLMENA MAX 22410070", "codigo": 10115, "pb_uf": 4.2, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 100, "G45": 90, "G46": 40}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "70%(1,20 UF)"}}, {"plan": "COLMENA MAX 2241007A", "codigo": 10116, "pb_uf": 4.6, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 100, "G45": 90, "G46": 45}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "70% (1,20 UF)"}}, {"plan": "COLMENA MAX 2241007B", "codigo": 10117, "pb_uf": 4.9, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 100, "G45": 90, "G46": 50}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "70% (1,20 UF)"}}, {"plan": "COLMENA MAX 2241007C", "codigo": 10118, "pb_uf": 5.2, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 100, "G45": 90, "G46": 55}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "70% (1,20 UF)"}}, {"plan": "COLMENA MAX NORTE 1125", "codigo": 11327, "pb_uf": 2.11, "zona": "NORTE", "coberturas_redes": {}, "tope_anual_uf": 7000, "consulta": {"tipo": "preferente", "valor": "50% Centros Médicos RedSalud, Integramédica, Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá.\n40% Clínica BUPA Antofagasta."}}, {"plan": "COLMENA MAX NORTE 2125", "codigo": 11328, "pb_uf": 2.22, "zona": "NORTE", "coberturas_redes": {}, "tope_anual_uf": 7000, "consulta": {"tipo": "preferente", "valor": "60% Centros Médicos RedSalud, Integramédica, Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá.\n50% Clínica BUPA Antofagasta."}}, {"plan": "COLMENA MAX NORTE 3125", "codigo": 11329, "pb_uf": 2.34, "zona": "NORTE", "coberturas_redes": {}, "tope_anual_uf": 7000, "consulta": {"tipo": "preferente", "valor": "70% Centros Médicos RedSalud, Integramédica, Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá.\n60% Clínica BUPA Antofagasta."}}, {"plan": "COLMENA MAX NORTE 4125", "codigo": 11330, "pb_uf": 2.45, "zona": "NORTE", "coberturas_redes": {}, "tope_anual_uf": 7000, "consulta": {"tipo": "preferente", "valor": "80% Centros Médicos RedSalud, Integramédica, Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá.\n70% Clínica BUPA Antofagasta."}}, {"plan": "COLMENA MAX NORTE 5125", "codigo": 11331, "pb_uf": 2.53, "zona": "NORTE", "coberturas_redes": {}, "tope_anual_uf": 7000, "consulta": {"tipo": "preferente", "valor": "80% Centros Médicos RedSalud, Integramédica, Clínica BUPA Antofagasta, Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá."}}, {"plan": "COLMENA PLUS 2244040", "codigo": 10637, "pb_uf": 1.58, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=50%  %G42 =40%  %G43=30% %G44=25%  %G45=25%  %G46=25%", "consulta": {"tipo": "libre_eleccion", "valor": "40% (0,30 UF)"}}, {"plan": "COLMENA PLUS 2244050", "codigo": 10638, "pb_uf": 1.66, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=50%  %G42 =40%  %G43=30% %G44=25%  %G45=25%  %G46=25%", "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,30 UF)"}}, {"plan": "COLMENA PLUS 2245040", "codigo": 10639, "pb_uf": 1.69, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=60%  %G42 =50%  %G43=40% %G44=30%  %G45=25%  %G46=25%", "consulta": {"tipo": "libre_eleccion", "valor": "40% (0,30 UF)"}}, {"plan": "COLMENA PLUS 2245050", "codigo": 10640, "pb_uf": 1.82, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=60%  %G42 =50%  %G43=40% %G44=30%  %G45=25%  %G46=25%", "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,30 UF)"}}, {"plan": "COLMENA PLUS 2245060", "codigo": 10641, "pb_uf": 1.88, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=60%  %G42 =50%  %G43=40% %G44=30%  %G45=25%  %G46=25%", "consulta": {"tipo": "libre_eleccion", "valor": "60% (0,34 UF)"}}, {"plan": "COLMENA PLUS 2245070", "codigo": 10642, "pb_uf": 1.95, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=60%  %G42 =50%  %G43=40% %G44=30%  %G45=25%  %G46=25%", "consulta": {"tipo": "libre_eleccion", "valor": "70% (0,37 UF)"}}, {"plan": "COLMENA PLUS 2245080", "codigo": 10643, "pb_uf": 2.0, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=60%  %G42 =50%  %G43=40% %G44=30%  %G45=25%  %G46=25%", "consulta": {"tipo": "libre_eleccion", "valor": "80% (0,37 UF)"}}, {"plan": "COLMENA PLUS 2246050", "codigo": 10644, "pb_uf": 2.04, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=70%  %G42 =60%  %G43=50% %G44=40%  %G45=30%  %G46=30%", "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,34 UF)"}}, {"plan": "COLMENA PLUS 2246060", "codigo": 10645, "pb_uf": 2.12, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=70%  %G42 =60%  %G43=50% %G44=40%  %G45=30%  %G46=30%", "consulta": {"tipo": "libre_eleccion", "valor": "60% (0,38 UF)"}}, {"plan": "COLMENA PLUS 2246070", "codigo": 10646, "pb_uf": 2.15, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=70%  %G42 =60%  %G43=50% %G44=40%  %G45=30%  %G46=30%", "consulta": {"tipo": "libre_eleccion", "valor": "70% (0,44 UF)"}}, {"plan": "COLMENA PLUS 2246080", "codigo": 10647, "pb_uf": 2.2, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "%G41=70%  %G42 =60%  %G43=50% %G44=40%  %G45=30%  %G46=30%", "consulta": {"tipo": "libre_eleccion", "valor": "80% (0,44 UF)"}}];
-
-const REDES_DATA = {"Grupo 46 - GX Premium": [{"nombre": "CLÍNICA ALEMANA", "ciudad": "SANTIAGO", "region": "Región Metropolitana"}, {"nombre": "CLÍNICA LAS CONDES", "ciudad": "SANTIAGO", "region": "Región Metropolitana"}], "Grupo 45 - GX Plus": [{"nombre": "CLÍNICA SAN CARLOS APOQUINDO", "ciudad": "SANTIAGO", "region": "Región Metropolitana"}, {"nombre": "CLÍNICA UNIVERSIDAD CATÓLICA", "ciudad": "SANTIAGO", "region": "Región Metropolitana"}, {"nombre": "CLÍNICA UNIVERSIDAD DE LOS ANDES", "ciudad": "SANTIAGO", "region": "Región Metropolitana"}, {"nombre": "CLÍNICA MEDS", "ciudad": "SANTIAGO", "region": "Región Metropolitana"}, {"nombre": "CLÍNICA SANTA MARÍA", "ciudad": "SANTIAGO", "region": "Región Metropolitana"}]};
-
-let contadorRecalculos = 0;
-const MAX_RECALCULOS = 2;
-
-/*========================================================
-  MAPEO DE REGIONES A ZONAS
-=========================================================*/
-const REGION_A_ZONA = {
-  'Arica y Parinacota': 'NORTE',
-  'Tarapacá': 'NORTE',
-  'Antofagasta': 'NORTE',
-  'Atacama': 'NORTE',
-  'Coquimbo': 'NORTE',
-  'Valparaíso': 'CENTRO',
-  "O'Higgins": 'CENTRO',
-  'Maule': 'CENTRO',
-  'Metropolitana': 'SANTIAGO',
-  'Ñuble': 'SUR',
-  'Bío-Bío': 'SUR',
-  'La Araucanía': 'SUR',
-  'Los Ríos': 'SUR',
-  'Los Lagos': 'SUR',
-  'Aysén': 'SUR',
-  'Magallanes': 'SUR'
-};
-
-/*========================================================
-  TABLA DE FACTORES DE EDAD
-=========================================================*/
-function obtenerFactor(edad) {
-  if (edad < 2) return 0.0;
-  if (edad < 20) return 0.6;
-  if (edad < 25) return 0.9;
-  if (edad < 35) return 1.0;
-  if (edad < 45) return 1.3;
-  if (edad < 55) return 1.4;
-  if (edad < 65) return 2.0;
-  return 2.4;
-}
-
-function obtenerFactorCarga(edad) {
-  if (edad < 2) return 0.0;
-  if (edad < 20) return 0.6;
-  if (edad < 25) return 0.7;
-  if (edad < 35) return 0.7;
-  if (edad < 45) return 0.9;
-  if (edad < 55) return 1.0;
-  if (edad < 65) return 1.4;
-  return 2.2;
-}
-
-/*========================================================
-  VARIABLES GLOBALES
-=========================================================*/
-let formularioDatos = {};
-let ultimoResultado = null;
-let PLANES = [];
-let REDES_CLINICAS = {};
-
-/*========================================================
-  CARGAR DATOS
-=========================================================*/
-async function cargarUF() {
-  try {
-    const r = await fetch("https://mindicador.cl/api/");
-    const j = await r.json();
-    const uf = j.uf.valor;
-    window.__UF_VALOR = uf;
-    document.getElementById("ufValor").innerText = "$" + uf.toLocaleString("es-CL", { minimumFractionDigits: 2 });
-    document.getElementById("ufFecha").innerText = new Date(j.uf.fecha).toLocaleDateString("es-CL", { year: "numeric", month: "long", day: "numeric" });
-  } catch (err) {
-    window.__UF_VALOR = 39700;
-    document.getElementById("ufValor").innerText = "$39.700 (estimado)";
-    document.getElementById("ufFecha").innerText = "No disponible";
+  function obtenerFactorCarga(edad) {
+    if (edad < 2) return 0.0;
+    if (edad < 20) return 0.6;
+    if (edad < 25) return 0.7;
+    if (edad < 35) return 0.7;
+    if (edad < 45) return 0.9;
+    if (edad < 55) return 1.0;
+    if (edad < 65) return 1.4;
+    return 2.2;
   }
-}
 
-async function cargarPlanes() {
-  try {
-    const r = await fetch(URL_PLANES);
-    const data = await r.json();
-    PLANES = data.planes || data;
-    console.log('✅ Planes cargados desde GitHub:', PLANES.length);
-  } catch (err) {
-    console.log('⚠️ GitHub no disponible, usando datos locales');
+  let formularioDatos = {};
+  let ultimoResultado = null;
+  let PLANES = [];
+  let REDES_CLINICAS = {};
+
+  async function cargarUF() {
+    try {
+      const r = await fetch("https://mindicador.cl/api/");
+      const j = await r.json();
+      const uf = j.uf.valor;
+      window.__UF_VALOR = uf;
+      document.getElementById("ufValor").innerText = "$" + uf.toLocaleString("es-CL", { minimumFractionDigits: 2 });
+      document.getElementById("ufFecha").innerText = new Date(j.uf.fecha).toLocaleDateString("es-CL", { year: "numeric", month: "long", day: "numeric" });
+    } catch (err) {
+      window.__UF_VALOR = 39700;
+      document.getElementById("ufValor").innerText = "$39.700 (estimado)";
+      document.getElementById("ufFecha").innerText = "No disponible";
+    }
+  }
+
+  async function cargarPlanes() {
     PLANES = PLANES_DATA;
-    console.log('✅ Planes cargados localmente:', PLANES.length);
   }
-}
 
-async function cargarRedesClincias() {
-  console.log('📍 Usando datos locales de redes');
-  REDES_CLINICAS = REDES_DATA;
-  console.log('✅ Redes de clínicas cargadas:', Object.keys(REDES_CLINICAS).length, 'grupos');
-}
+  async function cargarRedesClincias() {
+    REDES_CLINICAS = GRUPOS_GX;
+  }
 
-/*========================================================
-  FORMATEO
-=========================================================*/
-function formatearCLP(n) {
-  return (n || 0).toLocaleString("es-CL");
-}
+  function formatearCLP(n) {
+    return (n || 0).toLocaleString("es-CL");
+  }
 
-/*========================================================
-  CÁLCULO DEL VALOR DEL PLAN
-=========================================================*/
-function calcularValorPlan(pbUF, edadTitular, edadesCargas) {
-  const uf = window.__UF_VALOR || 39700;
-  
-  let sumaFactores = obtenerFactor(edadTitular);
-  edadesCargas.forEach(e => sumaFactores += obtenerFactorCarga(e));
-  
-  const valorPlanUF = pbUF * sumaFactores;
-  const valorPlanCLP = Math.round(valorPlanUF * uf);
-  
-  let personasGES = edadTitular >= 2 ? 1 : 0;
-  edadesCargas.forEach(e => { if (e >= 2) personasGES++; });
-  const gesUF = 0.77 * personasGES;
-  const gesCLP = Math.round(gesUF * uf);
-  
-  const totalUF = valorPlanUF + gesUF;
-  const totalCLP = valorPlanCLP + gesCLP;
-  
-  return { valorPlanUF, valorPlanCLP, gesUF, gesCLP, totalUF, totalCLP, sumaFactores };
-}
+  function calcularValorPlan(pbUF, edadTitular, edadesCargas) {
+    const uf = window.__UF_VALOR || 39700;
+    let sumaFactores = obtenerFactor(edadTitular);
+    edadesCargas.forEach(e => sumaFactores += obtenerFactorCarga(e));
+    const valorPlanUF = pbUF * sumaFactores;
+    const valorPlanCLP = Math.round(valorPlanUF * uf);
+    let personasGES = edadTitular >= 2 ? 1 : 0;
+    edadesCargas.forEach(e => { if (e >= 2) personasGES++; });
+    const gesUF = 0.77 * personasGES;
+    const gesCLP = Math.round(gesUF * uf);
+    const totalUF = valorPlanUF + gesUF;
+    const totalCLP = valorPlanCLP + gesCLP;
+    return { valorPlanUF, valorPlanCLP, gesUF, gesCLP, totalUF, totalCLP, sumaFactores };
+  }
 
-// ════════════════════════════════════════════════════════════════════════════
-// CALCULAR 7% CON VALIDACIÓN RTI
-// ════════════════════════════════════════════════════════════════════════════
+  function calcularSietePorCiento(rentaMensual, ufValor) {
+    const RTI_UF = 87.8;
+    const rentaEnUF = rentaMensual / ufValor;
+    const rentaAUsar = Math.min(rentaEnUF, RTI_UF);
+    const sietePorCientoUF = rentaAUsar * 0.07;
+    const sietePorCientoCLP = Math.round(sietePorCientoUF * ufValor);
+    const rtiAplicado = rentaEnUF > RTI_UF;
+    return { sietePorCientoCLP, sietePorCientoUF, rtiAplicado };
+  }
 
-function calcularSietePorCiento(rentaMensual, ufValor) {
-  const RTI_UF = 87.8;
-  const rentaEnUF = rentaMensual / ufValor;
-  
-  const rentaAUsar = Math.min(rentaEnUF, RTI_UF);
-  const sietePorCientoUF = rentaAUsar * 0.07;
-  const sietePorCientoCLP = Math.round(sietePorCientoUF * ufValor);
-  const rtiAplicado = rentaEnUF > RTI_UF;
-  
-  return {
-    sietePorCientoCLP,
-    sietePorCientoUF,
-    rtiAplicado
-  };
-}
+  function seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas, region) {
+    const uf = window.__UF_VALOR || 39700;
+    function calcularPlanesDisponibles(filtroZona) {
+      const planesZona = PLANES.filter(p => p.zona === filtroZona || p.zona === 'LIBRE_ELECCION');
+      const planesConValor = planesZona.map(p => {
+        const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
+        const diferencia = Math.abs(calc.totalUF - sieteUF);
+        let coberturaPromedio = 0;
+        if (p.coberturas_redes && Object.keys(p.coberturas_redes).length > 0) {
+          const coberturas = Object.values(p.coberturas_redes);
+          coberturaPromedio = Math.round(coberturas.reduce((a, b) => a + b, 0) / coberturas.length);
+        }
+        return { ...p, valorCalculadoUF: calc.totalUF, valorCalculadoCLP: calc.totalCLP, gesUF: calc.gesUF, gesCLP: calc.gesCLP, sumaFactores: calc.sumaFactores, diferencia: diferencia, exceso: Math.max(0, calc.totalUF - sieteUF), coberturaPromedio: coberturaPromedio };
+      });
+      return planesConValor;
+    }
+    let planesZona = calcularPlanesDisponibles(zona);
+    const rango95 = sieteUF * 0.95;
+    const rango110 = sieteUF * 1.10;
+    let planesIdeales = planesZona.filter(p => p.valorCalculadoUF >= rango95 && p.valorCalculadoUF <= rango110);
+    if (planesIdeales.length === 0) {
+      const planesLibres = PLANES.filter(p => p.zona === 'LIBRE_ELECCION');
+      const planesLibresConValor = planesLibres.map(p => {
+        const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
+        const diferencia = Math.abs(calc.totalUF - sieteUF);
+        let coberturaPromedio = 0;
+        if (p.coberturas_redes && Object.keys(p.coberturas_redes).length > 0) {
+          const coberturas = Object.values(p.coberturas_redes);
+          coberturaPromedio = Math.round(coberturas.reduce((a, b) => a + b, 0) / coberturas.length);
+        }
+        return { ...p, valorCalculadoUF: calc.totalUF, valorCalculadoCLP: calc.totalCLP, gesUF: calc.gesUF, gesCLP: calc.gesCLP, sumaFactores: calc.sumaFactores, diferencia: diferencia, exceso: Math.max(0, calc.totalUF - sieteUF), coberturaPromedio: coberturaPromedio };
+      });
+      planesIdeales = planesLibresConValor.filter(p => p.valorCalculadoUF >= rango95 && p.valorCalculadoUF <= rango110);
+    }
+    function agruparPorCobertura(planes) {
+      const grupos = { 90: [], 80: [], 70: [], 60: [], otros: [] };
+      planes.forEach(p => {
+        if (p.coberturaPromedio >= 85) { grupos[90].push(p); } 
+        else if (p.coberturaPromedio >= 75 && p.coberturaPromedio < 85) { grupos[80].push(p); } 
+        else if (p.coberturaPromedio >= 65 && p.coberturaPromedio < 75) { grupos[70].push(p); } 
+        else if (p.coberturaPromedio >= 55 && p.coberturaPromedio < 65) { grupos[60].push(p); } 
+        else { grupos.otros.push(p); }
+      });
+      Object.keys(grupos).forEach(key => { grupos[key].sort((a, b) => a.diferencia - b.diferencia); });
+      return grupos;
+    }
+    function seleccionarMejoresPorCobertura(planes) {
+      const grupos = agruparPorCobertura(planes);
+      const resultado = [];
+      if (grupos[90].length > 0) resultado.push(grupos[90][0]);
+      if (grupos[80].length > 0) resultado.push(grupos[80][0]);
+      if (grupos[70].length > 0) resultado.push(grupos[70][0]);
+      if (grupos[60].length > 0) resultado.push(grupos[60][0]);
+      if (resultado.length < 2 && grupos.otros.length > 0) resultado.push(grupos.otros[0]);
+      return resultado;
+    }
+    if (planesIdeales.length > 0) {
+      const planesSeleccionados = seleccionarMejoresPorCobertura(planesIdeales);
+      return { plan1: planesSeleccionados[0] || null, plan2: planesSeleccionados[1] || null, plan3: planesSeleccionados[2] || null, plan4: planesSeleccionados[3] || null, fuente: `Planes ideales diferenciados en ${zona}`, coberturas: planesSeleccionados.map(p => p.coberturaPromedio) };
+    }
+    let planesAlternativos = planesZona.filter(p => p.valorCalculadoUF >= sieteUF * 0.85 && p.valorCalculadoUF <= sieteUF * 1.30);
+    if (planesAlternativos.length === 0) {
+      const planesLibres = PLANES.filter(p => p.zona === 'LIBRE_ELECCION');
+      const planesLibresConValor = planesLibres.map(p => {
+        const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
+        const diferencia = Math.abs(calc.totalUF - sieteUF);
+        let coberturaPromedio = 0;
+        if (p.coberturas_redes && Object.keys(p.coberturas_redes).length > 0) {
+          const coberturas = Object.values(p.coberturas_redes);
+          coberturaPromedio = Math.round(coberturas.reduce((a, b) => a + b, 0) / coberturas.length);
+        }
+        return { ...p, valorCalculadoUF: calc.totalUF, valorCalculadoCLP: calc.totalCLP, gesUF: calc.gesUF, gesCLP: calc.gesCLP, sumaFactores: calc.sumaFactores, diferencia: diferencia, exceso: Math.max(0, calc.totalUF - sieteUF), coberturaPromedio: coberturaPromedio };
+      });
+      planesAlternativos = planesLibresConValor.filter(p => p.valorCalculadoUF >= sieteUF * 0.85 && p.valorCalculadoUF <= sieteUF * 1.30);
+    }
+    const planesSeleccionados = seleccionarMejoresPorCobertura(planesAlternativos);
+    return { plan1: planesSeleccionados[0] || null, plan2: planesSeleccionados[1] || null, plan3: planesSeleccionados[2] || null, plan4: planesSeleccionados[3] || null, fuente: `Planes alternativos diferenciados`, coberturas: planesSeleccionados.map(p => p.coberturaPromedio) };
+  }
 
-/*========================================================
-  SELECCIÓN DE PLANES - NUEVA LÓGICA CON CASCADA
-=========================================================*/
-function seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas, region) {
-  const uf = window.__UF_VALOR || 39700;
-  
-  function calcularPlanesDisponibles(filtroZona) {
-    const planesZona = PLANES.filter(p => p.zona === filtroZona || p.zona === 'LIBRE_ELECCION');
-    
-    const planesConValor = planesZona.map(p => {
-      const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
-      const diferencia = Math.abs(calc.totalUF - sieteUF);
-      
-      let coberturaPromedio = 0;
-      if (p.coberturas_redes && Object.keys(p.coberturas_redes).length > 0) {
-        const coberturas = Object.values(p.coberturas_redes);
-        coberturaPromedio = Math.round(coberturas.reduce((a, b) => a + b, 0) / coberturas.length);
+  function generarTablaEjecutiva(plan1, plan2, plan3, sieteUF, sieteCLP) {
+    const planes = [plan1, plan2, plan3].filter(p => p);
+    if (planes.length === 0) return '';
+    let html = `
+      <div style="margin-top:30px; margin-bottom:30px;">
+        <h3 style="color:#d4af37; text-align:center; font-size:1.3rem; margin-bottom:20px;">📊 RESUMEN EJECUTIVO - 3 PLANES MÁS CERCANOS AL 7%</h3>
+        <div style="overflow-x: auto; background:#112233; border-radius:15px; border:1px solid #d4af37; padding:0;">
+          <table style="width:100%; border-collapse:collapse; font-size:0.95rem;">
+            <thead>
+              <tr style="background:linear-gradient(90deg, #1a3a5a, #0f2640); border-bottom:2px solid #d4af37;">
+                <th style="padding:15px; text-align:left; color:#d4af37; font-weight:bold; border-right:1px solid #3a5a7a;">Plan</th>
+                <th style="padding:15px; text-align:center; color:#d4af37; font-weight:bold; border-right:1px solid #3a5a7a;">Código</th>
+                <th style="padding:15px; text-align:center; color:#d4af37; font-weight:bold; border-right:1px solid #3a5a7a;">Costo Mensual</th>
+                <th style="padding:15px; text-align:center; color:#d4af37; font-weight:bold; border-right:1px solid #3a5a7a;">Diferencia al 7%</th>
+                <th style="padding:15px; text-align:left; color:#d4af37; font-weight:bold; border-right:1px solid #3a5a7a;">Cobertura Hospitalaria</th>
+                <th style="padding:15px; text-align:left; color:#d4af37; font-weight:bold;">Consultas</th>
+              </tr>
+            </thead>
+            <tbody>
+    `;
+    planes.forEach((plan, idx) => {
+      const uf = window.__UF_VALOR || 39700;
+      const diferencia = plan.valorCalculadoUF - sieteUF;
+      const diferenciaCLP = Math.round(diferencia * uf);
+      const diferenciaPorcentaje = ((diferencia / sieteUF) * 100).toFixed(1);
+      let coberturaHospitalaria = "No especificada";
+      if (plan.hospitalizacion) {
+        coberturaHospitalaria = plan.hospitalizacion.replace(/%G41=/g, "G41: ").replace(/%G42=/g, " | G42: ").replace(/%G43=/g, " | G43: ").replace(/%G44=/g, " | G44: ").replace(/%G45=/g, " | G45: ").replace(/%G46=/g, " | G46: ").substring(0, 80) + "...";
       }
-      
-      return { 
-        ...p, 
-        valorCalculadoUF: calc.totalUF, 
-        valorCalculadoCLP: calc.totalCLP, 
-        gesUF: calc.gesUF, 
-        gesCLP: calc.gesCLP, 
-        sumaFactores: calc.sumaFactores,
-        diferencia: diferencia,
-        exceso: Math.max(0, calc.totalUF - sieteUF),
-        coberturaPromedio: coberturaPromedio
-      };
-    });
-    
-    return planesConValor;
-  }
-  
-  console.log(`🔍 Buscando planes ideales en zona: ${zona}`);
-  let planesZona = calcularPlanesDisponibles(zona);
-  
-  const rango95 = sieteUF * 0.95;
-  const rango110 = sieteUF * 1.10;
-  
-  let planesIdeales = planesZona.filter(p => 
-    p.valorCalculadoUF >= rango95 && p.valorCalculadoUF <= rango110
-  );
-  
-  console.log(`   Planes ideales encontrados: ${planesIdeales.length}`);
-  
-  if (planesIdeales.length === 0) {
-    console.log(`⚠️ Sin planes ideales en ${zona}, buscando en LIBRE_ELECCION...`);
-    const planesLibres = PLANES.filter(p => p.zona === 'LIBRE_ELECCION');
-    const planesLibresConValor = planesLibres.map(p => {
-      const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
-      const diferencia = Math.abs(calc.totalUF - sieteUF);
-      
-      let coberturaPromedio = 0;
-      if (p.coberturas_redes && Object.keys(p.coberturas_redes).length > 0) {
-        const coberturas = Object.values(p.coberturas_redes);
-        coberturaPromedio = Math.round(coberturas.reduce((a, b) => a + b, 0) / coberturas.length);
+      let consultaTexto = "Libre Elección";
+      if (plan.consulta) {
+        if (plan.consulta.tipo === 'preferente') {
+          consultaTexto = "Preferente: " + plan.consulta.valor;
+        } else {
+          consultaTexto = "Libre Elección: " + plan.consulta.valor;
+        }
       }
-      
-      return { 
-        ...p, 
-        valorCalculadoUF: calc.totalUF, 
-        valorCalculadoCLP: calc.totalCLP, 
-        gesUF: calc.gesUF, 
-        gesCLP: calc.gesCLP, 
-        sumaFactores: calc.sumaFactores,
-        diferencia: diferencia,
-        exceso: Math.max(0, calc.totalUF - sieteUF),
-        coberturaPromedio: coberturaPromedio
-      };
+      const bgColor = idx === 0 ? "#1a3a5a" : "#112233";
+      const borderColor = idx === 0 ? "#d4af37" : "#3a5a7a";
+      html += `
+        <tr style="background:${bgColor}; border-bottom:1px solid ${borderColor};">
+          <td style="padding:15px; border-right:1px solid #2a3a4a; color:#fff; font-weight:${idx === 0 ? 'bold' : 'normal'};">
+            ${idx === 0 ? '🥇 ' : (idx === 1 ? '🥈 ' : '🥉 ')}${plan.plan}
+          </td>
+          <td style="padding:15px; border-right:1px solid #2a3a4a; color:#fbbf24; text-align:center; font-weight:bold;">
+            ${plan.codigo}
+          </td>
+          <td style="padding:15px; border-right:1px solid #2a3a4a; text-align:center;">
+            <div style="color:#4ade80; font-weight:bold; font-size:1.05rem;">$${plan.valorCalculadoCLP.toLocaleString("es-CL")}</div>
+            <div style="color:#888; font-size:0.85rem;">${plan.valorCalculadoUF.toFixed(2)} UF</div>
+          </td>
+          <td style="padding:15px; border-right:1px solid #2a3a4a; text-align:center;">
+            <div style="color:${diferencia < 0 ? '#4ade80' : '#fbbf24'}; font-weight:bold;">
+              ${diferencia < 0 ? '−' : '+'}$${Math.abs(diferenciaCLP).toLocaleString("es-CL")}
+            </div>
+            <div style="color:#888; font-size:0.85rem;">${diferenciaPorcentaje > 0 ? '+' : ''}${diferenciaPorcentaje}%</div>
+          </td>
+          <td style="padding:15px; border-right:1px solid #2a3a4a; color:#b8c5d6; font-size:0.9rem;">
+            ${coberturaHospitalaria}
+          </td>
+          <td style="padding:15px; color:#b8c5d6; font-size:0.9rem;">
+            ${consultaTexto}
+          </td>
+        </tr>
+      `;
     });
-    
-    planesIdeales = planesLibresConValor.filter(p => 
-      p.valorCalculadoUF >= rango95 && p.valorCalculadoUF <= rango110
-    );
-    console.log(`   Planes ideales en LIBRE_ELECCION: ${planesIdeales.length}`);
+    html += `
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top:15px; padding:15px; background:#1a2a3a; border-radius:10px; border-left:4px solid #4ade80;">
+          <p class="small" style="margin:0; color:#b8c5d6;">
+            <strong>💡 Referencia:</strong> Tu aporte legal (7%) es de <strong style="color:#4ade80;">$${sieteCLP.toLocaleString("es-CL")}</strong>. 
+            Los planes mostrados son los más cercanos a este monto, con la opción de pagar adicional o recibir subsidio.
+          </p>
+        </div>
+      </div>
+    `;
+    return html;
   }
-  
-  function agruparPorCobertura(planes) {
-    const grupos = {
-      90: [],
-      80: [],
-      70: [],
-      60: [],
-      otros: []
-    };
-    
-    planes.forEach(p => {
-      if (p.coberturaPromedio >= 85) {
-        grupos[90].push(p);
-      } else if (p.coberturaPromedio >= 75 && p.coberturaPromedio < 85) {
-        grupos[80].push(p);
-      } else if (p.coberturaPromedio >= 65 && p.coberturaPromedio < 75) {
-        grupos[70].push(p);
-      } else if (p.coberturaPromedio >= 55 && p.coberturaPromedio < 65) {
-        grupos[60].push(p);
-      } else {
-        grupos.otros.push(p);
-      }
-    });
-    
-    Object.keys(grupos).forEach(key => {
-      grupos[key].sort((a, b) => a.diferencia - b.diferencia);
-    });
-    
-    return grupos;
-  }
-  
-  function seleccionarMejoresPorCobertura(planes) {
-    const grupos = agruparPorCobertura(planes);
-    const resultado = [];
-    
-    if (grupos[90].length > 0) resultado.push(grupos[90][0]);
-    if (grupos[80].length > 0) resultado.push(grupos[80][0]);
-    if (grupos[70].length > 0) resultado.push(grupos[70][0]);
-    if (grupos[60].length > 0) resultado.push(grupos[60][0]);
-    if (resultado.length < 2 && grupos.otros.length > 0) resultado.push(grupos.otros[0]);
-    
-    return resultado;
-  }
-  
-  if (planesIdeales.length > 0) {
-    console.log(`✅ Se encontraron ${planesIdeales.length} planes ideales`);
-    const planesSeleccionados = seleccionarMejoresPorCobertura(planesIdeales);
-    
-    return { 
-      plan1: planesSeleccionados[0] || null, 
-      plan2: planesSeleccionados[1] || null,
-      plan3: planesSeleccionados[2] || null,
-      plan4: planesSeleccionados[3] || null,
-      fuente: `Planes ideales diferenciados en ${zona}`,
-      coberturas: planesSeleccionados.map(p => p.coberturaPromedio)
-    };
-  }
-  
-  console.log(`❌ Sin planes ideales en ningún lado, buscando alternativos...`);
-  
-  let planesAlternativos = planesZona.filter(p => 
-    p.valorCalculadoUF >= sieteUF * 0.85 && p.valorCalculadoUF <= sieteUF * 1.30
-  );
-  
-  if (planesAlternativos.length === 0) {
-    console.log(`⚠️ Sin alternativos en ${zona}, buscando en LIBRE_ELECCION...`);
-    const planesLibres = PLANES.filter(p => p.zona === 'LIBRE_ELECCION');
-    const planesLibresConValor = planesLibres.map(p => {
-      const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
-      const diferencia = Math.abs(calc.totalUF - sieteUF);
-      
-      let coberturaPromedio = 0;
-      if (p.coberturas_redes && Object.keys(p.coberturas_redes).length > 0) {
-        const coberturas = Object.values(p.coberturas_redes);
-        coberturaPromedio = Math.round(coberturas.reduce((a, b) => a + b, 0) / coberturas.length);
-      }
-      
-      return { 
-        ...p, 
-        valorCalculadoUF: calc.totalUF, 
-        valorCalculadoCLP: calc.totalCLP, 
-        gesUF: calc.gesUF, 
-        gesCLP: calc.gesCLP, 
-        sumaFactores: calc.sumaFactores,
-        diferencia: diferencia,
-        exceso: Math.max(0, calc.totalUF - sieteUF),
-        coberturaPromedio: coberturaPromedio
-      };
-    });
-    
-    planesAlternativos = planesLibresConValor.filter(p => 
-      p.valorCalculadoUF >= sieteUF * 0.85 && p.valorCalculadoUF <= sieteUF * 1.30
-    );
-  }
-  
-  console.log(`✅ Planes alternativos encontrados: ${planesAlternativos.length}`);
-  
-  const planesSeleccionados = seleccionarMejoresPorCobertura(planesAlternativos);
-  
-  return { 
-    plan1: planesSeleccionados[0] || null, 
-    plan2: planesSeleccionados[1] || null,
-    plan3: planesSeleccionados[2] || null,
-    plan4: planesSeleccionados[3] || null,
-    fuente: `Planes alternativos diferenciados`,
-    coberturas: planesSeleccionados.map(p => p.coberturaPromedio)
-  };
-}
 
-/*========================================================
-  GENERAR HTML DE UN PLAN
-=========================================================*/
-function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
-  if (!plan) return '';
-  
-  const uf = window.__UF_VALOR || 39700;
-  const adicionalUF = Math.max(0, plan.valorCalculadoUF - sieteUF - (montoAdicional / uf));
-  const adicionalCLP = Math.round(adicionalUF * uf);
-
-  const esPrincipal = numero === 1;
-  const badgeClass = esPrincipal ? 'principal' : 'secundario';
-  const cardClass = esPrincipal ? '' : 'secundario';
-  
-  let badgeText = '';
-  if (numero === 1) badgeText = '🥇 MEJOR OPCIÓN';
-  else if (numero === 2) badgeText = '🥈 ALTERNATIVA 2';
-  else if (numero === 3) badgeText = '🥉 ALTERNATIVA 3';
-  else badgeText = '⭐ ALTERNATIVA 4';
-  
-  let coberturasHTML = '';
-  if (plan.hospitalizacion) {
-    coberturasHTML = `
-      <div class="coberturas-section">
-        <div class="coberturas-title">📊 Cobertura Hospitalaria</div>
-        <div class="coberturas-texto">${plan.hospitalizacion.replace(/\n/g, '<br>')}</div>
+  function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
+    if (!plan) return '';
+    const uf = window.__UF_VALOR || 39700;
+    const adicionalUF = Math.max(0, plan.valorCalculadoUF - sieteUF - (montoAdicional / uf));
+    const adicionalCLP = Math.round(adicionalUF * uf);
+    const esPrincipal = numero === 1;
+    const badgeClass = esPrincipal ? 'principal' : 'secundario';
+    const cardClass = esPrincipal ? '' : 'secundario';
+    let badgeText = '';
+    if (numero === 1) badgeText = '🥇 MEJOR OPCIÓN';
+    else if (numero === 2) badgeText = '🥈 ALTERNATIVA 2';
+    else if (numero === 3) badgeText = '🥉 ALTERNATIVA 3';
+    else badgeText = '⭐ ALTERNATIVA 4';
+    let coberturasHTML = '';
+    if (plan.hospitalizacion) {
+      coberturasHTML = `
+        <div class="coberturas-section">
+          <div class="coberturas-title">📊 Cobertura Hospitalaria</div>
+          <div class="coberturas-texto">${plan.hospitalizacion.replace(/\n/g, '<br>')}</div>
+        </div>
+      `;
+    }
+    let consultaHTML = '';
+    if (plan.consulta) {
+      const consultaTipo = plan.consulta.tipo === 'preferente' ? 'Consulta Preferente Ambulatoria' : 'Consulta Libre Elección';
+      consultaHTML = `
+        <div class="coberturas-section">
+          <div class="coberturas-title">🏥 ${consultaTipo}</div>
+          <div class="coberturas-texto">${plan.consulta.valor}</div>
+        </div>
+      `;
+    }
+    return `
+      <div class="plan-card ${cardClass}">
+        <span class="plan-badge ${badgeClass}">${badgeText}</span>
+        <div class="plan-nombre-container">
+          <span class="plan-nombre-estrella">★</span>
+          <span class="plan-nombre">${plan.plan} <span style="font-size: 0.8rem; color: #aaa;">(${plan.codigo})</span></span>
+          <span class="plan-nombre-estrella">★</span>
+        </div>
+        <div class="plan-info">
+          <div class="plan-info-item">
+            <div class="plan-info-label">Valor del Plan</div>
+            <div class="plan-info-value">$${formatearCLP(plan.valorCalculadoCLP)}</div>
+            <div class="small">${plan.valorCalculadoUF.toFixed(2)} UF</div>
+          </div>
+          <div class="plan-info-item">
+            <div class="plan-info-label">Adicional a pagar</div>
+            <div class="plan-info-value ${adicionalCLP <= 0 ? 'verde' : 'amarillo'}">$${formatearCLP(Math.max(0, adicionalCLP))}</div>
+          </div>
+          <div class="plan-info-item">
+            <div class="plan-info-label">GES incluido</div>
+            <div class="plan-info-value verde">$${formatearCLP(plan.gesCLP)}</div>
+            <div class="small">${plan.gesUF.toFixed(2)} UF</div>
+          </div>
+          <div class="plan-info-item">
+            <div class="plan-info-label">Tope anual</div>
+            <div class="plan-info-value">${formatearCLP(plan.tope_anual_uf || 7000)} UF</div>
+          </div>
+        </div>
+        ${coberturasHTML}
+        ${consultaHTML}
       </div>
     `;
   }
-  
-  let consultaHTML = '';
-  if (plan.consulta) {
-    const consultaTipo = plan.consulta.tipo === 'preferente' ? 'Consulta Preferente Ambulatoria' : 'Consulta Libre Elección';
-    consultaHTML = `
-      <div class="coberturas-section">
-        <div class="coberturas-title">🏥 ${consultaTipo}</div>
-        <div class="coberturas-texto">${plan.consulta.valor}</div>
+
+  document.getElementById("mainForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById("submitBtn");
+    const statusMsg = document.getElementById("statusMsg");
+    btn.disabled = true;
+    btn.textContent = "Calculando...";
+    statusMsg.textContent = "";
+    contadorRecalculos = 0;
+    const data = new FormData(this);
+    formularioDatos = {
+      nombre: data.get("nombre"),
+      correo: data.get("correo"),
+      telefono: data.get("telefono"),
+      edad: data.get("edad"),
+      rut: data.get("rut"),
+      isapre: data.get("isapre"),
+      renta: data.get("renta"),
+      cargas: data.get("cargas"),
+      region: data.get("region"),
+      mensaje: data.get("mensaje")
+    };
+    const camposObligatorios = ['nombre', 'correo', 'telefono', 'edad', 'rut', 'isapre', 'renta', 'region'];
+    const faltanCampos = camposObligatorios.filter(campo => !formularioDatos[campo]);
+    if (faltanCampos.length > 0) {
+      statusMsg.textContent = "❌ Por favor completa todos los campos requeridos";
+      statusMsg.className = "small error-msg";
+      btn.disabled = false;
+      btn.textContent = "Cotizar Ahora";
+      return;
+    }
+    const uf = window.__UF_VALOR || 39700;
+    const renta = Number(formularioDatos.renta);
+    const edadTitular = Number(formularioDatos.edad);
+    const cargasTexto = (formularioDatos.cargas || "").replace(/\n/g, ", ").trim();
+    const edadesCargas = cargasTexto.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean).map(Number).filter(n => !isNaN(n) && n >= 0 && n <= 120);
+    const calcSiete = calcularSietePorCiento(renta, uf);
+    const sieteCLP = calcSiete.sietePorCientoCLP;
+    const sieteUF = calcSiete.sietePorCientoUF;
+    const rtiAplicado = calcSiete.rtiAplicado;
+    const zona = REGION_A_ZONA[formularioDatos.region] || 'SANTIAGO';
+    const { plan1, plan2, plan3, plan4, fuente, coberturas } = seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas, formularioDatos.region);
+    ultimoResultado = { sieteCLP, sieteUF, edadesCargas, cargasTexto, zona, plan1, plan2, plan3, plan4, edadTitular };
+    try {
+      const plan1Nombre = plan1 ? plan1.plan : 'Sin plan disponible';
+      const plan2Nombre = plan2 ? plan2.plan : 'Sin plan disponible';
+      const params = new URLSearchParams();
+      params.append(FORM_FIELDS.nombre, formularioDatos.nombre);
+      params.append(FORM_FIELDS.rut, formularioDatos.rut);
+      params.append(FORM_FIELDS.correo, formularioDatos.correo);
+      params.append(FORM_FIELDS.telefono, formularioDatos.telefono);
+      params.append(FORM_FIELDS.edad, formularioDatos.edad);
+      params.append(FORM_FIELDS.isapre, formularioDatos.isapre);
+      params.append(FORM_FIELDS.renta, formularioDatos.renta);
+      params.append(FORM_FIELDS.region, formularioDatos.region);
+      params.append(FORM_FIELDS.cargas, cargasTexto || 'Sin cargas');
+      params.append(FORM_FIELDS.mensaje, formularioDatos.mensaje || "(sin mensaje)");
+      params.append(FORM_FIELDS.plan1, plan1Nombre);
+      params.append(FORM_FIELDS.plan2, plan2Nombre);
+      params.append(FORM_FIELDS.asesorid, asesorKey);
+      fetch(FORM_BASE_URL, { method: "POST", headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: params.toString() }).catch(() => {});
+      statusMsg.textContent = "✅ Datos enviados correctamente";
+      statusMsg.className = "small success-msg";
+    } catch (err) {
+      statusMsg.textContent = "⚠️ Error al enviar";
+      statusMsg.className = "small error-msg";
+    }
+    const resultadoDetalle = document.getElementById("resultadoDetalle");
+    let htmlResultado = `
+      <div class="resumen-cotizacion">
+        <div class="resumen-titulo">📊 Resumen de tu Cotización</div>
+        <div class="resumen-grid">
+          <div class="resumen-item">
+            <div class="resumen-label">Tu Renta Mensual</div>
+            <div class="resumen-value">$${formatearCLP(renta)}</div>
+          </div>
+          <div class="resumen-item">
+            <div class="resumen-label">7% Legal (Aporte)</div>
+            <div class="resumen-value destacado">$${formatearCLP(sieteCLP)}</div>
+            <div class="resumen-uf">${sieteUF.toFixed(2)} UF</div>
+          </div>
+          <div class="resumen-item">
+            <div class="resumen-label">Titular</div>
+            <div class="resumen-value">${edadTitular} años</div>
+          </div>
+          <div class="resumen-item">
+            <div class="resumen-label">Cargas Familiares</div>
+            <div class="resumen-value">${edadesCargas.length}</div>
+            <div class="resumen-uf">${cargasTexto || 'Sin cargas'}</div>
+          </div>
+          <div class="resumen-item">
+            <div class="resumen-label">Zona de Cobertura</div>
+            <div class="resumen-value">${zona}</div>
+          </div>
+        </div>
+        ${rtiAplicado ? '<p class="small" style="color:#fbbf24; margin-top:10px;">⚠️ Nota: Se aplicó límite RTI de 87.8 UF en renta imponible</p>' : ''}
       </div>
     `;
-  }
-  
-  return `
-    <div class="plan-card ${cardClass}">
-      <span class="plan-badge ${badgeClass}">${badgeText}</span>
-      
-      <div class="plan-nombre-container">
-        <span class="plan-nombre-estrella">★</span>
-        <span class="plan-nombre">${plan.plan} <span style="font-size: 0.8rem; color: #aaa;">(${plan.codigo})</span></span>
-        <span class="plan-nombre-estrella">★</span>
+    htmlResultado += generarTablaEjecutiva(plan1, plan2, plan3, sieteUF, sieteCLP);
+    if (plan1) htmlResultado += generarHTMLPlan(plan1, 1, sieteUF, sieteCLP, 0);
+    if (plan2) htmlResultado += generarHTMLPlan(plan2, 2, sieteUF, sieteCLP, 0);
+    if (plan3) htmlResultado += generarHTMLPlan(plan3, 3, sieteUF, sieteCLP, 0);
+    if (plan4) htmlResultado += generarHTMLPlan(plan4, 4, sieteUF, sieteCLP, 0);
+    htmlResultado += `
+      <div class="mejorar-cobertura">
+        <div class="mejorar-titulo">💰 ¿Quieres Mejorar tu Cobertura?</div>
+        <p class="mejorar-texto">Ingresa un monto adicional mensual para ver planes con más beneficios:</p>
+        <div class="mejorar-input-container">
+          <input type="number" id="inputAdicional" class="mejorar-input" placeholder="Ej: 50000" min="0" />
+          <button type="button" id="btnRecalcular" class="btn-recalcular">🔄 Recalcular</button>
+        </div>
+        <p class="small" style="color:#888; margin-top:10px;">Podrás recalcular hasta 2 veces. Recálculos restantes: <span id="recalculosRestantes">${MAX_RECALCULOS - contadorRecalculos}</span></p>
       </div>
-      
-      <div class="plan-info">
-        <div class="plan-info-item">
-          <div class="plan-info-label">Valor del Plan</div>
-          <div class="plan-info-value">$${formatearCLP(plan.valorCalculadoCLP)}</div>
-          <div class="small">${plan.valorCalculadoUF.toFixed(2)} UF</div>
-        </div>
-        <div class="plan-info-item">
-          <div class="plan-info-label">Adicional a pagar</div>
-          <div class="plan-info-value ${adicionalCLP <= 0 ? 'verde' : 'amarillo'}">$${formatearCLP(Math.max(0, adicionalCLP))}</div>
-        </div>
-        <div class="plan-info-item">
-          <div class="plan-info-label">GES incluido</div>
-          <div class="plan-info-value verde">$${formatearCLP(plan.gesCLP)}</div>
-          <div class="small">${plan.gesUF.toFixed(2)} UF</div>
-        </div>
-        <div class="plan-info-item">
-          <div class="plan-info-label">Tope anual</div>
-          <div class="plan-info-value">${formatearCLP(plan.tope_anual_uf || 7000)} UF</div>
-        </div>
-      </div>
-      
-      ${coberturasHTML}
-      ${consultaHTML}
-    </div>
-  `;
-}
-
-/*========================================================
-  FORMULARIO PRINCIPAL
-=========================================================*/
-document.getElementById("mainForm").addEventListener("submit", async function(e) {
-  e.preventDefault();
-
-  const btn = document.getElementById("submitBtn");
-  const statusMsg = document.getElementById("statusMsg");
-  
-  btn.disabled = true;
-  btn.textContent = "Calculando...";
-  statusMsg.textContent = "";
-  contadorRecalculos = 0;
-
-  const data = new FormData(this);
-
-  formularioDatos = {
-    nombre: data.get("nombre"),
-    correo: data.get("correo"),
-    telefono: data.get("telefono"),
-    edad: data.get("edad"),
-    rut: data.get("rut"),
-    isapre: data.get("isapre"),
-    renta: data.get("renta"),
-    cargas: data.get("cargas"),
-    region: data.get("region"),
-    mensaje: data.get("mensaje")
-  };
-  
-  const camposObligatorios = ['nombre', 'correo', 'telefono', 'edad', 'rut', 'isapre', 'renta', 'region'];
-  const faltanCampos = camposObligatorios.filter(campo => !formularioDatos[campo]);
-  
-  if (faltanCampos.length > 0) {
-    statusMsg.textContent = "❌ Por favor completa todos los campos requeridos";
-    statusMsg.className = "small error-msg";
+    `;
+    resultadoDetalle.innerHTML = htmlResultado;
+    document.getElementById("resultado-preliminar").style.display = "block";
+    document.getElementById("btnRecalcular").addEventListener("click", recalcularConAdicional);
+    document.getElementById("btnAsesoria").addEventListener("click", function() {
+      const sieteCLPMsg = sieteCLP.toLocaleString("es-CL");
+      const plan1Msg = plan1 ? plan1.plan : "No disponible";
+      const plan2Msg = plan2 ? plan2.plan : "No disponible";
+      const mensaje = `Hola ${ASESOR_NOMBRE}, quisiera recibir asesoría sobre mis opciones de planes. Mi 7% es $${sieteCLPMsg}. Planes recomendados: ${plan1Msg} y ${plan2Msg}. Mis cargas son: ${cargasTexto || 'sin cargas'}.`;
+      const urlWA = `https://wa.me/${WHATSAPP_ASESORIA}?text=${encodeURIComponent(mensaje)}`;
+      window.open(urlWA, "_blank");
+    });
+    document.getElementById("btnBuscarClinicaDesdeResultados").addEventListener("click", mostrarBusquedaClinica);
+    document.getElementById("btnBuscarClinicaFormulario").addEventListener("click", mostrarBusquedaClinica);
+    function mostrarBusquedaClinica() {
+      document.getElementById("seccionBusquedaClinica").style.display = "block";
+      document.getElementById("seccionBusquedaClinica").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
     btn.disabled = false;
     btn.textContent = "Cotizar Ahora";
-    return;
-  }
-
-  const uf = window.__UF_VALOR || 39700;
-  const renta = Number(formularioDatos.renta);
-  const edadTitular = Number(formularioDatos.edad);
-  
-  const cargasTexto = (formularioDatos.cargas || "").replace(/\n/g, ", ").trim();
-  const edadesCargas = cargasTexto.split(/[\n,;]+/)
-    .map(s => s.trim())
-    .filter(Boolean)
-    .map(Number)
-    .filter(n => !isNaN(n) && n >= 0 && n <= 120);
-  
-  const calcSiete = calcularSietePorCiento(renta, uf);
-  const sieteCLP = calcSiete.sietePorCientoCLP;
-  const sieteUF = calcSiete.sietePorCientoUF;
-  const rtiAplicado = calcSiete.rtiAplicado;
-  
-  const zona = REGION_A_ZONA[formularioDatos.region] || 'SANTIAGO';
-  
-  const { plan1, plan2, plan3, plan4, fuente, coberturas } = seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas, formularioDatos.region);
-  
-  ultimoResultado = { sieteCLP, sieteUF, edadesCargas, cargasTexto, zona, plan1, plan2, plan3, plan4, edadTitular };
-
-  try {
-    const plan1Nombre = plan1 ? plan1.plan : 'Sin plan disponible';
-    const plan2Nombre = plan2 ? plan2.plan : 'Sin plan disponible';
-    
-    const params = new URLSearchParams();
-    params.append(FORM_FIELDS.nombre, formularioDatos.nombre);
-    params.append(FORM_FIELDS.rut, formularioDatos.rut);
-    params.append(FORM_FIELDS.correo, formularioDatos.correo);
-    params.append(FORM_FIELDS.telefono, formularioDatos.telefono);
-    params.append(FORM_FIELDS.edad, formularioDatos.edad);
-    params.append(FORM_FIELDS.isapre, formularioDatos.isapre);
-    params.append(FORM_FIELDS.renta, formularioDatos.renta);
-    params.append(FORM_FIELDS.region, formularioDatos.region);
-    params.append(FORM_FIELDS.cargas, cargasTexto || 'Sin cargas');
-    params.append(FORM_FIELDS.mensaje, formularioDatos.mensaje || "(sin mensaje)");
-    params.append(FORM_FIELDS.plan1, plan1Nombre);
-    params.append(FORM_FIELDS.plan2, plan2Nombre);
-    params.append(FORM_FIELDS.asesorid, asesorKey);
-
-    fetch(FORM_BASE_URL, { 
-      method: "POST", 
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: params.toString()
-    }).catch(() => {});
-
-    statusMsg.textContent = "✅ Datos enviados correctamente";
-    statusMsg.className = "small success-msg";
-  } catch (err) {
-    statusMsg.textContent = "⚠️ Error al enviar";
-    statusMsg.className
-    statusMsg.className = "small error-msg";
-  }
-
-  // Mostrar resultados
-  const resultadoDetalle = document.getElementById("resultadoDetalle");
-  let htmlResultado = `
-    <div class="resumen-cotizacion">
-      <div class="resumen-titulo">📊 Resumen de tu Cotización</div>
-      <div class="resumen-grid">
-        <div class="resumen-item">
-          <div class="resumen-label">Tu Renta Mensual</div>
-          <div class="resumen-value">$${formatearCLP(renta)}</div>
-        </div>
-        <div class="resumen-item">
-          <div class="resumen-label">7% Legal (Aporte)</div>
-          <div class="resumen-value destacado">$${formatearCLP(sieteCLP)}</div>
-          <div class="resumen-uf">${sieteUF.toFixed(2)} UF</div>
-        </div>
-        <div class="resumen-item">
-          <div class="resumen-label">Titular</div>
-          <div class="resumen-value">${edadTitular} años</div>
-        </div>
-        <div class="resumen-item">
-          <div class="resumen-label">Cargas Familiares</div>
-          <div class="resumen-value">${edadesCargas.length}</div>
-          <div class="resumen-uf">${cargasTexto || 'Sin cargas'}</div>
-        </div>
-        <div class="resumen-item">
-          <div class="resumen-label">Zona de Cobertura</div>
-          <div class="resumen-value">${zona}</div>
-        </div>
-      </div>
-      ${rtiAplicado ? '<p class="small" style="color:#fbbf24; margin-top:10px;">⚠️ Nota: Se aplicó límite RTI de 87.8 UF en renta imponible</p>' : ''}
-    </div>
-  `;
-
-  if (plan1) htmlResultado += generarHTMLPlan(plan1, 1, sieteUF, sieteCLP, 0);
-  if (plan2) htmlResultado += generarHTMLPlan(plan2, 2, sieteUF, sieteCLP, 0);
-  if (plan3) htmlResultado += generarHTMLPlan(plan3, 3, sieteUF, sieteCLP, 0);
-  if (plan4) htmlResultado += generarHTMLPlan(plan4, 4, sieteUF, sieteCLP, 0);
-
-  htmlResultado += `
-    <div class="mejorar-cobertura">
-      <div class="mejorar-titulo">💰 ¿Quieres Mejorar tu Cobertura?</div>
-      <p class="mejorar-texto">Ingresa un monto adicional mensual para ver planes con más beneficios:</p>
-      <div class="mejorar-input-container">
-        <input type="number" id="inputAdicional" class="mejorar-input" placeholder="Ej: 50000" min="0" />
-        <button type="button" id="btnRecalcular" class="btn-recalcular">🔄 Recalcular</button>
-      </div>
-      <p class="small" style="color:#888; margin-top:10px;">Podrás recalcular hasta 2 veces. Recálculos restantes: <span id="recalculosRestantes">${MAX_RECALCULOS - contadorRecalculos}</span></p>
-    </div>
-  `;
-
-  resultadoDetalle.innerHTML = htmlResultado;
-  document.getElementById("resultado-preliminar").style.display = "block";
-  
-  // Event listener para recalcular
-  document.getElementById("btnRecalcular").addEventListener("click", recalcularConAdicional);
-  
-  // Event listeners para botones de acción
-  document.getElementById("btnAsesoria").addEventListener("click", function() {
-    const sieteCLPMsg = sieteCLP.toLocaleString("es-CL");
-    const plan1Msg = plan1 ? plan1.plan : "No disponible";
-    const plan2Msg = plan2 ? plan2.plan : "No disponible";
-    const mensaje = `Hola ${ASESOR_NOMBRE}, quisiera recibir asesoría sobre mis opciones de planes. Mi 7% es $${sieteCLPMsg}. Planes recomendados: ${plan1Msg} y ${plan2Msg}. Mis cargas son: ${cargasTexto || 'sin cargas'}.`;
-    
-    const urlWA = `https://wa.me/${WHATSAPP_ASESORIA}?text=${encodeURIComponent(mensaje)}`;
-    window.open(urlWA, "_blank");
   });
 
-  document.getElementById("btnBuscarClinicaDesdeResultados").addEventListener("click", mostrarBusquedaClinica);
-  document.getElementById("btnBuscarClinicaFormulario").addEventListener("click", mostrarBusquedaClinica);
-  
-  function mostrarBusquedaClinica() {
-    document.getElementById("seccionBusquedaClinica").style.display = "block";
-    document.getElementById("seccionBusquedaClinica").scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
-  btn.disabled = false;
-  btn.textContent = "Cotizar Ahora";
-});
-
-/*========================================================
-  RECALCULAR CON MONTO ADICIONAL
-=========================================================*/
-function recalcularConAdicional() {
-  if (contadorRecalculos >= MAX_RECALCULOS) {
-    alert(`❌ Has alcanzado el máximo de ${MAX_RECALCULOS} recálculos. Contacta a ${ASESOR_NOMBRE} para más opciones.`);
-    return;
-  }
-
-  const inputAdicional = document.getElementById("inputAdicional").value;
-  if (!inputAdicional || isNaN(inputAdicional) || Number(inputAdicional) < 0) {
-    alert("Por favor ingresa un monto válido");
-    return;
-  }
-
-  const montoAdicional = Number(inputAdicional);
-  const uf = window.__UF_VALOR || 39700;
-  const nuevoPresupuesto = ultimoResultado.sieteCLP + montoAdicional;
-  const nuevoPresupuestoUF = nuevoPresupuesto / uf;
-
-  const { plan1, plan2, plan3, plan4 } = seleccionarPlanes(nuevoPresupuestoUF, ultimoResultado.zona, ultimoResultado.edadTitular, ultimoResultado.edadesCargas, formularioDatos.region);
-
-  contadorRecalculos++;
-
-  let htmlNuevos = `
-    <div style="margin-top:40px; padding:20px; background:#1a2a3a; border-left:4px solid #4ade80; border-radius:10px;">
-      <h3 style="color:#4ade80; margin-top:0;">Recálculo #${contadorRecalculos} - Presupuesto Ampliado</h3>
-      <p class="small">Nuevo presupuesto: <strong>$${formatearCLP(nuevoPresupuesto)}</strong> (${nuevoPresupuestoUF.toFixed(2)} UF)</p>
-      <div style="margin-top:15px;">
-  `;
-
-  if (plan1) htmlNuevos += generarHTMLPlan(plan1, 1, nuevoPresupuestoUF, nuevoPresupuesto, montoAdicional);
-  if (plan2) htmlNuevos += generarHTMLPlan(plan2, 2, nuevoPresupuestoUF, nuevoPresupuesto, montoAdicional);
-  if (plan3) htmlNuevos += generarHTMLPlan(plan3, 3, nuevoPresupuestoUF, nuevoPresupuesto, montoAdicional);
-  if (plan4) htmlNuevos += generarHTMLPlan(plan4, 4, nuevoPresupuestoUF, nuevoPresupuesto, montoAdicional);
-
-  htmlNuevos += `
-      </div>
-    </div>
-  `;
-
-  document.getElementById("resultadoDetalle").innerHTML += htmlNuevos;
-  document.getElementById("recalculosRestantes").textContent = MAX_RECALCULOS - contadorRecalculos;
-
-  if (contadorRecalculos >= MAX_RECALCULOS) {
-    document.getElementById("btnRecalcular").disabled = true;
-    document.getElementById("btnRecalcular").textContent = "Máximo de recálculos alcanzado";
-  }
-
-  ultimoResultado = { ...ultimoResultado, sieteCLP: nuevoPresupuesto, sieteUF: nuevoPresupuestoUF, plan1, plan2, plan3, plan4 };
-}
-
-/*========================================================
-  BÚSQUEDA POR CLÍNICA FAVORITA
-=========================================================*/
-document.getElementById("btnBuscarClinica").addEventListener("click", function() {
-  const nombreClinica = document.getElementById("inputBuscadorClinica").value.trim().toUpperCase();
-  
-  if (!nombreClinica) {
-    alert("Por favor ingresa el nombre de la clínica");
-    return;
-  }
-
-  const resultadoDiv = document.getElementById("resultadoBusquedaClinica");
-  resultadoDiv.innerHTML = '<p class="small">🔍 Buscando clínicas...</p>';
-
-  let clinicasEncontradas = [];
-  
-  for (const [grupo, clinicas] of Object.entries(GRUPOS_GX)) {
-    clinicas.forEach(clinica => {
-      if (clinica.nombre.toUpperCase().includes(nombreClinica)) {
-        clinicasEncontradas.push({ clinica, grupo });
-      }
-    });
-  }
-
-  if (clinicasEncontradas.length === 0) {
-    resultadoDiv.innerHTML = '<p class="small error-msg">❌ No encontramos clínicas con ese nombre. Intenta con otro nombre.</p>';
-    return;
-  }
-
-  let html = `
-    <div style="margin-top:20px; padding:20px; background:linear-gradient(135deg, #0f2640, #1a3a5a); border-radius:15px; border:1px solid #4ade80;">
-      <h3 style="color:#4ade80; margin-top:0;">✅ Clínicas Encontradas (${clinicasEncontradas.length})</h3>
-      <div style="margin-bottom:20px;">
-  `;
-
-  clinicasEncontradas.forEach(({ clinica, grupo }) => {
-    html += `
-      <div style="background:#112233; padding:15px; margin-bottom:12px; border-radius:8px; border-left:3px solid #4ade80;">
-        <p style="margin:0; color:#4ade80; font-weight:bold;">${clinica.nombre}</p>
-        <p style="margin:5px 0; color:#888; font-size:0.9rem;">${clinica.ciudad} - ${clinica.region}</p>
-        <p style="margin:5px 0; color:#d4af37; font-size:0.85rem; font-weight:bold;">📍 ${grupo}</p>
+  function recalcularConAdicional() {
+    if (contadorRecalculos >= MAX_RECALCULOS) {
+      alert(`❌ Has alcanzado el máximo de ${MAX_RECALCULOS} recálculos. Contacta a ${ASESOR_NOMBRE} para más opciones.`);
+      return;
+    }
+    const inputAdicional = document.getElementById("inputAdicional").value;
+    if (!inputAdicional || isNaN(inputAdicional) || Number(inputAdicional) < 0) {
+      alert("Por favor ingresa un monto válido");
+      return;
+    }
+    const montoAdicional = Number(inputAdicional);
+    const uf = window.__UF_VALOR || 39700;
+    const nuevoPresupuesto = ultimoResultado.sieteCLP + montoAdicional;
+    const nuevoPresupuestoUF = nuevoPresupuesto / uf;
+    const { plan1, plan2, plan3, plan4 } = seleccionarPlanes(nuevoPresupuestoUF, ultimoResultado.zona, ultimoResultado.edadTitular, ultimoResultado.edadesCargas, formularioDatos.region);
+    contadorRecalculos++;
+    let htmlNuevos = `
+      <div style="margin-top:40px; padding:20px; background:#1a2a3a; border-left:4px solid #4ade80; border-radius:10px;">
+        <h3 style="color:#4ade80; margin-top:0;">Recálculo #${contadorRecalculos} - Presupuesto Ampliado</h3>
+        <p class="small">Nuevo presupuesto: <strong>$${formatearCLP(nuevoPresupuesto)}</strong> (${nuevoPresupuestoUF.toFixed(2)} UF)</p>
+        <div style="margin-top:15px;">
+    `;
+    if (plan1) htmlNuevos += generarHTMLPlan(plan1, 1, nuevoPresupuestoUF, nuevoPresupuesto, montoAdicional);
+    if (plan2) htmlNuevos += generarHTMLPlan(plan2, 2, nuevoPresupuestoUF, nuevoPresupuesto, montoAdicional);
+    if (plan3) htmlNuevos += generarHTMLPlan(plan3, 3, nuevoPresupuestoUF, nuevoPresupuesto, montoAdicional);
+    if (plan4) htmlNuevos += generarHTMLPlan(plan4, 4, nuevoPresupuestoUF, nuevoPresupuesto, montoAdicional);
+    htmlNuevos += `
+        </div>
       </div>
     `;
-  });
+    document.getElementById("resultadoDetalle").innerHTML += htmlNuevos;
+    document.getElementById("recalculosRestantes").textContent = MAX_RECALCULOS - contadorRecalculos;
+    if (contadorRecalculos >= MAX_RECALCULOS) {
+      document.getElementById("btnRecalcular").disabled = true;
+      document.getElementById("btnRecalcular").textContent = "Máximo de recálculos alcanzado";
+    }
+    ultimoResultado = { ...ultimoResultado, sieteCLP: nuevoPresupuesto, sieteUF: nuevoPresupuestoUF, plan1, plan2, plan3, plan4 };
+  }
 
-  html += `</div>`;
-
-  if (ultimoResultado && ultimoResultado.plan1) {
-    html += `
-      <div style="margin-top:20px; padding:20px; background:#1a2a3a; border-radius:10px; border-left:4px solid #d4af37;">
-        <h4 style="color:#d4af37; margin-top:0;">📋 Planes que cubren estas clínicas</h4>
-        <p class="small" style="color:#b8c5d6; margin-bottom:15px;">Los siguientes planes tienen cobertura en la red de clínicas encontradas:</p>
-        <div style="display:grid; gap:12px;">
+  document.getElementById("btnBuscarClinica").addEventListener("click", function() {
+    const nombreClinica = document.getElementById("inputBuscadorClinica").value.trim().toUpperCase();
+    if (!nombreClinica) {
+      alert("Por favor ingresa el nombre de la clínica");
+      return;
+    }
+    const resultadoDiv = document.getElementById("resultadoBusquedaClinica");
+    resultadoDiv.innerHTML = '<p class="small">🔍 Buscando clínicas...</p>';
+    let clinicasEncontradas = [];
+    for (const [grupo, clinicas] of Object.entries(GRUPOS_GX)) {
+      clinicas.forEach(clinica => {
+        if (clinica.nombre.toUpperCase().includes(nombreClinica)) {
+          clinicasEncontradas.push({ clinica, grupo });
+        }
+      });
+    }
+    if (clinicasEncontradas.length === 0) {
+      resultadoDiv.innerHTML = '<p class="small error-msg">❌ No encontramos clínicas con ese nombre. Intenta con otro nombre.</p>';
+      return;
+    }
+    let html = `
+      <div style="margin-top:20px; padding:20px; background:linear-gradient(135deg, #0f2640, #1a3a5a); border-radius:15px; border:1px solid #4ade80;">
+        <h3 style="color:#4ade80; margin-top:0;">✅ Clínicas Encontradas (${clinicasEncontradas.length})</h3>
+        <div style="margin-bottom:20px;">
     `;
-
-    const planesRecomendados = [ultimoResultado.plan1, ultimoResultado.plan2, ultimoResultado.plan3, ultimoResultado.plan4].filter(p => p);
-    
-    planesRecomendados.forEach((plan, idx) => {
-      if (!plan) return;
-      
-      const tieneCobertura = plan.coberturas_redes && Object.keys(plan.coberturas_redes).length > 0;
-      const coberturaTexto = tieneCobertura ? `Con cobertura de ${Object.keys(plan.coberturas_redes).join(', ')}` : "Cobertura variable según grupo";
-      
+    clinicasEncontradas.forEach(({ clinica, grupo }) => {
       html += `
-        <div style="background:#112233; padding:15px; border-radius:8px; border-left:3px solid #d4af37;">
-          <p style="margin:0; color:#fff; font-weight:bold;">${plan.plan}</p>
-          <p style="margin:5px 0; color:#888; font-size:0.9rem;">${coberturaTexto}</p>
-          <p style="margin:5px 0; color:#4ade80; font-weight:bold;">$${formatearCLP(plan.valorCalculadoCLP)} (${plan.valorCalculadoUF.toFixed(2)} UF)</p>
+        <div style="background:#112233; padding:15px; margin-bottom:12px; border-radius:8px; border-left:3px solid #4ade80;">
+          <p style="margin:0; color:#4ade80; font-weight:bold;">${clinica.nombre}</p>
+          <p style="margin:5px 0; color:#888; font-size:0.9rem;">${clinica.ciudad} - ${clinica.region}</p>
+          <p style="margin:5px 0; color:#d4af37; font-size:0.85rem; font-weight:bold;">📍 ${grupo}</p>
         </div>
       `;
     });
-
-    html += `
+    html += `</div>`;
+    if (ultimoResultado && ultimoResultado.plan1) {
+      html += `
+        <div style="margin-top:20px; padding:20px; background:#1a2a3a; border-radius:10px; border-left:4px solid #d4af37;">
+          <h4 style="color:#d4af37; margin-top:0;">📋 Planes que cubren estas clínicas</h4>
+          <p class="small" style="color:#b8c5d6; margin-bottom:15px;">Los siguientes planes tienen cobertura en la red de clínicas encontradas:</p>
+          <div style="display:grid; gap:12px;">
+      `;
+      const planesRecomendados = [ultimoResultado.plan1, ultimoResultado.plan2, ultimoResultado.plan3, ultimoResultado.plan4].filter(p => p);
+      planesRecomendados.forEach((plan, idx) => {
+        if (!plan) return;
+        const tieneCobertura = plan.coberturas_redes && Object.keys(plan.coberturas_redes).length > 0;
+        const coberturaTexto = tieneCobertura ? `Con cobertura de ${Object.keys(plan.coberturas_redes).join(', ')}` : "Cobertura variable según grupo";
+        html += `
+          <div style="background:#112233; padding:15px; border-radius:8px; border-left:3px solid #d4af37;">
+            <p style="margin:0; color:#fff; font-weight:bold;">${plan.plan}</p>
+            <p style="margin:5px 0; color:#888; font-size:0.9rem;">${coberturaTexto}</p>
+            <p style="margin:5px 0; color:#4ade80; font-weight:bold;">$${formatearCLP(plan.valorCalculadoCLP)} (${plan.valorCalculadoUF.toFixed(2)} UF)</p>
+          </div>
+        `;
+      });
+      html += `
+          </div>
+          <button type="button" id="btnEnviarClinica" class="btn-enviar-clinica" style="width:100%; margin-top:20px;">📲 Solicitar Información de Cobertura</button>
         </div>
-        <button type="button" id="btnEnviarClinica" class="btn-enviar-clinica" style="width:100%; margin-top:20px;">📲 Solicitar Información de Cobertura</button>
-      </div>
-    `;
-  }
+      `;
+    }
+    html += `</div>`;
+    resultadoDiv.innerHTML = html;
+    resultadoDiv.classList.add("busqueda-clinica-resultado");
+    document.getElementById("btnEnviarClinica").addEventListener("click", function() {
+      const clinicasTexto = clinicasEncontradas.map(c => `${c.clinica.nombre} (${c.clinica.ciudad})`).join(", ");
+      const planesTexto = [ultimoResultado.plan1, ultimoResultado.plan2, ultimoResultado.plan3, ultimoResultado.plan4].filter(p => p).map(p => p.plan).join(", ");
+      const mensaje = `Hola ${ASESOR_NOMBRE}, estoy interesado en conocer la cobertura exacta de mis planes en las siguientes clínicas: ${clinicasTexto}. Mis planes cotizados son: ${planesTexto}.`;
+      const urlWA = `https://wa.me/${WHATSAPP_ASESORIA}?text=${encodeURIComponent(mensaje)}`;
+      window.open(urlWA, "_blank");
+    });
+  });
 
-  html += `</div>`;
+  document.getElementById("inputBuscadorClinica").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+      document.getElementById("btnBuscarClinica").click();
+    }
+  });
 
-  resultadoDiv.innerHTML = html;
-  resultadoDiv.classList.add("busqueda-clinica-resultado");
-
-  document.getElementById("btnEnviarClinica").addEventListener("click", function() {
-    const clinicasTexto = clinicasEncontradas.map(c => `${c.clinica.nombre} (${c.clinica.ciudad})`).join(", ");
-    const planesTexto = [ultimoResultado.plan1, ultimoResultado.plan2, ultimoResultado.plan3, ultimoResultado.plan4]
-      .filter(p => p)
-      .map(p => p.plan)
-      .join(", ");
-    
-    const mensaje = `Hola ${ASESOR_NOMBRE}, estoy interesado en conocer la cobertura exacta de mis planes en las siguientes clínicas: ${clinicasTexto}. Mis planes cotizados son: ${planesTexto}.`;
-    
+  document.getElementById("btnEnviarUsuario").addEventListener("click", function() {
+    if (!ultimoResultado || !ultimoResultado.plan1) {
+      alert("Por favor cotiza primero");
+      return;
+    }
+    const sieteCLPMsg = ultimoResultado.sieteCLP.toLocaleString("es-CL");
+    const plan1 = ultimoResultado.plan1.plan;
+    const plan2 = ultimoResultado.plan2 ? ultimoResultado.plan2.plan : "No disponible";
+    const cargasMsg = ultimoResultado.cargasTexto || "Sin cargas";
+    const mensaje = `Hola ${ASESOR_NOMBRE}, \n\nQuisiera recibir el resumen de mi cotización y documentos requeridos para afiliación.\n\n*Mi Información:*\n• Nombre: ${formularioDatos.nombre}\n• Rut: ${formularioDatos.rut}\n• Edad: ${formularioDatos.edad}\n• Correo: ${formularioDatos.correo}\n• 7% aporte: $${sieteCLPMsg}\n\n*Planes Recomendados:*\n• Plan 1: ${plan1}\n• Plan 2: ${plan2}\n\n*Cargas Familiares:* ${cargasMsg}\n\n¿Cuáles son los documentos requeridos para formalizar la afiliación?`;
     const urlWA = `https://wa.me/${WHATSAPP_ASESORIA}?text=${encodeURIComponent(mensaje)}`;
     window.open(urlWA, "_blank");
   });
+
+  document.getElementById("formReferidos").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const nombreUsuario = document.getElementById("nombreUsuario").value;
+    const nombreReferido = document.getElementById("nombreReferido").value;
+    const telefonoReferido = document.getElementById("telefonoReferido").value;
+    const correoReferido = document.getElementById("correoReferido").value;
+    const params = new URLSearchParams();
+    params.append(REFERIDOS_FIELDS.tu_nombre, nombreUsuario);
+    params.append(REFERIDOS_FIELDS.nombre_referido, nombreReferido);
+params.append(REFERIDOS_FIELDS.telefono_referido, telefonoReferido);
+params.append(REFERIDOS_FIELDS.correo_referido, correoReferido);
+params.append(REFERIDOS_FIELDS.mensaje_adicional, Referido realizado a través de ${asesorKey});
+params.append(REFERIDOS_FIELDS.asesorid_referidos, asesorKey);
+try {
+fetch(GOOGLE_FORM_REFERIDOS_URL, {
+method: "POST",
+headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+body: params.toString()
+}).catch(() => {});
+document.getElementById("mensajeExitoReferido").style.display = "block";
+document.getElementById("mensajeErrorReferido").style.display = "none";
+document.getElementById("formReferidos").reset();
+setTimeout(() => {
+document.getElementById("mensajeExitoReferido").style.display = "none";
+}, 4000);
+} catch (err) {
+document.getElementById("mensajeErrorReferido").style.display = "block";
+document.getElementById("mensajeExitoReferido").style.display = "none";
+}
 });
-
-document.getElementById("inputBuscadorClinica").addEventListener("keypress", function(e) {
-  if (e.key === "Enter") {
-    document.getElementById("btnBuscarClinica").click();
-  }
-});
-
-/*========================================================
-  BOTÓN ENVIAR POR WHATSAPP
-=========================================================*/
-document.getElementById("btnEnviarUsuario").addEventListener("click", function() {
-  if (!ultimoResultado || !ultimoResultado.plan1) {
-    alert("Por favor cotiza primero");
-    return;
-  }
-
-  const sieteCLPMsg = ultimoResultado.sieteCLP.toLocaleString("es-CL");
-  const plan1 = ultimoResultado.plan1.plan;
-  const plan2 = ultimoResultado.plan2 ? ultimoResultado.plan2.plan : "No disponible";
-  const cargasMsg = ultimoResultado.cargasTexto || "Sin cargas";
-
-  const mensaje = `Hola ${ASESOR_NOMBRE}, 
-
-Quisiera recibir el resumen de mi cotización y documentos requeridos para afiliación.
-
-*Mi Información:*
-- Nombre: ${formularioDatos.nombre}
-- Rut: ${formularioDatos.rut}
-- Edad: ${formularioDatos.edad}
-- Correo: ${formularioDatos.correo}
-- 7% aporte: $${sieteCLPMsg}
-
-*Planes Recomendados:*
-- Plan 1: ${plan1}
-- Plan 2: ${plan2}
-
-*Cargas Familiares:* ${cargasMsg}
-
-¿Cuáles son los documentos requeridos para formalizar la afiliación?`;
-
-  const urlWA = `https://wa.me/${WHATSAPP_ASESORIA}?text=${encodeURIComponent(mensaje)}`;
-  window.open(urlWA, "_blank");
-});
-
-/*========================================================
-  FORMULARIO DE REFERIDOS
-=========================================================*/
-document.getElementById("formReferidos").addEventListener("submit", async function(e) {
-  e.preventDefault();
-
-  const nombreUsuario = document.getElementById("nombreUsuario").value;
-  const nombreReferido = document.getElementById("nombreReferido").value;
-  const telefonoReferido = document.getElementById("telefonoReferido").value;
-  const correoReferido = document.getElementById("correoReferido").value;
-
-  const params = new URLSearchParams();
-  params.append(REFERIDOS_FIELDS.tu_nombre, nombreUsuario);
-  params.append(REFERIDOS_FIELDS.nombre_referido, nombreReferido);
-  params.append(REFERIDOS_FIELDS.telefono_referido, telefonoReferido);
-  params.append(REFERIDOS_FIELDS.correo_referido, correoReferido);
-  params.append(REFERIDOS_FIELDS.mensaje_adicional, `Referido realizado a través de ${asesorKey}`);
-  params.append(REFERIDOS_FIELDS.asesorid_referidos, asesorKey);
-
-  try {
-    fetch(GOOGLE_FORM_REFERIDOS_URL, {
-      method: "POST",
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params.toString()
-    }).catch(() => {});
-
-    document.getElementById("mensajeExitoReferido").style.display = "block";
-    document.getElementById("mensajeErrorReferido").style.display = "none";
-    document.getElementById("formReferidos").reset();
-
-    setTimeout(() => {
-      document.getElementById("mensajeExitoReferido").style.display = "none";
-    }, 4000);
-  } catch (err) {
-    document.getElementById("mensajeErrorReferido").style.display = "block";
-    document.getElementById("mensajeExitoReferido").style.display = "none";
-  }
-});
-
-/*========================================================
-  INICIALIZACIÓN
-=========================================================*/
 window.addEventListener("DOMContentLoaded", async function() {
-  await cargarUF();
-  await cargarPlanes();
-  await cargarRedesClincias();
-
-  if (ultimoResultado) {
-    document.getElementById("resultado-preliminar").style.display = "block";
-    document.getElementById("referidos").style.display = "block";
-  }
+await cargarUF();
+await cargarPlanes();
+await cargarRedesClincias();
+if (ultimoResultado) {
+document.getElementById("resultado-preliminar").style.display = "block";
+document.getElementById("referidos").style.display = "block";
+}
 });
-
-// Mostrar sección de referidos después de cotizar
 document.getElementById("mainForm").addEventListener("submit", function() {
-  setTimeout(() => {
-    document.getElementById("referidos").style.display = "block";
-  }, 1000);
+setTimeout(() => {
+document.getElementById("referidos").style.display = "block";
+}, 1000);
 });
 </script>
-
 </body>
 </html>
+```
