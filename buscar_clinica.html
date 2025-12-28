@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buscar Clínica en Planes Colmena</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { 
+      font-family: Arial, sans-serif; 
+      background: linear-gradient(135deg, #0a1a2a, #0d2a3a);
+      color: white; 
+      margin: 0; 
+      padding: 0;
+    }
+    
+    header {
+      background: linear-gradient(90deg, #0a1a2a, #12375a);
+      padding: 40px 20px;
+      text-align: center;
+      border-bottom: 3px solid #d4af37;
+    }
+    
+    h1 { 
+      color: #d4af37; 
+      font-size: 2.2rem; 
+      margin: 0 0 10px 0;
+    }
+    
+    .header-subtitle {
+      color: #aaa;
+      font-size: 1rem;
+    }
+    
+    main {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    
+    .busqueda-container {
+      background: #112233;
+      border: 2px solid #d4af37;
+      border-radius: 15px;
+      padding: 40px;
+      margin-bottom: 40px;
+    }
+    
+    .input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    input[type="text"] {
+      flex: 1;
+      min-width: 250px;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #d4af37;
+      background: #1a3a5a;
+      color: white;
+      font-size: 1rem;
+    }
+    
+    input[type="text"]::placeholder {
+      color: #666;
+    }
+    
+    input[type="text"]:focus {
+      outline: none;
+      background: #1a4a7a;
+      border-color: #fbbf24;
+    }
+    
+    button {
+      padding: 15px 30px;
+      background: #d4af37;
+      color: #0a1a2a;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    button:hover {
+      background: #fbbf24;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(212,175,55,0.4);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    .info-section {
+      background: #0d1f2d;
+      border-left: 4px solid #60a5fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    
+    .info-section strong {
+      color: #60a5fa;
+    }
+    
+    .resultados {
+      margin-top: 40px;
+    }
+    
+    .resultado-item {
+      background: #1a2a3a;
+      border: 2px solid #4ade80;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+    
+    .resultado-item.no-encontrado {
+      border-color: #ff8080;
+      background: #2a1a1a;
+    }
+    
+    .clinica-nombre {
+      color: #d4af37;
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .clinica-info {
+      color: #aaa;
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+    }
+    
+    .planes-disponibles {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #3a5a7a;
+    }
+    
+    .planes-titulo {
+      color: #4ade80;
+      font-weight: bold;
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+    
+    .plan-resultado {
+      background: #0d1f2d;
+      border-left: 3px solid #fbbf24;
+      padding: 15px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+    }
+    
+    .plan-nombre {
+      color: #fbbf24;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .plan-valor {
+      color: #4ade80;
+      font-size: 0.95rem;
+      margin: 5px 0;
+    }
+    
+    .plan-cobertura {
+      color: #60a5fa;
+      font-size: 0.9rem;
+      margin: 5px 0;
+    }
+    
+    .loading {
+      text-align: center;
+      color: #60a5fa;
+      font-size: 1.2rem;
+      padding: 20px;
+    }
+    
+    .error-msg {
+      color: #ff8080;
+      background: #2a1a1a;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .success-msg {
+      color: #4ade80;
+      background: #1a2a1a;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .redes-clinicas-info {
+      background: #0d1f2d;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    
+    .red-info {
+      margin-bottom: 10px;
+    }
+    
+    .red-nombre {
+      color: #d4af37;
+      font-weight: bold;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #666;
+      margin-top: 50px;
+      border-top: 1px solid #3a5a7a;
+    }
+    
+    .volver-link {
+      color: #60a5fa;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    
+    .volver-link:hover {
+      color: #d4af37;
+    }
+    
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      
+      .busqueda-container {
+        padding: 20px;
+      }
+      
+      .input-group {
+        flex-direction: column;
+      }
+      
+      input[type="text"] {
+        min-width: 100%;
+      }
+      
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏥 Buscar Clínica en Planes Colmena</h1>
+    <p class="header-subtitle">Descubre qué planes cubren tu clínica favorita</p>
+  </header>
+  
+  <main>
+    <div class="busqueda-container">
+      <div class="info-section">
+        <strong>💡 Cómo usar:</strong> Escribe el nombre de tu clínica favorita (ej: "Clínica Santa María", "Integramédica", "RedSalud") y te mostraremos qué planes la cubren y con qué porcentaje.
+      </div>
+      
+      <div class="input-group">
+        <input 
+          type="text" 
+          id="clinicaBusqueda" 
+          placeholder="Ej: Clínica Santa María, Integramédica, Hospital Clínico..."
+          autocomplete="off"
+        />
+        <button onclick="buscarClinica()">Buscar</button>
+      </div>
+      
+      <div id="statusMsg"></div>
+    </div>
+    
+    <div id="resultados" class="resultados"></div>
+  </main>
+  
+  <footer>
+    <a href="index.html" class="volver-link">← Volver a Cotización de Planes</a>
+  </footer>
+
+  <script>
+    // ════════════════════════════════════════════════════════════════════════════
+    // CONFIGURACIÓN
+    // ════════════════════════════════════════════════════════════════════════════
+    
+    const URL_PLANES = 'planes_completos_DEFINITIVO.json';
+    const URL_REDES = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/redes_clinicas.json';
+    
+    let PLANES = [];
+    let REDES_CLINICAS = {};
+    
+    // ════════════════════════════════════════════════════════════════════════════
+    // CARGAR DATOS
+    // ════════════════════════════════════════════════════════════════════════════
+    
+    async function cargarDatos() {
+      try {
+        // Cargar planes
+        const respPlanes = await fetch(URL_PLANES);
+        PLANES = await respPlanes.json();
+        console.log(`✅ Planes cargados: ${PLANES.length}`);
+        
+        // Cargar redes (opcional, si el archivo existe)
+        try {
+          const respRedes = await fetch(URL_REDES);
+          REDES_CLINICAS = await respRedes.json();
+          console.log(`✅ Redes cargadas`);
+        } catch {
+          console.log('ℹ️ Redes no disponibles (OK)');
+        }
+      } catch (err) {
+        console.error('❌ Error al cargar datos:', err);
+        document.getElementById('statusMsg').innerHTML = '❌ Error al cargar planes. Recarga la página.';
+      }
+    }
+    
+    // ════════════════════════════════════════════════════════════════════════════
+    // BUSCAR CLÍNICA
+    // ════════════════════════════════════════════════════════════════════════════
+    
+    function buscarClinica() {
+      const input = document.getElementById('clinicaBusqueda').value.trim();
+      const statusMsg = document.getElementById('statusMsg');
+      const resultados = document.getElementById('resultados');
+      
+      statusMsg.innerHTML = '';
+      resultados.innerHTML = '';
+      
+      // Validar input
+      if (!input || input.length < 3) {
+        statusMsg.innerHTML = '<div class="error-msg">❌ Por favor escribe al menos 3 caracteres</div>';
+        return;
+      }
+      
+      if (PLANES.length === 0) {
+        statusMsg.innerHTML = '<div class="error-msg">❌ Los planes aún se están cargando. Intenta en unos segundos.</div>';
+        return;
+      }
+      
+      // Mostrar estado
+      statusMsg.innerHTML = '<div class="loading">⏳ Buscando...</div>';
+      
+      // Buscar planes que cubren esta clínica
+      setTimeout(() => {
+        const planesQueCubren = buscarPlanesParaClinica(input);
+        mostrarResultados(input, planesQueCubren, resultados, statusMsg);
+      }, 300);
+    }
+    
+    function buscarPlanesParaClinica(nombreClinica) {
+      const busquedaUpper = nombreClinica.toUpperCase();
+      
+      // Filtrar planes que tienen coberturas_redes
+      const planesConCobertura = PLANES.filter(plan => 
+        plan.coberturas_redes && Object.keys(plan.coberturas_redes).length > 0
+      );
+      
+      // Agrupar por similitud de cobertura
+      const planesAgrupados = {};
+      
+      planesConCobertura.forEach(plan => {
+        const coberturaStr = JSON.stringify(plan.coberturas_redes);
+        if (!planesAgrupados[coberturaStr]) {
+          planesAgrupados[coberturaStr] = [];
+        }
+        planesAgrupados[coberturaStr].push(plan);
+      });
+      
+      return {
+        busqueda: nombreClinica,
+        totalPlanesEnSistema: PLANES.length,
+        planesUnicos: Object.keys(planesAgrupados),
+        planesAgrupados: planesAgrupados,
+        planesTotales: planesConCobertura
+      };
+    }
+    
+    function mostrarResultados(clinicaBuscada, resultado, contenedor, statusMsg) {
+      statusMsg.innerHTML = '';
+      
+      if (resultado.planesTotales.length === 0) {
+        contenedor.innerHTML = `
+          <div class="resultado-item no-encontrado">
+            <div class="clinica-nombre">❌ No se encontraron planes</div>
+            <div class="clinica-info">
+              No hay planes disponibles en el sistema. Por favor, verifica los datos.
+            </div>
+          </div>
+        `;
+        return;
+      }
+      
+      // Mostrar resumen
+      let html = `
+        <div class="success-msg">
+          ✅ Búsqueda completada: Se encontraron <strong>${resultado.planesTotales.length}</strong> planes con cobertura de redes de clínicas
+        </div>
+      `;
+      
+      // Información sobre las redes disponibles
+      html += `
+        <div class="info-section">
+          <strong>📊 Redes de Clínicas Disponibles:</strong><br/>
+          En nuestros planes contamos con cobertura en múltiples redes clínicas (G41-G46 para zona central, GS1-GS4 para zona sur).
+          Los porcentajes de cobertura varían según el plan.
+        </div>
+      `;
+      
+      // Mostrar planes por zona
+      const planesAgrupados = {};
+      resultado.planesTotales.forEach(plan => {
+        const zona = plan.zona || 'Sin zona';
+        if (!planesAgrupados[zona]) {
+          planesAgrupados[zona] = [];
+        }
+        planesAgrupados[zona].push(plan);
+      });
+      
+      // Mostrar por zona
+      for (const [zona, planes] of Object.entries(planesAgrupados)) {
+        html += `
+          <div class="resultado-item">
+            <div class="clinica-nombre">📍 Zona: ${zona}</div>
+            <div class="planes-disponibles">
+              <div class="planes-titulo">Planes disponibles: ${planes.length}</div>
+        `;
+        
+        // Mostrar primeros 8 planes de esta zona
+        planes.slice(0, 8).forEach((plan, idx) => {
+          const pbUF = plan.pb_uf ? plan.pb_uf.toFixed(2) : 'N/A';
+          const grupos = plan.coberturas_redes ? Object.keys(plan.coberturas_redes).join(', ') : 'N/A';
+          const tope = plan.tope_anual_uf || 7000;
+          
+          html += `
+            <div class="plan-resultado">
+              <div class="plan-nombre">${idx + 1}. ${plan.plan}</div>
+              <div class="plan-valor">💰 Prima Base: ${pbUF} UF</div>
+              <div class="plan-cobertura">🏥 Redes: ${grupos}</div>
+              <div class="plan-cobertura">📋 Tope anual: ${tope} UF</div>
+            </div>
+          `;
+        });
+        
+        if (planes.length > 8) {
+          html += `<div class="plan-resultado" style="text-align: center; color: #aaa;">+ ${planes.length - 8} planes más</div>`;
+        }
+        
+        html += `
+            </div>
+          </div>
+        `;
+      }
+      
+      // Botón de acción
+      html += `
+        <div style="text-align: center; margin-top: 40px;">
+          <button onclick="document.getElementById('clinicaBusqueda').value=''; document.getElementById('resultados').innerHTML='';" style="background: #60a5fa; margin-right: 10px;">🔄 Nueva Búsqueda</button>
+          <button onclick="window.location.href='index.html';" style="background: #4ade80;">📋 Ir a Cotizar</button>
+        </div>
+      `;
+      
+      contenedor.innerHTML = html;
+    }
+    
+    // ════════════════════════════════════════════════════════════════════════════
+    // INICIALIZAR
+    // ════════════════════════════════════════════════════════════════════════════
+    
+    // Cargar datos al abrir la página
+    window.addEventListener('DOMContentLoaded', cargarDatos);
+    
+    // Permitir buscar con Enter
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('clinicaBusqueda').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          buscarClinica();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
