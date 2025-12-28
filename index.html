@@ -121,7 +121,6 @@
         opacity: 1; 
         transform: translateY(0); 
       } 
-    }
     
     .btn-enviar-clinica { 
       transition: all 0.3s ease;
@@ -147,22 +146,10 @@
   <p class="small">Completa el formulario para obtener una cotización exacta en UF y CLP.</p>
 </header>
 
-  <script>
-    // Mostrar fecha actual
-    const fecha = new Date();
-    const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const fechaFormato = fecha.toLocaleDateString('es-CL', opciones);
-    document.getElementById('fechaActual').textContent = fechaFormato;
-    
-    // Cargar UF
-    fetch('https://mindicador.cl/api/uf')
-      .then(r => r.json())
-      .then(data => {
-        const ufValor = Math.round(data.UF.valor * 100) / 100;
-        document.getElementById('ufValor').textContent = ufValor.toLocaleString('es-CL', {minimumFractionDigits: 0, maximumFractionDigits: 0});
-      })
-      .catch(err => console.log('UF no disponible:', err));
-  </script>
+  <div style="text-align: center; margin-top: 10px; padding: 10px; background: rgba(212,175,55,0.1); border-radius: 8px; font-size: 0.9rem; color: #aaa;">
+    <span id="fechaActual">Cargando...</span> • <span>💱 UF: $<span id="ufValor">39,700</span></span>
+  </div>
+
 <section id="formulario" class="card">
   <h2 class="gold">Formulario para Cálculo del Plan</h2>
   <form id="mainForm">
@@ -356,7 +343,6 @@ window.addEventListener("DOMContentLoaded", function() {
     btnWA.href = `https://wa.me/${WHATSAPP_ASESORIA}`;
     btnWA.innerText = `Contactar a ${ASESOR_NOMBRE} por WhatsApp`;
   }
-});
 
 /*========================================================
   CONFIGURACIÓN GOOGLE FORMS
@@ -535,7 +521,6 @@ async function cargarUF() {
     document.getElementById("ufValor").innerText = "$39.700 (estimado)";
     document.getElementById("ufFecha").innerText = "No disponible";
   }
-}
 
 async function cargarPlanes() {
   PLANES = PLANES_DATA;
@@ -700,7 +685,6 @@ function seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas) {
       console.log(`
 ✅ PLAN 2 (Mejor alternativa):`);
     }
-  }
 
   if (plan2) {
     const coberturaKey = plan2.zona === 'SUR' ? 'GS1' : 'G41';
@@ -1098,7 +1082,6 @@ function generarHTMLClinicasDesdeHospitalizacion(plan, numeroPlan) {
     } else if (porcentajeActual !== null && linea.trim()) {
       clinicasActuales.push(linea.trim());
     }
-  }
   
   if (porcentajeActual !== null && clinicasActuales.length > 0) {
     seccionesHTML += generarSeccionClinicas(planId, porcentajeActual, clinicasActuales);
@@ -1184,7 +1167,6 @@ function toggleClinicasGrupo(grupoId, boton) {
   } else {
     boton.classList.add('active');
   }
-}
 
 /*========================================================
   CALLMEBOT
@@ -1201,7 +1183,6 @@ async function enviarCallMeBot(mensaje) {
   } catch (err) {
     console.error('Error CallMeBot:', err);
   }
-}
 
   /*========================================================
   FORMULARIO PRINCIPAL
@@ -1532,7 +1513,6 @@ function recalcularConAdicional() {
     console.error("Error en recalcularConAdicional:", error);
     alert("Ocurrió un error al recalcular. Por favor intenta de nuevo.");
   }
-}
 
 /*========================================================
   BOTÓN ASESORÍA
@@ -1599,8 +1579,6 @@ if (document.getElementById("btnBuscarClinicaDesdeResultados")) {
   document.getElementById("btnBuscarClinicaDesdeResultados").addEventListener("click", function() {
     window.location.href = 'buscar_clinica.html';
   });
-}
-});
 
 /*========================================================
   BOTÓN ENVIAR RESUMEN AL USUARIO
@@ -1698,7 +1676,6 @@ Correo: ${correoReferido}`;
     document.getElementById("mensajeErrorReferido").style.display = "block";
     document.getElementById("mensajeExitoReferido").style.display = "none";
   }
-});
 
 /*========================================================
   MÓDULO: BÚSQUEDA POR CLÍNICA FAVORITA
@@ -1719,8 +1696,6 @@ function buscarClinicaEnRedes(nombreClinica) {
       if (clinica.nombre.toLowerCase().includes(nombreNormalizado)) {
         return { grupoRed, clinica };
       }
-    }
-  }
   
   return null;
 }
@@ -1755,7 +1730,6 @@ function obtenerPlanesConClinica(nombreClinica) {
       clinicaEncontrada = clinica;
       break;
     }
-  }
   
   if (!clinicaEncontrada) {
     return { clinicaEncontrada: null, grupoClinica: null, planesDisponibles: [] };
@@ -1802,7 +1776,6 @@ function obtenerPlanesConClinica(nombreClinica) {
       coberturaUsadas.add(cobertura);
       planesFinales.push(plan);
     }
-  }
   
   // Si no tenemos 4 y hay más planes, agregar aunque tengan cobertura igual (hasta 4 total)
   if (planesFinales.length < 4) {
@@ -1811,8 +1784,6 @@ function obtenerPlanesConClinica(nombreClinica) {
       if (!planesFinales.includes(plan)) {
         planesFinales.push(plan);
       }
-    }
-  }
   
   return {
     clinicaEncontrada,
@@ -1984,7 +1955,6 @@ ${r.montoAdicional ? `- Aporte adicional: $${formatearCLP(r.montoAdicional)}
     console.error('Error enviando cotización:', err);
     alert('⚠️ Hubo un error al enviar. Intenta de nuevo.');
   }
-}
 
 function manejarBusquedaClinica() {
   const inputClinica = document.getElementById("inputBuscadorClinica");
@@ -2152,7 +2122,6 @@ function inicializarBusquedaClinica() {
       document.getElementById("inputBuscadorClinica").focus();
       document.getElementById("seccionBusquedaClinica").scrollIntoView({ behavior: 'smooth' });
     });
-  }
   
   const inputClinica = document.getElementById("inputBuscadorClinica");
   if (inputClinica) {
@@ -2160,9 +2129,6 @@ function inicializarBusquedaClinica() {
       if (e.key === 'Enter') {
         manejarBusquedaClinica();
       }
-    });
-  }
-}
 
 window.addEventListener('DOMContentLoaded', inicializarBusquedaClinica);
 
@@ -2175,6 +2141,52 @@ window.addEventListener("load", () => {
   cargarRedesClincias();
 });
 </script>
+
+  <script>
+    // ════════════════════════════════════════════════════════════════════
+    // MOSTRAR FECHA ACTUAL Y VALOR UF
+    // ════════════════════════════════════════════════════════════════════
+    
+    function mostrarFechaYUF() {
+      try {
+        // Mostrar fecha actual
+        const fecha = new Date();
+        const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const fechaFormato = fecha.toLocaleDateString('es-CL', opciones);
+        
+        const elemFecha = document.getElementById('fechaActual');
+        if (elemFecha) {
+          elemFecha.textContent = '📅 ' + fechaFormato;
+        }
+        
+        // Cargar UF desde API
+        fetch('https://mindicador.cl/api/uf')
+          .then(response => response.json())
+          .then(data => {
+            const ufValor = Math.round(data.UF.valor);
+            const elemUF = document.getElementById('ufValor');
+            if (elemUF) {
+              elemUF.textContent = ufValor.toLocaleString('es-CL');
+            }
+            console.log('✅ UF cargada: $' + ufValor);
+          })
+          .catch(error => {
+            console.log('ℹ️ UF no disponible, usando valor por defecto');
+            const elemUF = document.getElementById('ufValor');
+            if (elemUF) {
+              elemUF.textContent = '39,700';
+            }
+      } catch (error) {
+        console.error('Error al cargar fecha/UF:', error);
+      }
+    
+    // Ejecutar cuando el documento esté listo
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', mostrarFechaYUF);
+    } else {
+      mostrarFechaYUF();
+    }
+  </script>
 
 </body>
 </html>
