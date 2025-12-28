@@ -1,0 +1,328 @@
+{
+  "G41": {
+    "nombre": "Red G41 - Preferente",
+    "clinicas": [
+      {
+        "nombre": "Clínica Juan Pablo II",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Clínica Sierra Bella",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Hospital del Profesor",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Hospital Parroquial San Bernardo",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Clínica Fleming Arica",
+        "ciudad": "Arica"
+      },
+      {
+        "nombre": "Clínica Río Blanco",
+        "ciudad": "Los Andes"
+      },
+      {
+        "nombre": "Clínica San Antonio",
+        "ciudad": "San Antonio"
+      },
+      {
+        "nombre": "Clínica Adventista Los Ángeles",
+        "ciudad": "Los Ángeles"
+      },
+      {
+        "nombre": "Hospital de las FFAA Cirujano Guzmán",
+        "ciudad": "Punta Arenas"
+      }
+    ]
+  },
+  "G42": {
+    "nombre": "Red G42 - Ampliada",
+    "clinicas": [
+      {
+        "nombre": "Clínica Dávila Recoleta",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Clínica RedSalud Providencia",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Clínica RedSalud Santiago",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Clínica Dávila Vespucio",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Clínica San José",
+        "ciudad": "Arica"
+      },
+      {
+        "nombre": "Clínica RedSalud Iquique",
+        "ciudad": "Iquique"
+      },
+      {
+        "nombre": "Clínica El Loa",
+        "ciudad": "Calama"
+      },
+      {
+        "nombre": "Clínica Portada",
+        "ciudad": "Antofagasta"
+      },
+      {
+        "nombre": "Clínica Cumbres del Norte",
+        "ciudad": "Antofagasta"
+      },
+      {
+        "nombre": "Hospital Militar del Norte",
+        "ciudad": "Antofagasta"
+      },
+      {
+        "nombre": "Clínica RCR Atacama",
+        "ciudad": "Copiapó"
+      },
+      {
+        "nombre": "Clínica RedSalud Elqui",
+        "ciudad": "La Serena"
+      },
+      {
+        "nombre": "Hospital Clínico de Viña del Mar",
+        "ciudad": "Viña del Mar"
+      },
+      {
+        "nombre": "Hospital Naval Almirante Nef",
+        "ciudad": "Viña del Mar"
+      },
+      {
+        "nombre": "Clínica RedSalud Valparaíso",
+        "ciudad": "Valparaíso"
+      },
+      {
+        "nombre": "Clínica Los Carrera",
+        "ciudad": "Quilpué"
+      },
+      {
+        "nombre": "Clínica Isamédica",
+        "ciudad": "Rancagua"
+      },
+      {
+        "nombre": "Hospital Clínico FUSAT",
+        "ciudad": "Rancagua"
+      },
+      {
+        "nombre": "Clínica Red Salud Rancagua",
+        "ciudad": "Rancagua"
+      },
+      {
+        "nombre": "Clínica Lircay",
+        "ciudad": "Talca"
+      },
+      {
+        "nombre": "Clínica Las Amapolas",
+        "ciudad": "Chillán"
+      },
+      {
+        "nombre": "Clínica RedSalud Mayor",
+        "ciudad": "Temuco"
+      },
+      {
+        "nombre": "Clínica Puerto Varas",
+        "ciudad": "Puerto Varas"
+      },
+      {
+        "nombre": "Clínica Andes Salud Puerto Montt",
+        "ciudad": "Puerto Montt"
+      },
+      {
+        "nombre": "Clínica Puerto Montt",
+        "ciudad": "Puerto Montt"
+      }
+    ]
+  },
+  "G43": {
+    "nombre": "Red G43 - Preferente",
+    "clinicas": [
+      {
+        "nombre": "Hospital del Niño",
+        "ciudad": "Viña del Mar"
+      },
+      {
+        "nombre": "Clínica Chillán",
+        "ciudad": "Chillán"
+      },
+      {
+        "nombre": "Clínica Bío Bío",
+        "ciudad": "Concepción"
+      },
+      {
+        "nombre": "Clínica Andes Salud Concepción",
+        "ciudad": "Concepción"
+      },
+      {
+        "nombre": "Hospital Clínico del Sur",
+        "ciudad": "Concepción"
+      }
+    ]
+  },
+  "G44": {
+    "nombre": "Red G44 - Premium",
+    "clinicas": [
+      {
+        "nombre": "Clínica RedSalud Vitacura",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Hospital Clínico Universidad Católica",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Fundación Arturo López Pérez",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Hospital Clínico de la Fuerza Aérea",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Clínica Indisa",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Clínica Bupa Antofagasta",
+        "ciudad": "Antofagasta"
+      },
+      {
+        "nombre": "Clínica Bupa Reñaca",
+        "ciudad": "Viña del Mar"
+      },
+      {
+        "nombre": "Clínica Sanatorio Alemán",
+        "ciudad": "Concepción"
+      },
+      {
+        "nombre": "Clínica Los Andes",
+        "ciudad": "Los Ángeles"
+      },
+      {
+        "nombre": "Clínica Alemana de Temuco",
+        "ciudad": "Temuco"
+      },
+      {
+        "nombre": "Clínica Alemana de Valdivia",
+        "ciudad": "Valdivia"
+      },
+      {
+        "nombre": "Clínica Alemana de Osorno",
+        "ciudad": "Osorno"
+      },
+      {
+        "nombre": "Clínica RedSalud Magallanes",
+        "ciudad": "Punta Arenas"
+      }
+    ]
+  },
+  "G45": {
+    "nombre": "Red G45 - Plus",
+    "clinicas": [
+      {
+        "nombre": "Clínica San Carlos Apoquindo",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Clínica Universidad Católica",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Clínica Universidad de los Andes",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Clínica MEDS",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Clínica Santa María",
+        "ciudad": "Santiago"
+      }
+    ]
+  },
+  "G46": {
+    "nombre": "Red G46 - Premium Selecta",
+    "clinicas": [
+      {
+        "nombre": "Clínica Alemana",
+        "ciudad": "Santiago"
+      },
+      {
+        "nombre": "Clínica Las Condes",
+        "ciudad": "Santiago"
+      }
+    ]
+  },
+  "GS1": {
+    "nombre": "Red GS1 - Sur",
+    "clinicas": [
+      {
+        "nombre": "Clínica Puerto Varas",
+        "ciudad": "Puerto Varas"
+      },
+      {
+        "nombre": "Clínica Puerto Montt",
+        "ciudad": "Puerto Montt"
+      },
+      {
+        "nombre": "Hospital de las FFAA Cirujano Guzmán",
+        "ciudad": "Punta Arenas"
+      }
+    ]
+  },
+  "GS2": {
+    "nombre": "Red GS2 - Sur",
+    "clinicas": [
+      {
+        "nombre": "Clínica RedSalud Mayor",
+        "ciudad": "Temuco"
+      },
+      {
+        "nombre": "Clínica Alemana de Osorno",
+        "ciudad": "Osorno"
+      },
+      {
+        "nombre": "Clínica Andes Salud Puerto Montt",
+        "ciudad": "Puerto Montt"
+      },
+      {
+        "nombre": "Clínica RedSalud Magallanes",
+        "ciudad": "Punta Arenas"
+      }
+    ]
+  },
+  "GS3": {
+    "nombre": "Red GS3 - Sur",
+    "clinicas": [
+      {
+        "nombre": "Clínica Alemana de Temuco",
+        "ciudad": "Temuco"
+      },
+      {
+        "nombre": "Clínica Alemana de Valdivia",
+        "ciudad": "Valdivia"
+      }
+    ]
+  },
+  "GS4": {
+    "nombre": "Red GS4 - Sur",
+    "clinicas": [
+      {
+        "nombre": "Clínica Indisa",
+        "ciudad": "Santiago"
+      }
+    ]
+  }
+}
