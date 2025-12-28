@@ -999,19 +999,137 @@ function calcularSietePorCiento(rentaMensual, ufValor) {
   SELECCIÓN DE PLANES
 =========================================================*/
 function seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas) {
-  const minimo95 = sieteUF * 0.95;
-  const planesZona = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
+  // PASO 1: Filtrar por zona exacta
+  let planesZona = PLANES.filter(p => p.zona === zona);
   
+  // PASO 2: Si no hay planes en la zona, usar LIBRE_ELECCION
+  if (planesZona.length === 0) {
+    planesZona = PLANES.filter(p => p.zona === 'LIBRE_ELECCION');
+  }
+  
+  // PASO 3: Calcular valor y extraer cobertura
   const planesConValor = planesZona.map(p => {
     const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
-    return { ...p, valorCalculadoUF: calc.totalUF, valorCalculadoCLP: calc.totalCLP, gesUF: calc.gesUF, gesCLP: calc.gesCLP, sumaFactores: calc.sumaFactores };
+    
+    // Extraer cobertura máxima de hospitalización
+    let coberturaMax = 0;
+    if (p.coberturas_redes) {
+      coberturaMax = Math.max(...Object.values(p.coberturas_redes).map(v => parseInt(v) || 0));
+    }
+    
+    return {
+      ...p,
+      valorCalculadoUF: calc.totalUF,
+      valorCalculadoCLP: calc.totalCLP,
+      gesUF: calc.gesUF,
+      gesCLP: calc.gesCLP,
+      sumaFactores: calc.sumaFactores,
+      coberturaMax: coberturaMax,
+      distanciaA7: Math.abs(calc.totalUF - sieteUF)
+    };
   });
   
-  const planesValidos = planesConValor.filter(p => p.valorCalculadoUF >= minimo95);
-  planesValidos.sort((a, b) => Math.abs(a.valorCalculadoUF - sieteUF) - Math.abs(b.valorCalculadoUF - sieteUF));
+  // PASO 4: Ordenar por distancia al 7%, luego por cobertura
+  planesConValor.sort((a, b) => {
+    if (Math.abs(a.distanciaA7 - b.distanciaA7) > 0.1) {
+      return a.distanciaA7 - b.distanciaA7; // Primero por cercanía al 7%
+    }
+    return b.coberturaMax - a.coberturaMax; // Luego por cobertura más alta
+  });
   
-  return { plan1: planesValidos[0] || null, plan2: planesValidos[1] || null };
+  return {
+    plan1: planesConValor[0] || null,
+    plan2: planesConValor[1] || null,
+    planesTop4: planesConValor.slice(0, 4) // Retornar top 4 para búsqueda por clínica
+  };
 }
+
+function generarHTMLPlanes4Detallado(planes, sieteUF, uf) {
+  if (!planes || planes.length === 0) return '';
+  
+  let html = '';
+  
+  planes.slice(0, 4).forEach((plan, idx) => {
+    const pbUF = (plan.pb_uf || 0).toFixed(2);
+    const pbCLP = Math.round(plan.pb_uf * uf);
+    const distancia = (plan.pb_uf - sieteUF).toFixed(2);
+    const badge = idx === 0 ? '✨ PLAN 1' : (idx === 1 ? '🔷 PLAN 2' : (idx === 2 ? '🟢 PLAN 3' : '🔵 PLAN 4'));
+    
+    // Ordenar redes: primero G41-G46, luego GS1-GS4
+    const redesOrdenadas = [];
+    const orden = ['G41', 'G42', 'G43', 'G44', 'G45', 'G46', 'GS1', 'GS2', 'GS3', 'GS4'];
+    
+    if (plan.coberturas_redes) {
+      orden.forEach(red => {
+        if (plan.coberturas_redes[red]) {
+          redesOrdenadas.push([red, plan.coberturas_redes[red]]);
+        }
+      });
+    }
+    
+    html += `
+      <div style="background: #1a2a3a; border: 2px solid #d4af37; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+        <div style="color: #d4af37; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;">
+          ${badge} ${plan.plan}
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 15px;">
+          <div style="background: #0d1f2d; padding: 12px; border-radius: 8px;">
+            <div style="color: #888; font-size: 0.85rem;">Prima Base (UF)</div>
+            <div style="color: #4ade80; font-size: 1.1rem; font-weight: bold;">${pbUF}</div>
+          </div>
+          <div style="background: #0d1f2d; padding: 12px; border-radius: 8px;">
+            <div style="color: #888; font-size: 0.85rem;">Prima Base (CLP)</div>
+            <div style="color: #4ade80; font-size: 1.1rem; font-weight: bold;">$${pbCLP.toLocaleString('es-CL')}</div>
+          </div>
+          <div style="background: #0d1f2d; padding: 12px; border-radius: 8px;">
+            <div style="color: #888; font-size: 0.85rem;">Diferencia al 7%</div>
+            <div style="color: #4ade80; font-size: 1.1rem; font-weight: bold;">${distancia} UF</div>
+          </div>
+          <div style="background: #0d1f2d; padding: 12px; border-radius: 8px;">
+            <div style="color: #888; font-size: 0.85rem;">Tope Anual</div>
+            <div style="color: #4ade80; font-size: 1.1rem; font-weight: bold;">${plan.tope_anual_uf || 7000} UF</div>
+          </div>
+        </div>
+        
+        <div style="border-top: 1px solid #3a5a7a; padding-top: 15px;">
+          <div style="color: #aaa; font-weight: bold; margin-bottom: 10px;">📊 Redes y Coberturas:</div>
+          
+          ${redesOrdenadas.length > 0 ? `
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px;">
+              ${redesOrdenadas.map(([grupo, cobertura]) => {
+                // Color según grupo
+                let colorGrupo = '#60a5fa'; // Azul por defecto
+                if (grupo.startsWith('GS')) {
+                  colorGrupo = '#f59e0b'; // Naranja para Sur
+                }
+                
+                return `
+                  <div style="background: #0d1f2d; padding: 12px; border-radius: 6px; border-left: 3px solid ${colorGrupo}; text-align: center;">
+                    <div style="color: ${colorGrupo}; font-weight: bold; font-size: 0.95rem; margin-bottom: 5px;">${grupo}</div>
+                    <div style="color: #4ade80; font-weight: bold; font-size: 1.1rem;">${cobertura}%</div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+            
+            <div style="margin-top: 12px; font-size: 0.85rem; color: #888;">
+              ${redesOrdenadas.length > 0 ? `<span style="color: #60a5fa;">● G41-G46 (Redes Metropolitana/Nacional)</span>` : ''}
+              ${redesOrdenadas.some(r => r[0].startsWith('GS')) ? ` | <span style="color: #f59e0b;">● GS1-GS4 (Redes del Sur)</span>` : ''}
+            </div>
+          ` : `
+            <div style="color: #888; padding: 10px; background: #0d1f2d; border-radius: 6px;">
+              No disponible
+            </div>
+          `}
+        </div>
+      </div>
+    `;
+  });
+  
+  return html;
+}
+
 
 function seleccionarPlanesConPresupuesto(presupuestoUF, zona, edadTitular, edadesCargas) {
   const planesZona = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
