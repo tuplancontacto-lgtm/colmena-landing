@@ -372,12 +372,16 @@
     async function cargarDatos() {
       try {
         // Cargar planes
+        console.log('📥 Cargando planes desde: ' + URL_PLANES);
         const respPlanes = await fetch(URL_PLANES);
+        if (!respPlanes.ok) throw new Error(`Error ${respPlanes.status}: No se pudo cargar planes`);
         PLANES = await respPlanes.json();
         console.log(`✅ Planes cargados: ${PLANES.length}`);
         
         // Cargar redes
+        console.log('📥 Cargando redes desde: ' + URL_REDES);
         const respRedes = await fetch(URL_REDES);
+        if (!respRedes.ok) throw new Error(`Error ${respRedes.status}: No se pudo cargar redes`);
         REDES_CLINICAS = await respRedes.json();
         console.log(`✅ Redes cargadas: ${Object.keys(REDES_CLINICAS).length}`);
         
