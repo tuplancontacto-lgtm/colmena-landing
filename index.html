@@ -121,6 +121,7 @@
         opacity: 1; 
         transform: translateY(0); 
       } 
+    }
     
     .btn-enviar-clinica { 
       transition: all 0.3s ease;
@@ -145,10 +146,6 @@
   <p class="gold">Atención premium para clientes exigentes</p>
   <p class="small">Completa el formulario para obtener una cotización exacta en UF y CLP.</p>
 </header>
-
-  <div style="text-align: center; margin-top: 10px; padding: 10px; background: rgba(212,175,55,0.1); border-radius: 8px; font-size: 0.9rem; color: #aaa;">
-    <span id="fechaActual">Cargando...</span> • <span>💱 UF: $<span id="ufValor">39,700</span></span>
-  </div>
 
 <section id="formulario" class="card">
   <h2 class="gold">Formulario para Cálculo del Plan</h2>
@@ -213,7 +210,7 @@
   <div id="resultadoDetalle"></div>
   <div style="text-align:center;margin-top:30px; display:flex; gap:15px; flex-wrap:wrap; justify-content:center;">
     <button id="btnAsesoria" class="btn-asesoria">📋 Solicitar Asesoría</button>
-    <button id="btnBuscarClinicaDesdeResultados" class="btn-buscar-clinica" onclick="window.location.href='buscar_clinica.html'">🏥 Buscar por Clínica Favorita</button>
+    <button id="btnBuscarClinicaDesdeResultados" class="btn-buscar-clinica">🏥 Buscar por Clínica</button>
   </div>
   <p class="small" style="margin-top:10px; text-align:center;">Selecciona una opción para continuar.</p>
   <div style="text-align:center;margin-top:20px;">
@@ -343,6 +340,7 @@ window.addEventListener("DOMContentLoaded", function() {
     btnWA.href = `https://wa.me/${WHATSAPP_ASESORIA}`;
     btnWA.innerText = `Contactar a ${ASESOR_NOMBRE} por WhatsApp`;
   }
+});
 
 /*========================================================
   CONFIGURACIÓN GOOGLE FORMS
@@ -521,6 +519,7 @@ async function cargarUF() {
     document.getElementById("ufValor").innerText = "$39.700 (estimado)";
     document.getElementById("ufFecha").innerText = "No disponible";
   }
+}
 
 async function cargarPlanes() {
   PLANES = PLANES_DATA;
@@ -685,6 +684,7 @@ function seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas) {
       console.log(`
 ✅ PLAN 2 (Mejor alternativa):`);
     }
+  }
 
   if (plan2) {
     const coberturaKey = plan2.zona === 'SUR' ? 'GS1' : 'G41';
@@ -1082,6 +1082,7 @@ function generarHTMLClinicasDesdeHospitalizacion(plan, numeroPlan) {
     } else if (porcentajeActual !== null && linea.trim()) {
       clinicasActuales.push(linea.trim());
     }
+  }
   
   if (porcentajeActual !== null && clinicasActuales.length > 0) {
     seccionesHTML += generarSeccionClinicas(planId, porcentajeActual, clinicasActuales);
@@ -1167,6 +1168,7 @@ function toggleClinicasGrupo(grupoId, boton) {
   } else {
     boton.classList.add('active');
   }
+}
 
 /*========================================================
   CALLMEBOT
@@ -1183,6 +1185,7 @@ async function enviarCallMeBot(mensaje) {
   } catch (err) {
     console.error('Error CallMeBot:', err);
   }
+}
 
   /*========================================================
   FORMULARIO PRINCIPAL
@@ -1513,6 +1516,7 @@ function recalcularConAdicional() {
     console.error("Error en recalcularConAdicional:", error);
     alert("Ocurrió un error al recalcular. Por favor intenta de nuevo.");
   }
+}
 
 /*========================================================
   BOTÓN ASESORÍA
@@ -1575,10 +1579,14 @@ ${textoAdicional}
 /*========================================================
   BOTÓN BUSCAR POR CLÍNICA DESDE RESULTADOS
 =========================================================*/
-if (document.getElementById("btnBuscarClinicaDesdeResultados")) {
-  document.getElementById("btnBuscarClinicaDesdeResultados").addEventListener("click", function() {
-    window.location.href = 'buscar_clinica.html';
-  });
+document.getElementById("btnBuscarClinicaDesdeResultados").addEventListener("click", function() {
+  // Mostrar sección de búsqueda por clínica sin requerir cotización adicional
+  document.getElementById("seccionBusquedaClinica").style.display = "block";
+  document.getElementById("inputBuscadorClinica").focus();
+  setTimeout(() => {
+    document.getElementById("seccionBusquedaClinica").scrollIntoView({ behavior: "smooth" });
+  }, 100);
+});
 
 /*========================================================
   BOTÓN ENVIAR RESUMEN AL USUARIO
@@ -1676,6 +1684,7 @@ Correo: ${correoReferido}`;
     document.getElementById("mensajeErrorReferido").style.display = "block";
     document.getElementById("mensajeExitoReferido").style.display = "none";
   }
+});
 
 /*========================================================
   MÓDULO: BÚSQUEDA POR CLÍNICA FAVORITA
@@ -1696,6 +1705,8 @@ function buscarClinicaEnRedes(nombreClinica) {
       if (clinica.nombre.toLowerCase().includes(nombreNormalizado)) {
         return { grupoRed, clinica };
       }
+    }
+  }
   
   return null;
 }
@@ -1730,6 +1741,7 @@ function obtenerPlanesConClinica(nombreClinica) {
       clinicaEncontrada = clinica;
       break;
     }
+  }
   
   if (!clinicaEncontrada) {
     return { clinicaEncontrada: null, grupoClinica: null, planesDisponibles: [] };
@@ -1776,6 +1788,7 @@ function obtenerPlanesConClinica(nombreClinica) {
       coberturaUsadas.add(cobertura);
       planesFinales.push(plan);
     }
+  }
   
   // Si no tenemos 4 y hay más planes, agregar aunque tengan cobertura igual (hasta 4 total)
   if (planesFinales.length < 4) {
@@ -1784,6 +1797,8 @@ function obtenerPlanesConClinica(nombreClinica) {
       if (!planesFinales.includes(plan)) {
         planesFinales.push(plan);
       }
+    }
+  }
   
   return {
     clinicaEncontrada,
@@ -1955,6 +1970,7 @@ ${r.montoAdicional ? `- Aporte adicional: $${formatearCLP(r.montoAdicional)}
     console.error('Error enviando cotización:', err);
     alert('⚠️ Hubo un error al enviar. Intenta de nuevo.');
   }
+}
 
 function manejarBusquedaClinica() {
   const inputClinica = document.getElementById("inputBuscadorClinica");
@@ -2122,6 +2138,7 @@ function inicializarBusquedaClinica() {
       document.getElementById("inputBuscadorClinica").focus();
       document.getElementById("seccionBusquedaClinica").scrollIntoView({ behavior: 'smooth' });
     });
+  }
   
   const inputClinica = document.getElementById("inputBuscadorClinica");
   if (inputClinica) {
@@ -2129,6 +2146,9 @@ function inicializarBusquedaClinica() {
       if (e.key === 'Enter') {
         manejarBusquedaClinica();
       }
+    });
+  }
+}
 
 window.addEventListener('DOMContentLoaded', inicializarBusquedaClinica);
 
@@ -2141,52 +2161,6 @@ window.addEventListener("load", () => {
   cargarRedesClincias();
 });
 </script>
-
-  <script>
-    // ════════════════════════════════════════════════════════════════════
-    // MOSTRAR FECHA ACTUAL Y VALOR UF
-    // ════════════════════════════════════════════════════════════════════
-    
-    function mostrarFechaYUF() {
-      try {
-        // Mostrar fecha actual
-        const fecha = new Date();
-        const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        const fechaFormato = fecha.toLocaleDateString('es-CL', opciones);
-        
-        const elemFecha = document.getElementById('fechaActual');
-        if (elemFecha) {
-          elemFecha.textContent = '📅 ' + fechaFormato;
-        }
-        
-        // Cargar UF desde API
-        fetch('https://mindicador.cl/api/uf')
-          .then(response => response.json())
-          .then(data => {
-            const ufValor = Math.round(data.UF.valor);
-            const elemUF = document.getElementById('ufValor');
-            if (elemUF) {
-              elemUF.textContent = ufValor.toLocaleString('es-CL');
-            }
-            console.log('✅ UF cargada: $' + ufValor);
-          })
-          .catch(error => {
-            console.log('ℹ️ UF no disponible, usando valor por defecto');
-            const elemUF = document.getElementById('ufValor');
-            if (elemUF) {
-              elemUF.textContent = '39,700';
-            }
-      } catch (error) {
-        console.error('Error al cargar fecha/UF:', error);
-      }
-    
-    // Ejecutar cuando el documento esté listo
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', mostrarFechaYUF);
-    } else {
-      mostrarFechaYUF();
-    }
-  </script>
 
 </body>
 </html>
