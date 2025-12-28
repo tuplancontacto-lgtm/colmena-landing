@@ -1841,7 +1841,7 @@ function generarResultadoBusquedaClinica(clinicaEncontrada, grupoRed, planesDisp
   
   planesDisponibles.forEach((plan, index) => {
     const esDeSegundo = plan.plan === ultimoResultado.plan2?.plan;
-    const cobertura = plan.cobertura;
+    const cobertura = plan.coberturaGrupo || 'N/A';
     const badgeColor = esDeSegundo ? '#60a5fa' : '#d4af37';
     const badgeText = esDeSegundo ? '🔷 PLAN 2' : '✨ PLAN 1';
     
