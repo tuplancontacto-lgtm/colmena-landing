@@ -37,6 +37,14 @@
       {
         "nombre": "Hospital de las FFAA Cirujano Guzmán",
         "ciudad": "Punta Arenas"
+      },
+      {
+        "nombre": "Clínica Regional de Valdivia",
+        "ciudad": "Valdivia"
+      },
+      {
+        "nombre": "Hospital Base de Osorno",
+        "ciudad": "Osorno"
       }
     ]
   },
@@ -167,6 +175,14 @@
       {
         "nombre": "Hospital Clínico del Sur",
         "ciudad": "Concepción"
+      },
+      {
+        "nombre": "Clínica Los Leones",
+        "ciudad": "La Calera"
+      },
+      {
+        "nombre": "Hospital Barros Luco Trudeau",
+        "ciudad": "Santiago"
       }
     ]
   },
@@ -273,12 +289,16 @@
         "ciudad": "Puerto Varas"
       },
       {
-        "nombre": "Clínica Puerto Montt",
+        "nombre": "Clínica Andes Salud Puerto Montt",
         "ciudad": "Puerto Montt"
       },
       {
         "nombre": "Hospital de las FFAA Cirujano Guzmán",
         "ciudad": "Punta Arenas"
+      },
+      {
+        "nombre": "Clínica Dávila Recoleta",
+        "ciudad": "Santiago"
       }
     ]
   },
@@ -313,6 +333,10 @@
       {
         "nombre": "Clínica Alemana de Valdivia",
         "ciudad": "Valdivia"
+      },
+      {
+        "nombre": "Clínica Indisa",
+        "ciudad": "Santiago"
       }
     ]
   },
@@ -320,8 +344,12 @@
     "nombre": "Red GS4 - Sur",
     "clinicas": [
       {
-        "nombre": "Clínica Indisa",
-        "ciudad": "Santiago"
+        "nombre": "Hospital Base de Osorno",
+        "ciudad": "Osorno"
+      },
+      {
+        "nombre": "Clínica Alemana de Temuco",
+        "ciudad": "Temuco"
       }
     ]
   }
