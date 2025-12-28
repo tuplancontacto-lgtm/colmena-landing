@@ -147,6 +147,22 @@
   <p class="small">Completa el formulario para obtener una cotización exacta en UF y CLP.</p>
 </header>
 
+  <script>
+    // Mostrar fecha actual
+    const fecha = new Date();
+    const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const fechaFormato = fecha.toLocaleDateString('es-CL', opciones);
+    document.getElementById('fechaActual').textContent = fechaFormato;
+    
+    // Cargar UF
+    fetch('https://mindicador.cl/api/uf')
+      .then(r => r.json())
+      .then(data => {
+        const ufValor = Math.round(data.UF.valor * 100) / 100;
+        document.getElementById('ufValor').textContent = ufValor.toLocaleString('es-CL', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+      })
+      .catch(err => console.log('UF no disponible:', err));
+  </script>
 <section id="formulario" class="card">
   <h2 class="gold">Formulario para Cálculo del Plan</h2>
   <form id="mainForm">
@@ -1584,7 +1600,6 @@ if (document.getElementById("btnBuscarClinicaDesdeResultados")) {
     window.location.href = 'buscar_clinica.html';
   });
 }
-  }, 100);
 });
 
 /*========================================================
