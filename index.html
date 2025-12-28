@@ -145,6 +145,9 @@
   <h1>Asesoría en Planes de Salud Colmena</h1>
   <p class="gold">Atención premium para clientes exigentes</p>
   <p class="small">Completa el formulario para obtener una cotización exacta en UF y CLP.</p>
+  <p class="small" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #3a5a7a;">
+    📅 <span id="fechaActual">Cargando fecha...</span> • 💱 UF: $<span id="ufValor">39,700</span>
+  </p>
 </header>
 
 <section id="formulario" class="card">
@@ -909,6 +912,43 @@ let REDES_CLINICAS = {};
 /*========================================================
   CARGAR DATOS
 =========================================================*/
+function mostrarFechaYUF() {
+  try {
+    // Mostrar fecha actual
+    const fecha = new Date();
+    const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const fechaFormato = fecha.toLocaleDateString('es-CL', opciones);
+    
+    const elemFecha = document.getElementById('fechaActual');
+    if (elemFecha) {
+      elemFecha.textContent = '📅 ' + fechaFormato;
+    }
+    
+    // Cargar UF desde API
+    fetch('https://mindicador.cl/api/uf')
+      .then(r => r.json())
+      .then(data => {
+        const ufValor = Math.round(data.UF.valor);
+        const elemUF = document.getElementById('ufValor');
+        if (elemUF) {
+          elemUF.textContent = ufValor.toLocaleString('es-CL');
+        }
+        window.__UF_VALOR = ufValor;
+        console.log('✅ UF cargada: $' + ufValor);
+      })
+      .catch(error => {
+        console.log('ℹ️ UF no disponible, usando valor por defecto');
+        window.__UF_VALOR = 39700;
+        const elemUF = document.getElementById('ufValor');
+        if (elemUF) {
+          elemUF.textContent = '39,700';
+        }
+      });
+  } catch (error) {
+    console.error('Error al cargar fecha/UF:', error);
+  }
+}
+
 async function cargarUF() {
   try {
     const r = await fetch("https://mindicador.cl/api/");
@@ -920,7 +960,9 @@ async function cargarUF() {
   } catch (err) {
     window.__UF_VALOR = 39700;
     document.getElementById("ufValor").innerText = "$39.700 (estimado)";
-    document.getElementById("ufFecha").innerText = "No disponible";
+    if (document.getElementById("ufFecha")) {
+      document.getElementById("ufFecha").innerText = "No disponible";
+    }
   }
 }
 
@@ -2629,6 +2671,7 @@ window.addEventListener('DOMContentLoaded', inicializarBusquedaClinica);
   INICIO
 =========================================================*/
 window.addEventListener("load", () => {
+  mostrarFechaYUF();  // Mostrar fecha y UF al cargar
   cargarUF();
   cargarPlanes();
   cargarRedesClincias();
