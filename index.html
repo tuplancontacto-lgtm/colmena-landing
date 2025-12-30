@@ -965,7 +965,7 @@ function calcularValorPlan(pbUF, edadTitular, edadesCargas) {
   
   let personasGES = edadTitular >= 2 ? 1 : 0;
   edadesCargas.forEach(e => { if (e >= 2) personasGES++; });
-  const gesUF = 0.77 * personasGES;
+  const gesUF = 1.036 * personasGES;
   const gesCLP = Math.round(gesUF * uf);
   
   const totalUF = valorPlanUF + gesUF;
