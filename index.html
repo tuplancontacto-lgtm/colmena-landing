@@ -2095,233 +2095,206 @@ const MAPEO_GRUPO_A_CODIGO = {
 // Reemplaza la antigua (alrededor de línea 2094)
 // ============================================
 
-function obtenerPlanesConClinica(nombreClinica) {
+/**
+ * FUNCIÓN MEJORADA: obtenerPlanesConClinica
+ * Retorna 2 planes: 1 de su ZONA + 1 NACIONAL más cercanos a 7%
+ * Valida que NO superen el 7% + 0.5%
+ */
+function obtenerPlanesConClinica(nombreClinica, edadTitular = 40, edadesCargas = [], rentaMensual = 0) {
   console.log('🔍 obtenerPlanesConClinica INICIADA');
   console.log('   Buscando:', nombreClinica);
+  console.log('   Edad:', edadTitular, 'Renta:', rentaMensual);
   
-  // 1. DETECTAR ZONA DE LA CLÍNICA
+  // Detectar zona de la clínica
   const zonaClinica = detectarZonaClinica(nombreClinica);
-  console.log(`📍 Zona detectada: ${zonaClinica}`);
+  console.log('📍 Zona detectada:', zonaClinica);
   
-  if (!TARIFARIO || !TARIFARIO.norte) {
-    console.warn('⚠️ TARIFARIO no cargado, usando datos locales');
-    return obtenerPlanesConClinicaLocal(nombreClinica);
+  const uf = window.__UF_VALOR || 39724.12;
+  
+  // Obtener planes según zona
+  let planesZona = [];
+  let planesNacional = [];
+  
+  // Planes de su ZONA
+  if (zonaClinica === 'NORTE' && TARIFARIO.norte) {
+    planesZona = TARIFARIO.norte;
+  } else if (zonaClinica === 'SUR' && TARIFARIO.sur) {
+    planesZona = TARIFARIO.sur;
+  } else if (zonaClinica === 'CENTRO' && TARIFARIO.centro) {
+    planesZona = TARIFARIO.centro;
   }
   
-  // 2. OBTENER PLANES SEGÚN ZONA
-  let planesMax = [];
-  let planesZona = [];
+  // Planes NACIONAL (siempre)
+  if (TARIFARIO.nacional) {
+    planesNacional = TARIFARIO.nacional;
+  }
   
-  if (zonaClinica === 'NORTE') {
-    planesMax = TARIFARIO.norte.slice(0, 2);  // 2 primeros MAX NORTE
-    planesZona = TARIFARIO.norte.slice(2, 4); // 2 siguientes MAX NORTE
-  } else if (zonaClinica === 'SUR') {
-    planesMax = TARIFARIO.sur.slice(0, 2);
-    planesZona = TARIFARIO.sur.slice(2, 4);
-} else if (zonaClinica === 'CENTRO') {
-    planesMax = TARIFARIO.nacional.slice(0, 2);
-    planesZona = TARIFARIO.centro.slice(0, 2);
-}
+  if (!planesZona.length && !planesNacional.length) {
+    console.log('❌ No hay planes disponibles');
+    return null;
+  }
   
-  // 3. INTERCALAR: MAX, ZONA, MAX, ZONA
-  const planesIntercalados = [
-    planesMax[0],
-    planesZona[0],
-    planesMax[1],
-    planesZona[1]
-  ].filter(p => p);
+  // Calcular 7% referencia
+  const calcSiete = calcularSietePorCiento(rentaMensual, uf);
+  const { sietePorCientoCLP, sietePorCientoUF } = calcSiete;
+  const tolerancia = sietePorCientoCLP * 0.005; // 0.5%
+  const limiteMaximo = sietePorCientoCLP + tolerancia;
   
-  console.log(`✅ Planes intercalados obtenidos: ${planesIntercalados.length}`);
+  console.log(`💰 7% Ref: ${sietePorCientoCLP} CLP | Límite: ${limiteMaximo} CLP`);
+  
+  // FUNCIÓN AUXILIAR: Calcular diferencia de cada plan
+  const calcularDiferencia = (plan) => {
+    const calcPlan = calcularValorPlan(plan.pb_uf, edadTitular, edadesCargas);
+    return {
+      ...plan,
+      totalCLP: calcPlan.totalCLP,
+      totalUF: calcPlan.totalUF,
+      diferencia: Math.abs(calcPlan.totalCLP - sietePorCientoCLP),
+      excedeLimite: calcPlan.totalCLP > limiteMaximo
+    };
+  };
+  
+  // Calcular y filtrar planes de ZONA
+  const planesZonaCalculados = planesZona
+    .map(calcularDiferencia)
+    .sort((a, b) => a.diferencia - b.diferencia);
+  
+  // Calcular y filtrar planes NACIONAL
+  const planesNacionalCalculados = planesNacional
+    .map(calcularDiferencia)
+    .sort((a, b) => a.diferencia - b.diferencia);
+  
+  // Obtener mejores de cada grupo (válidos)
+  const mejorZona = planesZonaCalculados.find(p => !p.excedeLimite) || planesZonaCalculados[0];
+  const mejorNacional = planesNacionalCalculados.find(p => !p.excedeLimite) || planesNacionalCalculados[0];
+  
+  const planesFinales = [];
+  if (mejorZona) planesFinales.push(mejorZona);
+  if (mejorNacional && mejorNacional.nombre !== mejorZona?.nombre) planesFinales.push(mejorNacional);
+  
+  console.log(`✅ Planes encontrados: ${planesFinales.length}`);
   
   return {
     zona: zonaClinica,
-    planes: planesIntercalados,
-    total: planesIntercalados.length
+    planes: planesFinales,
+    total: planesFinales.length,
+    sietePorCientoCLP,
+    limiteMaximo
   };
 }
 
-// ============================================
-// FUNCIÓN: detectarZonaClinica()
-// Detecta si la clínica es NORTE, SUR o CENTRO
-// ============================================
-
-function detectarZonaClinica(nombre) {
-  const nombre_upper = nombre.toUpperCase();
-  
-  // CLÍNICAS Y CIUDADES NORTE
-  const clinicasNorte = [
-    'ARICA', 'IQUIQUE', 'CALAMA', 'ANTOFAGASTA', 'LA SERENA', 
-    'COQUIMBO', 'OVALLE', 'COPIAPÓ','ATACAMA', 'COQUIMBO', 'VICUÑA', 'ANDACOLLO'];
-  
-  // CLÍNICAS Y CIUDADES SUR
-  const clinicasSur = [
-    'PUERTO MONTT', 'PUERTO VARAS', 'OSORNO', 'VALDIVIA', 
-    'COYHAIQUE', 'MAGALLANES', 'PUERTO NATALES', 'PUNTA ARENAS',
-    'TEMUCO', 'CHILLAN', 'TALCA', 'CURICÓ', 'LINARES',
-    'LOS ÁNGELES', 'CONCEPCIÓN', 'TEMUCO', 'VALDIVIA', 'PUERTO VARAS', 'LOS LAGOS', 'LOS RÍOS'
-  ];
-  
-  // Verificar NORTE
-  for (let ciudad of clinicasNorte) {
-    if (nombre_upper.includes(ciudad)) {
-      console.log(`   📌 Clínica en zona NORTE (${ciudad})`);
-      return 'NORTE';
-    }
-  }
-  
-  // Verificar SUR
-  for (let ciudad of clinicasSur) {
-    if (nombre_upper.includes(ciudad)) {
-      console.log(`   📌 Clínica en zona SUR (${ciudad})`);
-      return 'SUR';
-    }
-  }
-  
-  // Default: CENTRO
-  console.log('   📌 Clínica en zona CENTRO (default)');
-  return 'CENTRO';
-}
-
-// ============================================
-// FUNCIÓN: generarResultadoBusquedaClinicaNew()
-// Genera HTML con los 4 planes intercalados
-// ============================================
-
 /**
- * FUNCIÓN CORREGIDA: generarResultadoBusquedaClinicaNew
- * Usa los cálculos REALES de calcularValorPlan() y calcularSietePorCiento()
- * 
- * Variables necesarias:
- * - plan: Objeto del plan con pb_uf, nombre, hospitalizacion, etc.
- * - clinica: Nombre de la clínica buscada
- * - zona: Zona detectada (NORTE, SUR, CENTRO)
- * - edadTitular: Edad (obtenida del formulario)
- * - edadesCargas: Array de edades de cargas
- * - rentaMensual: Renta mensual (obtenida del formulario)
+ * FUNCIÓN: generarResultadoBusquedaClinicaNew
+ * Genera HTML con diseño ORIGINAL de "Cotizar"
  */
-
-function generarResultadoBusquedaClinicaNew(plan, clinica, zona, edadTitular = 40, edadesCargas = [], rentaMensual = 0) {
+function generarResultadoBusquedaClinicaNew(plan, nombreClinica, zona, edadTitular = 40, edadesCargas = [], rentaMensual = 0, numeroPlan = 1) {
   const uf = window.__UF_VALOR || 39724.12;
   
-  // 1. CALCULAR VALOR TOTAL DEL PLAN
+  // Calcular valores
   const calcPlan = calcularValorPlan(plan.pb_uf, edadTitular, edadesCargas);
-  const { totalUF, totalCLP, gesUF, gesCLP, sumaFactores } = calcPlan;
+  const { totalUF, totalCLP, gesCLP, gesUF } = calcPlan;
   
-  // 2. CALCULAR 7% REFERENCIA
   const calcSiete = calcularSietePorCiento(rentaMensual, uf);
-  const { sietePorCientoCLP, sietePorCientoUF, rtiAplicado } = calcSiete;
+  const { sietePorCientoCLP } = calcSiete;
   
-  // 3. CALCULAR ADICIONAL A PAGAR
   const adicionalCLP = Math.max(0, totalCLP - sietePorCientoCLP);
-  const adicionalUF = Math.max(0, totalUF - sietePorCientoUF);
-  const esAdicional = adicionalCLP > 0;
+  const adicionalUF = Math.max(0, totalUF - (sietePorCientoCLP / uf));
   
-  // 4. DETERMINAR % COBERTURA EN CLÍNICA BUSCADA (Hospitalización en Redes)
-  let coberturaPorcentaje = "N/A";
-  let hospitalizacionRedes = "Sin información";
+  // Extraer código del plan (números al final del nombre)
+  const codigoMatch = plan.nombre.match(/(\d+)$/);
+  const codigo = codigoMatch ? codigoMatch[1] : '';
   
-  if (plan.coberturas_grupos && Object.keys(plan.coberturas_grupos).length > 0) {
-    // Tiene coberturas por grupo (PLUS o MAX)
-    const grupos = plan.coberturas_grupos;
-    const coberturaTexto = Object.entries(grupos)
-      .map(([grupo, porcentaje]) => `${grupo}=${porcentaje}%`)
-      .join(", ");
-    hospitalizacionRedes = coberturaTexto;
-    
-    // Mostrar cobertura promedio o máxima
-    const coberturas = Object.values(grupos);
-    coberturaPorcentaje = Math.max(...coberturas) + "%";
-  } else if (plan.hospitalizacion && plan.hospitalizacion.trim()) {
-    // Tiene descripción de clínicas (STAR o MAX NORTE)
-    hospitalizacionRedes = plan.hospitalizacion.substring(0, 150) + "...";
+  // Hospitalización completa (sin truncar)
+  let hospitalizacionTexto = 'No tiene información';
+  if (plan.hospitalizacion && plan.hospitalizacion.trim()) {
+    hospitalizacionTexto = plan.hospitalizacion;
   }
   
-  // 5. CONSTRUIR HTML
+  // Consulta Preferente
+  let consultaPrefTexto = 'No tiene';
+  if (plan.consulta_preferente && plan.consulta_preferente !== 'Sin Información') {
+    consultaPrefTexto = plan.consulta_preferente;
+  }
+  
+  // Badge
+  const badgeTexto = numeroPlan === 1 ? 'PLAN RECOMENDADO 1' : 'PLAN RECOMENDADO 2';
+  const badgeColor = numeroPlan === 1 ? 'badge-gold' : 'badge-blue';
+  
+  // HTML
   let html = `
-    <div class="resultado-clinica">
-      <div class="header-plan">
-        <span class="badge-mejor">🏆 MEJOR OPCIÓN</span>
-        <h3 class="nombre-plan">${plan.nombre}</h3>
+    <div class="resultado-plan-clinica">
+      <span class="badge ${badgeColor}">${badgeTexto}</span>
+      
+      <div class="plan-header-clinica">
+        <h3>⭐ ${plan.nombre} ${codigo ? '(' + codigo + ')' : ''} ⭐</h3>
       </div>
       
-      <div class="datos-plan">
-        <div class="fila-datos">
-          <div class="dato">
-            <label>Precio Total del Plan</label>
-            <span class="valor">${totalCLP.toLocaleString('es-CL', {style: 'currency', currency: 'CLP'})}</span>
-            <small>${totalUF.toFixed(2)} UF</small>
-          </div>
-          
-          ${esAdicional ? `
-          <div class="dato adicional">
-            <label>Adicional a Pagar</label>
-            <span class="valor warning">${adicionalCLP.toLocaleString('es-CL', {style: 'currency', currency: 'CLP'})}</span>
-            <small>${adicionalUF.toFixed(2)} UF</small>
-          </div>
-          ` : `
-          <div class="dato">
-            <label>vs 7% Referencia</label>
-            <span class="valor ok">✅ OK</span>
-            <small>Dentro del rango</small>
-          </div>
-          `}
-          
-          <div class="dato">
-            <label>Zona</label>
-            <span class="valor">${zona}</span>
-          </div>
+      <div class="plan-datos-row">
+        <div class="plan-dato">
+          <label>Valor del Plan</label>
+          <span class="valor">${totalCLP.toLocaleString('es-CL', {style: 'currency', currency: 'CLP'})}</span>
+          <small>${totalUF.toFixed(2)} UF</small>
         </div>
         
-        <div class="detalle-plan">
-          <h4>📋 Resumen del Plan</h4>
-          <ul>
-            <li><strong>Tipo:</strong> ${plan.tipo}</li>
-            <li><strong>Factor Riesgo:</strong> ${sumaFactores.toFixed(3)}</li>
-            <li><strong>GES Incluido:</strong> ${gesCLP.toLocaleString('es-CL', {style: 'currency', currency: 'CLP'})} (${gesUF.toFixed(2)} UF)</li>
-            <li><strong>Renta 7% Ref.:</strong> ${sietePorCientoCLP.toLocaleString('es-CL', {style: 'currency', currency: 'CLP'})} (${sietePorCientoUF.toFixed(2)} UF)${rtiAplicado ? ' <em>(RTI aplicado)</em>' : ''}</li>
-          </ul>
+        ${adicionalCLP > 0 ? `
+        <div class="plan-dato adicional-pagar">
+          <label>Adicional a pagar</label>
+          <span class="valor warning">${adicionalCLP.toLocaleString('es-CL', {style: 'currency', currency: 'CLP'})}</span>
+          <small>${adicionalUF.toFixed(2)} UF</small>
+        </div>
+        ` : `
+        <div class="plan-dato">
+          <label>Adicional a pagar</label>
+          <span class="valor ok">$0</span>
+          <small>0.00 UF</small>
+        </div>
+        `}
+        
+        <div class="plan-dato">
+          <label>GES Incluido</label>
+          <span class="valor ges">${gesCLP.toLocaleString('es-CL', {style: 'currency', currency: 'CLP'})}</span>
+          <small>${gesUF.toFixed(2)} UF</small>
         </div>
         
-        <div class="beneficios-plan">
-          <h4>🏥 Hospitalización en Redes</h4>
-          <p class="cobertura">${hospitalizacionRedes}</p>
+        <div class="plan-dato">
+          <label>Tope anual</label>
+          <span class="valor">${plan.tope_anual_uf ? plan.tope_anual_uf + ' UF' : 'Sin información'}</span>
         </div>
-        
-        ${plan.hospitalizacion && !Object.keys(plan.coberturas_grupos || {}).length ? `
-        <div class="hospitalizacion-desc">
-          <h4>🏥 Detalles Hospitalización</h4>
-          <p>${plan.hospitalizacion}</p>
-        </div>
-        ` : ''}
-        
-        ${plan.consulta_preferente && plan.consulta_preferente !== 'Sin Información' ? `
-        <div class="consulta-pref">
-          <h4>👨‍⚕️ Consulta Preferente</h4>
-          <p>${plan.consulta_preferente}</p>
-        </div>
-        ` : ''}
-        
-        ${plan.consulta_le ? `
-        <div class="consulta-le">
-          <h4>💊 Consulta Libre Elección</h4>
-          <p>${plan.consulta_le}</p>
-          <small>Tope: ${plan.tope_consulta_le_uf ? plan.tope_consulta_le_uf + ' UF' : 'Sin información'}</small>
-        </div>
-        ` : ''}
-        
-        ${plan.tope_anual_uf ? `
-        <div class="tope-anual">
-          <h4>📅 Tope Anual</h4>
-          <p>${plan.tope_anual_uf} UF</p>
-        </div>
-        ` : ''}
       </div>
       
-      <div class="acciones-plan">
-        <button class="btn-whatsapp" onclick="enviarAWhatsappPlan('${plan.nombre}', ${plan.pb_uf}, '${clinica}', '${zona}')">
-          📱 Enviar a WhatsApp
-        </button>
+      <!-- HOSPITALIZACIÓN EN REDES (% COBERTURA) -->
+      <div class="plan-hospitalizacion-redes">
+        <h4>🏥 Hospitalización en Redes</h4>
+        ${plan.coberturas_grupos && Object.keys(plan.coberturas_grupos).length > 0 ? `
+        <p>${Object.entries(plan.coberturas_grupos)
+          .map(([grupo, porcentaje]) => \`\${grupo}=\${porcentaje}%\`)
+          .join(", ")}</p>
+        ` : `
+        <p>No tiene información</p>
+        `}
       </div>
+      
+      <!-- HOSPITALIZACIÓN (DESCRIPCIÓN COMPLETA) -->
+      ${plan.hospitalizacion ? `
+      <div class="plan-hospitalizacion">
+        <h4>🏥 Hospitalización</h4>
+        <p>${hospitalizacionTexto}</p>
+      </div>
+      ` : ''}
+      
+      <!-- CONSULTA PREFERENTE AMBULATORIA -->
+      <div class="plan-beneficios">
+        <h4>👨‍⚕️ Consulta Preferente Ambulatoria</h4>
+        <p>${consultaPrefTexto}</p>
+      </div>
+      
+      <!-- CONSULTA LIBRE ELECCIÓN -->
+      ${plan.consulta_le ? `
+      <div class="plan-consulta-le">
+        <h4>💊 Consulta Libre Elección</h4>
+        <p>${plan.consulta_le}</p>
+      </div>
+      ` : ''}
     </div>
   `;
   
@@ -2329,95 +2302,8 @@ function generarResultadoBusquedaClinicaNew(plan, clinica, zona, edadTitular = 4
 }
 
 /**
- * FUNCIÓN MEJORADA: obtenerPlanesConClinica
- * Ahora CALCULA correctamente usando los datos del usuario
- */
-function obtenerPlanesConClinicaMejorado(nombreClinica, edadTitular = 40, edadesCargas = [], rentaMensual = 0) {
-  console.log('🔍 obtenerPlanesConClinica INICIADA');
-  console.log('   Buscando:', nombreClinica);
-  console.log('   Edad Titular:', edadTitular);
-  console.log('   Edades Cargas:', edadesCargas);
-  console.log('   Renta Mensual:', rentaMensual);
-  
-  // Detectar zona de la clínica
-  const zonaClinica = detectarZonaClinica(nombreClinica);
-  console.log('📍 Zona detectada:', zonaClinica);
-  
-  // Obtener planes según zona
-  let planesDisponibles = [];
-  
-  if (zonaClinica === 'NORTE' && TARIFARIO.norte) {
-    planesDisponibles = TARIFARIO.norte;
-  } else if (zonaClinica === 'SUR' && TARIFARIO.sur) {
-    planesDisponibles = TARIFARIO.sur;
-  } else if (zonaClinica === 'CENTRO' && TARIFARIO.centro) {
-    planesDisponibles = TARIFARIO.centro;
-  }
-  
-  if (!planesDisponibles || planesDisponibles.length === 0) {
-    console.log('❌ No hay planes disponibles para:', zonaClinica);
-    return null;
-  }
-  
-  // CALCULAR VALOR DE CADA PLAN y ORDENAR POR PRECIO TOTAL MÁS CERCANO A 7%
-  const planesConCalculo = planesDisponibles.map(plan => {
-    const calcPlan = calcularValorPlan(plan.pb_uf, edadTitular, edadesCargas);
-    const calcSiete = calcularSietePorCiento(rentaMensual, TARIFARIO.uf_valor || 39724.12);
-    
-    return {
-      ...plan,
-      totalUF: calcPlan.totalUF,
-      totalCLP: calcPlan.totalCLP,
-      diferencia: Math.abs(calcPlan.totalCLP - calcSiete.sietePorCientoCLP),
-      calculos: calcPlan
-    };
-  });
-  
-  // Ordenar por diferencia (más cercanos a 7% primero)
-  planesConCalculo.sort((a, b) => a.diferencia - b.diferencia);
-  
-  // Tomar los 2 más cercanos
-  const planesMejores = planesConCalculo.slice(0, 2);
-  
-  console.log('✅ Planes más cercanos a 7%:', planesMejores.length);
-  
-  return {
-    zona: zonaClinica,
-    planes: planesMejores,
-    total: planesMejores.length
-  };
-}
-
-// ============================================
-// FUNCIÓN: enviarAWhatsappPlan()
-// Envía los datos del plan por WhatsApp
-// ============================================
-
-function enviarAWhatsappPlan(nombrePlan, pbUF, clinica, zona) {
-  const uf = TARIFARIO.uf_valor || 39724.12;
-  const pbCLP = Math.round(pbUF * uf);
-  
-  const mensaje = encodeURIComponent(
-    `Hola! Me interesa este plan de Colmena:\n\n` +
-    `📋 Plan: ${nombrePlan}\n` +
-    `🏥 Clínica: ${clinica}\n` +
-    `📍 Zona: ${zona}\n` +
-    `💰 Valor: $${pbCLP.toLocaleString('es-CL')} (${pbUF} UF)\n` +
-    `📅 Fecha: ${new Date().toLocaleDateString('es-CL')}\n\n` +
-    `¿Puedes ayudarme con más información sobre este plan?`
-  );
-  
-  // Cambiar este número por el tuyo
-  const numeroWhatsapp = '56912345678';
-  
-  const url = `https://wa.me/${numeroWhatsapp}?text=${mensaje}`;
-  console.log('📱 Abriendo WhatsApp:', url);
-  window.open(url, '_blank');
-}
-  
-/**
- * FUNCIÓN CORREGIDA: manejarBusquedaClinica
- * Extrae datos del formulario y calcula correctamente
+ * FUNCIÓN: manejarBusquedaClinica
+ * Ejecuta la búsqueda y muestra resultados
  */
 function manejarBusquedaClinica() {
   const inputClinica = document.getElementById("inputBuscadorClinica");
@@ -2434,7 +2320,7 @@ function manejarBusquedaClinica() {
   const edadTitular = parseInt(document.getElementById("edad").value) || 40;
   const rentaMensual = parseInt(document.getElementById("renta").value.replace(/\D/g, '')) || 0;
   
-  // Procesar edades de cargas (convertir string "5, 12, 30" a array [5, 12, 30])
+  // Procesar edades de cargas
   const cargasStr = document.getElementById("cargas").value.trim();
   let edadesCargas = [];
   if (cargasStr) {
@@ -2448,48 +2334,43 @@ function manejarBusquedaClinica() {
   console.log('👨‍👩‍👧‍👦 Edades Cargas:', edadesCargas);
   console.log('💰 Renta Mensual:', rentaMensual);
   
-  // OBTENER PLANES SEGÚN CLÍNICA
-  const resultado = obtenerPlanesConClinica(nombreClinica);
+  // OBTENER PLANES
+  const resultado = obtenerPlanesConClinica(nombreClinica, edadTitular, edadesCargas, rentaMensual);
   
   if (!resultado || !resultado.planes || resultado.planes.length === 0) {
-    alert(`❌ No encontramos la clínica "${nombreClinica}"`);
+    alert(`❌ No encontramos planes para "${nombreClinica}"`);
     return;
   }
   
-  // GENERAR HTML CON PLANES CALCULADOS
+  // GENERAR HTML
   let htmlResultados = '';
-  
   resultado.planes.forEach((plan, index) => {
-    const badge = index === 0 ? '🏆 MEJOR OPCIÓN' : (index === 1 ? '🥈 ALTERNATIVA 2' : '🥉 ALTERNATIVA ' + (index + 1));
-    
     const htmlPlan = generarResultadoBusquedaClinicaNew(
       plan,
       nombreClinica,
       resultado.zona,
       edadTitular,
       edadesCargas,
-      rentaMensual
+      rentaMensual,
+      index + 1
     );
-    
     htmlResultados += htmlPlan;
   });
   
   // MOSTRAR RESULTADOS
-  const contenedorResultado = document.getElementById("resultadoBusquedaClinica");
-  if (contenedorResultado) {
-    contenedorResultado.innerHTML = `
+  const contenedor = document.getElementById("resultadoBusquedaClinica");
+  if (contenedor) {
+    contenedor.innerHTML = `
       <div class="resultados-header">
         <h3>✅ Planes disponibles para ${nombreClinica}</h3>
-        <p>Zona: <strong>${resultado.zona}</strong> | Mostramos los 2 más cercanos a tu 7% referencia</p>
+        <p>Zona: <strong>${resultado.zona}</strong></p>
       </div>
       ${htmlResultados}
     `;
     
-    // Scroll a resultados
-    contenedorResultado.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    contenedor.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
-
 /**
  * FUNCIÓN: obtenerPlanesConClinica (VERSIÓN MEJORADA)
  * Retorna planes sin cálculos (los cálculos se hacen en generarResultadoBusquedaClinicaNew)
