@@ -2267,7 +2267,7 @@ function generarResultadoBusquedaClinicaNew(plan, nombreClinica, zona, edadTitul
         <h4>🏥 Hospitalización en Redes</h4>
         ${plan.coberturas_grupos && Object.keys(plan.coberturas_grupos).length > 0 ? `
         <p>${Object.entries(plan.coberturas_grupos)
-          .map(([grupo, porcentaje]) => \`\${grupo}=\${porcentaje}%\`)
+          .map(([grupo, porcentaje]) => `${grupo}=${porcentaje}%`)
           .join(", ")}</p>
         ` : `
         <p>No tiene información</p>
