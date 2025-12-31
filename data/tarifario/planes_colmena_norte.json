@@ -1,0 +1,166 @@
+{
+  "zona": "NORTE",
+  "planes_max": [
+    {
+      "nombre": "COLMENA MAX NORTE PF 12610080",
+      "pb_uf": 3.78,
+      "pb_clp": 150157,
+      "distancia_7uf": 3.2199999999999998,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 12610070",
+      "pb_uf": 3.66,
+      "pb_clp": 145390,
+      "distancia_7uf": 3.34,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 1269080",
+      "pb_uf": 3.63,
+      "pb_clp": 144198,
+      "distancia_7uf": 3.37,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 1269070",
+      "pb_uf": 3.5,
+      "pb_clp": 139034,
+      "distancia_7uf": 3.5,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 12610060",
+      "pb_uf": 3.5,
+      "pb_clp": 139034,
+      "distancia_7uf": 3.5,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 1268080",
+      "pb_uf": 3.37,
+      "pb_clp": 133870,
+      "distancia_7uf": 3.63,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 1269060",
+      "pb_uf": 3.35,
+      "pb_clp": 133075,
+      "distancia_7uf": 3.6500000000000004,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 12610050",
+      "pb_uf": 3.35,
+      "pb_clp": 133075,
+      "distancia_7uf": 3.6500000000000004,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 1268070",
+      "pb_uf": 3.26,
+      "pb_clp": 129500,
+      "distancia_7uf": 3.74,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 1269050",
+      "pb_uf": 3.19,
+      "pb_clp": 126719,
+      "distancia_7uf": 3.8099999999999996,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 1268060",
+      "pb_uf": 3.1,
+      "pb_clp": 123144,
+      "distancia_7uf": 3.9000000000000004,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 1268050",
+      "pb_uf": 2.96,
+      "pb_clp": 117583,
+      "distancia_7uf": 4.04,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 1267080",
+      "pb_uf": 2.92,
+      "pb_clp": 115994,
+      "distancia_7uf": 4.08,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 1267070",
+      "pb_uf": 2.81,
+      "pb_clp": 111624,
+      "distancia_7uf": 4.19,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 1266080",
+      "pb_uf": 2.72,
+      "pb_clp": 108049,
+      "distancia_7uf": 4.28,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 1267060",
+      "pb_uf": 2.67,
+      "pb_clp": 106063,
+      "distancia_7uf": 4.33,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 1266070",
+      "pb_uf": 2.61,
+      "pb_clp": 103679,
+      "distancia_7uf": 4.39,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 1267050",
+      "pb_uf": 2.53,
+      "pb_clp": 100502,
+      "distancia_7uf": 4.47,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 1265080",
+      "pb_uf": 2.52,
+      "pb_clp": 100104,
+      "distancia_7uf": 4.48,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX NORTE PF 1266060",
+      "pb_uf": 2.48,
+      "pb_clp": 98515,
+      "distancia_7uf": 4.52,
+      "zona": "NORTE",
+      "tipo": "COLMENA MAX"
+    }
+  ],
+  "uf_valor": 39724.12
+}
