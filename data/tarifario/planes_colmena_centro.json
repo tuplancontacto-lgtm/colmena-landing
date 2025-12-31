@@ -1,0 +1,166 @@
+{
+  "zona": "CENTRO",
+  "planes_rm": [
+    {
+      "nombre": "COLMENA PRO 12610080",
+      "pb_uf": 6.19,
+      "pb_clp": 245892,
+      "distancia_7uf": 0.8099999999999996,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PRO 1269080",
+      "pb_uf": 5.92,
+      "pb_clp": 235166,
+      "distancia_7uf": 1.08,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PRO 12610070",
+      "pb_uf": 5.8,
+      "pb_clp": 230399,
+      "distancia_7uf": 1.2000000000000002,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PRO 1268080",
+      "pb_uf": 5.64,
+      "pb_clp": 224044,
+      "distancia_7uf": 1.3600000000000003,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PRO 1269070",
+      "pb_uf": 5.54,
+      "pb_clp": 220071,
+      "distancia_7uf": 1.46,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PRO 12610060",
+      "pb_uf": 5.42,
+      "pb_clp": 215304,
+      "distancia_7uf": 1.58,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PRO 1267080",
+      "pb_uf": 5.36,
+      "pb_clp": 212921,
+      "distancia_7uf": 1.6399999999999997,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PRO 1268070",
+      "pb_uf": 5.26,
+      "pb_clp": 208948,
+      "distancia_7uf": 1.7400000000000002,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PLUS 1261007I",
+      "pb_uf": 5.19,
+      "pb_clp": 206168,
+      "distancia_7uf": 1.8099999999999996,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PRO 1269060",
+      "pb_uf": 5.15,
+      "pb_clp": 204579,
+      "distancia_7uf": 1.8499999999999996,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PLUS 1261007H",
+      "pb_uf": 5.14,
+      "pb_clp": 204181,
+      "distancia_7uf": 1.8600000000000003,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PLUS 1261007G",
+      "pb_uf": 5.09,
+      "pb_clp": 202195,
+      "distancia_7uf": 1.9100000000000001,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PLUS 1261007F",
+      "pb_uf": 5.04,
+      "pb_clp": 200209,
+      "distancia_7uf": 1.96,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PLUS 1261008E",
+      "pb_uf": 4.99,
+      "pb_clp": 198223,
+      "distancia_7uf": 2.01,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PRO 1267070",
+      "pb_uf": 4.97,
+      "pb_clp": 197428,
+      "distancia_7uf": 2.0300000000000002,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PLUS 1261007E",
+      "pb_uf": 4.94,
+      "pb_clp": 196237,
+      "distancia_7uf": 2.0599999999999996,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PLUS 1261008D",
+      "pb_uf": 4.89,
+      "pb_clp": 194250,
+      "distancia_7uf": 2.1100000000000003,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA MASTER 12610080",
+      "pb_uf": 4.88,
+      "pb_clp": 193853,
+      "distancia_7uf": 2.12,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PRO 1268060",
+      "pb_uf": 4.87,
+      "pb_clp": 193456,
+      "distancia_7uf": 2.13,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    },
+    {
+      "nombre": "COLMENA PLUS 1261007D",
+      "pb_uf": 4.84,
+      "pb_clp": 192264,
+      "distancia_7uf": 2.16,
+      "zona": "CENTRO",
+      "tipo": "COLMENA RM"
+    }
+  ],
+  "uf_valor": 39724.12
+}
