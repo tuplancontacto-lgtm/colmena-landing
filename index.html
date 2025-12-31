@@ -2309,14 +2309,7 @@ function enviarAWhatsappPlan(nombrePlan, pbUF, clinica, zona) {
   console.log('📱 Abriendo WhatsApp:', url);
   window.open(url, '_blank');
 }
-  
-  return {
-    clinicaEncontrada,
-    grupoClinica: grupoClinicaEncontrado,
-    planesDisponibles: planesConValor.slice(0, 4)
-  };
-}
-  
+    
 function inicializarBusquedaClinica() {
   console.log('🔧 Inicializando búsqueda por clínica...');
   
