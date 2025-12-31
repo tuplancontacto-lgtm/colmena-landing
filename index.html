@@ -2604,6 +2604,29 @@ window.addEventListener("load", () => {
   }, 1000);
 });
 </script>
+<!-- TARIFARIO COLMENA 2025 -->
+<script>
+const TARIFARIO = {};
+<!-- TARIFARIO COLMENA 2025 -->
+<script>
+const TARIFARIO = {};
 
+// Cargar archivos JSON
+Promise.all([
+  fetch('/tarifario/tarifario_colmena_2025.json').then(r => r.json()),
+  fetch('/tarifario/planes_colmena_norte.json').then(r => r.json()),
+  fetch('/tarifario/planes_colmena_centro.json').then(r => r.json()),
+  fetch('/tarifario/planes_colmena_sur.json').then(r => r.json())
+]).then(([maestro, norte, centro, sur]) => {
+  Object.assign(TARIFARIO, {
+    maestro,
+    norte: norte.planes_max,
+    centro: centro.planes_rm,
+    sur: sur.planes_max,
+    uf_valor: maestro.metadata.uf_valor
+  });
+  console.log('✅ TARIFARIO CARGADO:', TARIFARIO);
+});
+</script>
 </body>
 </html>
