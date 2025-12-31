@@ -2328,13 +2328,13 @@ function manejarBusquedaClinica() {
     return;
   }
   
-  const resultadoHTML = generarResultadoBusquedaClinicaNew(resultado.planes[0], resultado.zona, resultado.planes);
+  const resultadoHTML = generarResultadoBusquedaClinicaNew(nombreClinica, resultado.zona, resultado.planes);
   
   const contenedorResultado = document.getElementById("resultadoBusquedaClinica");
   if (contenedorResultado) {
     contenedorResultado.innerHTML = resultadoHTML;
   }
-}    
+}
 function inicializarBusquedaClinica() {
   console.log('🔧 Inicializando búsqueda por clínica...');
   
