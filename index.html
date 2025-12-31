@@ -1946,60 +1946,83 @@ Ejecutivo de Ventas - Colmena Golden Cross
 });
 
 /*========================================================
-  FORMULARIO REFERIDOS
+  FORMULARIO REFERIDOS - VERSIÓN CORREGIDA
 =========================================================*/
 document.getElementById("formReferidos").addEventListener("submit", async function(e) {
   e.preventDefault();
 
-  const nombreUsuario = document.getElementById("nombreUsuario").value;
-  const nombreReferido = document.getElementById("nombreReferido").value;
-  const telefonoReferido = document.getElementById("telefonoReferido").value;
-  const correoReferido = document.getElementById("correoReferido").value;
+  const nombreUsuario = document.getElementById("nombreUsuario").value.trim();
+  const nombreReferido = document.getElementById("nombreReferido").value.trim();
+  const telefonoReferido = document.getElementById("telefonoReferido").value.trim();
+  const correoReferido = document.getElementById("correoReferido").value.trim();
 
-  const f = new FormData();
-  f.append(REFERIDOS_FIELDS.tu_nombre, nombreUsuario);
-  f.append(REFERIDOS_FIELDS.nombre_referido, nombreReferido);
-  f.append(REFERIDOS_FIELDS.telefono_referido, telefonoReferido);
-  f.append(REFERIDOS_FIELDS.correo_referido, correoReferido);
-  f.append(REFERIDOS_FIELDS.mensaje_adicional, "Referido enviado desde landing");
-  f.append(REFERIDOS_FIELDS.asesorid_referidos, asesorKey);
+  // VALIDAR CAMPOS
+  if (!nombreUsuario || !nombreReferido || !telefonoReferido || !correoReferido) {
+    alert("Por favor completa todos los campos");
+    return;
+  }
+
+  const btn = document.querySelector("#formReferidos button[type='submit']");
+  btn.disabled = true;
+  btn.textContent = "⏳ Enviando...";
 
   try {
-    await fetch(GOOGLE_FORM_REFERIDOS_URL, { method: "POST", body: f });
-    document.getElementById("mensajeExitoReferido").style.display = "block";
-    document.getElementById("mensajeErrorReferido").style.display = "none";
+    // PASO 1: ENVIAR A GOOGLE SHEETS
+    console.log('📤 Iniciando envío a Google Sheets...');
+    const f = new FormData();
+    f.append(REFERIDOS_FIELDS.tu_nombre, nombreUsuario);
+    f.append(REFERIDOS_FIELDS.nombre_referido, nombreReferido);
+    f.append(REFERIDOS_FIELDS.telefono_referido, telefonoReferido);
+    f.append(REFERIDOS_FIELDS.correo_referido, correoReferido);
+    f.append(REFERIDOS_FIELDS.mensaje_adicional, "Referido enviado desde landing");
+    f.append(REFERIDOS_FIELDS.asesorid_referidos, asesorKey);
 
+    const respuestaSheets = await fetch(GOOGLE_FORM_REFERIDOS_URL, { 
+      method: "POST", 
+      body: f,
+      mode: 'no-cors'
+    });
+    
+    console.log('✅ Respuesta de Google Sheets recibida');
+
+    // PASO 2: ENVIAR WHATSAPP
+    console.log('📱 Enviando WhatsApp...');
     const msgRef = `🎯 NUEVO REFERIDO - ${ASESOR_NOMBRE}
 
 Referido por: ${nombreUsuario}
 Nombre: ${nombreReferido}
 Tel: ${telefonoReferido}
 Correo: ${correoReferido}`;
-    enviarCallMeBot(msgRef);
+    
+    await enviarCallMeBot(msgRef);
+    
+    console.log('✅ WhatsApp enviado');
 
-    // RESETEAR DATOS DESPUÉS DE ENVIAR Y ESPERAR 10 SEGUNDOS ANTES DE SUBIR
+    // PASO 3: MOSTRAR ÉXITO
+    document.getElementById("mensajeExitoReferido").style.display = "block";
+    document.getElementById("mensajeErrorReferido").style.display = "none";
+
+    // PASO 4: RESETEAR DESPUÉS DE 3 SEGUNDOS
     setTimeout(() => {
-      // Resetear formulario de referidos
+      // Limpiar formulario
       document.getElementById("formReferidos").reset();
       
-      // Resetear datos de cotización
-      document.getElementById("mainForm").reset();
-      formularioDatos = {};
-      ultimoResultado = null;
-      contadorRecalculos = 0;
+      // Restaurar botón
+      btn.disabled = false;
+      btn.textContent = "📤 Enviar Referido";
       
-      // Ocultar secciones
-      document.getElementById("resultado-preliminar").style.display = "none";
-      document.getElementById("referidos").style.display = "none";
+      // Ocultar mensaje de éxito
       document.getElementById("mensajeExitoReferido").style.display = "none";
       
-      // Subir al inicio después de 10 segundos
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 10000);
+    }, 3000);
 
   } catch (err) {
+    console.error('❌ Error:', err);
     document.getElementById("mensajeErrorReferido").style.display = "block";
     document.getElementById("mensajeExitoReferido").style.display = "none";
+    
+    btn.disabled = false;
+    btn.textContent = "📤 Enviar Referido";
   }
 });
 
