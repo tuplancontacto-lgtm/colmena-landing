@@ -2375,7 +2375,50 @@ function manejarBusquedaClinica() {
  * FUNCIÓN: obtenerPlanesConClinica (VERSIÓN MEJORADA)
  * Retorna planes sin cálculos (los cálculos se hacen en generarResultadoBusquedaClinicaNew)
  */
-function obtenerPlanesConClinica(nombreClinica) {
+
+  /**
+ * FUNCIÓN: detectarZonaClinica
+ * Detecta la zona según el nombre de la clínica
+ */
+function detectarZonaClinica(nombre) {
+  const nombre_upper = nombre.toUpperCase();
+  
+  // CLÍNICAS Y CIUDADES NORTE
+  const clinicasNorte = [
+    'ARICA', 'IQUIQUE', 'CALAMA', 'ANTOFAGASTA', 'LA SERENA', 
+    'COQUIMBO', 'OVALLE', 'COPIAPÓ', 'ATACAMA', 'VICUÑA', 'ANDACOLLO'
+  ];
+  
+  // CLÍNICAS Y CIUDADES SUR
+  const clinicasSur = [
+    'PUERTO MONTT', 'PUERTO VARAS', 'OSORNO', 'VALDIVIA', 
+    'COYHAIQUE', 'MAGALLANES', 'PUERTO NATALES', 'PUNTA ARENAS',
+    'TEMUCO', 'CHILLAN', 'TALCA', 'CURICÓ', 'LINARES',
+    'LOS ÁNGELES', 'CONCEPCIÓN', 'TEMUCO', 'VALDIVIA', 'PUERTO VARAS', 'LOS LAGOS', 'LOS RÍOS'
+  ];
+  
+  // Verificar NORTE
+  for (let ciudad of clinicasNorte) {
+    if (nombre_upper.includes(ciudad)) {
+      console.log(`   📌 Clínica en zona NORTE (${ciudad})`);
+      return 'NORTE';
+    }
+  }
+  
+  // Verificar SUR
+  for (let ciudad of clinicasSur) {
+    if (nombre_upper.includes(ciudad)) {
+      console.log(`   📌 Clínica en zona SUR (${ciudad})`);
+      return 'SUR';
+    }
+  }
+  
+  // Default: CENTRO
+  console.log('   📌 Clínica en zona CENTRO (default)');
+  return 'CENTRO';
+}
+  
+  function obtenerPlanesConClinica(nombreClinica) {
   console.log('🔍 obtenerPlanesConClinica INICIADA');
   console.log('   Buscando:', nombreClinica);
   
