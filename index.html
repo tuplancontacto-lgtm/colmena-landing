@@ -2118,10 +2118,10 @@ function obtenerPlanesConClinica(nombreClinica) {
   } else if (zonaClinica === 'SUR') {
     planesMax = TARIFARIO.sur.slice(0, 2);
     planesZona = TARIFARIO.sur.slice(2, 4);
-  } else if (zonaClinica === 'CENTRO') {
-    planesMax = TARIFARIO.maestro.nacional.planes_max.slice(0, 2);
+} else if (zonaClinica === 'CENTRO') {
+    planesMax = TARIFARIO.nacional.slice(0, 2);
     planesZona = TARIFARIO.centro.slice(0, 2);
-  }
+}
   
   // 3. INTERCALAR: MAX, ZONA, MAX, ZONA
   const planesIntercalados = [
