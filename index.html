@@ -2074,10 +2074,21 @@ const MAPEO_CODIGOS_GRUPO = {
 };
 
 // Mapeo inverso: De nombre de grupo a código
-const MAPEO_GRUPO_A_CODIGO = {};
-for (const [codigo, nombre] of Object.entries(MAPEO_CODIGOS_GRUPO)) {
-  MAPEO_GRUPO_A_CODIGO[nombre] = codigo;
-}
+// Mapeo inverso: De nombre de grupo a código
+const MAPEO_GRUPO_A_CODIGO = {
+  'Grupo 41 - GX Preferente': 'G41',
+  'Grupo 42 - GX Ampliada': 'G42',
+  'Grupo 43 - GX Red': 'G43',
+  'Grupo 44 - GX Red': 'G44',
+  'Grupo 45 - GX Plus': 'G45',
+  'Grupo 46 - GX Premium': 'G46',
+  'GC1 (G55)': 'G55',
+  'GC2 (G56)': 'G56',
+  'GC3 (G57)': 'G57',
+  'GS1 (G63)': 'G63',
+  'GS2 (G64)': 'G64',
+  'GS3 (G65)': 'G65'
+};
 
 function obtenerPlanesConClinica(nombreClinica) {
   console.log('🔍 obtenerPlanesConClinica INICIADA');
