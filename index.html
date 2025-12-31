@@ -2090,94 +2090,225 @@ const MAPEO_GRUPO_A_CODIGO = {
   'GS3 (G65)': 'G65'
 };
 
+// ============================================
+// FUNCIÓN NUEVA: obtenerPlanesConClinica()
+// Reemplaza la antigua (alrededor de línea 2094)
+// ============================================
+
 function obtenerPlanesConClinica(nombreClinica) {
   console.log('🔍 obtenerPlanesConClinica INICIADA');
   console.log('   Buscando:', nombreClinica);
-  console.log('   GRUPOS_GX disponibles:', Object.keys(GRUPOS_GX).length);
   
-  if (!PLANES || PLANES.length === 0) {
-    console.error('❌ No hay planes cargados');
-    return { planesDisponibles: [] };
+  // 1. DETECTAR ZONA DE LA CLÍNICA
+  const zonaClinica = detectarZonaClinica(nombreClinica);
+  console.log(`📍 Zona detectada: ${zonaClinica}`);
+  
+  if (!TARIFARIO || !TARIFARIO.norte) {
+    console.warn('⚠️ TARIFARIO no cargado, usando datos locales');
+    return obtenerPlanesConClinicaLocal(nombreClinica);
   }
   
-  // PASO 1: Buscar clínica en GRUPOS_GX
-  let clinicaEncontrada = null;
-  let grupoClinicaEncontrado = null;
+  // 2. OBTENER PLANES SEGÚN ZONA
+  let planesMax = [];
+  let planesZona = [];
   
-  const nombreBuscado = nombreClinica.toUpperCase().trim();
+  if (zonaClinica === 'NORTE') {
+    planesMax = TARIFARIO.norte.slice(0, 2);  // 2 primeros MAX NORTE
+    planesZona = TARIFARIO.norte.slice(2, 4); // 2 siguientes MAX NORTE
+  } else if (zonaClinica === 'SUR') {
+    planesMax = TARIFARIO.sur.slice(0, 2);
+    planesZona = TARIFARIO.sur.slice(2, 4);
+  } else if (zonaClinica === 'CENTRO') {
+    planesMax = TARIFARIO.maestro.nacional.planes_max.slice(0, 2);
+    planesZona = TARIFARIO.centro.slice(0, 2);
+  }
   
-  for (const [grupoNombre, clinicas] of Object.entries(GRUPOS_GX)) {
-    console.log(`   Buscando en ${grupoNombre}...`);
-    
-    for (const clinica of clinicas) {
-      const nombreClinicaGrupo = clinica.nombre.toUpperCase();
-      
-      // Búsqueda parcial o exacta
-      if (nombreClinicaGrupo.includes(nombreBuscado)) {
-        console.log(`   ✅ ENCONTRADA: ${clinica.nombre}`);
-        clinicaEncontrada = clinica;
-        grupoClinicaEncontrado = grupoNombre;
-        break;
-      }
+  // 3. INTERCALAR: MAX, ZONA, MAX, ZONA
+  const planesIntercalados = [
+    planesMax[0],
+    planesZona[0],
+    planesMax[1],
+    planesZona[1]
+  ].filter(p => p);
+  
+  console.log(`✅ Planes intercalados obtenidos: ${planesIntercalados.length}`);
+  
+  return {
+    zona: zonaClinica,
+    planes: planesIntercalados,
+    total: planesIntercalados.length
+  };
+}
+
+// ============================================
+// FUNCIÓN: detectarZonaClinica()
+// Detecta si la clínica es NORTE, SUR o CENTRO
+// ============================================
+
+function detectarZonaClinica(nombre) {
+  const nombre_upper = nombre.toUpperCase();
+  
+  // CLÍNICAS Y CIUDADES NORTE
+  const clinicasNorte = [
+    'ARICA', 'IQUIQUE', 'CALAMA', 'ANTOFAGASTA', 'LA SERENA', 
+    'COQUIMBO', 'OVALLE', 'COPIAPÓ', 'TACNA', 'AREQUIPA',
+    'ATACAMA', 'COQUIMBO', 'VICUÑA', 'ANDACOLLO'
+  ];
+  
+  // CLÍNICAS Y CIUDADES SUR
+  const clinicasSur = [
+    'PUERTO MONTT', 'PUERTO VARAS', 'OSORNO', 'VALDIVIA', 
+    'COYHAIQUE', 'MAGALLANES', 'PUERTO NATALES', 'PUNTA ARENAS',
+    'TEMUCO', 'CHILLAN', 'TALCA', 'CURICÓ', 'LINARES',
+    'LOS ÁNGELES', 'CONCEPCIÓN', 'TEMUCO', 'VALDIVIA', 'PUERTO VARAS'
+  ];
+  
+  // Verificar NORTE
+  for (let ciudad of clinicasNorte) {
+    if (nombre_upper.includes(ciudad)) {
+      console.log(`   📌 Clínica en zona NORTE (${ciudad})`);
+      return 'NORTE';
     }
-    
-    if (clinicaEncontrada) break;
   }
   
-  if (!clinicaEncontrada) {
-    console.warn('❌ Clínica NO encontrada en GRUPOS_GX');
-    return { planesDisponibles: [] };
+  // Verificar SUR
+  for (let ciudad of clinicasSur) {
+    if (nombre_upper.includes(ciudad)) {
+      console.log(`   📌 Clínica en zona SUR (${ciudad})`);
+      return 'SUR';
+    }
   }
   
-  console.log('✅ Clínica encontrada:', clinicaEncontrada.nombre);
-  console.log('   Grupo:', grupoClinicaEncontrado);
+  // Default: CENTRO
+  console.log('   📌 Clínica en zona CENTRO (default)');
+  return 'CENTRO';
+}
+
+// ============================================
+// FUNCIÓN: generarResultadoBusquedaClinicaNew()
+// Genera HTML con los 4 planes intercalados
+// ============================================
+
+function generarResultadoBusquedaClinicaNew(clinica, grupo, planes) {
+  // Obtener planes intercalados del TARIFARIO
+  const resultado = obtenerPlanesConClinica(clinica);
+  const planesIntercalados = resultado.planes;
+  const zonaDetectada = resultado.zona;
   
-  // PASO 2: Convertir nombre de grupo a código (G41, G42, etc)
-  let codigoGrupo = MAPEO_GRUPO_A_CODIGO[grupoClinicaEncontrado];
-  
-  console.log('   Código grupo mapeado:', codigoGrupo);
-  console.log('   Códigos disponibles en planes:', ['G41', 'G42', 'G43', 'G44', 'G45', 'G46']);
-  
-  if (!codigoGrupo) {
-    console.warn('   ⚠️ Grupo no mapeado:', grupoClinicaEncontrado);
-    // Los grupos GC1, GC2, GS1, etc no están en los planes actuales
-    // Solo G41-G46 están disponibles
-    return { planesDisponibles: [] };
+  if (!planesIntercalados || planesIntercalados.length === 0) {
+    return `
+      <div style="background: #ff4444; color: white; padding: 20px; border-radius: 10px; text-align: center;">
+        <h3>❌ No hay planes disponibles</h3>
+        <p>Para la clínica: <strong>${clinica}</strong></p>
+      </div>
+    `;
   }
   
-  // PASO 3: Filtrar planes que cubren este grupo
-  const planesQueCubren = PLANES.filter(plan => {
-    if (!plan.coberturas_redes) return false;
-    return plan.coberturas_redes[codigoGrupo] !== undefined;
-  });
+  const uf = TARIFARIO.uf_valor || 39724.12;
   
-  console.log('✅ Planes que cubren', codigoGrupo + ':', planesQueCubren.length);
+  let html = `
+    <div style="text-align: center; margin: 20px 0;">
+      <h2 style="color: #4ade80;">✅ Planes disponibles para ${clinica}</h2>
+      <p style="color: #888; margin-top: 10px;">Zona: <strong>${zonaDetectada}</strong> | Mostramos los 4 mejores planes</p>
+    </div>
+  `;
   
-  if (planesQueCubren.length === 0) {
-    console.warn('❌ No hay planes que cubran esta clínica');
-    return { planesDisponibles: [] };
-  }
-  
-  // PASO 4: Calcular valores y filtrar
-  const uf = window.__UF_VALOR || 39700;
-  const r = ultimoResultado;
-  
-  const planesConValor = planesQueCubren.map(plan => {
-    const calc = calcularValorPlan(plan.pb_uf, r.edadTitular, r.edadesCargas);
-    return {
-      ...plan,
-      valorCalculadoUF: calc.totalUF,
-      valorCalculadoCLP: calc.totalCLP,
-      gesUF: calc.gesUF,
-      gesCLP: calc.gesCLP,
-      coberturaGrupo: plan.coberturas_redes[codigoGrupo]
+  planesIntercalados.forEach((plan, i) => {
+    const num = i + 1;
+    const badges = {
+      1: '🥇 MEJOR OPCIÓN',
+      2: '🥈 ALTERNATIVA 2',
+      3: '🥉 ALTERNATIVA 3',
+      4: '⭐ ALTERNATIVA 4'
     };
+    const badge = badges[num] || `✨ OPCIÓN ${num}`;
+    
+    const pb_clp = Math.round(plan.pb_uf * uf);
+    const siete_uf = 7 * uf;
+    const adicional = Math.max(0, (plan.pb_uf - 7) * uf);
+    const esMejor = plan.pb_uf <= 7;
+    
+    html += `
+      <div style="background: #112233; border: 2px solid #d4af37; border-radius: 15px; 
+                  padding: 25px; margin: 20px 0;">
+        <span style="display: inline-block; padding: 8px 16px; border-radius: 20px; 
+                     font-size: 0.9rem; font-weight: bold; background: #d4af37; 
+                     color: #0a1a2a; margin-bottom: 15px;">${badge}</span>
+        
+        <div style="font-size: 1.4rem; font-weight: bold; color: #d4af37; margin: 15px 0; text-align: center;">
+          ${plan.nombre}
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 20px 0;">
+          <div style="background: #1a2a3a; padding: 15px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 0.8rem; color: #888; margin-bottom: 5px;">Valor del Plan</div>
+            <div style="font-size: 1.1rem; font-weight: bold; color: #fbbf24;">
+              $${pb_clp.toLocaleString('es-CL')}
+            </div>
+            <div style="font-size: 0.85rem; color: #aaa;">${plan.pb_uf} UF</div>
+          </div>
+          <div style="background: #1a2a3a; padding: 15px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 0.8rem; color: #888; margin-bottom: 5px;">Zona</div>
+            <div style="font-size: 1.1rem; font-weight: bold; color: #4ade80;">
+              ${zonaDetectada}
+            </div>
+          </div>
+          <div style="background: #1a2a3a; padding: 15px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 0.8rem; color: #888; margin-bottom: 5px;">vs 7% Ref.</div>
+            <div style="font-size: 1.1rem; font-weight: bold; color: ${esMejor ? '#4ade80' : '#fbbf24'};">
+              ${esMejor ? '✅ OK' : '+$' + Math.round(adicional).toLocaleString('es-CL')}
+            </div>
+          </div>
+        </div>
+        
+        <div style="background: #0d1f2d; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 3px solid #4ade80;">
+          <div style="color: #4ade80; font-weight: bold; margin-bottom: 8px;">📊 Resumen</div>
+          <div style="color: #b8c5d6; font-size: 0.9rem;">
+            <div>• Tipo: <strong>${plan.tipo}</strong></div>
+            <div>• Valor: <strong>${plan.pb_uf} UF</strong> = <strong>$${pb_clp.toLocaleString('es-CL')}</strong></div>
+          </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 15px;">
+          <button onclick="enviarAWhatsappPlan('${plan.nombre}', ${plan.pb_uf}, '${clinica}', '${zonaDetectada}')"
+                  style="background: #25d366; color: white; border: none; padding: 12px 24px; 
+                         border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem;">
+            📱 Enviar a WhatsApp
+          </button>
+        </div>
+      </div>
+    `;
   });
   
-  // Ordenar por cobertura descendente
-  planesConValor.sort((a, b) => b.coberturaGrupo - a.coberturaGrupo);
+  return html;
+}
+
+// ============================================
+// FUNCIÓN: enviarAWhatsappPlan()
+// Envía los datos del plan por WhatsApp
+// ============================================
+
+function enviarAWhatsappPlan(nombrePlan, pbUF, clinica, zona) {
+  const uf = TARIFARIO.uf_valor || 39724.12;
+  const pbCLP = Math.round(pbUF * uf);
   
-  console.log('✅ Planes finales:', planesConValor.length);
+  const mensaje = encodeURIComponent(
+    `Hola! Me interesa este plan de Colmena:\n\n` +
+    `📋 Plan: ${nombrePlan}\n` +
+    `🏥 Clínica: ${clinica}\n` +
+    `📍 Zona: ${zona}\n` +
+    `💰 Valor: $${pbCLP.toLocaleString('es-CL')} (${pbUF} UF)\n` +
+    `📅 Fecha: ${new Date().toLocaleDateString('es-CL')}\n\n` +
+    `¿Puedes ayudarme con más información sobre este plan?`
+  );
+  
+  // Cambiar este número por el tuyo
+  const numeroWhatsapp = '56912345678';
+  
+  const url = `https://wa.me/${numeroWhatsapp}?text=${mensaje}`;
+  console.log('📱 Abriendo WhatsApp:', url);
+  window.open(url, '_blank');
+}
   
   return {
     clinicaEncontrada,
