@@ -2413,6 +2413,43 @@ function generarResultadoBusquedaClinicaNew(clinica, grupo, planes) {
     const adicional = Math.max(0, plan.valorCalculadoUF - r.sieteUF);
     const adicionalCLP = Math.round(adicional * uf);
     
+    // Generar HTML de cobertura hospitalaria
+    let coberturasHTML = '';
+    if (plan.hospitalizacion) {
+      coberturasHTML = `
+        <div style="background: #0d1f2d; padding: 15px; border-radius: 10px; margin: 15px 0;">
+          <div style="color: #d4af37; font-weight: bold; margin-bottom: 10px;">📊 Cobertura Hospitalaria</div>
+          <div style="color: #b8c5d6; font-size: 0.9rem; line-height: 1.6;">${plan.hospitalizacion.replace(/\n/g, '<br>')}</div>
+        </div>
+      `;
+    }
+    
+    // Generar HTML de consulta
+    let consultaHTML = '';
+    if (plan.consulta) {
+      const consultaTipo = plan.consulta.tipo === 'preferente' ? 'Consulta Preferente' : 'Consulta Libre Elección';
+      consultaHTML = `
+        <div style="background: #0d1f2d; padding: 15px; border-radius: 10px; margin: 15px 0;">
+          <div style="color: #d4af37; font-weight: bold; margin-bottom: 10px;">🏥 ${consultaTipo}</div>
+          <div style="color: #b8c5d6; font-size: 0.9rem; line-height: 1.6;">${plan.consulta.valor.replace(/\n/g, '<br>')}</div>
+        </div>
+      `;
+    }
+    
+    // Generar lista de clínicas del grupo
+    let clinicasListaHTML = '';
+    const clinicasDelGrupo = GRUPOS_GX[grupo] || [];
+    if (clinicasDelGrupo.length > 0) {
+      clinicasListaHTML = `
+        <div style="background: #0d1f2d; padding: 15px; border-radius: 10px; margin: 15px 0;">
+          <div style="color: #4ade80; font-weight: bold; margin-bottom: 10px;">🏨 Clínicas disponibles en ${grupo}</div>
+          <div style="max-height: 200px; overflow-y: auto; color: #b8c5d6; font-size: 0.9rem;">
+            ${clinicasDelGrupo.map(c => `<div style="padding: 5px 0; border-bottom: 1px solid #2a3a4a;">✓ ${c.nombre} <span style="color: #888;">(${c.ciudad})</span></div>`).join('')}
+          </div>
+        </div>
+      `;
+    }
+    
     return `
       <div style="background: #112233; border: 2px solid #d4af37; border-radius: 15px; padding: 25px; margin: 20px 0;">
         <span style="display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; background: #d4af37; color: #0a1a2a; margin-bottom: 15px;">${badge}</span>
@@ -2435,6 +2472,10 @@ function generarResultadoBusquedaClinicaNew(clinica, grupo, planes) {
           </div>
         </div>
         
+        ${coberturasHTML}
+        ${consultaHTML}
+        ${clinicasListaHTML}
+        
         <div style="background: #0d1f2d; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 3px solid #4ade80;">
           <div style="color: #4ade80; font-weight: bold; margin-bottom: 10px;">✓ Cobertura: ${plan.coberturaGrupo}%</div>
           <div style="color: #b8c5d6; font-size: 0.9rem;">GES incluido: $${formatearCLP(plan.gesCLP)}</div>
@@ -2442,7 +2483,6 @@ function generarResultadoBusquedaClinicaNew(clinica, grupo, planes) {
       </div>
     `;
   }).join('');
-  
   return `
     <div style="background: linear-gradient(135deg, #0f2640, #1a3a5a); padding: 25px; border-radius: 15px; border: 1px solid #4ade80; margin: 20px 0;">
       <div style="color: #4ade80; font-size: 1.3rem; font-weight: bold; margin-bottom: 10px;">
