@@ -2448,18 +2448,20 @@ window.addEventListener("load", () => {
 const TARIFARIO = {};
 // Cargar archivos JSON
 Promise.all([
-  fetch('/data/tarifario/tarifario_colmena_2025.json').then(r => r.json()),
-  fetch('/data/tarifario/planes_colmena_norte.json').then(r => r.json()),
-  fetch('/data/tarifario/planes_colmena_centro.json').then(r => r.json()),
-  fetch('/data/tarifario/planes_colmena_sur.json').then(r => r.json())
-]).then(([maestro, norte, centro, sur]) => {
-  Object.assign(TARIFARIO, {
-    maestro,
-    norte: norte.planes_max,
-    centro: centro.planes_rm,
-    sur: sur.planes_max,
-    uf_valor: maestro.metadata.uf_valor
-  });
+      fetch('/data/tarifario/tarifario_colmena_2025.json').then(r => r.json()),
+      fetch('/data/tarifario/planes_colmena_norte.json').then(r => r.json()),
+      fetch('/data/tarifario/planes_colmena_centro.json').then(r => r.json()),
+      fetch('/data/tarifario/planes_colmena_sur.json').then(r => r.json()),
+      fetch('/data/tarifario/planes_colmena_nacional.json').then(r => r.json())
+    ]).then(([maestro, norte, centro, sur, nacional]) => {
+      Object.assign(TARIFARIO, {
+        maestro: maestro,
+        norte: norte.planes_max,
+        centro: centro.planes_rm,
+        sur: sur.planes_max,
+        nacional: nacional.planes_max,
+        uf_valor: maestro.metadata.uf_valor
+      });
   console.log('✅ TARIFARIO CARGADO:', TARIFARIO);
 });
 </script>
