@@ -2309,7 +2309,32 @@ function enviarAWhatsappPlan(nombrePlan, pbUF, clinica, zona) {
   console.log('📱 Abriendo WhatsApp:', url);
   window.open(url, '_blank');
 }
-    
+  
+function manejarBusquedaClinica() {
+  const inputClinica = document.getElementById("inputBuscadorClinica");
+  
+  if (!inputClinica || !inputClinica.value.trim()) {
+    alert("Por favor ingresa el nombre de una clínica.");
+    return;
+  }
+  
+  const nombreClinica = inputClinica.value.trim();
+  console.log('📋 Buscando clínica:', nombreClinica);
+  
+  const resultado = obtenerPlanesConClinica(nombreClinica);
+  
+  if (!resultado || !resultado.planes || resultado.planes.length === 0) {
+    alert(`❌ No encontramos la clínica "${nombreClinica}"`);
+    return;
+  }
+  
+  const resultadoHTML = generarResultadoBusquedaClinicaNew(resultado.planes[0], resultado.zona, resultado.planes);
+  
+  const contenedorResultado = document.getElementById("resultadoBusquedaClinica");
+  if (contenedorResultado) {
+    contenedorResultado.innerHTML = resultadoHTML;
+  }
+}    
 function inicializarBusquedaClinica() {
   console.log('🔧 Inicializando búsqueda por clínica...');
   
