@@ -2181,18 +2181,7 @@ function detectarZonaClinica(nombre) {
   console.log('   📌 Clínica en zona CENTRO (default)');
   return 'CENTRO';
 }
-// REGIONES (por si el usuario escribe la región en lugar de la clínica)
-const regiones = {
-  'NORTE': ['ARICA', 'IQUIQUE', 'ANTOFAGASTA', 'CALAMA', 'LA SERENA', 'COQUIMBO', 'OVALLE', 'COPIAPÓ'],
-  'SUR': ['PUERTO MONTT', 'PUERTO VARAS', 'OSORNO', 'VALDIVIA', 'COYHAIQUE', 'TEMUCO', 'CHILLÁN', 'TALCA', 'CONCEPCIÓN', 'LOS LAGOS', 'LOS RÍOS'],
-  'CENTRO': ['SANTIAGO', 'RM', 'REGIÓN METROPOLITANA']
-};
 
-for (const [zona, regiones_lista] of Object.entries(regiones)) {
-  if (regiones_lista.some(r => nombre_upper.includes(r))) {
-    return zona;
-  }
-}
 // ============================================
 // FUNCIÓN: generarResultadoBusquedaClinicaNew()
 // Genera HTML con los 4 planes intercalados
