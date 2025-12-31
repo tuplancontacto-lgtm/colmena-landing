@@ -1,0 +1,166 @@
+{
+  "zona": "SUR",
+  "planes_max": [
+    {
+      "nombre": "COLMENA MAX SUR 21126",
+      "pb_uf": 3.35,
+      "pb_clp": 133075,
+      "distancia_7uf": 3.65,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 18126",
+      "pb_uf": 3.25,
+      "pb_clp": 129103,
+      "distancia_7uf": 3.75,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 20126",
+      "pb_uf": 3.2,
+      "pb_clp": 127117,
+      "distancia_7uf": 3.8,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 17126",
+      "pb_uf": 3.15,
+      "pb_clp": 125130,
+      "distancia_7uf": 3.85,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 19126",
+      "pb_uf": 3.05,
+      "pb_clp": 121158,
+      "distancia_7uf": 3.95,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 16126",
+      "pb_uf": 3.0,
+      "pb_clp": 119172,
+      "distancia_7uf": 4.0,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 15126",
+      "pb_uf": 2.75,
+      "pb_clp": 109241,
+      "distancia_7uf": 4.25,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 14126",
+      "pb_uf": 2.5,
+      "pb_clp": 99310,
+      "distancia_7uf": 4.5,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 13126",
+      "pb_uf": 2.3,
+      "pb_clp": 91365,
+      "distancia_7uf": 4.7,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 12126",
+      "pb_uf": 2.25,
+      "pb_clp": 89379,
+      "distancia_7uf": 4.75,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 11126",
+      "pb_uf": 2.1,
+      "pb_clp": 83420,
+      "distancia_7uf": 4.9,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 10126",
+      "pb_uf": 2.03,
+      "pb_clp": 80639,
+      "distancia_7uf": 4.970000000000001,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 9126",
+      "pb_uf": 2.0,
+      "pb_clp": 79448,
+      "distancia_7uf": 5.0,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 8126",
+      "pb_uf": 1.94,
+      "pb_clp": 77064,
+      "distancia_7uf": 5.0600000000000005,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 7126",
+      "pb_uf": 1.86,
+      "pb_clp": 73886,
+      "distancia_7uf": 5.14,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 6126",
+      "pb_uf": 1.83,
+      "pb_clp": 72695,
+      "distancia_7uf": 5.17,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 5126",
+      "pb_uf": 1.78,
+      "pb_clp": 70708,
+      "distancia_7uf": 5.22,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 4126",
+      "pb_uf": 1.73,
+      "pb_clp": 68722,
+      "distancia_7uf": 5.27,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 3126",
+      "pb_uf": 1.71,
+      "pb_clp": 67928,
+      "distancia_7uf": 5.29,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    },
+    {
+      "nombre": "COLMENA MAX SUR 2126",
+      "pb_uf": 1.68,
+      "pb_clp": 66736,
+      "distancia_7uf": 5.32,
+      "zona": "SUR",
+      "tipo": "COLMENA MAX"
+    }
+  ],
+  "uf_valor": 39724.12
+}
