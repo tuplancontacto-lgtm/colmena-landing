@@ -609,7 +609,7 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
       
       <div class="plan-nombre-container">
         <span class="plan-nombre-estrella">*</span>
-        <span class="plan-nombre">${plan.plan} <span style="font-size: 0.8rem; color: #aaa;">(${plan.codigo})</span></span>
+        <span class="plan-nombre"> <span style="font-size: 0.8rem; color: #aaa;">(${plan.codigo})</span></span>
         <span class="plan-nombre-estrella">*</span>
       </div>
       
@@ -701,8 +701,8 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
   ultimoResultado = { sieteCLP, sieteUF, edadesCargas, cargasTexto, zona, plan1, plan2, edadTitular };
 
   try {
-    const plan1Nombre = plan1 ? plan1.plan : 'Sin plan disponible';
-    const plan2Nombre = plan2 ? plan2.plan : 'Sin plan disponible';
+    const plan1Nombre = plan1 ? plan1.nombre : 'Sin plan disponible';
+    const plan2Nombre = plan2 ? plan2.nombre : 'Sin plan disponible';
     
     const params = new URLSearchParams();
     params.append(FORM_FIELDS.nombre, formularioDatos.nombre);
@@ -746,7 +746,7 @@ Cargas: ${cargasInfo}
 
 Planes sugeridos:
 1) ${plan1 ? plan1.plan + ' -> ' + plan1.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}
-2) ${plan2 ? plan2.plan + ' -> ' + plan2.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}`;
+2) ${plan2 ? plan2 ? plan2.nombre + ' -> ' + plan2.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}`;
   
   enviarCallMeBot(msgWA);
 
@@ -973,7 +973,7 @@ document.getElementById("btnAsesoria").addEventListener("click", function() {
 
   const r = ultimoResultado;
   const plan1Nombre = r.plan1 ? r.plan1.plan : '-';
-  const plan2Nombre = r.plan2 ? r.plan2.plan : '-';
+  const plan2Nombre = r.plan2 ? r.plan2 ? plan2.nombre : '-';
   const plan1Valor = r.plan1 ? `${r.plan1.valorCalculadoUF.toFixed(2)} UF` : '-';
   const plan2Valor = r.plan2 ? `${r.plan2.valorCalculadoUF.toFixed(2)} UF` : '-';
   
@@ -1042,7 +1042,7 @@ document.getElementById("btnEnviarUsuario").addEventListener("click", function()
 
   const r = ultimoResultado;
   const plan1Nombre = r.plan1 ? r.plan1.plan : '-';
-  const plan2Nombre = r.plan2 ? r.plan2.plan : '-';
+  const plan2Nombre = r.plan2 ? r.plan2 ? plan2.nombre : '-';
   const plan1Valor = r.plan1 ? `${r.plan1.valorCalculadoUF.toFixed(2)} UF` : '-';
   const plan2Valor = r.plan2 ? `${r.plan2.valorCalculadoUF.toFixed(2)} UF` : '-';
 
