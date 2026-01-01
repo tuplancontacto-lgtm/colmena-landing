@@ -751,12 +751,12 @@ Cargas: ${cargasInfo}
 7%: $${formatearCLP(sieteCLP)} (${sieteUF.toFixed(2)} UF)
 
 Planes sugeridos:
-1) ${plan1 ? plan1.plan + ' -> ' + plan1.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}
-2) ${plan2 ? plan2.nombre + ' -> ' + plan2.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}
+1) ${plan1 ? plan1.nombre + ' -> ' + plan1.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}
+2) ${plan2 ? plan2.nombre + ' -> ' + plan2.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}`;
   
   enviarCallMeBot(msgWA);
 
- let htmlResultado = `
+  let htmlResultado = `
     <div class="resumen-cotizacion">
       <div class="resumen-titulo">Tu Cotizacion - ${formularioDatos.nombre}</div>
       <div class="resumen-grid">
