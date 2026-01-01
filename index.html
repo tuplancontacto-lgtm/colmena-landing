@@ -1227,13 +1227,11 @@ function buscarClinicaEnRedes(nombreClinica) {
 /*========================================================
 INICIO
 =========================================================*/
-window.addEventListener("load", () => {
-  cargarUF();
-  cargarPlanes();
-  
+window.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
-    inicializarBusquedaClinica();
-  }, 1000);
+    cargarUF();
+    cargarPlanes();
+  }, 500);
 });
 </script>
 
