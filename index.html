@@ -992,8 +992,8 @@ document.getElementById("btnAsesoria").addEventListener("click", function() {
   
   const cargasInfo = r.edadesCargas.length > 0 ? `${r.edadesCargas.length} (${r.edadesCargas.join(', ')} anos)` : '0';
   
-const tieneAdicional = r.montoAdicional && r.montoAdicional > 0;
-const textoAdicional = tieneAdicional 
+ const tieneAdicional = r.montoAdicional && r.montoAdicional > 0;
+ const textoAdicional = tieneAdicional 
   ? `Aporte adicional: $${formatearCLP(r.montoAdicional)}
 - Presupuesto total: $${formatearCLP(r.presupuestoTotalCLP)} (${r.presupuestoTotalUF.toFixed(2)} UF)`
   : '';
