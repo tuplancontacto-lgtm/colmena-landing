@@ -439,16 +439,22 @@ const URLS_PLANES = {
 
 async function cargarUF() {
   try {
-    const r = await fetch("https://mindicador.cl/api/");
-    const j = await r.json();
-    const uf = j.uf.valor;
-    window.__UF_VALOR = uf;
-    document.getElementById("ufValor").innerText = "$" + uf.toLocaleString("es-CL", { minimumFractionDigits: 2 });
-    document.getElementById("ufFecha").innerText = new Date(j.uf.fecha).toLocaleDateString("es-CL", { year: "numeric", month: "long", day: "numeric" });
-  } catch (err) {
+    const response = await fetch("https://mindicador.cl/api/");
+    const data = await response.json();
+    const ufValor = data.uf.valor;
+    const ufFecha = data.uf.fecha;
+    
+    window.__UF_VALOR = ufValor;
+    
+    document.getElementById("ufValor").textContent = "$" + ufValor.toLocaleString("es-CL", { minimumFractionDigits: 2 });
+    document.getElementById("ufFecha").textContent = new Date(ufFecha).toLocaleDateString("es-CL", { year: "numeric", month: "long", day: "numeric" });
+    
+    console.log("✅ UF cargada:", ufValor);
+  } catch (error) {
+    console.error("❌ Error cargando UF:", error);
     window.__UF_VALOR = 39700;
-    document.getElementById("ufValor").innerText = "$39.700 (estimado)";
-    document.getElementById("ufFecha").innerText = "No disponible";
+    document.getElementById("ufValor").textContent = "$39.700 (estimado)";
+    document.getElementById("ufFecha").textContent = "No disponible";
   }
 }
 
