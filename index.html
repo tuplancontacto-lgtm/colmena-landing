@@ -333,7 +333,6 @@ const REFERIDOS_FIELDS = {
 /*========================================================
 DATOS LOCALES - PLANES CON CODIGOS
 =========================================================*/
-const PLANES_DATA = [{"plan": "COLMENA MAX 2245050", "codigo": 10101, "pb_uf": 2.22, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 60, "G42": 50, "G43": 40, "G44": 30, "G45": 25, "G46": 25}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,50 UF)"}}, {"plan": "COLMENA MAX 2246050", "codigo": 10102, "pb_uf": 2.3, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 70, "G42": 60, "G43": 50, "G44": 40, "G45": 30, "G46": 30}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,55 UF)"}}, {"plan": "COLMENA MAX 2246060", "codigo": 10103, "pb_uf": 2.4, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 70, "G42": 60, "G43": 50, "G44": 40, "G45": 30, "G46": 30}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "60% (0,60 UF)"}}, {"plan": "COLMENA MAX 2247050", "codigo": 10104, "pb_uf": 2.5, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 80, "G42": 70, "G43": 60, "G44": 50, "G45": 30, "G46": 30}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "50% (0,65 UF)"}}, {"plan": "COLMENA MAX 2247060", "codigo": 10105, "pb_uf": 2.6, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 80, "G42": 70, "G44": 60, "G45": 50, "G46": 35}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "60% (0,70 UF)"}}, {"plan": "COLMENA MAX 2247070", "codigo": 10106, "pb_uf": 2.7, "zona": "LIBRE_ELECCION", "coberturas_redes": {"G41": 80, "G42": 70, "G44": 60, "G45": 50, "G46": 35}, "tope_anual_uf": 7000, "consulta": {"tipo": "libre_eleccion", "valor": "70% (0,75 UF)"}}, {"plan": "COLMENA STAR 1254040", "codigo": 11385, "pb_uf": 1.43, "zona": "SANTIAGO", "tope_anual_uf": 5000, "hospitalizacion": "50% Hospital del Profesor\n40% Clinica Davila Vespucio, Clinica RedSalud Santiago, Clinica Bupa Santiago, Hospital Clinico Universidad de Chile, Clinica Cordillera.", "consulta": {"tipo": "preferente", "valor": "40% Centros Medicos RedSalud y Centros Medicos Vidaintegra"}}, {"plan": "COLMENA STAR 1254050", "codigo": 11386, "pb_uf": 1.47, "zona": "SANTIAGO", "tope_anual_uf": 5000, "hospitalizacion": "50% Hospital del Profesor\n40% Clinica Davila Vespucio, Clinica RedSalud Santiago, Clinica Bupa Santiago, Hospital Clinico Universidad de Chile, Clinica Cordillera", "consulta": {"tipo": "preferente", "valor": "50% Centros Medicos RedSalud y Centros Medicos Vidaintegra"}}, {"plan": "COLMENA BLUE 1254040", "codigo": 11023, "pb_uf": 1.63, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "50% Clinica RedSalud Providencia, Clinica RedSalud Santiago, Hospital del Profesor, Clinica Cordillera, Hospital Clinico Universidad de Chile.\n40% Clinica Indisa (Providencia y Maipú), Clinica Davila Vespucio, Clinica Davila Recoleta, Clinica BUPA Santiago.", "consulta": {"tipo": "preferente", "valor": "50% Clinica RedSalud Providencia, Clinica RedSalud Santiago, Centros Medicos RedSalud (excepto RedSalud Arauco)\n40% Clinica Indisa (Providencia y Maipú), Clinica Davila Vespucio, Clinica Davila Recoleta, Clinica BUPA Santiago, Integramedica"}}, {"plan": "COLMENA ELITE 1254040", "codigo": 11203, "pb_uf": 2.02, "zona": "SANTIAGO", "tope_anual_uf": 7000, "hospitalizacion": "60% Clinica Davila Recoleta, Clinica Davila Vespucio, Clinica Bupa Santiago\n50% Clinica Indisa (Providencia y Maipú), Hospital Clinico Universidad Catolica (Marcoleta), Clinica Universidad Catolica (Lira y Santa Lucia)\n40% Clinica San Carlos de Apoquindo, Clinica Meds, Clinica Santa Maria", "consulta": {"tipo": "preferente", "valor": "60% Clinica Davila Recoleta, Clinica Davila Vespucio, Clinica Bupa Santiago, Integramedica\n50% Clinica Indisa (Providencia y Maipú), Hospital Clinico Universidad Catolica (Marcoleta), Clinica Universidad Catolica (Santa Lucia), Centros Medicos y UTM UC CHRISTUS\n40% Clinica San Carlos de Apoquindo, Clinica Meds, Clinica Santa Maria"}}];
 
 const GRUPOS_GX = {
   "Grupo 46 - GX Premium": [
@@ -426,6 +425,18 @@ let PLANES = [];
 /*========================================================
 CARGAR DATOS
 =========================================================*/
+/*========================================================
+CARGAR DATOS
+=========================================================*/
+
+// URLs de los JSONs en GitHub
+const URLS_PLANES = {
+    'CENTRO': 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/tarifario/planes_colmena_centro.json',
+    'NACIONAL': 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/tarifario/planes_colmena_nacional.json',
+    'NORTE': 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/tarifario/planes_colmena_norte.json',
+    'SUR': 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/tarifario/planes_colmena_sur.json'
+};
+
 async function cargarUF() {
   try {
     const r = await fetch("https://mindicador.cl/api/");
@@ -442,10 +453,37 @@ async function cargarUF() {
 }
 
 async function cargarPlanes() {
-  PLANES = PLANES_DATA;
-  console.log('Planes cargados:', PLANES.length);
+  try {
+    PLANES = [];
+    
+    for (const [zona, url] of Object.entries(URLS_PLANES)) {
+      try {
+        console.log(`Cargando ${zona} desde GitHub...`);
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        
+        const data = await response.json();
+        let planes = data.planes_rm || data.planes_max || [];
+        
+        PLANES = PLANES.concat(planes);
+        console.log(`✅ ${zona}: ${planes.length} planes cargados`);
+        
+      } catch (error) {
+        console.error(`❌ Error cargando ${zona}:`, error);
+      }
+    }
+    
+    console.log(`✅ TOTAL: ${PLANES.length} planes cargados desde GitHub`);
+    
+  } catch (error) {
+    console.error('Error en cargarPlanes:', error);
+    PLANES = [];
+  }
 }
-
+  
 /*========================================================
 FORMATEO
 =========================================================*/
