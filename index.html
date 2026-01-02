@@ -1163,13 +1163,14 @@ function buscarPlanesEnClinica(nombreClinica) {
   const nombreNormalizado = normalizarTexto(nombreClinica);
   const uf = window.__UF_VALOR || 39700;
   
-  let zona, edadTitular, edadesCargas, sieteUF;
+  let zona, edadTitular, edadesCargas, sieteUF, sieteCLP;
   
   if (ultimoResultado) {
     zona = ultimoResultado.zona;
     edadTitular = ultimoResultado.edadTitular;
     edadesCargas = ultimoResultado.edadesCargas;
     sieteUF = ultimoResultado.sieteUF;
+    sieteCLP = ultimoResultado.sieteCLP;
   } else {
     const region = document.getElementById("region").value;
     const edad = document.getElementById("edad").value;
@@ -1191,6 +1192,7 @@ function buscarPlanesEnClinica(nombreClinica) {
     
     const calcSiete = calcularSietePorCiento(Number(renta), uf);
     sieteUF = calcSiete.sietePorCientoUF;
+    sieteCLP = calcSiete.sietePorCientoUF * uf;
   }
   
   let planesConClinica = PLANES.filter(plan => {
@@ -1198,6 +1200,10 @@ function buscarPlanesEnClinica(nombreClinica) {
     const hospNormalizado = normalizarTexto(plan.hospitalizacion);
     return hospNormalizado.includes(nombreNormalizado);
   });
+  
+  if (planesConClinica.length === 0) {
+    return { plan1Regional: null, plan2Regional: null, plan1Nacional: null, plan2Nacional: null, totalEncontrados: 0 };
+  }
   
   planesConClinica = planesConClinica.map(plan => {
     const calc = calcularValorPlan(plan.pb_uf, edadTitular, edadesCargas);
@@ -1228,7 +1234,11 @@ function buscarPlanesEnClinica(nombreClinica) {
     plan2Regional,
     plan1Nacional,
     plan2Nacional,
-    totalEncontrados: planesConClinica.length
+    totalEncontrados: planesConClinica.length,
+    sieteUF,
+    sieteCLP,
+    edadesCargas,
+    nombreClinicaBuscada: nombreNormalizado
   };
 }
 function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = [], nombreClinicaBuscada = '') {
