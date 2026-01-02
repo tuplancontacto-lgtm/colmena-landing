@@ -1164,6 +1164,47 @@ function normalizarTexto(texto) {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
+let REDES_CLINICAS = {};
+let PLANES_REDES_ACCESO = {};
+
+async function cargarRedesClinicas() {
+  try {
+    const url = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/redes_clinicas.json';
+    const response = await fetch(url);
+    REDES_CLINICAS = await response.json();
+    console.log(`✅ Redes clínicas cargadas`);
+  } catch (error) {
+    console.error('Error cargando redes:', error);
+  }
+}
+
+async function cargarPlanesRedesAcceso() {
+  try {
+    const url = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/tarifario/planes_redes_acceso.json';
+    const response = await fetch(url);
+    PLANES_REDES_ACCESO = await response.json();
+    console.log(`✅ Acceso a redes cargado`);
+  } catch (error) {
+    console.error('Error cargando acceso a redes:', error);
+  }
+}
+
+function obtenerClinicasDelGrupo(grupo) {
+  if (!REDES_CLINICAS[grupo] || !REDES_CLINICAS[grupo].clinicas) {
+    return [];
+  }
+  return REDES_CLINICAS[grupo].clinicas.map(c => c.nombre.toLowerCase());
+}
+
+function tieneAccesoARedEs(nombrePlan, zona) {
+  for (const [tipo, config] of Object.entries(PLANES_REDES_ACCESO)) {
+    if (nombrePlan.includes(tipo) && config.zonas.includes(zona)) {
+      return { tieneAcceso: true, grupos: config.grupos };
+    }
+  }
+  return { tieneAcceso: false, grupos: [] };
+}
+
 function buscarPlanesEnClinica(nombreClinica) {
   const nombreNormalizado = normalizarTexto(nombreClinica);
   const uf = window.__UF_VALOR || 39700;
@@ -1201,9 +1242,26 @@ function buscarPlanesEnClinica(nombreClinica) {
   }
   
   let planesConClinica = PLANES.filter(plan => {
-    if (!plan.hospitalizacion) return false;
-    const hospNormalizado = normalizarTexto(plan.hospitalizacion);
-    return hospNormalizado.includes(nombreNormalizado);
+    // Búsqueda 1: En campo hospitalizacion
+    if (plan.hospitalizacion) {
+      const hospNormalizado = normalizarTexto(plan.hospitalizacion);
+      if (hospNormalizado.includes(nombreNormalizado)) {
+        return true;
+      }
+    }
+    
+    // Búsqueda 2: En redes clínicas (G41-G46, GS1-GS4)
+    const acceso = tieneAccesoARedEs(plan.nombre, zona);
+    if (acceso.tieneAcceso) {
+      for (const grupo of acceso.grupos) {
+        const clinicasGrupo = obtenerClinicasDelGrupo(grupo);
+        if (clinicasGrupo.some(c => c.includes(nombreNormalizado))) {
+          return true;
+        }
+      }
+    }
+    
+    return false;
   });
   
   if (planesConClinica.length === 0) {
@@ -1402,6 +1460,8 @@ window.addEventListener("DOMContentLoaded", () => {
     cargarUF();
     cargarPlanes();
     //cargarPlanesCodigosJSON();
+    cargarRedesClinicas();
+    cargarPlanesRedesAcceso();
     inicializarBusquedaClinica();
   }, 500);
 });
