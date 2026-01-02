@@ -1,0 +1,275 @@
+{
+  "COLMENA MAX": {
+    "G41": [
+      "Clínica Juan Pablo II",
+      "Clínica Sierra Bella",
+      "Hospital del Profesor",
+      "Hospital Parroquial San Bernardo",
+      "Clínica Fleming Arica",
+      "Clínica Río Blanco",
+      "Clínica San Antonio",
+      "Clínica Adventista Los Ángeles",
+      "Hospital de las FFAA Cirujano Guzmán",
+      "Clínica Regional de Valdivia",
+      "Hospital Base de Osorno"
+    ],
+    "G42": [
+      "Clínica Dávila Recoleta",
+      "Clínica RedSalud Providencia",
+      "Clínica RedSalud Santiago",
+      "Clínica Dávila Vespucio",
+      "Clínica San José",
+      "Clínica RedSalud Iquique",
+      "Clínica El Loa",
+      "Clínica Portada",
+      "Clínica Cumbres del Norte",
+      "Hospital Militar del Norte",
+      "Clínica RCR Atacama",
+      "Clínica RedSalud Elqui",
+      "Hospital Clínico de Viña del Mar",
+      "Hospital Naval Almirante Nef",
+      "Clínica RedSalud Valparaíso",
+      "Clínica Los Carrera",
+      "Clínica Isamédica",
+      "Hospital Clínico FUSAT",
+      "Clínica Red Salud Rancagua",
+      "Clínica Lircay",
+      "Clínica Las Amapolas",
+      "Clínica RedSalud Mayor",
+      "Clínica Puerto Varas",
+      "Clínica Andes Salud Puerto Montt",
+      "Clínica Puerto Montt"
+    ],
+    "G43": [
+      "Hospital del Niño",
+      "Clínica Chillán",
+      "Clínica Bío Bío",
+      "Clínica Andes Salud Concepción",
+      "Hospital Clínico del Sur",
+      "Clínica Los Leones",
+      "Hospital Barros Luco Trudeau"
+    ],
+    "G44": [
+      "Clínica RedSalud Vitacura",
+      "Hospital Clínico Universidad Católica",
+      "Fundación Arturo López Pérez",
+      "Hospital Clínico de la Fuerza Aérea",
+      "Clínica Indisa",
+      "Clínica Bupa Antofagasta",
+      "Clínica Bupa Reñaca",
+      "Clínica Sanatorio Alemán",
+      "Clínica Los Andes",
+      "Clínica Alemana de Temuco",
+      "Clínica Alemana de Valdivia",
+      "Clínica Alemana de Osorno",
+      "Clínica RedSalud Magallanes"
+    ],
+    "G45": [
+      "Clínica San Carlos Apoquindo",
+      "Clínica Universidad Católica",
+      "Clínica Universidad de los Andes",
+      "Clínica MEDS",
+      "Clínica Santa María"
+    ],
+    "G46": [
+      "Clínica Alemana",
+      "Clínica Las Condes"
+    ],
+    "GS1": [
+      "Clínica Puerto Varas",
+      "Clínica Andes Salud Puerto Montt",
+      "Hospital de las FFAA Cirujano Guzmán",
+      "Clínica Dávila Recoleta"
+    ],
+    "GS2": [
+      "Clínica RedSalud Mayor",
+      "Clínica Alemana de Osorno",
+      "Clínica Andes Salud Puerto Montt",
+      "Clínica RedSalud Magallanes"
+    ],
+    "GS3": [
+      "Clínica Alemana de Temuco",
+      "Clínica Alemana de Valdivia",
+      "Clínica Indisa"
+    ],
+    "GS4": [
+      "Hospital Base de Osorno",
+      "Clínica Alemana de Temuco"
+    ]
+  },
+  "COLMENA PLUS": {
+    "G41": [
+      "Clínica Juan Pablo II",
+      "Clínica Sierra Bella",
+      "Hospital del Profesor",
+      "Hospital Parroquial San Bernardo",
+      "Clínica Fleming Arica",
+      "Clínica Río Blanco",
+      "Clínica San Antonio",
+      "Clínica Adventista Los Ángeles",
+      "Hospital de las FFAA Cirujano Guzmán",
+      "Clínica Regional de Valdivia",
+      "Hospital Base de Osorno"
+    ],
+    "G42": [
+      "Clínica Dávila Recoleta",
+      "Clínica RedSalud Providencia",
+      "Clínica RedSalud Santiago",
+      "Clínica Dávila Vespucio",
+      "Clínica San José",
+      "Clínica RedSalud Iquique",
+      "Clínica El Loa",
+      "Clínica Portada",
+      "Clínica Cumbres del Norte",
+      "Hospital Militar del Norte",
+      "Clínica RCR Atacama",
+      "Clínica RedSalud Elqui",
+      "Hospital Clínico de Viña del Mar",
+      "Hospital Naval Almirante Nef",
+      "Clínica RedSalud Valparaíso",
+      "Clínica Los Carrera",
+      "Clínica Isamédica",
+      "Hospital Clínico FUSAT",
+      "Clínica Red Salud Rancagua",
+      "Clínica Lircay",
+      "Clínica Las Amapolas",
+      "Clínica RedSalud Mayor",
+      "Clínica Puerto Varas",
+      "Clínica Andes Salud Puerto Montt",
+      "Clínica Puerto Montt"
+    ],
+    "G43": [
+      "Hospital del Niño",
+      "Clínica Chillán",
+      "Clínica Bío Bío",
+      "Clínica Andes Salud Concepción",
+      "Hospital Clínico del Sur",
+      "Clínica Los Leones",
+      "Hospital Barros Luco Trudeau"
+    ],
+    "G44": [
+      "Clínica RedSalud Vitacura",
+      "Hospital Clínico Universidad Católica",
+      "Fundación Arturo López Pérez",
+      "Hospital Clínico de la Fuerza Aérea",
+      "Clínica Indisa",
+      "Clínica Bupa Antofagasta",
+      "Clínica Bupa Reñaca",
+      "Clínica Sanatorio Alemán",
+      "Clínica Los Andes",
+      "Clínica Alemana de Temuco",
+      "Clínica Alemana de Valdivia",
+      "Clínica Alemana de Osorno",
+      "Clínica RedSalud Magallanes"
+    ],
+    "G45": [
+      "Clínica San Carlos Apoquindo",
+      "Clínica Universidad Católica",
+      "Clínica Universidad de los Andes",
+      "Clínica MEDS",
+      "Clínica Santa María"
+    ],
+    "G46": [
+      "Clínica Alemana",
+      "Clínica Las Condes"
+    ]
+  },
+  "COLMENA MAX SUR": {
+    "G41": [
+      "Clínica Juan Pablo II",
+      "Clínica Sierra Bella",
+      "Hospital del Profesor",
+      "Hospital Parroquial San Bernardo",
+      "Clínica Fleming Arica",
+      "Clínica Río Blanco",
+      "Clínica San Antonio",
+      "Clínica Adventista Los Ángeles",
+      "Hospital de las FFAA Cirujano Guzmán",
+      "Clínica Regional de Valdivia",
+      "Hospital Base de Osorno"
+    ],
+    "G42": [
+      "Clínica Dávila Recoleta",
+      "Clínica RedSalud Providencia",
+      "Clínica RedSalud Santiago",
+      "Clínica Dávila Vespucio",
+      "Clínica San José",
+      "Clínica RedSalud Iquique",
+      "Clínica El Loa",
+      "Clínica Portada",
+      "Clínica Cumbres del Norte",
+      "Hospital Militar del Norte",
+      "Clínica RCR Atacama",
+      "Clínica RedSalud Elqui",
+      "Hospital Clínico de Viña del Mar",
+      "Hospital Naval Almirante Nef",
+      "Clínica RedSalud Valparaíso",
+      "Clínica Los Carrera",
+      "Clínica Isamédica",
+      "Hospital Clínico FUSAT",
+      "Clínica Red Salud Rancagua",
+      "Clínica Lircay",
+      "Clínica Las Amapolas",
+      "Clínica RedSalud Mayor",
+      "Clínica Puerto Varas",
+      "Clínica Andes Salud Puerto Montt",
+      "Clínica Puerto Montt"
+    ],
+    "G43": [
+      "Hospital del Niño",
+      "Clínica Chillán",
+      "Clínica Bío Bío",
+      "Clínica Andes Salud Concepción",
+      "Hospital Clínico del Sur",
+      "Clínica Los Leones",
+      "Hospital Barros Luco Trudeau"
+    ],
+    "G44": [
+      "Clínica RedSalud Vitacura",
+      "Hospital Clínico Universidad Católica",
+      "Fundación Arturo López Pérez",
+      "Hospital Clínico de la Fuerza Aérea",
+      "Clínica Indisa",
+      "Clínica Bupa Antofagasta",
+      "Clínica Bupa Reñaca",
+      "Clínica Sanatorio Alemán",
+      "Clínica Los Andes",
+      "Clínica Alemana de Temuco",
+      "Clínica Alemana de Valdivia",
+      "Clínica Alemana de Osorno",
+      "Clínica RedSalud Magallanes"
+    ],
+    "G45": [
+      "Clínica San Carlos Apoquindo",
+      "Clínica Universidad Católica",
+      "Clínica Universidad de los Andes",
+      "Clínica MEDS",
+      "Clínica Santa María"
+    ],
+    "G46": [
+      "Clínica Alemana",
+      "Clínica Las Condes"
+    ],
+    "GS1": [
+      "Clínica Puerto Varas",
+      "Clínica Andes Salud Puerto Montt",
+      "Hospital de las FFAA Cirujano Guzmán",
+      "Clínica Dávila Recoleta"
+    ],
+    "GS2": [
+      "Clínica RedSalud Mayor",
+      "Clínica Alemana de Osorno",
+      "Clínica Andes Salud Puerto Montt",
+      "Clínica RedSalud Magallanes"
+    ],
+    "GS3": [
+      "Clínica Alemana de Temuco",
+      "Clínica Alemana de Valdivia",
+      "Clínica Indisa"
+    ],
+    "GS4": [
+      "Hospital Base de Osorno",
+      "Clínica Alemana de Temuco"
+    ]
+  }
+}
