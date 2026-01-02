@@ -248,9 +248,6 @@
 </footer>
 
 <script>
-/*========================================================
-SISTEMA DE ASESORES MULTI-URL
-=========================================================*/
 const ASESORES = {
   jose_pepe: {
     nombre: "Jose Pepe",
@@ -298,9 +295,6 @@ window.addEventListener("DOMContentLoaded", function() {
   }
 });
 
-/*========================================================
-CONFIGURACION GOOGLE FORMS
-=========================================================*/
 const FORM_BASE_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/formResponse';
 
 const FORM_FIELDS = {
@@ -329,10 +323,6 @@ const REFERIDOS_FIELDS = {
   mensaje_adicional: "entry.178502788",
   asesorid_referidos: "entry.683967436"
 };
-
-/*========================================================
-DATOS LOCALES - PLANES CON CODIGOS
-=========================================================*/
 
 const GRUPOS_GX = {
   "Grupo 46 - GX Premium": [
@@ -368,9 +358,6 @@ const GRUPOS_GX = {
 let contadorRecalculos = 0;
 const MAX_RECALCULOS = 2;
 
-/*========================================================
-MAPEO DE REGIONES A ZONAS
-=========================================================*/
 const REGION_A_ZONA = {
   'Arica y Parinacota': 'NORTE',
   'Tarapaca': 'NORTE',
@@ -390,9 +377,6 @@ const REGION_A_ZONA = {
   'Magallanes': 'SUR'
 };
 
-/*========================================================
-TABLA DE FACTORES DE EDAD
-=========================================================*/
 function obtenerFactor(edad) {
   if (edad < 2) return 0.0;
   if (edad < 20) return 0.6;
@@ -415,21 +399,10 @@ function obtenerFactorCarga(edad) {
   return 2.2;
 }
 
-/*========================================================
-VARIABLES GLOBALES
-=========================================================*/
 let formularioDatos = {};
 let ultimoResultado = null;
 let PLANES = [];
 
-/*========================================================
-CARGAR DATOS
-=========================================================*/
-/*========================================================
-CARGAR DATOS
-=========================================================*/
-
-// URLs de los JSONs en GitHub
 const URLS_PLANES = {
     'CENTRO': 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/tarifario/planes_colmena_centro.json',
     'NACIONAL': 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/tarifario/planes_colmena_nacional.json',
@@ -462,8 +435,12 @@ function cargarUF() {
     .catch(error => {
       console.error("Error cargando UF:", error);
       window.__UF_VALOR = 39700;
-      document.getElementById("ufValor").textContent = "$39.700 (estimado)";
-      document.getElementById("ufFecha").textContent = "No disponible";
+      if (document.getElementById("ufValor")) {
+        document.getElementById("ufValor").textContent = "$39.700 (estimado)";
+      }
+      if (document.getElementById("ufFecha")) {
+        document.getElementById("ufFecha").textContent = "No disponible";
+      }
     });
 }
   
@@ -499,16 +476,10 @@ async function cargarPlanes() {
   }
 }
   
-/*========================================================
-FORMATEO
-=========================================================*/
 function formatearCLP(n) {
   return (n || 0).toLocaleString("es-CL");
 }
 
-/*========================================================
-CALCULO DEL VALOR DEL PLAN
-=========================================================*/
 function calcularValorPlan(pbUF, edadTitular, edadesCargas) {
   const uf = window.__UF_VALOR || 39700;
   
@@ -528,9 +499,6 @@ function calcularValorPlan(pbUF, edadTitular, edadesCargas) {
   return { valorPlanUF, valorPlanCLP, gesUF, totalUF, totalCLP, sumaFactores };
 }
 
-/*========================================================
-CALCULO SIETE POR CIENTO CON VALIDACION RTI
-=========================================================*/
 function calcularSietePorCiento(rentaMensual, ufValor) {
   const RTI_UF = 87.8;
   const rentaEnUF = rentaMensual / ufValor;
@@ -542,9 +510,6 @@ function calcularSietePorCiento(rentaMensual, ufValor) {
   return { sietePorCientoCLP, sietePorCientoUF, rtiAplicado };
 }
 
-/*========================================================
-SELECCION DE PLANES
-=========================================================*/
 function seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas) {
   const minimo95 = sieteUF * 0.95;
   const planesZona = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
@@ -582,9 +547,6 @@ function seleccionarPlanesConPresupuesto(presupuestoUF, zona, edadTitular, edade
   return { plan1: planesValidos[0] || null, plan2: planesValidos[1] || null };
 }
 
-/*========================================================
-GENERAR HTML DE UN PLAN
-=========================================================*/
 function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   if (!plan) return '';
   
@@ -624,7 +586,7 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
       
       <div class="plan-nombre-container">
         <span class="plan-nombre-estrella">*</span>
-        <span class="plan-nombre"> <span style="font-size: 0.8rem; color: #aaa;">(${plan.codigo})</span></span>
+        <span class="plan-nombre">${plan.nombre}</span>
         <span class="plan-nombre-estrella">*</span>
       </div>
       
@@ -655,9 +617,6 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   `;
 }
 
-/*========================================================
-FORMULARIO PRINCIPAL
-=========================================================*/
 document.getElementById("mainForm").addEventListener("submit", async function(e) {
   e.preventDefault();
 
@@ -781,7 +740,7 @@ Planes sugeridos:
         </div>
         <div class="resumen-item">
           <div class="resumen-label">Zona</div>
-          <div class="resumen-value" style="font-size:0.95rem;">${r.zona}</div>
+          <div class="resumen-value" style="font-size:0.95rem;">${zona}</div>
           <div class="resumen-uf">${formularioDatos.region}</div>
         </div>
       </div>
@@ -841,9 +800,6 @@ Planes sugeridos:
   }, 300);
 });
 
-/*========================================================
-RECALCULAR CON MONTO ADICIONAL
-=========================================================*/
 function recalcularConAdicional() {
   try {
     const montoAdicionalInput = document.getElementById("montoAdicional");
@@ -975,9 +931,6 @@ function recalcularConAdicional() {
   }
 }
 
-/*========================================================
-BOTON ASESORIA
-=========================================================*/
 document.getElementById("btnAsesoria").addEventListener("click", function() {
   if (!formularioDatos || !formularioDatos.nombre) {
     alert("Primero completa y envia la cotizacion.");
@@ -985,8 +938,8 @@ document.getElementById("btnAsesoria").addEventListener("click", function() {
   }
 
   const r = ultimoResultado;
-  const plan1Nombre = r.plan1 ? r.plan1.plan : '-';
-  const plan2Nombre = r.plan2 ? r.plan2 ? plan2.nombre : '-';
+  const plan1Nombre = r.plan1 ? r.plan1.nombre : '-';
+  const plan2Nombre = r.plan2 ? r.plan2.nombre : '-';
   const plan1Valor = r.plan1 ? `${r.plan1.valorCalculadoUF.toFixed(2)} UF` : '-';
   const plan2Valor = r.plan2 ? `${r.plan2.valorCalculadoUF.toFixed(2)} UF` : '-';
   
@@ -994,9 +947,9 @@ document.getElementById("btnAsesoria").addEventListener("click", function() {
   
   const tieneAdicional = r.montoAdicional && r.montoAdicional > 0;
   const textoAdicional = tieneAdicional 
-  ? `Aporte adicional: $${formatearCLP(r.montoAdicional)}
-  - Presupuesto total: $${formatearCLP(r.presupuestoTotalCLP)} (${r.presupuestoTotalUF.toFixed(2)} UF)`
-  : ''
+    ? `Aporte adicional: $${formatearCLP(r.montoAdicional)}
+- Presupuesto total: $${formatearCLP(r.presupuestoTotalCLP)} (${r.presupuestoTotalUF.toFixed(2)} UF)`
+    : ''
 
   const mensaje = `SOLICITUD DE ASESORIA
 
@@ -1033,9 +986,6 @@ SOLICITA CONTACTO URGENTE`;
   }, 400);
 });
 
-/*========================================================
-BOTON BUSCAR POR CLINICA DESDE RESULTADOS
-=========================================================*/
 document.getElementById("btnBuscarClinicaDesdeResultados").addEventListener("click", function() {
   document.getElementById("seccionBusquedaClinica").style.display = "block";
   document.getElementById("inputBuscadorClinica").focus();
@@ -1044,9 +994,6 @@ document.getElementById("btnBuscarClinicaDesdeResultados").addEventListener("cli
   }, 100);
 });
 
-/*========================================================
-BOTON ENVIAR RESUMEN AL USUARIO
-=========================================================*/
 document.getElementById("btnEnviarUsuario").addEventListener("click", function() {
   if (!formularioDatos || !formularioDatos.nombre) {
     alert("Primero completa y envia la cotizacion.");
@@ -1054,8 +1001,8 @@ document.getElementById("btnEnviarUsuario").addEventListener("click", function()
   }
 
   const r = ultimoResultado;
-  const plan1Nombre = r.plan1 ? r.plan1.plan : '-';
-  const plan2Nombre = r.plan2 ? r.plan2 ? plan2.nombre : '-';
+  const plan1Nombre = r.plan1 ? r.plan1.nombre : '-';
+  const plan2Nombre = r.plan2 ? r.plan2.nombre : '-';
   const plan1Valor = r.plan1 ? `${r.plan1.valorCalculadoUF.toFixed(2)} UF` : '-';
   const plan2Valor = r.plan2 ? `${r.plan2.valorCalculadoUF.toFixed(2)} UF` : '-';
 
@@ -1084,9 +1031,6 @@ Telefono: ${ASESOR_TELEFONO}`;
   alert("Resumen enviado a tu WhatsApp. Reenvíalo al cliente.");
 });
 
-/*========================================================
-FORMULARIO REFERIDOS
-=========================================================*/
 document.getElementById("formReferidos").addEventListener("submit", async function(e) {
   e.preventDefault();
 
@@ -1148,9 +1092,6 @@ Correo: ${correoReferido}`;
   }
 });
 
-/*========================================================
-CALLMEBOT
-=========================================================*/
 async function enviarCallMeBot(mensaje) {
   if (!CALLMEBOT_APIKEY || CALLMEBOT_APIKEY === "PENDIENTE") {
     console.warn('CallMeBot no configurado para este asesor');
@@ -1165,9 +1106,6 @@ async function enviarCallMeBot(mensaje) {
   }
 }
 
-/*========================================================
-BUSCAR CLINICA - FUNCION AUXILIAR
-=========================================================*/
 function inicializarBusquedaClinica() {
   const btnBuscar = document.getElementById("btnBuscarClinica");
   if (btnBuscar) {
@@ -1237,13 +1175,11 @@ function buscarClinicaEnRedes(nombreClinica) {
   return null;
 }
 
-/*========================================================
-INICIO
-=========================================================*/
 window.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
     cargarUF();
     cargarPlanes();
+    inicializarBusquedaClinica();
   }, 500);
 });
 </script>
