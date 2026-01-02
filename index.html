@@ -1169,7 +1169,7 @@ let PLANES_REDES_ACCESO = {};
 
 async function cargarRedesClinicas() {
   try {
-    const url = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/redes_clinicas.json';
+    const url = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/redes_clinicas.json';
     const response = await fetch(url);
     REDES_CLINICAS = await response.json();
     console.log(`✅ Redes clínicas cargadas`);
