@@ -560,8 +560,10 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   const badgeText = esPrincipal ? 'PLAN RECOMENDADO 1' : 'PLAN RECOMENDADO 2';
   
   let coberturasHTML = '';
+  
+  // HOSPITALIZACION
   if (plan.hospitalizacion) {
-    coberturasHTML = `
+    coberturasHTML += `
       <div class="coberturas-section">
         <div class="coberturas-title">Hospitalizacion</div>
         <div class="coberturas-texto">${plan.hospitalizacion.replace(/\n/g, '<br>')}</div>
@@ -569,13 +571,22 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
     `;
   }
   
-  let consultaHTML = '';
-  if (plan.consulta) {
-    const consultaTipo = plan.consulta.tipo === 'preferente' ? 'Consulta Preferente Ambulatoria' : 'Consulta Libre Eleccion';
-    consultaHTML = `
+  // CONSULTA PREFERENTE
+  if (plan.consulta_preferente) {
+    coberturasHTML += `
       <div class="coberturas-section">
-        <div class="coberturas-title">${consultaTipo}</div>
-        <div class="coberturas-texto">${plan.consulta.valor}</div>
+        <div class="coberturas-title">Consulta Preferente</div>
+        <div class="coberturas-texto">${plan.consulta_preferente.replace(/\n/g, '<br>')}</div>
+      </div>
+    `;
+  }
+  
+  // TOPE CONSULTA LE
+  if (plan.tope_consulta_le) {
+    coberturasHTML += `
+      <div class="coberturas-section">
+        <div class="coberturas-title">Tope Consulta Libre Eleccion</div>
+        <div class="coberturas-texto">${plan.tope_consulta_le.replace(/\n/g, '<br>')}</div>
       </div>
     `;
   }
@@ -612,7 +623,6 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
       </div>
       
       ${coberturasHTML}
-      ${consultaHTML}
     </div>
   `;
 }
