@@ -1125,10 +1125,38 @@ function extraerPorcentajeHospitalizacion(hospitalizacionText) {
 function buscarPlanesEnClinica(nombreClinica) {
   const nombreNormalizado = nombreClinica.toLowerCase().trim();
   const uf = window.__UF_VALOR || 39700;
-  const zona = ultimoResultado ? ultimoResultado.zona : 'SANTIAGO';
-  const sieteUF = ultimoResultado ? ultimoResultado.sieteUF : 0;
-  const edadTitular = ultimoResultado ? ultimoResultado.edadTitular : 0;
-  const edadesCargas = ultimoResultado ? ultimoResultado.edadesCargas : [];
+  
+  // Obtener datos del formulario o ultimoResultado
+  let zona, edadTitular, edadesCargas, sieteUF;
+  
+  if (ultimoResultado) {
+    zona = ultimoResultado.zona;
+    edadTitular = ultimoResultado.edadTitular;
+    edadesCargas = ultimoResultado.edadesCargas;
+    sieteUF = ultimoResultado.sieteUF;
+  } else {
+    // Obtener del formulario actual
+    const region = document.getElementById("region").value;
+    const edad = document.getElementById("edad").value;
+    const renta = document.getElementById("renta").value;
+    const cargasTexto = (document.getElementById("cargas").value || "").replace(/\n/g, ", ").trim();
+    
+    if (!region || !edad || !renta) {
+      alert("Por favor completa: Region, Edad y Renta en el formulario");
+      return { plan1Regional: null, plan2Regional: null, plan1Nacional: null, plan2Nacional: null, totalEncontrados: 0 };
+    }
+    
+    zona = REGION_A_ZONA[region] || 'SANTIAGO';
+    edadTitular = Number(edad);
+    edadesCargas = cargasTexto.split(/[\n,;]+/)
+      .map(s => s.trim())
+      .filter(Boolean)
+      .map(Number)
+      .filter(n => !isNaN(n) && n >= 0 && n <= 120);
+    
+    const calcSiete = calcularSietePorCiento(Number(renta), uf);
+    sieteUF = calcSiete.sietePorCientoUF;
+  }
   
   let planesConClinica = PLANES.filter(plan => {
     if (!plan.hospitalizacion) return false;
@@ -1167,7 +1195,6 @@ function buscarPlanesEnClinica(nombreClinica) {
     totalEncontrados: planesConClinica.length
   };
 }
-
 function generarHTMLPlanClinica(plan, numero) {
   if (!plan) return '';
   
