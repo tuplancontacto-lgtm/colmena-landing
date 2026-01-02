@@ -1197,11 +1197,17 @@ function obtenerClinicasDelGrupo(grupo) {
 }
 
 function tieneAccesoARedEs(nombrePlan, zona) {
-  for (const [tipo, config] of Object.entries(PLANES_REDES_ACCESO)) {
+  const tiposPlanes = Object.keys(PLANES_REDES_ACCESO);
+  
+  for (const tipo of tiposPlanes) {
+    const config = PLANES_REDES_ACCESO[tipo];
+    
+    // Verificar si el plan es de este tipo y la zona coincide
     if (nombrePlan.includes(tipo) && config.zonas.includes(zona)) {
       return { tieneAcceso: true, grupos: config.grupos };
     }
   }
+  
   return { tieneAcceso: false, grupos: [] };
 }
 
