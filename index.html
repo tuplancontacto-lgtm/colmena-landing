@@ -470,17 +470,22 @@ async function cargarPlanes() {
     
    let PLANES_CODIGOS = {};
 
-async function cargarPlanesCodigosJSON() {
+function cargarPlanesCodigosJSON() {
   try {
-    const url = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/tarifario/planes_codigos.json';
-    const response = await fetch(url);
-    PLANES_CODIGOS = await response.json();
-    console.log(`✅ Códigos de planes cargados: ${Object.keys(PLANES_CODIGOS).length}`);
+    fetch('https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/tarifario/planes_codigos.json')
+      .then(response => response.json())
+      .then(data => {
+        PLANES_CODIGOS = data;
+        console.log(`✅ Códigos de planes cargados: ${Object.keys(PLANES_CODIGOS).length}`);
+      })
+      .catch(error => console.error('Error cargando códigos:', error));
   } catch (error) {
-    console.error('Error cargando códigos:', error);
+    console.error('Error:', error);
   }
 }
 
+cargarPlanesCodigosJSON();
+    
 function obtenerCodigoPlan(nombrePlan) {
   for (const [codigo, data] of Object.entries(PLANES_CODIGOS)) {
     if (data.nombre === nombrePlan) {
@@ -1396,7 +1401,7 @@ window.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
     cargarUF();
     cargarPlanes();
-    cargarPlanesCodigosJSON();
+    //cargarPlanesCodigosJSON();
     inicializarBusquedaClinica();
   }, 500);
 });
