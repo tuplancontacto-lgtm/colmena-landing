@@ -1122,11 +1122,18 @@ function extraerPorcentajeHospitalizacion(hospitalizacionText) {
   return match ? parseInt(match[1]) : null;
 }
 
+function normalizarTexto(texto) {
+  if (!texto) return '';
+  return texto
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
 function buscarPlanesEnClinica(nombreClinica) {
-  const nombreNormalizado = nombreClinica.toLowerCase().trim();
+  const nombreNormalizado = normalizarTexto(nombreClinica);
   const uf = window.__UF_VALOR || 39700;
   
-  // Obtener datos del formulario o ultimoResultado
   let zona, edadTitular, edadesCargas, sieteUF;
   
   if (ultimoResultado) {
@@ -1135,7 +1142,6 @@ function buscarPlanesEnClinica(nombreClinica) {
     edadesCargas = ultimoResultado.edadesCargas;
     sieteUF = ultimoResultado.sieteUF;
   } else {
-    // Obtener del formulario actual
     const region = document.getElementById("region").value;
     const edad = document.getElementById("edad").value;
     const renta = document.getElementById("renta").value;
@@ -1160,7 +1166,8 @@ function buscarPlanesEnClinica(nombreClinica) {
   
   let planesConClinica = PLANES.filter(plan => {
     if (!plan.hospitalizacion) return false;
-    return plan.hospitalizacion.toLowerCase().includes(nombreNormalizado);
+    const hospNormalizado = normalizarTexto(plan.hospitalizacion);
+    return hospNormalizado.includes(nombreNormalizado);
   });
   
   planesConClinica = planesConClinica.map(plan => {
