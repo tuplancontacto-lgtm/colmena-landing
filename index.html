@@ -1202,11 +1202,25 @@ function buscarPlanesEnClinica(nombreClinica) {
     totalEncontrados: planesConClinica.length
   };
 }
-function generarHTMLPlanClinica(plan, numero) {
+function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = [], nombreClinicaBuscada = '') {
   if (!plan) return '';
   
   const uf = window.__UF_VALOR || 39700;
   const tipoLabel = numero % 2 === 1 ? '🏥 REGIONAL' : '🌍 NACIONAL';
+  
+  // Calcular Valor Adicional
+  const valorAdicionalCLP = Math.max(0, plan.valorCalculadoCLP - sieteCLP);
+  const valorAdicionalUF = Math.max(0, plan.valorCalculadoUF - sieteUF);
+  
+  // Información de cargas
+  const cargasInfo = edadesCargas.length > 0 ? `${edadesCargas.length} (${edadesCargas.join(', ')})` : '0';
+  
+  // Resaltar clínica favorita en dorado
+  let hospitalizacionHTML = plan.hospitalizacion;
+  if (nombreClinicaBuscada) {
+    const regex = new RegExp(`(${nombreClinicaBuscada})`, 'gi');
+    hospitalizacionHTML = hospitalizacionHTML.replace(regex, '<span style="color: #d4af37; font-weight: bold;">$1</span>');
+  }
   
   return `
     <div class="plan-card" style="border-color: #60a5fa; margin-bottom: 25px;">
@@ -1225,9 +1239,18 @@ function generarHTMLPlanClinica(plan, numero) {
           <div class="small">${plan.valorCalculadoUF.toFixed(2)} UF</div>
         </div>
         <div class="plan-info-item">
-          <div class="plan-info-label">GES Grupo Familiar</div>
-          <div class="plan-info-value verde">${plan.gesUF.toFixed(2)} UF</div>
-          <div class="small">Total familia</div>
+          <div class="plan-info-label">Tu 7%</div>
+          <div class="plan-info-value amarillo">$${formatearCLP(sieteCLP)}</div>
+          <div class="small">${sieteUF.toFixed(2)} UF</div>
+        </div>
+        <div class="plan-info-item">
+          <div class="plan-info-label">Valor Adicional</div>
+          <div class="plan-info-value amarillo">$${formatearCLP(valorAdicionalCLP)}</div>
+          <div class="small">${valorAdicionalUF.toFixed(2)} UF</div>
+        </div>
+        <div class="plan-info-item">
+          <div class="plan-info-label">Cargas</div>
+          <div class="plan-info-value">${cargasInfo}</div>
         </div>
         <div class="plan-info-item">
           <div class="plan-info-label">Tope anual</div>
@@ -1236,8 +1259,8 @@ function generarHTMLPlanClinica(plan, numero) {
       </div>
       
       <div class="coberturas-section">
-        <div class="coberturas-title">Hospitalizacion (${plan.porcentajeHospitalizacion}%)</div>
-        <div class="coberturas-texto">${plan.hospitalizacion.replace(/\n/g, '<br>')}</div>
+        <div class="coberturas-title" style="color: #d4af37;">Hospitalizacion (<span style="color: #d4af37; font-weight: bold;">${plan.porcentajeHospitalizacion}%</span>)</div>
+        <div class="coberturas-texto">${hospitalizacionHTML.replace(/\n/g, '<br>')}</div>
       </div>
       
       ${plan.consulta_preferente ? `
@@ -1256,7 +1279,6 @@ function generarHTMLPlanClinica(plan, numero) {
     </div>
   `;
 }
-
 function inicializarBusquedaClinica() {
   const btnBuscar = document.getElementById("btnBuscarClinica");
   if (btnBuscar) {
@@ -1287,8 +1309,8 @@ function inicializarBusquedaClinica() {
       if (resultado.plan2Nacional) planesOrdenados.push({plan: resultado.plan2Nacional, numero: 4});
       
       planesOrdenados.forEach(item => {
-        htmlResultado += generarHTMLPlanClinica(item.plan, item.numero);
-      });
+      htmlResultado += generarHTMLPlanClinica(item.plan, item.numero, ultimoResultado ? ultimoResultado.sieteUF : 0, ultimoResultado ? ultimoResultado.sieteCLP : 0, ultimoResultado ? ultimoResultado.edadesCargas : [], nombreClinica);
+  });
       
       const contenedor = document.getElementById("resultadoBusquedaClinica");
       if (contenedor) {
