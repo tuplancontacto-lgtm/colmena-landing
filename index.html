@@ -1116,6 +1116,113 @@ async function enviarCallMeBot(mensaje) {
   }
 }
 
+function extraerPorcentajeHospitalizacion(hospitalizacionText) {
+  if (!hospitalizacionText) return null;
+  const match = hospitalizacionText.match(/(\d+)%/);
+  return match ? parseInt(match[1]) : null;
+}
+
+function buscarPlanesEnClinica(nombreClinica) {
+  const nombreNormalizado = nombreClinica.toLowerCase().trim();
+  const uf = window.__UF_VALOR || 39700;
+  const zona = ultimoResultado ? ultimoResultado.zona : 'SANTIAGO';
+  const sieteUF = ultimoResultado ? ultimoResultado.sieteUF : 0;
+  const edadTitular = ultimoResultado ? ultimoResultado.edadTitular : 0;
+  const edadesCargas = ultimoResultado ? ultimoResultado.edadesCargas : [];
+  
+  let planesConClinica = PLANES.filter(plan => {
+    if (!plan.hospitalizacion) return false;
+    return plan.hospitalizacion.toLowerCase().includes(nombreNormalizado);
+  });
+  
+  planesConClinica = planesConClinica.map(plan => {
+    const calc = calcularValorPlan(plan.pb_uf, edadTitular, edadesCargas);
+    const porcentajeHosp = extraerPorcentajeHospitalizacion(plan.hospitalizacion);
+    return {
+      ...plan,
+      valorCalculadoUF: calc.totalUF,
+      valorCalculadoCLP: calc.totalCLP,
+      gesUF: calc.gesUF,
+      porcentajeHospitalizacion: porcentajeHosp,
+      distanciaAlSiete: Math.abs(calc.totalUF - sieteUF)
+    };
+  });
+  
+  const planesRegionales = planesConClinica.filter(p => p.zona === zona);
+  const planesNacionales = planesConClinica.filter(p => p.zona === 'NACIONAL');
+  
+  planesRegionales.sort((a, b) => a.distanciaAlSiete - b.distanciaAlSiete);
+  planesNacionales.sort((a, b) => a.distanciaAlSiete - b.distanciaAlSiete);
+  
+  const plan1Regional = planesRegionales[0] || null;
+  const plan2Regional = planesRegionales[1] || null;
+  const plan1Nacional = planesNacionales[0] || null;
+  const plan2Nacional = planesNacionales[1] || null;
+  
+  return {
+    plan1Regional,
+    plan2Regional,
+    plan1Nacional,
+    plan2Nacional,
+    totalEncontrados: planesConClinica.length
+  };
+}
+
+function generarHTMLPlanClinica(plan, numero) {
+  if (!plan) return '';
+  
+  const uf = window.__UF_VALOR || 39700;
+  const tipoLabel = numero % 2 === 1 ? '🏥 REGIONAL' : '🌍 NACIONAL';
+  
+  return `
+    <div class="plan-card" style="border-color: #60a5fa; margin-bottom: 25px;">
+      <span class="plan-badge secundario">${tipoLabel}</span>
+      
+      <div class="plan-nombre-container">
+        <span class="plan-nombre-estrella">*</span>
+        <span class="plan-nombre">${plan.nombre}</span>
+        <span class="plan-nombre-estrella">*</span>
+      </div>
+      
+      <div class="plan-info">
+        <div class="plan-info-item">
+          <div class="plan-info-label">Valor del Plan</div>
+          <div class="plan-info-value amarillo">$${formatearCLP(plan.valorCalculadoCLP)}</div>
+          <div class="small">${plan.valorCalculadoUF.toFixed(2)} UF</div>
+        </div>
+        <div class="plan-info-item">
+          <div class="plan-info-label">GES Grupo Familiar</div>
+          <div class="plan-info-value verde">${plan.gesUF.toFixed(2)} UF</div>
+          <div class="small">Total familia</div>
+        </div>
+        <div class="plan-info-item">
+          <div class="plan-info-label">Tope anual</div>
+          <div class="plan-info-value">${formatearCLP(plan.tope_anual_uf || 7000)} UF</div>
+        </div>
+      </div>
+      
+      <div class="coberturas-section">
+        <div class="coberturas-title">Hospitalizacion (${plan.porcentajeHospitalizacion}%)</div>
+        <div class="coberturas-texto">${plan.hospitalizacion.replace(/\n/g, '<br>')}</div>
+      </div>
+      
+      ${plan.consulta_preferente ? `
+        <div class="coberturas-section">
+          <div class="coberturas-title">Consulta Preferente</div>
+          <div class="coberturas-texto">${plan.consulta_preferente.replace(/\n/g, '<br>')}</div>
+        </div>
+      ` : ''}
+      
+      ${plan.tope_consulta_le ? `
+        <div class="coberturas-section">
+          <div class="coberturas-title">Tope Consulta Libre Eleccion</div>
+          <div class="coberturas-texto">${plan.tope_consulta_le.replace(/\n/g, '<br>')}</div>
+        </div>
+      ` : ''}
+    </div>
+  `;
+}
+
 function inicializarBusquedaClinica() {
   const btnBuscar = document.getElementById("btnBuscarClinica");
   if (btnBuscar) {
@@ -1127,17 +1234,34 @@ function inicializarBusquedaClinica() {
       }
       
       const nombreClinica = inputClinica.value.trim();
-      const resultado = buscarClinicaEnRedes(nombreClinica);
+      const resultado = buscarPlanesEnClinica(nombreClinica);
       
-      if (!resultado) {
-        alert("No encontramos clinicas con ese nombre.");
+      if (resultado.totalEncontrados === 0) {
+        alert("No encontramos planes con esa clinica.");
         return;
       }
       
+      let htmlResultado = `
+        <h3 class="gold" style="margin-top: 20px;">Planes disponibles con ${nombreClinica}</h3>
+        <p class="small">Total de planes encontrados: ${resultado.totalEncontrados}</p>
+      `;
+      
+      const planesOrdenados = [];
+      if (resultado.plan1Regional) planesOrdenados.push({plan: resultado.plan1Regional, numero: 1});
+      if (resultado.plan1Nacional) planesOrdenados.push({plan: resultado.plan1Nacional, numero: 2});
+      if (resultado.plan2Regional) planesOrdenados.push({plan: resultado.plan2Regional, numero: 3});
+      if (resultado.plan2Nacional) planesOrdenados.push({plan: resultado.plan2Nacional, numero: 4});
+      
+      planesOrdenados.forEach(item => {
+        htmlResultado += generarHTMLPlanClinica(item.plan, item.numero);
+      });
+      
       const contenedor = document.getElementById("resultadoBusquedaClinica");
       if (contenedor) {
-        contenedor.innerHTML = `<p class="small">Clinica encontrada: <strong>${resultado.clinica.nombre}</strong> en ${resultado.clinica.ciudad}</p><p class="small">Red: ${resultado.grupoRed}</p>`;
+        contenedor.innerHTML = htmlResultado;
       }
+      
+      document.getElementById("resultadoBusquedaClinica").scrollIntoView({ behavior: "smooth" });
     });
   }
 
@@ -1170,21 +1294,7 @@ function inicializarBusquedaClinica() {
     });
   }
 }
-
-function buscarClinicaEnRedes(nombreClinica) {
-  const nombreNormalizado = nombreClinica.toLowerCase().trim();
   
-  for (const [grupoRed, clinicas] of Object.entries(GRUPOS_GX)) {
-    for (const clinica of clinicas) {
-      if (clinica.nombre.toLowerCase().includes(nombreNormalizado)) {
-        return { grupoRed, clinica };
-      }
-    }
-  }
-  
-  return null;
-}
-
 window.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
     cargarUF();
