@@ -1331,16 +1331,18 @@ function inicializarBusquedaClinica() {
         <p class="small">Total de planes encontrados: ${resultado.totalEncontrados}</p>
       `;
       
-      const planesOrdenados = [];
-      if (resultado.plan1Regional) planesOrdenados.push({plan: resultado.plan1Regional, numero: 1});
-      if (resultado.plan1Nacional) planesOrdenados.push({plan: resultado.plan1Nacional, numero: 2});
-      if (resultado.plan2Regional) planesOrdenados.push({plan: resultado.plan2Regional, numero: 3});
-      if (resultado.plan2Nacional) planesOrdenados.push({plan: resultado.plan2Nacional, numero: 4});
-      
-      planesOrdenados.forEach(item => {
-      htmlResultado += generarHTMLPlanClinica(item.plan, item.numero, ultimoResultado ? ultimoResultado.sieteUF : 0, ultimoResultado ? ultimoResultado.sieteCLP : 0, ultimoResultado ? ultimoResultado.edadesCargas : [], nombreClinica);
-  });
-      
+     const planesOrdenados = [];
+if (resultado.plan1Regional) planesOrdenados.push({plan: resultado.plan1Regional, numero: 1});
+if (resultado.plan1Nacional) planesOrdenados.push({plan: resultado.plan1Nacional, numero: 2});
+if (resultado.plan2Regional) planesOrdenados.push({plan: resultado.plan2Regional, numero: 3});
+if (resultado.plan2Nacional) planesOrdenados.push({plan: resultado.plan2Nacional, numero: 4});
+
+planesOrdenados.forEach(item => {
+  const sieteUF = ultimoResultado ? ultimoResultado.sieteUF : 0;
+  const sieteCLP = ultimoResultado ? ultimoResultado.sieteCLP : 0;
+  const edadesCargas = ultimoResultado ? ultimoResultado.edadesCargas : [];
+  htmlResultado += generarHTMLPlanClinica(item.plan, item.numero, sieteUF, sieteCLP, edadesCargas, nombreClinica);
+});
       const contenedor = document.getElementById("resultadoBusquedaClinica");
       if (contenedor) {
         contenedor.innerHTML = htmlResultado;
