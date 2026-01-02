@@ -468,6 +468,27 @@ async function cargarPlanes() {
       }
     }
     
+   let PLANES_CODIGOS = {};
+
+async function cargarPlanesCodigosJSON() {
+  try {
+    const url = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/tarifario/planes_codigos.json';
+    const response = await fetch(url);
+    PLANES_CODIGOS = await response.json();
+    console.log(`✅ Códigos de planes cargados: ${Object.keys(PLANES_CODIGOS).length}`);
+  } catch (error) {
+    console.error('Error cargando códigos:', error);
+  }
+}
+
+function obtenerCodigoPlan(nombrePlan) {
+  for (const [codigo, data] of Object.entries(PLANES_CODIGOS)) {
+    if (data.nombre === nombrePlan) {
+      return codigo;
+    }
+  }
+  return '';
+} 
     console.log(`✅ TOTAL: ${PLANES.length} planes cargados desde GitHub`);
     
   } catch (error) {
@@ -476,6 +497,14 @@ async function cargarPlanes() {
   }
 }
   
+function obtenerCodigoPlan(nombrePlan) {
+  for (const [codigo, data] of Object.entries(PLANES_CODIGOS)) {
+    if (data.nombre === nombrePlan) {
+      return codigo;
+    }
+  }
+  return '';
+}  
 function formatearCLP(n) {
   return (n || 0).toLocaleString("es-CL");
 }
@@ -1355,6 +1384,7 @@ window.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
     cargarUF();
     cargarPlanes();
+    cargarPlanesCodigosJSON();
     inicializarBusquedaClinica();
   }, 500);
 });
