@@ -1211,6 +1211,35 @@ function tieneAccesoARedEs(nombrePlan, zona) {
   return { tieneAcceso: false, grupos: [] };
 }
 
+let PLANES_CLINICAS_REDES = {};
+
+async function cargarPlanesClinicasRedes() {
+  try {
+    const url = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/tarifario/planes_clinicas_redes.json';
+    const response = await fetch(url);
+    PLANES_CLINICAS_REDES = await response.json();
+    console.log(`✅ Clínicas de redes cargadas`);
+  } catch (error) {
+    console.error('Error cargando clínicas de redes:', error);
+  }
+}
+
+function obtenerClinicasDelPlan(nombrePlan, zona) {
+  const clinicas = [];
+  
+  for (const [tipoPlan, gruposData] of Object.entries(PLANES_CLINICAS_REDES)) {
+    if (nombrePlan.includes(tipoPlan)) {
+      // Si el plan es COLMENA MAX o COLMENA PLUS, agregar todas sus clínicas
+      for (const [grupo, clinicasList] of Object.entries(gruposData)) {
+        clinicas.push(...clinicasList);
+      }
+      break;
+    }
+  }
+  
+  return clinicas.map(c => c.toLowerCase());
+}
+
 function buscarPlanesEnClinica(nombreClinica) {
   const nombreNormalizado = normalizarTexto(nombreClinica);
   const uf = window.__UF_VALOR || 39700;
@@ -1256,15 +1285,10 @@ function buscarPlanesEnClinica(nombreClinica) {
       }
     }
     
-    // Búsqueda 2: En redes clínicas (G41-G46, GS1-GS4)
-    const acceso = tieneAccesoARedEs(plan.nombre, zona);
-    if (acceso.tieneAcceso) {
-      for (const grupo of acceso.grupos) {
-        const clinicasGrupo = obtenerClinicasDelGrupo(grupo);
-        if (clinicasGrupo.some(c => c.includes(nombreNormalizado))) {
-          return true;
-        }
-      }
+    // Búsqueda 2: En clínicas de redes (COLMENA MAX, COLMENA PLUS, COLMENA MAX SUR)
+    const clinicasDelPlan = obtenerClinicasDelPlan(plan.nombre, zona);
+    if (clinicasDelPlan.some(c => c.includes(nombreNormalizado))) {
+      return true;
     }
     
     return false;
