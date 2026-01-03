@@ -156,7 +156,7 @@ async function validarAsesor() {
       setTimeout(() => {
         document.getElementById('modal-validacion').classList.add('oculto');
         registrarAcceso(slug);
-      }, 1500);
+      }, 3000);
     } else {
       document.getElementById('error-modal').textContent = `❌ ${data.error || 'Acceso no disponible'}`;
       document.getElementById('error-modal').style.display = 'block';
