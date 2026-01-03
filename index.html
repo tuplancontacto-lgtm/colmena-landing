@@ -157,6 +157,8 @@ async function validarAsesor() {
         document.getElementById('modal-validacion').classList.add('oculto');
         registrarAcceso(slug);
       }, 6000);
+      // Cambiar color de fondo del modal a verde mientras está visible
+      document.getElementById('modal-validacion').style.background = 'rgba(74, 222, 128, 0.3)';
     } else {
       document.getElementById('error-modal').textContent = `❌ ${data.error || 'Acceso no disponible'}`;
       document.getElementById('error-modal').style.display = 'block';
