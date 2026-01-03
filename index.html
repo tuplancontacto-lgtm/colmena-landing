@@ -152,6 +152,11 @@ async function validarAsesor() {
       
       sessionStorage.setItem('asesor_slug', slug);
       sessionStorage.setItem('asesor_nombre', data.asesor.nombre);
+      document.getElementById('success-modal').style.display = 'block';
+
+// Hacer el modal verde mientras valida
+document.getElementById('modal-validacion').style.background = 'rgba(74, 222, 128, 0.15)';
+document.getElementById('modal-validacion').style.borderColor = '#4ade80';
 
       setTimeout(() => {
         document.getElementById('modal-validacion').classList.add('oculto');
