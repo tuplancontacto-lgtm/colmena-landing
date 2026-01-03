@@ -147,21 +147,21 @@ async function validarAsesor() {
     const data = await response.json();
 
    if (data.valid) {
-  document.getElementById('success-modal').textContent = `✅ ¡Bienvenido ${data.asesor.nombre}!`;
-  document.getElementById('success-modal').style.display = 'block';
-  
-  sessionStorage.setItem('asesor_slug', slug);
-  sessionStorage.setItem('asesor_nombre', data.asesor.nombre);
-  
-  // Hacer el modal verde
-  document.getElementById('modal-validacion').style.background = 'rgba(74, 222, 128, 0.15)';
-  document.getElementById('modal-validacion').style.borderColor = '#4ade80';
+      document.getElementById('success-modal').textContent = `✅ ¡Bienvenido ${data.asesor.nombre}!`;
+      document.getElementById('success-modal').style.display = 'block';
+      
+      sessionStorage.setItem('asesor_slug', slug);
+      sessionStorage.setItem('asesor_nombre', data.asesor.nombre);
+      document.getElementById('success-modal').style.display = 'block';
 
-  setTimeout(() => {
-    document.getElementById('modal-validacion').classList.add('oculto');
-    registrarAcceso(slug);
-  }, 5000);
-}
+// Hacer el modal verde mientras valida
+document.getElementById('modal-validacion').style.background = 'rgba(74, 222, 128, 0.15)';
+document.getElementById('modal-validacion').style.borderColor = '#4ade80';
+
+      setTimeout(() => {
+        document.getElementById('modal-validacion').classList.add('oculto');
+        registrarAcceso(slug);
+      }, 5000)
       // Cambiar color de fondo del modal a verde mientras está visible
       document.getElementById('modal-validacion').style.background = 'rgba(74, 222, 128, 0.3)';
     } else {
