@@ -100,7 +100,91 @@
   </style>
 </head>
 <body>
+<!-- MODAL DE VALIDACION DE ASESOR -->
+<div id="modal-validacion" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 26, 42, 0.95); display: flex; align-items: center; justify-content: center; z-index: 9999;" class="modal-visible">
+  <div style="background: linear-gradient(135deg, #1a3a5a, #0d1f2d); border: 2px solid #d4af37; border-radius: 20px; padding: 40px; max-width: 500px; width: 90%; text-align: center; box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3);">
+    <div style="font-size: 2rem; color: #d4af37; margin-bottom: 10px; font-weight: bold;">🔐 Validando acceso...</div>
+    <div style="color: #b8c5d6; margin-bottom: 30px; font-size: 1rem;">Por favor espera</div>
+    
+    <div style="margin: 30px 0;">
+      <div style="display: inline-block; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #d4af37; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+    </div>
+    
+    <div id="error-modal" style="color: #ff8080; background: rgba(255, 128, 128, 0.1); border: 1px solid #ff8080; padding: 15px; border-radius: 8px; margin-bottom: 15px; display: none; font-size: 0.9rem;"></div>
+    <div id="success-modal" style="color: #4ade80; background: rgba(74, 222, 128, 0.1); border: 1px solid #4ade80; padding: 15px; border-radius: 8px; margin-bottom: 15px; display: none; font-size: 0.9rem;"></div>
+  </div>
+</div>
 
+<style>
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+#modal-validacion.oculto {
+  display: none !important;
+}
+</style>
+
+<script>
+const API_URL = 'http://localhost:5000/api';
+
+function obtenerSlugDeLaURL() {
+  const path = window.location.pathname;
+  const partes = path.split('/');
+  return partes[partes.length - 1] || null;
+}
+
+async function validarAsesor() {
+  const slug = obtenerSlugDeLaURL();
+  
+  if (!slug || slug === '' || slug.includes('.html')) {
+    document.getElementById('modal-validacion').classList.add('oculto');
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/asesores/${slug}`);
+    const data = await response.json();
+
+    if (data.valid) {
+      document.getElementById('success-modal').textContent = `✅ ¡Bienvenido ${data.asesor.nombre}!`;
+      document.getElementById('success-modal').style.display = 'block';
+      
+      sessionStorage.setItem('asesor_slug', slug);
+      sessionStorage.setItem('asesor_nombre', data.asesor.nombre);
+
+      setTimeout(() => {
+        document.getElementById('modal-validacion').classList.add('oculto');
+        registrarAcceso(slug);
+      }, 1500);
+    } else {
+      document.getElementById('error-modal').textContent = `❌ ${data.error || 'Acceso no disponible'}`;
+      document.getElementById('error-modal').style.display = 'block';
+    }
+  } catch (error) {
+    document.getElementById('modal-validacion').classList.add('oculto');
+  }
+}
+
+async function registrarAcceso(slug) {
+  try {
+    await fetch(`${API_URL}/asesores/${slug}/registrar-acceso`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        cliente_nombre: 'visitante',
+        cliente_email: null
+      })
+    });
+  } catch (error) {
+    console.error('Error registrando acceso:', error);
+  }
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+  validarAsesor();
+});
+</script>
 <header>
   <h1>Asesoria en Planes de Salud Colmena</h1>
   <p class="gold">Atencion premium para clientes exigentes</p>
@@ -659,7 +743,26 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
     </div>
   `;
 }
-
+// Registrar cotización cuando se envía el formulario
+const originalFormListener = function(e) {
+  const slug = sessionStorage.getItem('asesor_slug');
+  if (slug) {
+    const nombre = document.getElementById('nombre').value;
+    const email = document.getElementById('correo').value;
+    
+    fetch(`${API_URL}/asesores/${slug}/registrar-cotizacion`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        cliente_nombre: nombre,
+        cliente_email: email,
+        plan1: 'plan_pendiente',
+        plan2: 'plan_pendiente',
+        monto: 0
+      })
+    }).catch(err => console.error('Error registrando cotización:', err));
+  }
+};
 document.getElementById("mainForm").addEventListener("submit", async function(e) {
   e.preventDefault();
 
