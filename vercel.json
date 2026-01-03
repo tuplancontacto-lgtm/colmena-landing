@@ -8,10 +8,10 @@
 }
 ```
 
-4. **Commit:** "Agregar vercel.json para rutas dinámicas"
+5. Haz clic en **"Commit changes"**
 
-5. **Espera 3-5 minutos**
+6. **Espera 5 minutos**
 
-6. **Prueba de nuevo:**
+7. Prueba:
 ```
 https://tuplanisapre.vercel.app/prueba-2
