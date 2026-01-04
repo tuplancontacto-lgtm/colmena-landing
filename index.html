@@ -1267,16 +1267,21 @@ Correo: ${correoReferido}`;
 });
 
 async function enviarCallMeBot(mensaje) {
-  if (!CALLMEBOT_APIKEY || CALLMEBOT_APIKEY === "PENDIENTE") {
-    console.warn('CallMeBot no configurado para este asesor');
+  // Usar datos del asesor cargado desde MongoDB
+  const whatsapp = ASESOR_DATA.whatsapp || '';
+  
+  if (!whatsapp) {
+    console.warn('WhatsApp del asesor no disponible');
     return;
   }
+  
   try {
-    const url = `https://api.callmebot.com/whatsapp.php?phone=${CALLMEBOT_PHONE}&text=${encodeURIComponent(mensaje)}&apikey=${CALLMEBOT_APIKEY}`;
+    // Enviar al asesor
+    const url = `https://api.callmebot.com/whatsapp.php?phone=${whatsapp}&text=${encodeURIComponent(mensaje)}&apikey=0`;
     await fetch(url, { mode: 'no-cors' });
-    console.log('CallMeBot enviado');
+    console.log('✅ WhatsApp enviado al asesor');
   } catch (err) {
-    console.error('Error CallMeBot:', err);
+    console.error('Error en WhatsApp:', err);
   }
 }
 
