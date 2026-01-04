@@ -184,7 +184,32 @@ async function registrarAcceso(slug) {
   }
 }
 
+let ASESOR_DATA = {};
+
+async function cargarDatosAsesor() {
+  const slug = obtenerSlugDeLaURL();
+  if (!slug) return;
+
+  try {
+    const response = await fetch(`${API_URL}/asesores/${slug}`);
+    const data = await response.json();
+
+    if (data.valid) {
+      ASESOR_DATA = {
+        nombre: data.asesor.nombre,
+        email: data.asesor.email,
+        telefono: data.asesor.telefono,
+        whatsapp: data.asesor.telefono.replace(/\D/g, '')
+      };
+      console.log('✅ Datos del asesor:', ASESOR_DATA);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
 window.addEventListener('DOMContentLoaded', function() {
+  cargarDatosAsesor();
   validarAsesor();
 });
 </script>
