@@ -1439,6 +1439,47 @@ function buscarPlanesEnClinica(nombreClinica) {
     nombreClinicaBuscada: nombreNormalizado
   };
 }
+  // Función para extraer porcentajes de grupos (G41-G46, GS1-GS4) de hospitalización
+function extraerGruposYPorcentajes(hospitalizacionText) {
+  if (!hospitalizacionText) return null;
+  
+  const grupos = {};
+  const regex = /([GS]\d+)=(\d+)%/g;
+  let match;
+  
+  while ((match = regex.exec(hospitalizacionText)) !== null) {
+    grupos[match[1]] = parseInt(match[2]);
+  }
+  
+  return Object.keys(grupos).length > 0 ? grupos : null;
+}
+
+// Función para generar HTML de grupo desplegable
+function generarHTMLGrupoDesplegable(grupo, porcentaje, clinicas, nombreClinicaBuscada) {
+  const clinicasHTML = clinicas
+    .map(clinica => {
+      const nombreNorm = normalizarTexto(clinica.toLowerCase());
+      const isFavorita = nombreClinicaBuscada && nombreNorm.includes(nombreClinicaBuscada);
+      const color = isFavorita ? '#d4af37' : '#fbbf24';
+      return `<div style="padding: 8px 0; color: ${color}; border-bottom: 1px solid #2a3a4a;">
+        ${isFavorita ? '★ ' : ''}${clinica}
+      </div>`;
+    })
+    .join('');
+
+  return `
+    <div style="margin-bottom: 12px; background: #0d1f2d; border-radius: 8px; overflow: hidden;">
+      <details style="cursor: pointer;">
+        <summary style="padding: 12px; background: #1a2a3a; color: #fbbf24; font-weight: bold; user-select: none;">
+          ${grupo}: <span style="color: #fbbf24;">${porcentaje}%</span>
+        </summary>
+        <div style="padding: 12px; background: #0d1f2d;">
+          ${clinicasHTML}
+        </div>
+      </details>
+    </div>
+  `;
+}
 function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = [], nombreClinicaBuscada = '') {
   if (!plan) return '';
   
@@ -1452,11 +1493,62 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
   // Información de cargas
   const cargasInfo = edadesCargas.length > 0 ? `${edadesCargas.length} (${edadesCargas.join(', ')})` : '0';
   
-  // Resaltar clínica favorita en dorado
-  let hospitalizacionHTML = plan.hospitalizacion;
-  if (nombreClinicaBuscada) {
-    const regex = new RegExp(`(${nombreClinicaBuscada})`, 'gi');
-    hospitalizacionHTML = hospitalizacionHTML.replace(regex, '<span style="color: #d4af37; font-weight: bold;">$1</span>');
+  // Obtener código del plan
+  const codigoPlan = obtenerCodigoPlan(plan.nombre) || '';
+  const nombreConCodigo = codigoPlan ? `${plan.nombre} (${codigoPlan})` : plan.nombre;
+  
+  // Extraer porcentaje de hospitalización
+  let porcentajeHosp = null;
+  if (plan.hospitalizacion) {
+    const match = plan.hospitalizacion.match(/(\d+)%/);
+    if (match) {
+      porcentajeHosp = parseInt(match[1]);
+    }
+  }
+  
+  // Procesar hospitalización
+  let hospitalizacionHTML = '';
+  const gruposYPorcentajes = extraerGruposYPorcentajes(plan.hospitalizacion);
+  
+  if (gruposYPorcentajes) {
+    // Es texto con grupos (G41-G46, GS1-GS4)
+    hospitalizacionHTML = `<div style="margin-top: 12px;">`;
+    
+    // Ordenar grupos
+    const gruposOrdenados = Object.keys(gruposYPorcentajes).sort();
+    
+    for (const grupo of gruposOrdenados) {
+      const porcentaje = gruposYPorcentajes[grupo];
+      const clinicas = obtenerClinicasDelPlan(plan.nombre, plan.zona);
+      
+      // Filtrar clínicas para este grupo específico
+      const clinicasGrupo = clinicas.filter(c => 
+        PLANES_CLINICAS_REDES[grupo] && 
+        PLANES_CLINICAS_REDES[grupo].length > 0 &&
+        PLANES_CLINICAS_REDES[grupo].some(cg => 
+          normalizarTexto(cg.toLowerCase()) === normalizarTexto(c.toLowerCase())
+        )
+      );
+      
+      if (clinicasGrupo.length > 0) {
+        hospitalizacionHTML += generarHTMLGrupoDesplegable(grupo, porcentaje, clinicasGrupo, nombreClinicaBuscada);
+      }
+    }
+    
+    hospitalizacionHTML += `</div>`;
+  } else {
+    // Es texto con clínicas específicas
+    if (plan.hospitalizacion) {
+      let hospText = plan.hospitalizacion;
+      
+      // Resaltar clínica favorita en dorado
+      if (nombreClinicaBuscada) {
+        const regex = new RegExp(`(${nombreClinicaBuscada})`, 'gi');
+        hospText = hospText.replace(regex, '<span style="color: #d4af37; font-weight: bold;">$1</span>');
+      }
+      
+      hospitalizacionHTML = `<div class="coberturas-texto" style="color: #ccc;">${hospText.replace(/\n/g, '<br>')}</div>`;
+    }
   }
   
   return `
@@ -1465,7 +1557,7 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
       
       <div class="plan-nombre-container">
         <span class="plan-nombre-estrella">*</span>
-        <span class="plan-nombre">${plan.nombre}</span>
+        <span class="plan-nombre">${nombreConCodigo}</span>
         <span class="plan-nombre-estrella">*</span>
       </div>
       
@@ -1496,8 +1588,10 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
       </div>
       
       <div class="coberturas-section">
-        <div class="coberturas-title" style="color: #d4af37;">Hospitalizacion (<span style="color: #d4af37; font-weight: bold;">${plan.porcentajeHospitalizacion}%</span>)</div>
-        <div class="coberturas-texto">${hospitalizacionHTML.replace(/\n/g, '<br>')}</div>
+        <div class="coberturas-title" style="color: #d4af37;">
+          Hospitalizacion (${porcentajeHosp ? porcentajeHosp + '%' : 'Sin %'})
+        </div>
+        ${hospitalizacionHTML}
       </div>
       
       ${plan.consulta_preferente ? `
@@ -1509,7 +1603,7 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
       
       ${plan.tope_consulta_le ? `
         <div class="coberturas-section">
-          <div class="coberturas-title">Tope Consulta Libre Eleccion</div>
+          <div class="coberturas-title">Tope Consulta Libre Elección</div>
           <div class="coberturas-texto">${plan.tope_consulta_le.replace(/\n/g, '<br>')}</div>
         </div>
       ` : ''}
