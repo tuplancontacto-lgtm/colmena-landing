@@ -1267,23 +1267,19 @@ Correo: ${correoReferido}`;
 });
 
 async function enviarCallMeBot(mensaje) {
-  // Usar datos del asesor cargado desde MongoDB
-  const whatsapp = ASESOR_DATA.whatsapp || '';
-  
-  if (!whatsapp) {
-    console.warn('WhatsApp del asesor no disponible');
+  if (!CALLMEBOT_APIKEY || CALLMEBOT_APIKEY === "PENDIENTE") {
+    console.warn('CallMeBot no configurado para este asesor');
     return;
   }
-  
   try {
-    // Enviar al asesor
-    const url = `https://api.callmebot.com/whatsapp.php?phone=${whatsapp}&text=${encodeURIComponent(mensaje)}&apikey=0`;
+    const url = `https://api.callmebot.com/whatsapp.php?phone=${CALLMEBOT_PHONE}&text=${encodeURIComponent(mensaje)}&apikey=${CALLMEBOT_APIKEY}`;
     await fetch(url, { mode: 'no-cors' });
-    console.log('✅ WhatsApp enviado al asesor');
+    console.log('CallMeBot enviado');
   } catch (err) {
-    console.error('Error en WhatsApp:', err);
+    console.error('Error CallMeBot:', err);
   }
 }
+
 
 function extraerPorcentajeHospitalizacion(hospitalizacionText) {
   if (!hospitalizacionText) return null;
