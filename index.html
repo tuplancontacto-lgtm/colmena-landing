@@ -208,8 +208,8 @@ async function cargarDatosAsesor() {
   }
 }
 
-window.addEventListener('DOMContentLoaded', function() {
-  cargarDatosAsesor();
+window.addEventListener("DOMContentLoaded", async function() {
+  await cargarAsesor();
   validarAsesor();
 });
 </script>
@@ -359,30 +359,26 @@ window.addEventListener('DOMContentLoaded', function() {
 </footer>
 
 <script>
-const ASESORES = {
-  jose_pepe: {
-    nombre: "Jose Pepe",
-    telefono: "+56990701837",
-    whatsapp: "56990701837",
-    callmebot_apikey: "5088331",
-    correo: "voz.josemora@gmail.com"
-  },
-  betty: {
-    nombre: "Betty Gonzalez",
-    telefono: "+56983899232",
-    whatsapp: "56983899232",
-    callmebot_apikey: "PENDIENTE",
-    correo: "betty.gonzalez@colmena.cl"
-  },
-  jose_mora: {
-    nombre: "Jose Mora",
-    telefono: "+56975356696",
-    whatsapp: "56975356696",
-    callmebot_apikey: "7360481",
-    correo: "jose.mora@colmena.cl"
-  }
-};
+let ASESOR_ACTUAL = {};
 
+async function cargarAsesor() {
+  const slug = obtenerSlugDeLaURL();
+  if (!slug) return;
+
+  try {
+    const response = await fetch(`${API_URL}/asesores/${slug}`);
+    const data = await response.json();
+    if (data.valid) {
+      ASESOR_ACTUAL = {
+        nombre: data.asesor.nombre,
+        email: data.asesor.email,
+        whatsapp: data.asesor.telefono.replace(/\D/g, '')
+      };
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
 function getQueryParam(param) {
   const params = new URLSearchParams(window.location.search);
   return params.get(param);
@@ -1267,16 +1263,12 @@ Correo: ${correoReferido}`;
 });
 
 async function enviarCallMeBot(mensaje) {
-  if (!CALLMEBOT_APIKEY || CALLMEBOT_APIKEY === "PENDIENTE") {
-    console.warn('CallMeBot no configurado para este asesor');
-    return;
-  }
+  if (!ASESOR_ACTUAL.whatsapp) return;
   try {
-    const url = `https://api.callmebot.com/whatsapp.php?phone=${CALLMEBOT_PHONE}&text=${encodeURIComponent(mensaje)}&apikey=${CALLMEBOT_APIKEY}`;
+    const url = `https://api.callmebot.com/whatsapp.php?phone=${ASESOR_ACTUAL.whatsapp}&text=${encodeURIComponent(mensaje)}&apikey=0`;
     await fetch(url, { mode: 'no-cors' });
-    console.log('CallMeBot enviado');
   } catch (err) {
-    console.error('Error CallMeBot:', err);
+    console.error('Error:', err);
   }
 }
 
