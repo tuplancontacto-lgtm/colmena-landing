@@ -760,29 +760,27 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
         <span class="plan-nombre">${nombreConCodigoGen}</span>
         <span class="plan-nombre-estrella">*</span>
       </div>
-      
       div class="plan-info">
-    <div class="plan-info-item">
+  <div class="plan-info-item">
     <div class="plan-info-label">Valor del Plan</div>
-    <div class="plan-info-value amarillo">formatearCLP(plan.valorCalculadoCLP)</div>
-    <div class="small">plan.valorCalculadoUF.toFixed(2) UF</div>
-    </div>
-    <div class="plan-info-item">
+    <div class="plan-info-value amarillo">' + formatearCLP(plan.valorCalculadoCLP) + '</div>
+    <div class="small">' + plan.valorCalculadoUF.toFixed(2) + ' UF</div>
+  </div>
+  <div class="plan-info-item">
     <div class="plan-info-label">Adicional a pagar</div>
-    <div class="plan-info-value">adicionalCLP > 0 ? 'verde' : 'amarillo'>formatearCLP(Math.max(0, adicionalCLP))</div>
+    <div class="plan-info-value ' + (adicionalCLP > 0 ? 'verde' : 'amarillo') + '">' + formatearCLP(Math.max(0, adicionalCLP)) + '</div>
+  </div>
+  <div class="plan-info-item">
+    <div class="plan-info-label">GES Grupo Familiar</div>
+    <div class="plan-info-value verde">' + plan.gesUF.toFixed(2) + ' UF</div>
+    <div class="small">Total familia</div>
+  </div>
+  <div class="plan-info-item">
+    <div class="plan-info-label">Tope anual</div>
+    <div class="plan-info-value">' + formatearCLP((plan.topeanualuf || 7000) * window.UFVALOR) + '</div>
   </div>
 </div>
 
-        <div class="plan-info-item">
-          <div class="plan-info-label">GES Grupo Familiar</div>
-          <div class="plan-info-value verde">${plan.gesUF.toFixed(2)} UF</div>
-          <div class="small">Total familia</div>
-        </div>
-        <div class="plan-info-item">
-          <div class="plan-info-label">Tope anual</div>
-          <div class="plan-info-value">${formatearCLP(plan.tope_anual_uf || 7000)} UF</div>
-        </div>
-      </div>
       
       ${coberturasHTML}
     </div>
