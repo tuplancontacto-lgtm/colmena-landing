@@ -518,20 +518,6 @@ async function cargarPlanes() {
     
    let PLANES_CODIGOS = {};
 
-function cargarPlanesCodigosJSON() {
-  try {
-    fetch('https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/tarifario/planes_codigos.json')
-      .then(response => response.json())
-      .then(data => {
-        PLANES_CODIGOS = data;
-        console.log(`✅ Códigos de planes cargados: ${Object.keys(PLANES_CODIGOS).length}`);
-      })
-      .catch(error => console.error('Error cargando códigos:', error));
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
-
   async function cargarPlanesCodigosJSON() {
   try {
     const res = await fetch('data/tarifario/planes_codigos.json');
