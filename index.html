@@ -1433,7 +1433,7 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
   // Información de cargas
   const cargasInfo = edadesCargas.length > 0 ? `${edadesCargas.length} (${edadesCargas.join(', ')})` : '0';
   
-  // Obtener código del plan
+// ===== UTILIDADES (UNA SOLA VEZ, ARRIBA DEL ARCHIVO) =====
 function normalizar(texto) {
   return texto
     .toUpperCase()
@@ -1444,6 +1444,10 @@ function normalizar(texto) {
 }
 
 function obtenerCodigoPlan(nombrePlan) {
+  if (!PLANES_CODIGOS || Object.keys(PLANES_CODIGOS).length === 0) {
+    return '';
+  }
+
   const nombre = normalizar(nombrePlan);
 
   for (const [codigo, data] of Object.entries(PLANES_CODIGOS)) {
@@ -1454,20 +1458,37 @@ function obtenerCodigoPlan(nombrePlan) {
   return '';
 }
 
-// ⚠️ ESTE BLOQUE DEBE ESTAR DENTRO DEL LOOP DONDE EXISTE `plan`
-const codigoPlan = obtenerCodigoPlan(plan.nombre);
-const nombreConCodigo = codigoPlan
-  ? `${plan.nombre} (${codigoPlan})`
-  : plan.nombre;
+// ===== FLUJO CORRECTO (OBLIGATORIO) =====
+async function iniciarApp() {
+  await cargarPlanesCodigosJSON();   // ⬅️ ESPERAR SÍ O SÍ
 
-// Extraer porcentaje de hospitalización
-let porcentajeHosp = null;
-if (plan.hospitalizacion) {
-  const match = plan.hospitalizacion.match(/(\d+)%/);
-  if (match) {
-    porcentajeHosp = parseInt(match[1], 10);
-  }
+  // ⬇️ TODO lo que renderiza planes VA AQUÍ DENTRO
+  PLANES.forEach(plan => {
+
+    const codigoPlan = obtenerCodigoPlan(plan.nombre);
+    const nombreConCodigo = codigoPlan
+      ? `${plan.nombre} (${codigoPlan})`
+      : plan.nombre;
+
+    // EJEMPLO DE USO (ajusta a tu render real)
+    console.log('PLAN FINAL:', nombreConCodigo);
+
+    // Extraer porcentaje de hospitalización
+    let porcentajeHosp = null;
+    if (plan.hospitalizacion) {
+      const match = plan.hospitalizacion.match(/(\d+)%/);
+      if (match) {
+        porcentajeHosp = parseInt(match[1], 10);
+      }
+    }
+
+    // aquí sigue tu render HTML normal…
+  });
 }
+
+// ===== ARRANQUE ÚNICO =====
+iniciarApp();
+
 
 
   
