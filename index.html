@@ -532,8 +532,12 @@ function cargarPlanesCodigosJSON() {
   }
 }
 
-cargarPlanesCodigosJSON();
-    
+async function iniciarApp() {
+  await cargarPlanesCodigosJSON();
+}
+
+iniciarApp();
+
 function obtenerCodigoPlan(nombrePlan) {
   const nombre = nombrePlan.trim().toUpperCase();
 
@@ -544,6 +548,7 @@ function obtenerCodigoPlan(nombrePlan) {
   }
   return '';
 }
+
 
     console.log(`✅ TOTAL: ${PLANES.length} planes cargados desde GitHub`);
     
