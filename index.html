@@ -1558,14 +1558,14 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
       const porcentaje = gruposYPorcentajes[grupo];
       const clinicas = obtenerClinicasDelPlan(plan.nombre, plan.zona);
       
-      // Filtrar clínicas para este grupo específico
-      const clinicasGrupo = clinicas.filter(c => 
-        PLANES_CLINICAS_REDES[grupo] && 
-        PLANES_CLINICAS_REDES[grupo].length > 0 &&
-        PLANES_CLINICAS_REDES[grupo].some(cg => 
-          normalizarTexto(cg.toLowerCase()) === normalizarTexto(c.toLowerCase())
-        )
-      );
+      // Filtrar clínicas para este grupo específico 
+      
+     const clinicasGrupo = clinicas;
+    PLANESCLINICASREDES[grupo] ?
+    PLANESCLINICASREDES[grupo].some(cg => normalizarTexto(cg).toLowerCase() === normalizarTexto(c).toLowerCase()) :
+    true
+);
+
       
       if (clinicasGrupo.length > 0) {
         hospitalizacionHTML += generarHTMLGrupoDesplegable(grupo, porcentaje, clinicasGrupo, nombreClinicaBuscada);
