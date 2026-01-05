@@ -581,14 +581,6 @@ function obtenerCodigoPlan(nombrePlan) {
   }
 }
   
-function obtenerCodigoPlan(nombrePlan) {
-  for (const [codigo, data] of Object.entries(PLANES_CODIGOS)) {
-    if (data.nombre === nombrePlan) {
-      return codigo;
-    }
-  }
-  return '';
-}  
 function formatearCLP(n) {
   return (n || 0).toLocaleString("es-CL");
 }
