@@ -623,13 +623,49 @@ function calcularSietePorCiento(rentaMensual, ufValor) {
   return { sietePorCientoCLP, sietePorCientoUF, rtiAplicado };
 }
 
-function seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas) {
+function seleccionarPlanes(sieteUF, zona, region, edadTitular, edadesCargas) {
   const minimo95 = sieteUF * 0.95;
-  const planesZona = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
   
-  const planesConValor = planesZona.map(p => {
+  let planesDisponibles = [];
+  
+  // CASO 1: Región Metropolitana - SOLO planes RM
+  if (region === 'Metropolitana') {
+    planesDisponibles = PLANES.filter(p => p.zona === 'SANTIAGO');
+  }
+  // CASO 2: Valparaíso (Zona Central) - 1 plan CENTRO + 1 plan MAX NACIONAL
+  else if (region === 'Valparaiso') {
+    const planesCentro = PLANES.filter(p => p.zona === 'CENTRO');
+    const planesMaxNacional = PLANES.filter(p => 
+      p.zona === 'NACIONAL' && 
+      (p.nombre.includes('MAX') || p.nombre.includes('PLUS'))
+    );
+    planesDisponibles = [...planesCentro, ...planesMaxNacional];
+  }
+  // CASO 3: Norte - SOLO planes NORTE
+  else if (zona === 'NORTE') {
+    planesDisponibles = PLANES.filter(p => p.zona === 'NORTE');
+  }
+  // CASO 4: Sur - SOLO planes MAX SUR
+  else if (zona === 'SUR') {
+    planesDisponibles = PLANES.filter(p => 
+      p.zona === 'SUR' || 
+      (p.zona === 'NACIONAL' && p.nombre.includes('MAX SUR'))
+    );
+  }
+  // CASO 5: Otras regiones centro - planes CENTRO
+  else {
+    planesDisponibles = PLANES.filter(p => p.zona === zona || p.zona === 'LIBRE_ELECCION');
+  }
+  
+  const planesConValor = planesDisponibles.map(p => {
     const calc = calcularValorPlan(p.pb_uf, edadTitular, edadesCargas);
-    return { ...p, valorCalculadoUF: calc.totalUF, valorCalculadoCLP: calc.totalCLP, gesUF: calc.gesUF, sumaFactores: calc.sumaFactores };
+    return { 
+      ...p, 
+      valorCalculadoUF: calc.totalUF, 
+      valorCalculadoCLP: calc.totalCLP, 
+      gesUF: calc.gesUF, 
+      sumaFactores: calc.sumaFactores 
+    };
   });
   
   const planesValidos = planesConValor.filter(p => p.valorCalculadoUF >= minimo95);
@@ -705,12 +741,17 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   }
   
   return `
+    // OBTENER CÓDIGO DEL PLAN
+  const codigoPlan = obtenerCodigoPlan(plan.nombre) || '';
+  const nombreConCodigo = codigoPlan ? `${plan.nombre} <span class="plan-codigo">(${codigoPlan})</span>` : plan.nombre;
+
+  return `
     <div class="plan-card ${cardClass}">
       <span class="plan-badge ${badgeClass}">${badgeText}</span>
       
       <div class="plan-nombre-container">
         <span class="plan-nombre-estrella">*</span>
-        <span class="plan-nombre">${plan.nombre}</span>
+        <span class="plan-nombre">${nombreConCodigo}</span>
         <span class="plan-nombre-estrella">*</span>
       </div>
       
@@ -812,7 +853,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
   const sieteUF = calcSiete.sietePorCientoUF;
   
   const zona = REGION_A_ZONA[formularioDatos.region] || 'SANTIAGO';
-  const { plan1, plan2 } = seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas);
+  const { plan1, plan2 } = seleccionarPlanes(sieteUF, zona, formularioDatos.region, edadTitular, edadesCargas);
   
   ultimoResultado = { sieteCLP, sieteUF, edadesCargas, cargasTexto, zona, plan1, plan2, edadTitular };
 
