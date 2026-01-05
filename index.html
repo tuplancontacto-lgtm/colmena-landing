@@ -535,13 +535,16 @@ function cargarPlanesCodigosJSON() {
 cargarPlanesCodigosJSON();
     
 function obtenerCodigoPlan(nombrePlan) {
+  const nombre = nombrePlan.trim().toUpperCase();
+
   for (const [codigo, data] of Object.entries(PLANES_CODIGOS)) {
-    if (data.nombre === nombrePlan) {
+    if (data.nombre.trim().toUpperCase() === nombre) {
       return codigo;
     }
   }
   return '';
-} 
+}
+
     console.log(`✅ TOTAL: ${PLANES.length} planes cargados desde GitHub`);
     
   } catch (error) {
