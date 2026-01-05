@@ -2,7 +2,7 @@
   "zona": "SUR",
   "planes_max": [
     {
-      "nombre": "COLMENA MAX SUR 1126",
+      "nombre": "COLMENA MAX SUR 1126 (12468)",
       "pb_uf": 1.65,
       "pb_clp": 65544,
       "zona": "SUR",
@@ -20,7 +20,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 2126",
+      "nombre": "COLMENA MAX SUR 2126 (12469)",
       "pb_uf": 1.68,
       "pb_clp": 66736,
       "zona": "SUR",
@@ -38,7 +38,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 3126",
+      "nombre": "COLMENA MAX SUR 3126 (12470)",
       "pb_uf": 1.71,
       "pb_clp": 67928,
       "zona": "SUR",
@@ -56,7 +56,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 4126",
+      "nombre": "COLMENA MAX SUR 4126 (12471)",
       "pb_uf": 1.73,
       "pb_clp": 68722,
       "zona": "SUR",
@@ -74,7 +74,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 5126",
+      "nombre": "COLMENA MAX SUR 5126 (12472)",
       "pb_uf": 1.78,
       "pb_clp": 70708,
       "zona": "SUR",
@@ -92,7 +92,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 6126",
+      "nombre": "COLMENA MAX SUR 6126 (12473)",
       "pb_uf": 1.83,
       "pb_clp": 72695,
       "zona": "SUR",
@@ -110,7 +110,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 7126",
+      "nombre": "COLMENA MAX SUR 7126 (12474)",
       "pb_uf": 1.86,
       "pb_clp": 73886,
       "zona": "SUR",
@@ -128,7 +128,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 8126",
+      "nombre": "COLMENA MAX SUR 8126 (12475)",
       "pb_uf": 1.94,
       "pb_clp": 77064,
       "zona": "SUR",
@@ -146,7 +146,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 9126",
+      "nombre": "COLMENA MAX SUR 9126 (12476)",
       "pb_uf": 2.0,
       "pb_clp": 79448,
       "zona": "SUR",
@@ -164,7 +164,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 10126",
+      "nombre": "COLMENA MAX SUR 10126 (12477)",
       "pb_uf": 2.03,
       "pb_clp": 80639,
       "zona": "SUR",
@@ -182,7 +182,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 11126",
+      "nombre": "COLMENA MAX SUR 11126 (12478)",
       "pb_uf": 2.1,
       "pb_clp": 83420,
       "zona": "SUR",
@@ -200,7 +200,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 12126",
+      "nombre": "COLMENA MAX SUR 12126 (12479)",
       "pb_uf": 2.25,
       "pb_clp": 89379,
       "zona": "SUR",
@@ -218,7 +218,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 13126",
+      "nombre": "COLMENA MAX SUR 13126 (12480)",
       "pb_uf": 2.3,
       "pb_clp": 91365,
       "zona": "SUR",
@@ -236,7 +236,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 14126",
+      "nombre": "COLMENA MAX SUR 14126 (12481)",
       "pb_uf": 2.5,
       "pb_clp": 99310,
       "zona": "SUR",
@@ -254,7 +254,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 15126",
+      "nombre": "COLMENA MAX SUR 15126 (12482)",
       "pb_uf": 2.75,
       "pb_clp": 109241,
       "zona": "SUR",
@@ -272,7 +272,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 16126",
+      "nombre": "COLMENA MAX SUR 16126 (12483)",
       "pb_uf": 3.0,
       "pb_clp": 119172,
       "zona": "SUR",
@@ -290,7 +290,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 19126",
+      "nombre": "COLMENA MAX SUR 19126 (12486)",
       "pb_uf": 3.05,
       "pb_clp": 121158,
       "zona": "SUR",
@@ -308,7 +308,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 17126",
+      "nombre": "COLMENA MAX SUR 17126 (12484)",
       "pb_uf": 3.15,
       "pb_clp": 125130,
       "zona": "SUR",
@@ -326,7 +326,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 20126",
+      "nombre": "COLMENA MAX SUR 20126 (12487)",
       "pb_uf": 3.2,
       "pb_clp": 127117,
       "zona": "SUR",
@@ -344,7 +344,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 18126",
+      "nombre": "COLMENA MAX SUR 18126 (12485)",
       "pb_uf": 3.25,
       "pb_clp": 129103,
       "zona": "SUR",
@@ -362,7 +362,7 @@
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 21126",
+      "nombre": "COLMENA MAX SUR 21126 (12488)",
       "pb_uf": 3.35,
       "pb_clp": 133075,
       "zona": "SUR",
