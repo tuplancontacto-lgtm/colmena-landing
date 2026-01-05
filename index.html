@@ -532,7 +532,7 @@ function cargarPlanesCodigosJSON() {
   }
 }
 
-async function cargarPlanesCodigosJSON() {
+  async function cargarPlanesCodigosJSON() {
   try {
     const res = await fetch('data/tarifario/planes_codigos.json');
     PLANES_CODIGOS = await res.json();
@@ -542,7 +542,7 @@ async function cargarPlanesCodigosJSON() {
   }
 }
 
-    console.log(`✅ TOTAL: ${PLANES.length} planes cargados desde GitHub`);
+  console.log(`✅ TOTAL: ${PLANES.length} planes cargados desde GitHub`);
     
   } catch (error) {
     console.error('Error en cargarPlanes:', error);
