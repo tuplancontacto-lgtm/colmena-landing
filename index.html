@@ -744,8 +744,8 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
     `;
   }
  
-   const codigoPlan = obtenerCodigoPlan(plan.nombre) || '';
-  const nombreConCodigo = codigoPlan ? `${plan.nombre} <span class="plan-codigo">(${codigoPlan})</span>` : plan.nombre;
+ const codigoPlanGen = obtenerCodigoPlan(plan.nombre) || '';
+ const nombreConCodigoGen = codigoPlanGen ? `${plan.nombre} <span class="plan-codigo">(${codigoPlanGen})</span>` : plan.nombre;
   
   return `
     <div class="plan-card ${cardClass}">
@@ -753,7 +753,7 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
       
       <div class="plan-nombre-container">
         <span class="plan-nombre-estrella">*</span>
-        <span class="plan-nombre">${nombreConCodigo}</span>
+        <span class="plan-nombre">${nombreConCodigoGen}</span>
         <span class="plan-nombre-estrella">*</span>
       </div>
       
