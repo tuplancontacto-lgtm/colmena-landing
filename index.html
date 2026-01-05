@@ -741,7 +741,7 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   }
   
   return `
-    // OBTENER CÓDIGO DEL PLAN
+  // OBTENER CÓDIGO DEL PLAN
   const codigoPlan = obtenerCodigoPlan(plan.nombre) || '';
   const nombreConCodigo = codigoPlan ? `${plan.nombre} <span class="plan-codigo">(${codigoPlan})</span>` : plan.nombre;
 
