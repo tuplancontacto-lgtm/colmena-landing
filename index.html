@@ -1434,7 +1434,7 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
   const cargasInfo = edadesCargas.length > 0 ? `${edadesCargas.length} (${edadesCargas.join(', ')})` : '0';
   
   // Obtener código del plan
-  function normalizar(texto) {
+function normalizar(texto) {
   return texto
     .toUpperCase()
     .normalize('NFD')
@@ -1453,17 +1453,23 @@ function obtenerCodigoPlan(nombrePlan) {
   }
   return '';
 }
-  const codigoPlan = obtenerCodigoPlan(plan.nombre) || '';
-  const nombreConCodigo = codigoPlan ? `${plan.nombre} (${codigoPlan})` : plan.nombre;
-  
-  // Extraer porcentaje de hospitalización
-  let porcentajeHosp = null;
-  if (plan.hospitalizacion) {
-    const match = plan.hospitalizacion.match(/(\d+)%/);
-    if (match) {
-      porcentajeHosp = parseInt(match[1]);
-    }
+
+// ⚠️ ESTE BLOQUE DEBE ESTAR DENTRO DEL LOOP DONDE EXISTE `plan`
+const codigoPlan = obtenerCodigoPlan(plan.nombre);
+const nombreConCodigo = codigoPlan
+  ? `${plan.nombre} (${codigoPlan})`
+  : plan.nombre;
+
+// Extraer porcentaje de hospitalización
+let porcentajeHosp = null;
+if (plan.hospitalizacion) {
+  const match = plan.hospitalizacion.match(/(\d+)%/);
+  if (match) {
+    porcentajeHosp = parseInt(match[1], 10);
   }
+}
+
+
   
   // Procesar hospitalización
   let hospitalizacionHTML = '';
