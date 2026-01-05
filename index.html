@@ -713,7 +713,7 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   const codigoPlan = obtenerCodigoPlan(plan.nombre) || '';
   const nombreConCodigo = codigoPlan ? `${plan.nombre} <span class="plan-codigo">(${codigoPlan})</span>` : plan.nombre;
   
-  let coberturasHTML = '';
+
   // HOSPITALIZACION
   if (plan.hospitalizacion) {
     coberturasHTML += `
