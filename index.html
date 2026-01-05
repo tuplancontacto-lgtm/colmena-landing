@@ -532,20 +532,15 @@ function cargarPlanesCodigosJSON() {
   }
 }
 
-async function iniciarApp() {
-  await cargarPlanesCodigosJSON();
-}
-
-iniciarApp();
-
-function obtenerCodigoPlan(nombrePlan) {
-  const nombre = nombrePlan.trim().toUpperCase();
-
-  for (const [codigo, data] of Object.entries(PLANES_CODIGOS)) {
-    if (data.nombre.trim().toUpperCase() === nombre) {
-      return codigo;
-    }
+async function cargarPlanesCodigosJSON() {
+  try {
+    const res = await fetch('data/tarifario/planes_codigos.json');
+    PLANES_CODIGOS = await res.json();
+    console.log('✅ Códigos de planes cargados');
+  } catch (error) {
+    console.error('Error:', error);
   }
+}
   return '';
 }
 
