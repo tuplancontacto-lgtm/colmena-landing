@@ -1434,6 +1434,25 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
   const cargasInfo = edadesCargas.length > 0 ? `${edadesCargas.length} (${edadesCargas.join(', ')})` : '0';
   
   // Obtener código del plan
+  function normalizar(texto) {
+  return texto
+    .toUpperCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function obtenerCodigoPlan(nombrePlan) {
+  const nombre = normalizar(nombrePlan);
+
+  for (const [codigo, data] of Object.entries(PLANES_CODIGOS)) {
+    if (normalizar(data.nombre) === nombre) {
+      return codigo;
+    }
+  }
+  return '';
+}
   const codigoPlan = obtenerCodigoPlan(plan.nombre) || '';
   const nombreConCodigo = codigoPlan ? `${plan.nombre} (${codigoPlan})` : plan.nombre;
   
