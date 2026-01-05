@@ -743,12 +743,10 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
       </div>
     `;
   }
-  
-  return `
-  // OBTENER CÓDIGO DEL PLAN
-  const codigoPlan = obtenerCodigoPlan(plan.nombre) || '';
+ 
+   const codigoPlan = obtenerCodigoPlan(plan.nombre) || '';
   const nombreConCodigo = codigoPlan ? `${plan.nombre} <span class="plan-codigo">(${codigoPlan})</span>` : plan.nombre;
-
+  
   return `
     <div class="plan-card ${cardClass}">
       <span class="plan-badge ${badgeClass}">${badgeText}</span>
@@ -1533,7 +1531,7 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
   
   // Obtener código del plan
   const codigoPlan = obtenerCodigoPlan(plan.nombre) || '';
-  const nombreConCodigo = codigoPlan ? `${plan.nombre} (${codigoPlan})` : plan.nombre;
+  const nombreConCodigo = codigoPlan ? `${plan.nombre} <span class="plan-codigo">(${codigoPlan})</span>` : plan.nombre;
   
   // Extraer porcentaje de hospitalización
   let porcentajeHosp = null;
