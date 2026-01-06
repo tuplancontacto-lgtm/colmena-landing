@@ -739,10 +739,10 @@ export default function handler(req, res) {
       "tope_consulta_le_uf": 1.2,
       "tope_anual_uf": 7500.0
     }
-  ],
+ 
   "total": 47,
   "uf_valor": 39724.12
-}
+  }
 
-res.status(200).json(data);
-}
+  res.status(200).json(data);
+  }
