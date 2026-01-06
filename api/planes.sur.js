@@ -1,6 +1,6 @@
 export default function handler(req, res) {
   const data = {
-  "zona": "CENTRO",
+  "zona": "SUR",
   "planes_rm": [
 {
   "zona": "SUR",
