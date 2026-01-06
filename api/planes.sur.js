@@ -1,28 +1,25 @@
 export default function handler(req, res) {
   const data = {
-  "zona": "SUR",
-  "planes_rm": [
-{
-  "zona": "SUR",
-  "planes_max": [
-    {
-      "nombre": "COLMENA MAX SUR 1126 (12468)",
-      "pb_uf": 1.65,
-      "pb_clp": 65544,
-      "zona": "SUR",
-      "tipo": "COLMENA MAX",
-      "hospitalizacion": "GS1=70%, GS2=50%, GS3=40%, GS4=30%",
-      "coberturas_grupos": {
-        "GS1": 70,
-        "GS2": 50,
-        "GS3": 40,
-        "GS4": 30
+    "zona": "SUR",
+    "planes_max": [
+      {
+        "nombre": "COLMENA MAX SUR 1126 (12468)",
+        "pb_uf": 1.65,
+        "pb_clp": 65544,
+        "zona": "SUR",
+        "tipo": "COLMENA MAX",
+        "hospitalizacion": "GS1=70%, GS2=50%, GS3=40%, GS4=30%",
+        "coberturas_grupos": {
+          "GS1": 70,
+          "GS2": 50,
+          "GS3": 40,
+          "GS4": 30
+        },
+        "consulta_preferente": "60% Centros Médicos RedSalud e Integramédica",
+        "consulta_le": "50% (0,46 UF)",
+        "tope_consulta_le_uf": 0.46,
+        "tope_anual_uf": 7500.0
       },
-      "consulta_preferente": "60% Centros Médicos RedSalud e Integramédica",
-      "consulta_le": "50% (0,46 UF)",
-      "tope_consulta_le_uf": 0.46,
-      "tope_anual_uf": 7500.0
-    },
     {
       "nombre": "COLMENA MAX SUR 2126 (12469)",
       "pb_uf": 1.68,
@@ -366,30 +363,27 @@ export default function handler(req, res) {
       "tope_anual_uf": 7500.0
     },
     {
-      "nombre": "COLMENA MAX SUR 21126 (12488)",
-      "pb_uf": 3.35,
-      "pb_clp": 133075,
-      "zona": "SUR",
-      "tipo": "COLMENA MAX",
-      "hospitalizacion": "GS1=100%, GS2=100%, GS3=100%, GS4=60%",
-      "coberturas_grupos": {
-        "GS1": 100,
-        "GS2": 100,
-        "GS3": 100,
-        "GS4": 60
-      },
-      "consulta_preferente": "70% Centros Médicos RedSalud e Integramédica",
-      "consulta_le": "70% (1,00 UF)",
-      "tope_consulta_le_uf": 1.0,
-      "tope_anual_uf": 7500.0
-    }
-  ],
-  "total": 21,
-  "uf_valor": 39724.12
-  }
-  ],
-  "total": 228,
-  "uf_valor": 39724.12
-};
-res.status(200).json(data);
+        "nombre": "COLMENA MAX SUR 21126 (12488)",
+        "pb_uf": 3.35,
+        "pb_clp": 133075,
+        "zona": "SUR",
+        "tipo": "COLMENA MAX",
+        "hospitalizacion": "GS1=100%, GS2=100%, GS3=100%, GS4=60%",
+        "coberturas_grupos": {
+          "GS1": 100,
+          "GS2": 100,
+          "GS3": 100,
+          "GS4": 60
+        },
+        "consulta_preferente": "70% Centros Médicos RedSalud e Integramédica",
+        "consulta_le": "70% (1,00 UF)",
+        "tope_consulta_le_uf": 1.0,
+        "tope_anual_uf": 7500.0
+      }
+    ],
+    "total": 21,
+    "uf_valor": 39724.12
+  };
+  
+  res.status(200).json(data);
 }
