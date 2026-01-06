@@ -733,16 +733,15 @@ export default function handler(req, res) {
         "G44": 100,
         "G45": 90,
         "G46": 55
-      },
+},
       "consulta_preferente": "SOLO L.E",
       "consulta_le": "70% (1,20 UF)",
       "tope_consulta_le_uf": 1.2,
       "tope_anual_uf": 7500.0
     }
- 
+ ],
   "total": 47,
-  "uf_valor": 39724.12
-  }
-],
-  res.status(200).json(data);
-  }
+  "uf_valor": 39724.12 
+};
+res.status(200).json(data);
+}
