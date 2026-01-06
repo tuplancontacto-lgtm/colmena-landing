@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Buscar Clínica en Planes Colmena</title>
+  <title>Buscar Clínica en Planes Colmena - Optimizado</title>
   <style>
     * { box-sizing: border-box; }
     body { 
@@ -32,6 +32,17 @@
       font-size: 1rem;
     }
     
+    .performance-badge {
+      display: inline-block;
+      background: #4ade80;
+      color: #0a1a2a;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    
     main {
       max-width: 1000px;
       margin: 40px auto;
@@ -53,7 +64,7 @@
     
     input[type="text"] {
       width: 100%;
-      padding: 15px;
+      padding: 15px 50px 15px 15px;
       border-radius: 8px;
       border: 1px solid #d4af37;
       background: #1a3a5a;
@@ -71,20 +82,31 @@
       border-color: #fbbf24;
     }
     
-    /* Autocomplete dropdown */
+    .search-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #d4af37;
+      font-size: 1.2rem;
+      pointer-events: none;
+    }
+    
+    /* Autocomplete optimizado */
     .autocomplete-list {
       position: absolute;
       top: 100%;
       left: 0;
       right: 0;
-      background: #1a3a5a;
-      border: 1px solid #d4af37;
+      background: #0a1a2a;
+      border: 2px solid #4ade80;
       border-top: none;
       border-radius: 0 0 8px 8px;
-      max-height: 300px;
+      max-height: 350px;
       overflow-y: auto;
       display: none;
       z-index: 1000;
+      box-shadow: 0 10px 30px rgba(74, 222, 128, 0.3);
     }
     
     .autocomplete-list.visible {
@@ -92,26 +114,50 @@
     }
     
     .autocomplete-item {
-      padding: 12px 15px;
+      padding: 15px;
       cursor: pointer;
-      border-bottom: 1px solid #0d2a3a;
+      border-bottom: 1px solid #1a3a5a;
       transition: all 0.2s;
+      position: relative;
     }
     
     .autocomplete-item:hover {
-      background: #2a5a8a;
-      color: #fbbf24;
+      background: #1a3a5a;
+      border-left: 4px solid #4ade80;
+      padding-left: 11px;
     }
     
     .autocomplete-item-nombre {
       font-weight: bold;
       color: #d4af37;
+      font-size: 1rem;
+      margin-bottom: 5px;
     }
     
     .autocomplete-item-ciudad {
       font-size: 0.85rem;
       color: #aaa;
-      margin-top: 3px;
+    }
+    
+    .autocomplete-match-score {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      background: #4ade80;
+      color: #0a1a2a;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+    
+    .autocomplete-footer {
+      padding: 10px;
+      text-align: center;
+      color: #666;
+      font-size: 0.8rem;
+      background: #0d1f2d;
+      border-top: 1px solid #1a3a5a;
     }
     
     .info-section {
@@ -122,6 +168,36 @@
       margin-bottom: 30px;
       font-size: 0.95rem;
       line-height: 1.6;
+    }
+    
+    .stats-section {
+      display: flex;
+      gap: 20px;
+      justify-content: space-around;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    
+    .stat-item {
+      background: #0d1f2d;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      flex: 1;
+      min-width: 150px;
+      border: 1px solid #2a4a6a;
+    }
+    
+    .stat-value {
+      color: #4ade80;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    .stat-label {
+      color: #aaa;
+      font-size: 0.85rem;
+      margin-top: 5px;
     }
     
     .resultados {
@@ -209,17 +285,17 @@
     }
     
     .clinica-info {
-      background: #0d1f2d;
-      border-left: 4px solid #4ade80;
-      padding: 20px;
-      border-radius: 8px;
+      background: linear-gradient(135deg, #0d1f2d, #1a3a5a);
+      border: 2px solid #4ade80;
+      padding: 25px;
+      border-radius: 12px;
       margin-bottom: 30px;
       text-align: center;
     }
     
     .clinica-nombre {
       color: #d4af37;
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       font-weight: bold;
       margin-bottom: 10px;
     }
@@ -227,6 +303,25 @@
     .clinica-ciudad {
       color: #aaa;
       font-size: 1rem;
+    }
+    
+    .search-metrics {
+      display: flex;
+      justify-content: space-between;
+      background: #0d1f2d;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      font-size: 0.85rem;
+    }
+    
+    .metric {
+      color: #aaa;
+    }
+    
+    .metric span {
+      color: #4ade80;
+      font-weight: bold;
     }
     
     .error-msg {
@@ -318,6 +413,10 @@
       button {
         width: 100%;
       }
+      
+      .stats-section {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -325,21 +424,38 @@
   <header>
     <h1>🏥 Buscar Clínica en Planes Colmena</h1>
     <p class="header-subtitle">Descubre qué planes cubren tu clínica favorita</p>
+    <span class="performance-badge">⚡ Búsqueda Optimizada con IA</span>
   </header>
   
   <main>
     <div class="busqueda-container">
       <div class="info-section">
-        <strong>💡 Cómo usar:</strong> Empieza a escribir el nombre de tu clínica (ej: "V" para Viña, "Santa" para Santa María). Se mostrarán sugerencias mientras escribes.
+        <strong>💡 Búsqueda Inteligente:</strong> Empieza a escribir el nombre de tu clínica. El sistema usa algoritmos avanzados (Fuzzy Search + Índices Invertidos) para encontrar resultados incluso con errores de escritura. Ejemplo: "alemna" encontrará "Alemana".
+      </div>
+      
+      <div class="stats-section">
+        <div class="stat-item">
+          <div class="stat-value" id="totalClinicas">-</div>
+          <div class="stat-label">Clínicas Indexadas</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="totalPlanes">-</div>
+          <div class="stat-label">Planes Disponibles</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="tiempoBusqueda">0ms</div>
+          <div class="stat-label">Tiempo de Búsqueda</div>
+        </div>
       </div>
       
       <div class="input-wrapper">
         <input 
           type="text" 
           id="clinicaBusqueda" 
-          placeholder="Escribe el nombre de una clínica..."
+          placeholder="Ej: Alemana, Católica, Dávila, Las Condes..."
           autocomplete="off"
         />
+        <span class="search-icon">🔍</span>
         <div id="autocompleteList" class="autocomplete-list"></div>
       </div>
       
@@ -365,65 +481,177 @@
     let REDES_CLINICAS = {};
     let UF_VALOR = 39700;
     
+    // Variables de optimización
+    let INDICE_CLINICAS = null;
+    let CACHE_NORMALIZACION = new Map();
+    let TODAS_LAS_CLINICAS = [];
+    
+    // ════════════════════════════════════════════════════════════════════════════
+    // ALGORITMOS DE OPTIMIZACIÓN
+    // ════════════════════════════════════════════════════════════════════════════
+    
+    function normalizarTextoOptimizado(texto) {
+      if (!texto) return '';
+      if (CACHE_NORMALIZACION.has(texto)) {
+        return CACHE_NORMALIZACION.get(texto);
+      }
+      const resultado = texto
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+      CACHE_NORMALIZACION.set(texto, resultado);
+      return resultado;
+    }
+    
+    function calcularDistanciaLevenshtein(str1, str2) {
+      const m = str1.length;
+      const n = str2.length;
+      if (Math.abs(m - n) > 5) return Math.max(m, n);
+      const dp = Array(m + 1).fill(null).map(() => Array(n + 1).fill(0));
+      for (let i = 0; i <= m; i++) dp[i][0] = i;
+      for (let j = 0; j <= n; j++) dp[0][j] = j;
+      for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+          if (str1[i - 1] === str2[j - 1]) {
+            dp[i][j] = dp[i - 1][j - 1];
+          } else {
+            dp[i][j] = 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
+          }
+        }
+      }
+      return dp[m][n];
+    }
+    
+    function crearNGramas(texto, n = 3) {
+      const ngramas = new Set();
+      const textoNorm = normalizarTextoOptimizado(texto);
+      const palabras = textoNorm.split(/\s+/);
+      palabras.forEach(palabra => {
+        if (palabra.length >= 3) ngramas.add(palabra);
+      });
+      for (let i = 0; i <= textoNorm.length - n; i++) {
+        ngramas.add(textoNorm.slice(i, i + n));
+      }
+      return ngramas;
+    }
+    
+    function construirIndiceClinicas(listaClinicas) {
+      console.log('🔧 Construyendo índice invertido...');
+      const inicio = performance.now();
+      const indice = new Map();
+      
+      listaClinicas.forEach((clinica, idx) => {
+        const ngramas = crearNGramas(clinica.nombre);
+        ngramas.forEach(ngrama => {
+          if (!indice.has(ngrama)) indice.set(ngrama, []);
+          indice.get(ngrama).push(idx);
+        });
+      });
+      
+      const fin = performance.now();
+      console.log('✅ Índice construido en ' + (fin - inicio).toFixed(2) + 'ms');
+      return indice;
+    }
+    
+    function buscarClinicaOptimizada(terminoBusqueda, umbralFuzzy = 0.5) {
+      const terminoNorm = normalizarTextoOptimizado(terminoBusqueda);
+      if (!terminoNorm || terminoNorm.length < 1) return [];
+      
+      const ngramasBusqueda = crearNGramas(terminoNorm);
+      const candidatos = new Map();
+      
+      ngramasBusqueda.forEach(ngrama => {
+        const indices = INDICE_CLINICAS?.get(ngrama) || [];
+        indices.forEach(idx => {
+          candidatos.set(idx, (candidatos.get(idx) || 0) + 1);
+        });
+      });
+      
+      const resultados = Array.from(candidatos.entries())
+        .map(([idx, matchesIndice]) => {
+          const clinica = TODAS_LAS_CLINICAS[idx];
+          const clinicaNorm = normalizarTextoOptimizado(clinica.nombre);
+          const distancia = calcularDistanciaLevenshtein(terminoNorm, clinicaNorm);
+          const maxLen = Math.max(terminoNorm.length, clinicaNorm.length);
+          const similaridadFuzzy = 1 - (distancia / maxLen);
+          const scoreIndice = matchesIndice / ngramasBusqueda.size;
+          const scoreTotal = (scoreIndice * 0.4) + (similaridadFuzzy * 0.6);
+          
+          return {
+            ...clinica,
+            nombreNormalizado: clinicaNorm,
+            score: scoreTotal,
+            scoreFuzzy: similaridadFuzzy,
+            scoreIndice: scoreIndice
+          };
+        })
+        .filter(r => r.scoreFuzzy >= umbralFuzzy)
+        .sort((a, b) => b.score - a.score);
+      
+      return resultados;
+    }
+    
     // ════════════════════════════════════════════════════════════════════════════
     // CARGAR DATOS
     // ════════════════════════════════════════════════════════════════════════════
     
     async function cargarDatos() {
       try {
-        // Cargar planes
         console.log('📥 Cargando planes desde: ' + URL_PLANES);
         const respPlanes = await fetch(URL_PLANES);
-        if (!respPlanes.ok) throw new Error(`Error ${respPlanes.status}: No se pudo cargar planes`);
+        if (!respPlanes.ok) throw new Error('Error al cargar planes');
         PLANES = await respPlanes.json();
-        console.log(`✅ Planes cargados: ${PLANES.length}`);
+        console.log('✅ Planes cargados: ' + PLANES.length);
+        document.getElementById('totalPlanes').textContent = PLANES.length;
         
-        // Cargar redes
         console.log('📥 Cargando redes desde: ' + URL_REDES);
         const respRedes = await fetch(URL_REDES);
-        if (!respRedes.ok) throw new Error(`Error ${respRedes.status}: No se pudo cargar redes`);
+        if (!respRedes.ok) throw new Error('Error al cargar redes');
         REDES_CLINICAS = await respRedes.json();
-        console.log(`✅ Redes cargadas: ${Object.keys(REDES_CLINICAS).length}`);
+        console.log('✅ Redes cargadas: ' + Object.keys(REDES_CLINICAS).length);
         
-        // Cargar UF
+        // Construir índice de clínicas
+        const clinicasArray = [];
+        for (const [grupoId, grupoData] of Object.entries(REDES_CLINICAS)) {
+          if (grupoData.clinicas) {
+            grupoData.clinicas.forEach(clinica => {
+              clinicasArray.push({
+                nombre: clinica.nombre,
+                ciudad: clinica.ciudad,
+                grupo: grupoId,
+                grupoNombre: grupoData.nombre
+              });
+            });
+          }
+        }
+        
+        TODAS_LAS_CLINICAS = clinicasArray;
+        INDICE_CLINICAS = construirIndiceClinicas(clinicasArray);
+        document.getElementById('totalClinicas').textContent = clinicasArray.length;
+        
         try {
           const respUF = await fetch('https://mindicador.cl/api/uf');
           const dataUF = await respUF.json();
           UF_VALOR = Math.round(dataUF.UF.valor * 100) / 100;
-          console.log(`✅ UF cargada: ${UF_VALOR}`);
+          console.log('✅ UF cargada: ' + UF_VALOR);
         } catch {
           console.log('ℹ️ UF no disponible, usando valor por defecto');
         }
       } catch (err) {
         console.error('❌ Error al cargar datos:', err);
-        document.getElementById('statusMsg').innerHTML = '❌ Error al cargar datos. Recarga la página.';
+        document.getElementById('statusMsg').innerHTML = '<div class="error-msg">❌ Error al cargar datos. Recarga la página.</div>';
       }
     }
     
     // ════════════════════════════════════════════════════════════════════════════
-    // AUTOCOMPLETE
+    // AUTOCOMPLETE OPTIMIZADO
     // ════════════════════════════════════════════════════════════════════════════
     
-    function obtenerTodasLasClinicas() {
-      const clinicas = [];
-      
-      for (const [grupoId, grupoData] of Object.entries(REDES_CLINICAS)) {
-        if (grupoData.clinicas) {
-          grupoData.clinicas.forEach(clinica => {
-            clinicas.push({
-              nombre: clinica.nombre,
-              ciudad: clinica.ciudad,
-              grupo: grupoId,
-              grupoNombre: grupoData.nombre
-            });
-          });
-        }
-      }
-      
-      return clinicas;
-    }
-    
+    let timeoutAutocomplete;
     function mostrarAutocomplete() {
+      clearTimeout(timeoutAutocomplete);
+      
       const input = document.getElementById('clinicaBusqueda').value.trim();
       const listElement = document.getElementById('autocompleteList');
       
@@ -432,28 +660,36 @@
         return;
       }
       
-      const todasLasClinicas = obtenerTodasLasClinicas();
-      const filtradas = todasLasClinicas.filter(c => 
-        c.nombre.toUpperCase().includes(input.toUpperCase())
-      ).slice(0, 8);
-      
-      if (filtradas.length === 0) {
-        listElement.classList.remove('visible');
-        return;
-      }
-      
-      let html = '';
-      filtradas.forEach(clinica => {
-        html += `
-          <div class="autocomplete-item" onclick="seleccionarClinica('${clinica.nombre}', '${clinica.grupo}')">
-            <div class="autocomplete-item-nombre">${clinica.nombre}</div>
-            <div class="autocomplete-item-ciudad">📍 ${clinica.ciudad} • ${clinica.grupoNombre}</div>
-          </div>
-        `;
-      });
-      
-      listElement.innerHTML = html;
-      listElement.classList.add('visible');
+      timeoutAutocomplete = setTimeout(() => {
+        const inicio = performance.now();
+        const resultados = buscarClinicaOptimizada(input, 0.4);
+        const fin = performance.now();
+        
+        document.getElementById('tiempoBusqueda').textContent = (fin - inicio).toFixed(1) + 'ms';
+        
+        if (resultados.length === 0) {
+          listElement.innerHTML = '<div class="autocomplete-footer">❌ No se encontraron resultados</div>';
+          listElement.classList.add('visible');
+          return;
+        }
+        
+        let html = '';
+        resultados.slice(0, 8).forEach(clinica => {
+          const matchPercent = Math.round(clinica.score * 100);
+          html += `
+            <div class="autocomplete-item" onclick='seleccionarClinica(${JSON.stringify(clinica.nombre)}, "${clinica.grupo}")'>
+              <div class="autocomplete-item-nombre">${clinica.nombre}</div>
+              <div class="autocomplete-item-ciudad">📍 ${clinica.ciudad} • ${clinica.grupoNombre}</div>
+              <span class="autocomplete-match-score">${matchPercent}%</span>
+            </div>
+          `;
+        });
+        
+        html += '<div class="autocomplete-footer">⚡ Búsqueda en ' + (fin - inicio).toFixed(1) + 'ms • ' + resultados.length + ' resultados</div>';
+        
+        listElement.innerHTML = html;
+        listElement.classList.add('visible');
+      }, 150);
     }
     
     function seleccionarClinica(nombreClinica, grupoId) {
@@ -486,6 +722,7 @@
       statusMsg.innerHTML = '<div class="loading">⏳ Buscando planes...</div>';
       
       setTimeout(() => {
+        const inicioBusqueda = performance.now();
         const grupoData = REDES_CLINICAS[grupoId];
         
         if (!grupoData) {
@@ -493,7 +730,6 @@
           return;
         }
         
-        // Buscar planes que cubren este grupo
         const planesFiltrados = PLANES.filter(plan => 
           plan.coberturas_redes && plan.coberturas_redes[grupoId]
         );
@@ -503,7 +739,6 @@
           return;
         }
         
-        // Ordenar por valor y seleccionar 4 planes con coberturas diferentes
         const planesConValor = planesFiltrados.map(plan => ({
           ...plan,
           cobertura: plan.coberturas_redes[grupoId]
@@ -511,20 +746,17 @@
         
         planesConValor.sort((a, b) => a.pb_uf - b.pb_uf);
         
-        // Obtener 4 planes diferenciados por cobertura
         const planesSeleccionados = [];
         const coberturaUsadas = new Set();
         
         for (const plan of planesConValor) {
           if (planesSeleccionados.length >= 4) break;
-          
           if (!coberturaUsadas.has(plan.cobertura)) {
             coberturaUsadas.add(plan.cobertura);
             planesSeleccionados.push(plan);
           }
         }
         
-        // Si no hay 4 diferenciados, agregar más
         if (planesSeleccionados.length < 4) {
           for (const plan of planesConValor) {
             if (planesSeleccionados.length >= 4) break;
@@ -534,7 +766,10 @@
           }
         }
         
-        mostrarPlanesSeleccionados(nombreClinica, grupoId, grupoData, planesSeleccionados, statusMsg, resultados);
+        const finBusqueda = performance.now();
+        const tiempoTotal = finBusqueda - inicioBusqueda;
+        
+        mostrarPlanesSeleccionados(nombreClinica, grupoId, grupoData, planesSeleccionados, statusMsg, resultados, tiempoTotal);
       }, 300);
     }
     
@@ -542,7 +777,7 @@
     // MOSTRAR PLANES
     // ════════════════════════════════════════════════════════════════════════════
     
-    function mostrarPlanesSeleccionados(nombreClinica, grupoId, grupoData, planes, statusMsg, resultados) {
+    function mostrarPlanesSeleccionados(nombreClinica, grupoId, grupoData, planes, statusMsg, resultados, tiempoTotal) {
       statusMsg.innerHTML = '';
       
       let html = `
@@ -551,7 +786,13 @@
           <div class="clinica-ciudad">Red: ${grupoData.nombre}</div>
         </div>
         
-        <div class="resultado-titulo">📋 Planes Disponibles (${planes.length})</div>
+        <div class="search-metrics">
+          <div class="metric">Planes encontrados: <span>${planes.length}</span></div>
+          <div class="metric">Tiempo búsqueda: <span>${tiempoTotal.toFixed(1)}ms</span></div>
+          <div class="metric">Algoritmo: <span>Fuzzy + Índice</span></div>
+        </div>
+        
+        <div class="resultado-titulo">📋 Planes Disponibles</div>
         
         <div class="planes-grid">
       `;
@@ -568,90 +809,4 @@
           <div class="plan-card ${badge === 'secundario' ? 'secundario' : ''}">
             <div class="plan-badge ${badge}">${badgeText}</div>
             
-            <div class="plan-titulo">${plan.plan}</div>
-            
-            <div class="plan-info">
-              <div style="margin-bottom: 12px;">
-                <div class="plan-info-label">💰 Prima Base</div>
-                <div class="plan-info-value">${valorUF} UF</div>
-                <div style="color: #888; font-size: 0.85rem;">($${formatearNumero(valorCLP)} aprox.)</div>
-              </div>
-              
-              <div style="margin-bottom: 12px;">
-                <div class="plan-info-label">🏥 Cobertura en Red</div>
-                <div class="plan-info-value">${cobertura}%</div>
-              </div>
-              
-              <div style="margin-bottom: 12px;">
-                <div class="plan-info-label">🏨 Hospitalización</div>
-                <div class="plan-info-value">Incluida</div>
-              </div>
-              
-              <div style="margin-bottom: 12px;">
-                <div class="plan-info-label">🩺 Consulta Ambulatoria</div>
-                <div class="plan-info-value">${plan.consulta?.valor || 'Incluida'}</div>
-              </div>
-              
-              <div style="margin-bottom: 12px;">
-                <div class="plan-info-label">📋 Tope Anual</div>
-                <div class="plan-info-value amarillo">${plan.tope_anual_uf || 7000} UF</div>
-              </div>
-              
-              <div>
-                <div class="plan-info-label">Zona</div>
-                <div class="plan-info-value">${plan.zona || 'SANTIAGO'}</div>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-      
-      html += `
-        </div>
-        
-        <div class="botones-accion">
-          <button onclick="document.getElementById('clinicaBusqueda').value=''; document.getElementById('resultados').innerHTML='';">🔄 Nueva Búsqueda</button>
-          <button class="secundario" onclick="window.location.href='index.html';">📋 Ir a Cotizar</button>
-        </div>
-      `;
-      
-      resultados.innerHTML = html;
-    }
-    
-    function formatearNumero(num) {
-      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    }
-    
-    // ════════════════════════════════════════════════════════════════════════════
-    // EVENTOS
-    // ════════════════════════════════════════════════════════════════════════════
-    
-    window.addEventListener('DOMContentLoaded', cargarDatos);
-    
-    document.addEventListener('DOMContentLoaded', () => {
-      const input = document.getElementById('clinicaBusqueda');
-      
-      input.addEventListener('input', mostrarAutocomplete);
-      
-      input.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          const autocompleteList = document.getElementById('autocompleteList');
-          if (autocompleteList.classList.contains('visible')) {
-            const primerItem = autocompleteList.querySelector('.autocomplete-item');
-            if (primerItem) {
-              primerItem.click();
-            }
-          }
-        }
-      });
-      
-      // Cerrar autocomplete cuando hace click afuera
-      document.addEventListener('click', (e) => {
-        if (e.target !== input) {
-          document.getElementById('autocompleteList').classList.remove('visible');
-        }
-      });
-    });
-  </script>
-</body>
-</html>
+            <div class="plan-titulo">${plan.
