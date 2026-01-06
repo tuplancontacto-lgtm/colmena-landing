@@ -1225,7 +1225,7 @@ async function cargarRedesClinicas() {
 
 async function cargarPlanesRedesAcceso() {
   try {
-    const url = '/api/data';
+    const url = '/api/redes';
     const response = await fetch(url);
     PLANES_REDES_ACCESO = await response.json();
     console.log(`✅ Acceso a redes cargado`);
