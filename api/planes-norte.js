@@ -1,23 +1,20 @@
 export default function handler(req, res) {
   const data = {
-  "zona": "NORTE",
-  "planes_rm": [
-    {
-  "zona": "NORTE",
-  "planes_max": [
-    {
-      "nombre": "COLMENA MAX NORTE PF 1264040",
-      "pb_uf": 1.85,
-      "pb_clp": 73489,
-      "zona": "NORTE",
-      "tipo": "COLMENA MAX",
-      "hospitalizacion": "50% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n40% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
-      "coberturas_grupos": {},
-      "consulta_preferente": "50% Centros Médicos RedSalud, Integramédica, Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá.\n40% Clínica BUPA Antofagasta.",
-      "consulta_le": "0.35",
-      "tope_consulta_le_uf": 0.35,
-      "tope_anual_uf": 7500.0
-    },
+    "zona": "NORTE",
+    "planes_max": [
+      {
+        "nombre": "COLMENA MAX NORTE PF 1264040",
+        "pb_uf": 1.85,
+        "pb_clp": 73489,
+        "zona": "NORTE",
+        "tipo": "COLMENA MAX",
+        "hospitalizacion": "50% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago. \n40% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú).",
+        "coberturas_grupos": {},
+        "consulta_preferente": "50% Centros Médicos RedSalud, Integramédica, Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá.\n40% Clínica BUPA Antofagasta.",
+        "consulta_le": "0.35",
+        "tope_consulta_le_uf": 0.35,
+        "tope_anual_uf": 7500.0
+      },
     {
       "nombre": "COLMENA MAX NORTE PF 1264050",
       "pb_uf": 1.96,
@@ -369,22 +366,23 @@ export default function handler(req, res) {
       "tope_consulta_le_uf": 1.12,
       "tope_anual_uf": 7500.0
     },
-    {
-      "nombre": "COLMENA MAX NORTE PF 12610080",
-      "pb_uf": 3.78,
-      "pb_clp": 150157,
-      "zona": "NORTE",
-      "tipo": "COLMENA MAX",
-      "hospitalizacion": "100% BUPA Antofagasta, Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica Indisa (Providencia y Maipú). 100% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago 100% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú)",
-      "coberturas_grupos": {},
-      "consulta_preferente": "80% Centros Médicos RedSalud, Integramédica, Clínica BUPA Antofagasta, Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá.",
-      "consulta_le": "1.1500000000000006",
-      "tope_consulta_le_uf": 1.15,
-      "tope_anual_uf": 7500.0
-    }
-  ],
-  "total": 29,
-  "uf_valor": 39724.12
-}
-res.status(200).json(data);
+     {
+        "nombre": "COLMENA MAX NORTE PF 12610080",
+        "pb_uf": 3.78,
+        "pb_clp": 150157,
+        "zona": "NORTE",
+        "tipo": "COLMENA MAX",
+        "hospitalizacion": "100% BUPA Antofagasta, Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago, Clínica Indisa (Providencia y Maipú). 100% Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá, Clínica Dávila Recoleta, Clínica Dávila Vespucio, Clínica BUPA Santiago 100% BUPA Antofagasta, Clínica Indisa (Providencia y Maipú)",
+        "coberturas_grupos": {},
+        "consulta_preferente": "80% Centros Médicos RedSalud, Integramédica, Clínica BUPA Antofagasta, Clínica La Portada ACHS Salud, Clínica Atacama ACHS Salud, Clínica Andes Salud El Loa, Clínica Tarapacá.",
+        "consulta_le": "1.1500000000000006",
+        "tope_consulta_le_uf": 1.15,
+        "tope_anual_uf": 7500.0
+      }
+    ],
+    "total": 29,
+    "uf_valor": 39724.12
+  };
+  
+  res.status(200).json(data);
 }
