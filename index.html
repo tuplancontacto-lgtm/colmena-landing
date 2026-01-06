@@ -1225,7 +1225,7 @@ async function cargarRedesClinicas() {
 
 async function cargarPlanesRedesAcceso() {
   try {
-    const url = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/tarifario/planes_redes_acceso.json';
+    const url = '/api/data';
     const response = await fetch(url);
     PLANES_REDES_ACCESO = await response.json();
     console.log(`✅ Acceso a redes cargado`);
