@@ -1,7 +1,4 @@
 export default function handler(req, res) {
-  res.status(200).json({
-    ok: true,
-    mensaje: "Backend funcionando",
-    fecha: new Date().toISOString()
-  });
+  res.status(200).json({ mensaje: "API funcionando" });
 }
+
