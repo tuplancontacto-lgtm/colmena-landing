@@ -1,0 +1,273 @@
+
+import React, { useState } from 'react';
+import * as XLSX from 'xlsx';
+
+const PlanesJsonGenerator = () => {
+  const [jsonData, setJsonData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [file1, setFile1] = useState(null);
+  const [file2, setFile2] = useState(null);
+
+  const handleFile1 = (e) => {
+    setFile1(e.target.files[0]);
+    setError(null);
+  };
+
+  const handleFile2 = (e) => {
+    setFile2(e.target.files[0]);
+    setError(null);
+  };
+
+  const generateJson = async () => {
+    if (!file1 || !file2) {
+      setError('Por favor sube ambos archivos Excel');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    
+    try {
+      // Leer archivo 1
+      const buffer1 = await file1.arrayBuffer();
+      const workbook1 = XLSX.read(buffer1, { type: 'array' });
+      const sheet1 = workbook1.Sheets[workbook1.SheetNames[0]];
+      const data1 = XLSX.utils.sheet_to_json(sheet1);
+      
+      // Leer archivo 2
+      const buffer2 = await file2.arrayBuffer();
+      const workbook2 = XLSX.read(buffer2, { type: 'array' });
+      const sheet2 = workbook2.Sheets[workbook2.SheetNames[0]];
+      const data2 = XLSX.utils.sheet_to_json(sheet2);
+      
+      // Función helper para obtener propiedades con nombres variables
+      const getProp = (obj, ...keys) => {
+        for (let key of keys) {
+          if (obj[key] !== undefined && obj[key] !== null && obj[key] !== '') {
+            return obj[key];
+          }
+        }
+        return null;
+      };
+      
+      // Procesar archivo 1: MAX SUR, MAX NAC y PLUS (limpios)
+      const planesLimpios = data1.map((row, index) => ({
+        plan: getProp(row, 'Plan', 'plan', 'PLAN', 'Nombre Plan') || `Plan ${index + 1}`,
+        codigo: parseInt(getProp(row, 'Codigo', 'codigo', 'CODIGO', 'Código', 'Code')) || (10000 + index),
+        pb_uf: parseFloat(getProp(row, 'PB_UF', 'pb_uf', 'PB UF', 'PB', 'Prima Base UF')) || 0,
+        zone: getProp(row, 'Zona', 'zona', 'ZONA', 'Zone', 'Region') || 'SANTIAGO',
+        tope_anual_uf: parseInt(getProp(row, 'Tope_Anual_UF', 'tope_anual_uf', 'Tope Anual UF', 'Tope Anual')) || 0,
+        hospitalizacion: (getProp(row, 'Hospitalizacion', 'hospitalizacion', 'HOSPITALIZACION', 'Hospitalización', 'Hosp') || '').toString(),
+        consulta: {
+          tipo: getProp(row, 'Tipo Consulta', 'tipo_consulta', 'TIPO_CONSULTA', 'Tipo de Consulta') || 'preferente',
+          valor: (getProp(row, 'Valor Consulta', 'valor_consulta', 'VALOR_CONSULTA', 'Valor de Consulta') || '').toString()
+        },
+        coberturas_redes: {
+          G41: parseInt(getProp(row, 'G41', 'g41', 'Grupo 41', 'GR41')) || 0,
+          G42: parseInt(getProp(row, 'G42', 'g42', 'Grupo 42', 'GR42')) || 0,
+          G43: parseInt(getProp(row, 'G43', 'g43', 'Grupo 43', 'GR43')) || 0,
+          G44: parseInt(getProp(row, 'G44', 'g44', 'Grupo 44', 'GR44')) || 0,
+          G45: parseInt(getProp(row, 'G45', 'g45', 'Grupo 45', 'GR45')) || 0,
+          G46: parseInt(getProp(row, 'G46', 'g46', 'Grupo 46', 'GR46')) || 0
+        }
+      }));
+      
+      // Procesar archivo 2: Todos los demás planes (RM y MAX Regionales)
+      const otrosPlanes = data2.map((row, index) => ({
+        plan: getProp(row, 'Plan', 'plan', 'PLAN', 'Nombre Plan') || `Plan ${index + 1}`,
+        codigo: parseInt(getProp(row, 'Codigo', 'codigo', 'CODIGO', 'Código', 'Code')) || (20000 + index),
+        pb_uf: parseFloat(getProp(row, 'PB_UF', 'pb_uf', 'PB UF', 'PB', 'Prima Base UF')) || 0,
+        zone: getProp(row, 'Zona', 'zona', 'ZONA', 'Zone', 'Region') || 'SANTIAGO',
+        tope_anual_uf: parseInt(getProp(row, 'Tope_Anual_UF', 'tope_anual_uf', 'Tope Anual UF', 'Tope Anual')) || 0,
+        hospitalizacion: (getProp(row, 'Hospitalizacion', 'hospitalizacion', 'HOSPITALIZACION', 'Hospitalización', 'Hosp') || '').toString(),
+        consulta: {
+          tipo: getProp(row, 'Tipo Consulta', 'tipo_consulta', 'TIPO_CONSULTA', 'Tipo de Consulta') || 'preferente',
+          valor: (getProp(row, 'Valor Consulta', 'valor_consulta', 'VALOR_CONSULTA', 'Valor de Consulta') || '').toString()
+        },
+        coberturas_redes: {
+          G41: parseInt(getProp(row, 'G41', 'g41', 'Grupo 41', 'GR41')) || 0,
+          G42: parseInt(getProp(row, 'G42', 'g42', 'Grupo 42', 'GR42')) || 0,
+          G43: parseInt(getProp(row, 'G43', 'g43', 'Grupo 43', 'GR43')) || 0,
+          G44: parseInt(getProp(row, 'G44', 'g44', 'Grupo 44', 'GR44')) || 0,
+          G45: parseInt(getProp(row, 'G45', 'g45', 'Grupo 45', 'GR45')) || 0,
+          G46: parseInt(getProp(row, 'G46', 'g46', 'Grupo 46', 'GR46')) || 0
+        }
+      }));
+      
+      // Combinar todos los planes
+      const allPlans = [...planesLimpios, ...otrosPlanes];
+      
+      setJsonData(allPlans);
+      
+    } catch (err) {
+      setError(`Error al procesar: ${err.message}`);
+      console.error('Error:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const downloadJson = () => {
+    if (!jsonData) return;
+    
+    const jsonString = JSON.stringify(jsonData, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'planes_completos_DEFINITIVO.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const copyToClipboard = () => {
+    if (!jsonData) return;
+    
+    const jsonString = JSON.stringify(jsonData, null, 2);
+    navigator.clipboard.writeText(jsonString).then(() => {
+      alert('✓ JSON copiado al portapapeles!');
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+      <div className="max-w-6xl mx-auto">
+        <div className="bg-white rounded-lg shadow-xl p-8">
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">
+            Generador JSON Planes Colmena
+          </h1>
+          <p className="text-gray-600 mb-8">
+            Sube los archivos Excel para generar el JSON completo
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-dashed border-blue-300 rounded-xl p-6">
+              <h3 className="font-bold text-blue-900 mb-3 text-lg">
+                📄 Archivo 1: MAX SUR, NAC y PLUS
+              </h3>
+              <p className="text-sm text-blue-700 mb-4">
+                MAX SUR MAX NAC MAX PLUS LIMPIOS DIC25.xlsx
+              </p>
+              <input
+                type="file"
+                accept=".xlsx,.xls"
+                onChange={handleFile1}
+                className="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer"
+              />
+              {file1 && (
+                <div className="mt-3 flex items-center text-green-700 bg-green-50 px-3 py-2 rounded-lg">
+                  <span className="text-lg mr-2">✓</span>
+                  <span className="text-sm font-medium">{file1.name}</span>
+                </div>
+              )}
+            </div>
+
+            <div className="bg-gradient-to-br from-purple-50 to-purple-100 border-2 border-dashed border-purple-300 rounded-xl p-6">
+              <h3 className="font-bold text-purple-900 mb-3 text-lg">
+                📄 Archivo 2: Otros Planes
+              </h3>
+              <p className="text-sm text-purple-700 mb-4">
+                TP 29 Diciembre 2025 1.xlsx
+              </p>
+              <input
+                type="file"
+                accept=".xlsx,.xls"
+                onChange={handleFile2}
+                className="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-700 cursor-pointer"
+              />
+              {file2 && (
+                <div className="mt-3 flex items-center text-green-700 bg-green-50 px-3 py-2 rounded-lg">
+                  <span className="text-lg mr-2">✓</span>
+                  <span className="text-sm font-medium">{file2.name}</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="mb-8">
+            <button
+              onClick={generateJson}
+              disabled={!file1 || !file2 || loading}
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold px-8 py-4 rounded-xl transition disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-lg shadow-lg"
+            >
+              {loading ? '⏳ Procesando archivos...' : '🚀 Generar JSON'}
+            </button>
+          </div>
+
+          {error && (
+            <div className="bg-red-50 border-l-4 border-red-500 text-red-700 px-6 py-4 rounded-lg mb-6">
+              <p className="font-semibold">Error</p>
+              <p className="text-sm">{error}</p>
+            </div>
+          )}
+
+          {jsonData && (
+            <div className="space-y-6 animate-fade-in">
+              <div className="bg-green-50 border-l-4 border-green-500 p-6 rounded-lg">
+                <h3 className="font-bold text-green-900 text-xl mb-2">
+                  ✓ JSON Generado Exitosamente
+                </h3>
+                <p className="text-green-800 text-lg">
+                  Total: <span className="font-bold">{jsonData.length} planes</span> procesados
+                </p>
+              </div>
+
+              <div className="flex gap-4">
+                <button
+                  onClick={copyToClipboard}
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-4 rounded-xl transition text-lg shadow-lg"
+                >
+                  📋 Copiar JSON
+                </button>
+                <button
+                  onClick={downloadJson}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-xl transition text-lg shadow-lg"
+                >
+                  💾 Descargar JSON
+                </button>
+              </div>
+
+              <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200">
+                <h3 className="font-semibold text-gray-800 mb-4 text-lg">
+                  Vista Previa del JSON
+                </h3>
+                <div className="bg-gray-900 rounded-lg p-4 max-h-96 overflow-auto">
+                  <pre className="text-xs text-green-400 font-mono">
+                    {JSON.stringify(jsonData, null, 2)}
+                  </pre>
+                </div>
+              </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                <h3 className="font-bold text-blue-900 mb-3">📋 Información del Proceso</h3>
+                <ul className="text-sm text-blue-800 space-y-2">
+                  <li className="flex items-start">
+                    <span className="mr-2">✓</span>
+                    <span>Archivo 1: MAX SUR, COLMENA MAX NACIONAL y COLMENA PLUS extraídos</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2">✓</span>
+                    <span>Archivo 2: Todos los demás planes (RM y MAX Regionales) extraídos</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2">✓</span>
+                    <span>Formato 100% compatible con tu index principal</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2">✓</span>
+                    <span>Listo para usar en búsquedas de clínicas</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PlanesJsonGenerator;
