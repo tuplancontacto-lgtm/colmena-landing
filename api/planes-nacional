@@ -743,6 +743,6 @@ export default function handler(req, res) {
   "total": 47,
   "uf_valor": 39724.12
   }
-
+],
   res.status(200).json(data);
   }
