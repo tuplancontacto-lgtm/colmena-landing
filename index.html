@@ -333,46 +333,69 @@ window.addEventListener('DOMContentLoaded', function() {
 </footer>
 
 <script>
-const ASESORES = {
-  jose_pepe: {
-    nombre: "Jose Pepe",
-    telefono: "+56990701837",
-    whatsapp: "56990701837",
-    callmebot_apikey: "5088331",
-    correo: "voz.josemora@gmail.com"
-  },
-
-  jose_mora: {
-    nombre: "Jose Mora",
-    telefono: "+56975356696",
-    whatsapp: "56975356696",
-    callmebot_apikey: "7360481",
-    correo: "jose.mora@colmena.cl"
-  }
-};
+let ASESORES = {};
+let asesor = {};
+let WHATSAPP_ASESORIA = "";
+let CALLMEBOT_PHONE = "";
+let CALLMEBOT_APIKEY = "";
+let ASESOR_NOMBRE = "";
+let ASESOR_TELEFONO = "";
+let ASESOR_CORREO = "";
 
 function getQueryParam(param) {
   const params = new URLSearchParams(window.location.search);
   return params.get(param);
 }
 
-const asesorKey = getQueryParam("asesor") || "jose_mora";
-const asesor = ASESORES[asesorKey] || ASESORES["jose_mora"];
+// Cargar asesores desde la API
+async function cargarAsesores() {
+  try {
+    const response = await fetch('/api/asesores');
+    if (!response.ok) {
+      throw new Error('Error al cargar asesores');
+    }
+    ASESORES = await response.json();
+    console.log('✅ Asesores cargados correctamente:', ASESORES);
+    
+    // Inicializar variables del asesor
+    inicializarAsesor();
+  } catch (error) {
+    console.error('❌ Error cargando asesores:', error);
+  }
+}
 
-const WHATSAPP_ASESORIA = asesor.whatsapp;
-const CALLMEBOT_PHONE = asesor.whatsapp;
-const CALLMEBOT_APIKEY = asesor.callmebot_apikey;
-const ASESOR_NOMBRE = asesor.nombre;
-const ASESOR_TELEFONO = asesor.telefono;
-const ASESOR_CORREO = asesor.correo;
+function inicializarAsesor() {
+  const asesorKey = getQueryParam("asesor") || "jose_mora";
+  asesor = ASESORES[asesorKey] || ASESORES["jose_mora"];
+  
+  WHATSAPP_ASESORIA = asesor.whatsapp;
+  CALLMEBOT_PHONE = asesor.whatsapp;
+  CALLMEBOT_APIKEY = asesor.callmebot_apikey;
+  ASESOR_NOMBRE = asesor.nombre;
+  ASESOR_TELEFONO = asesor.telefono;
+  ASESOR_CORREO = asesor.correo;
+  
+  console.log('✅ Asesor seleccionado:', ASESOR_NOMBRE);
+  
+  // Actualizar botón de WhatsApp
+  actualizarBotonWhatsApp();
+}
 
-window.addEventListener("DOMContentLoaded", function() {
+function actualizarBotonWhatsApp() {
   const btnWA = document.getElementById("btnWAAsesor");
   if (btnWA) {
     btnWA.href = `https://wa.me/${WHATSAPP_ASESORIA}`;
     btnWA.innerText = `Contactar a ${ASESOR_NOMBRE} por WhatsApp`;
   }
-});
+}
+
+// Cargar asesores cuando la página esté lista
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', cargarAsesores);
+} else {
+  cargarAsesores();
+}
+</script>
 
 const FORM_BASE_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/formResponse';
 
