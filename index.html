@@ -1473,20 +1473,6 @@ function generarHTMLGrupoDesplegable(grupo, porcentaje, clinicas, nombreClinicaB
     </div>
   `;
 }
-function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = [], nombreClinicaBuscada = '') {
-  if (!plan) return '';
-  
-  const uf = window.__UF_VALOR || 39700;
-  const tipoLabel = numero % 2 === 1 ? '🏥 REGIONAL' : '🌍 NACIONAL';
-  
-  // Calcular Valor Adicional
-  const valorAdicionalCLP = Math.max(0, plan.valorCalculadoCLP - sieteCLP);
-  const valorAdicionalUF = Math.max(0, plan.valorCalculadoUF - sieteUF);
-  
-  // Información de cargas
-  const cargasInfo = edadesCargas.length > 0 ? `${edadesCargas.length} (${edadesCargas.join(', ')})` : '0';
-  
-// ===== UTILIDADES (UNA SOLA VEZ, ARRIBA DEL ARCHIVO) =====
 function normalizar(texto) {
   return texto
     .toUpperCase()
@@ -1500,9 +1486,7 @@ function obtenerCodigoPlan(nombrePlan) {
   if (!PLANES_CODIGOS || Object.keys(PLANES_CODIGOS).length === 0) {
     return '';
   }
-
   const nombre = normalizar(nombrePlan);
-
   for (const [codigo, data] of Object.entries(PLANES_CODIGOS)) {
     if (normalizar(data.nombre) === nombre) {
       return codigo;
@@ -1511,56 +1495,38 @@ function obtenerCodigoPlan(nombrePlan) {
   return '';
 }
 
-// ===== FLUJO CORRECTO (OBLIGATORIO) =====
-async function iniciarApp() {
-  await cargarPlanesCodigosJSON();   // ⬅️ ESPERAR SÍ O SÍ
-
-  // ⬇️ TODO lo que renderiza planes VA AQUÍ DENTRO
-  PLANES.forEach(plan => {
-
-    const codigoPlan = obtenerCodigoPlan(plan.nombre);
-    const nombreConCodigo = codigoPlan
-      ? `${plan.nombre} (${codigoPlan})`
-      : plan.nombre;
-
-    // EJEMPLO DE USO (ajusta a tu render real)
-    console.log('PLAN FINAL:', nombreConCodigo);
-
-    // Extraer porcentaje de hospitalización
-    let porcentajeHosp = null;
-    if (plan.hospitalizacion) {
-      const match = plan.hospitalizacion.match(/(\d+)%/);
-      if (match) {
-        porcentajeHosp = parseInt(match[1], 10);
-      }
-    }
-
-    // aquí sigue tu render HTML normal…
-  });
-}
-
-// ===== ARRANQUE ÚNICO =====
-iniciarApp();
-
-
-
+function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = [], nombreClinicaBuscada = '') {
+  if (!plan) return '';
   
-  // Procesar hospitalización
+  const uf = window.__UF_VALOR || 39700;
+  const tipoLabel = numero % 2 === 1 ? '🏥 REGIONAL' : '🌍 NACIONAL';
+  
+  const valorAdicionalCLP = Math.max(0, plan.valorCalculadoCLP - sieteCLP);
+  const valorAdicionalUF = Math.max(0, plan.valorCalculadoUF - sieteUF);
+  const cargasInfo = edadesCargas.length > 0 ? `${edadesCargas.length} (${edadesCargas.join(', ')})` : '0';
+  
+  const codigoPlan = obtenerCodigoPlan(plan.nombre);
+  const nombreConCodigo = codigoPlan ? `${plan.nombre} (${codigoPlan})` : plan.nombre;
+  
+  let porcentajeHosp = null;
+  if (plan.hospitalizacion) {
+    const match = plan.hospitalizacion.match(/(\d+)%/);
+    if (match) {
+      porcentajeHosp = parseInt(match[1], 10);
+    }
+  }
+  
   let hospitalizacionHTML = '';
   const gruposYPorcentajes = extraerGruposYPorcentajes(plan.hospitalizacion);
   
   if (gruposYPorcentajes) {
-    // Es texto con grupos (G41-G46, GS1-GS4)
     hospitalizacionHTML = `<div style="margin-top: 12px;">`;
-    
-    // Ordenar grupos
     const gruposOrdenados = Object.keys(gruposYPorcentajes).sort();
     
     for (const grupo of gruposOrdenados) {
       const porcentaje = gruposYPorcentajes[grupo];
       const clinicas = obtenerClinicasDelPlan(plan.nombre, plan.zona);
       
-      // Filtrar clínicas para este grupo específico
       const clinicasGrupo = clinicas.filter(c => 
         PLANES_CLINICAS_REDES[grupo] && 
         PLANES_CLINICAS_REDES[grupo].length > 0 &&
@@ -1576,11 +1542,9 @@ iniciarApp();
     
     hospitalizacionHTML += `</div>`;
   } else {
-    // Es texto con clínicas específicas
     if (plan.hospitalizacion) {
       let hospText = plan.hospitalizacion;
       
-      // Resaltar clínica favorita en dorado
       if (nombreClinicaBuscada) {
         const regex = new RegExp(`(${nombreClinicaBuscada})`, 'gi');
         hospText = hospText.replace(regex, '<span style="color: #d4af37; font-weight: bold;">$1</span>');
@@ -1649,6 +1613,7 @@ iniciarApp();
     </div>
   `;
 }
+
 function inicializarBusquedaClinica() {
   const btnBuscar = document.getElementById("btnBuscarClinica");
   if (btnBuscar) {
