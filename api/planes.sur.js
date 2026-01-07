@@ -1,4 +1,4 @@
-export default function handler(req, res) {
+  export default function handler(req, res) {
   const data = {
     "zona": "SUR",
     "planes_max": [
@@ -380,7 +380,7 @@ export default function handler(req, res) {
         "tope_consulta_le_uf": 1.0,
         "tope_anual_uf": 7500.0
       }
-    ],
+  ],
     "total": 21,
     "uf_valor": 39724.12
   };
