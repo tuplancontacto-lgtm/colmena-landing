@@ -1,0 +1,23 @@
+# Variables de entorno
+.env.local
+.env*.local
+
+# Vercel
+.vercel
+
+# Node modules (si usas)
+node_modules/
+```
+
+3. **Guarda el archivo**
+
+---
+
+**Tu estructura ahora debe verse así:**
+```
+tu-proyecto/
+├── api/
+├── index.html
+├── .env.local
+├── .gitignore        ← Actualizado o nuevo
+└── otros archivos...
