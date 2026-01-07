@@ -365,7 +365,7 @@ async function cargarAsesores() {
 }
 
 function inicializarAsesor() {
-  const asesorKey = getQueryParam("asesor") || "jose_mora";
+  asesorKey = getQueryParam("asesor") || "jose_mora";
   asesor = ASESORES[asesorKey] || ASESORES["karina_gonzalez"];
    
   // Verificar que el asesor existe
@@ -373,12 +373,15 @@ function inicializarAsesor() {
     console.error('❌ No se encontró ningún asesor');
     return;
   }
-  WHATSAPP_ASESORIA = asesor.whatsapp;
-  CALLMEBOT_PHONE = asesor.whatsapp;
-  CALLMEBOT_APIKEY = asesor.callmebot_apikey;
-  ASESOR_NOMBRE = asesor.nombre;
-  ASESOR_TELEFONO = asesor.telefono;
-  ASESOR_CORREO = asesor.correo;
+let ASESORES = {};
+let asesor = {};
+let asesorKey = "";
+let WHATSAPP_ASESORIA = "";
+let CALLMEBOT_PHONE = "";
+let CALLMEBOT_APIKEY = "";
+let ASESOR_NOMBRE = "";
+let ASESOR_TELEFONO = "";
+let ASESOR_CORREO = "";
   
   console.log('✅ Asesor seleccionado:', ASESOR_NOMBRE);
   
