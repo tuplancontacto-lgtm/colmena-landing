@@ -546,30 +546,53 @@ async function cargarPlanes() {
       }
     }
     
-   let PLANES_CODIGOS = {};
+  let PLANES_CODIGOS = {};
 
-  async function cargarPlanesCodigosJSON() {
+async function cargarPlanesCodigosJSON() {
   try {
     const res = await fetch('data/tarifario/planes_codigos.json');
     PLANES_CODIGOS = await res.json();
     console.log('✅ Códigos de planes cargados');
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error cargando códigos:', error);
   }
 }
 
-  console.log(`✅ TOTAL: ${PLANES.length} planes cargados desde GitHub`);
+async function cargarPlanes() {
+  try {
+    PLANES = [];
+    
+    for (const [zona, url] of Object.entries(URLS_PLANES)) {
+      try {
+        console.log(`Cargando ${zona} desde GitHub...`);
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        
+        const data = await response.json();
+        let planes = data.planes_rm || data.planes_max || [];
+        
+        PLANES = PLANES.concat(planes);
+        console.log(`✅ ${zona}: ${planes.length} planes cargados`);
+        
+      } catch (error) {
+        console.error(`❌ Error cargando ${zona}:`, error);
+      }
+    }
+    
+    console.log(`✅ TOTAL: ${PLANES.length} planes cargados desde GitHub`);
     
   } catch (error) {
     console.error('Error en cargarPlanes:', error);
     PLANES = [];
   }
 }
-  
+
 function formatearCLP(n) {
   return (n || 0).toLocaleString("es-CL");
 }
-
 function calcularValorPlan(pbUF, edadTitular, edadesCargas) {
   const uf = window.__UF_VALOR || 39700;
   
