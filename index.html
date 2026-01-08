@@ -833,17 +833,28 @@ function buscarPlanesEnClinica(nombreClinica) {
 // =============================================
 // FUNCIÓN CALLMEBOT
 // =============================================
-async function enviarCallMeBot(mensaje) {
-  if (!CALLMEBOT_APIKEY || CALLMEBOT_APIKEY === "PENDIENTE") {
-    console.warn('CallMeBot no configurado para este asesor');
-    return;
-  }
+async function enviarLead(mensaje) {
   try {
-    const url = `https://api.callmebot.com/whatsapp.php?phone=${CALLMEBOT_PHONE}&text=${encodeURIComponent(mensaje)}&apikey=${CALLMEBOT_APIKEY}`;
-    await fetch(url, { mode: 'no-cors' });
-    console.log('CallMeBot enviado');
+    const response = await fetch('/api/enviar-lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        asesor: asesorKey,
+        mensaje: mensaje
+      })
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      console.error('Error API:', result);
+      alert('Error enviando la solicitud');
+      return;
+    }
+
+    console.log('✅ Lead enviado al asesor');
   } catch (err) {
-    console.error('Error CallMeBot:', err);
+    console.error('Error enviando lead:', err);
   }
 }
 
