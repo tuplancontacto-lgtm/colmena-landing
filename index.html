@@ -435,85 +435,95 @@ function cargarUF() {
     });
 }
 
-async function cargarPlanesCodigosJSON() {
+async function cargarPlanes(zona) {
   try {
-    const res = await fetch('data/tarifario/planes_codigos.json');
-    PLANES_CODIGOS = await res.json();
-    console.log('✅ Códigos de planes cargados');
-  } catch (error) {
-    console.error('Error cargando códigos:', error);
+    const response = await fetch(`/api/planes-${zona.toLowerCase()}`);
+    if (!response.ok) throw new Error('API error');
+
+    const data = await response.json();
+
+    PLANES.length = 0;
+    PLANES.push(...data.planes);
+
+    console.log(`✅ ${data.total} planes cargados para ${zona}`);
+  } catch (e) {
+    console.error('Error cargando planes:', e);
   }
 }
+
 
 async function cargarPlanes() {
   try {
     PLANES = [];
+
     for (const [zona, url] of Object.entries(URLS_PLANES)) {
       try {
         console.log(`Cargando ${zona} desde API...`);
+
         const response = await fetch(url);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
         const data = await response.json();
-        
-        // Seleccionar el key correcto según la zona
-        let planes = [];
-        if (zona === 'METROPOLITANA') {
-          planes = data.planes_rm || [];
-        } else if (zona === 'VALPARAISO') {
-          planes = data.planes_valparaiso || [];
-        } else if (zona === 'NORTE') {
-          planes = data.planes_norte || data.planes_max || [];
-        } else if (zona === 'SUR') {
-          planes = data.planes_sur || data.planes_max || [];
-        } else {
-          planes = data.planes_rm || data.planes_max || data.planes || [];
+
+        if (!Array.isArray(data.planes)) {
+          throw new Error(`Respuesta inválida para ${zona}`);
         }
-        
-        PLANES = PLANES.concat(planes);
-        console.log(`✅ ${zona}: ${planes.length} planes cargados`);
+
+        PLANES = PLANES.concat(data.planes);
+        console.log(`✅ ${zona}: ${data.planes.length} planes cargados`);
+
       } catch (error) {
         console.error(`❌ Error cargando ${zona}:`, error);
       }
     }
+
     console.log(`✅ TOTAL: ${PLANES.length} planes cargados`);
+
   } catch (error) {
-    console.error('Error en cargarPlanes:', error);
+    console.error('Error general en cargarPlanes:', error);
     PLANES = [];
   }
 }
+
   
 async function cargarRedesClinicas() {
   try {
-    const url = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/redes_clinicas.json';
-    const response = await fetch(url);
+    const response = await fetch('/api/redes-clinicas');
+    if (!response.ok) throw new Error('Error API redes clínicas');
+
     REDES_CLINICAS = await response.json();
-    console.log('✅ Redes clínicas cargadas');
+    console.log('✅ Redes clínicas cargadas desde API');
   } catch (error) {
-    console.error('Error cargando redes:', error);
+    console.error('❌ Error cargando redes clínicas:', error);
   }
 }
+
 
 async function cargarPlanesRedesAcceso() {
   try {
-    const url = '/api/redes';
-    const response = await fetch(url);
+    const response = await fetch('/api/redes');
+    if (!response.ok) throw new Error('Error API redes');
+
     PLANES_REDES_ACCESO = await response.json();
     console.log('✅ Acceso a redes cargado');
   } catch (error) {
-    console.error('Error cargando acceso a redes:', error);
+    console.error('❌ Error cargando acceso a redes:', error);
   }
 }
 
+
 async function cargarPlanesClinicasRedes() {
   try {
-    const url = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/data/tarifario/planes_clinicas_redes.json';
-    const response = await fetch(url);
+    const response = await fetch('/api/planes-clinicas-redes');
+    if (!response.ok) throw new Error('Error API clínicas-redes');
+
     PLANES_CLINICAS_REDES = await response.json();
-    console.log('✅ Clínicas de redes cargadas');
+    console.log('✅ Clínicas de redes cargadas desde API');
   } catch (error) {
-    console.error('Error cargando clínicas de redes:', error);
+    console.error('❌ Error cargando clínicas de redes:', error);
   }
 }
+
 
 // =============================================
 // FUNCIONES DE CÁLCULO
