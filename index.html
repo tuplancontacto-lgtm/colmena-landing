@@ -107,8 +107,6 @@
 </style>
 
 <script>
-const API_URL = 'https://colmena-backend-v2-prod.vercel.app/api';
-
 function obtenerSlugDeLaURL() {
   const path = window.location.pathname;
   const partes = path.split('/');
@@ -117,48 +115,40 @@ function obtenerSlugDeLaURL() {
 
 async function validarAsesor() {
   const slug = obtenerSlugDeLaURL();
+
   if (!slug || slug === '' || slug.includes('.html')) {
     document.getElementById('modal-validacion').classList.add('oculto');
     return;
   }
+
   try {
-    const response = await fetch(`${API_URL}/asesores/${slug}`);
-    const data = await response.json();
-    if (data.valid) {
-      document.getElementById('success-modal').textContent = `✅ ¡Bienvenido ${data.asesor.nombre}!`;
-      document.getElementById('success-modal').style.display = 'block';
-      sessionStorage.setItem('asesor_slug', slug);
-      sessionStorage.setItem('asesor_nombre', data.asesor.nombre);
-      document.getElementById('modal-validacion').style.background = 'rgba(74, 222, 128, 0.15)';
-      document.getElementById('modal-validacion').style.borderColor = '#4ade80';
-      setTimeout(() => {
-        document.getElementById('modal-validacion').classList.add('oculto');
-        registrarAcceso(slug);
-      }, 10000);
-    } else {
-      document.getElementById('error-modal').textContent = `❌ ${data.error || 'Acceso no disponible'}`;
-      document.getElementById('error-modal').style.display = 'block';
-    }
+    const response = await fetch(`/api/asesores?id=${slug}`);
+    if (!response.ok) throw new Error('Asesor no válido');
+
+    const asesor = await response.json();
+
+    document.getElementById('success-modal').textContent =
+      `✅ ¡Bienvenido ${asesor.nombre}!`;
+    document.getElementById('success-modal').style.display = 'block';
+
+    sessionStorage.setItem('asesor_slug', slug);
+    sessionStorage.setItem('asesor_nombre', asesor.nombre);
+
+    document.getElementById('modal-validacion').style.background =
+      'rgba(74, 222, 128, 0.15)';
+    document.getElementById('modal-validacion').style.borderColor = '#4ade80';
+
+    setTimeout(() => {
+      document.getElementById('modal-validacion').classList.add('oculto');
+    }, 6000);
+
   } catch (error) {
+    console.warn('Acceso no válido');
     document.getElementById('modal-validacion').classList.add('oculto');
   }
 }
 
-async function registrarAcceso(slug) {
-  try {
-    await fetch(`${API_URL}/asesores/${slug}/registrar-acceso`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ cliente_nombre: 'visitante', cliente_email: null })
-    });
-  } catch (error) {
-    console.error('Error registrando acceso:', error);
-  }
-}
-
-window.addEventListener('DOMContentLoaded', function() {
-  validarAsesor();
-});
+window.addEventListener('DOMContentLoaded', validarAsesor);
 </script>
 
 <header>
