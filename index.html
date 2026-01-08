@@ -385,16 +385,30 @@ let PLANES_REDES_ACCESO = {};
 let PLANES_CLINICAS_REDES = {};
 
 const REGION_A_ZONA = {
-  'Arica y Parinacota': 'NORTE', 'Tarapaca': 'NORTE', 'Antofagasta': 'NORTE',
-  'Atacama': 'NORTE', 'Coquimbo': 'NORTE', 'Valparaiso': 'CENTRO',
-  "O'Higgins": 'SUR', 'Maule': 'SUR', 'Metropolitana': 'SANTIAGO',
-  'Nuble': 'SUR', 'Bio-Bio': 'SUR', 'La Araucania': 'SUR',
-  'Los Rios': 'SUR', 'Los Lagos': 'SUR', 'Aysen': 'SUR', 'Magallanes': 'SUR'
+  'Arica y Parinacota': 'NORTE',
+  'Tarapaca': 'NORTE',
+  'Antofagasta': 'NORTE',
+  'Atacama': 'NORTE',
+  'Coquimbo': 'NORTE',
+  'Valparaiso': 'VALPARAISO',
+  "O'Higgins": 'VALPARAISO',
+  'Maule': 'SUR',
+  'Metropolitana': 'METROPOLITANA',
+  'Nuble': 'SUR',
+  'Bio-Bio': 'SUR',
+  'La Araucania': 'SUR',
+  'Los Rios': 'SUR',
+  'Los Lagos': 'SUR',
+  'Aysen': 'SUR',
+  'Magallanes': 'SUR'
 };
 
 const URLS_PLANES = {
-  'CENTRO': '/api/planes-centro', 'NACIONAL': '/api/planes-nacional',
-  'NORTE': '/api/planes-norte', 'SUR': '/api/planes-sur'
+  'METROPOLITANA': '/api/planes-metropolitana',
+  'VALPARAISO': '/api/planes-valparaiso',
+  'NACIONAL': '/api/planes-nacional',
+  'NORTE': '/api/planes-norte',
+  'SUR': '/api/planes-sur'
 };
 
 // =============================================
@@ -436,24 +450,38 @@ async function cargarPlanes() {
     PLANES = [];
     for (const [zona, url] of Object.entries(URLS_PLANES)) {
       try {
-        console.log(`Cargando ${zona} desde GitHub...`);
+        console.log(`Cargando ${zona} desde API...`);
         const response = await fetch(url);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
-        let planes = data.planes_rm || data.planes_max || [];
+        
+        // Seleccionar el key correcto según la zona
+        let planes = [];
+        if (zona === 'METROPOLITANA') {
+          planes = data.planes_rm || [];
+        } else if (zona === 'VALPARAISO') {
+          planes = data.planes_valparaiso || [];
+        } else if (zona === 'NORTE') {
+          planes = data.planes_norte || data.planes_max || [];
+        } else if (zona === 'SUR') {
+          planes = data.planes_sur || data.planes_max || [];
+        } else {
+          planes = data.planes_rm || data.planes_max || data.planes || [];
+        }
+        
         PLANES = PLANES.concat(planes);
         console.log(`✅ ${zona}: ${planes.length} planes cargados`);
       } catch (error) {
         console.error(`❌ Error cargando ${zona}:`, error);
       }
     }
-    console.log(`✅ TOTAL: ${PLANES.length} planes cargados desde GitHub`);
+    console.log(`✅ TOTAL: ${PLANES.length} planes cargados`);
   } catch (error) {
     console.error('Error en cargarPlanes:', error);
     PLANES = [];
   }
 }
-
+  
 async function cargarRedesClinicas() {
   try {
     const url = 'https://raw.githubusercontent.com/tuplancontacto-lgtm/colmena-landing/main/redes_clinicas.json';
