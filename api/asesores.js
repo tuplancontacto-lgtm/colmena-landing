@@ -1,3 +1,4 @@
+
 module.exports = function handler(req, res) {
   // Habilitar CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
