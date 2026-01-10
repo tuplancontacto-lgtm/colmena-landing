@@ -1,0 +1,18 @@
+{
+  "name": "colmena-landing",
+  "version": "1.0.0",
+  "type": "commonjs"
+}
+```
+
+---
+
+## Opción 2: Verificar `vercel.json`
+
+¿Tienes un archivo `vercel.json` en tu repositorio? Si existe, compárteme su contenido porque puede estar causando conflicto.
+
+---
+
+## 🧪 Mientras tanto, prueba la URL correcta:
+```
+https://tuplanisapre.vercel.app/api/asesores
