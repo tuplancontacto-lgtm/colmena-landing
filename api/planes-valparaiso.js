@@ -1,7 +1,7 @@
 module.exports = async function handler(req, res) {
   const data = {
     "zona": "VALPARAISO",
-    "planes_valparaiso": [
+    "planes": [
         {
             "nombre": "COLMENA MAX CENTRO PF 1264040",
             "pb_uf": 1.72,
