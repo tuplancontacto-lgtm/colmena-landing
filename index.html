@@ -381,7 +381,7 @@ const REGION_A_ZONA = {
   'Atacama': 'NORTE',
   'Coquimbo': 'NORTE',
   'Valparaiso': 'VALPARAISO',
-  "O'Higgins": 'VALPARAISO',
+  'O'Higgins': 'VALPARAISO',
   'Maule': 'SUR',
   'Metropolitana': 'METROPOLITANA',
   'Nuble': 'SUR',
@@ -429,32 +429,24 @@ async function cargarPlanes(zona) {
   try {
     const response = await fetch(`/api/planes-${zona.toLowerCase()}`);
     if (!response.ok) throw new Error('API error');
-
     const data = await response.json();
-
     PLANES.length = 0;
     PLANES.push(...data.planes);
-
     console.log(`✅ ${data.total} planes cargados para ${zona}`);
   } catch (e) {
     console.error('Error cargando planes:', e);
   }
 }
 
-
 async function cargarPlanes() {
   try {
     PLANES = [];
-
     for (const [zona, url] of Object.entries(URLS_PLANES)) {
       try {
         console.log(`Cargando ${zona} desde API...`);
-
         const response = await fetch(url);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
         const data = await response.json();
-
         if (!Array.isArray(data.planes)) {
           throw new Error(`Respuesta inválida para ${zona}`);
         }
@@ -1021,7 +1013,7 @@ function recalcularConAdicional() {
 // =============================================
 // EVENT LISTENERS - BOTONES
 // =============================================
-document.getElementById("btnAsesoria").addEventListener("click", function() {
+document.getElementById("btnAsesoria").addEventListener("click", async function() {
   if (!formularioDatos || !formularioDatos.nombre) { alert("Primero completa y envia la cotizacion."); return; }
   const r = ultimoResultado;
   const plan1Nombre = r.plan1 ? r.plan1.nombre : '-';
@@ -1032,7 +1024,7 @@ document.getElementById("btnAsesoria").addEventListener("click", function() {
   const tieneAdicional = r.montoAdicional && r.montoAdicional > 0;
   const textoAdicional = tieneAdicional ? `Aporte adicional: $${formatearCLP(r.montoAdicional)}\n- Presupuesto total: $${formatearCLP(r.presupuestoTotalCLP)} (${r.presupuestoTotalUF.toFixed(2)} UF)` : '';
   const mensaje = `SOLICITUD DE ASESORIA\n\nDatos del cliente:\n- Nombre: ${formularioDatos.nombre}\n- Correo: ${formularioDatos.correo}\n- RUT: ${formularioDatos.rut}\n- Telefono: ${formularioDatos.telefono}\n- Edad: ${formularioDatos.edad} anos\n- Isapre actual: ${formularioDatos.isapre}\n- Region: ${formularioDatos.region} (${r.zona})\n- Renta: $${formatearCLP(Number(formularioDatos.renta))}\n- Cargas: ${cargasInfo}\n\nCotizacion:\n- Tu 7%: $${formatearCLP(r.sieteCLP)} (${r.sieteUF.toFixed(2)} UF)\n${textoAdicional}\n\nPlanes sugeridos:\n1) ${plan1Nombre} -> ${plan1Valor}\n2) ${plan2Nombre} -> ${plan2Valor}\n\nSOLICITA CONTACTO URGENTE`;
-  await enviarLead(msgWA);
+  await enviarLead(mensaje);
   alert("Solicitud enviada. Un asesor te contactara a la brevedad.");
   document.getElementById("seccionBusquedaClinica").style.display = "block";
   document.getElementById("referidos").style.display = "block";
