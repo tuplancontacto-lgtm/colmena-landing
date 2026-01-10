@@ -1,4 +1,4 @@
-  export default function handler(req, res) {
+  module.exports = async function handler(req, res) {
   const data = {
     "zona": "SUR",
     "planes_max": [
