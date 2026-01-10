@@ -1,7 +1,7 @@
  module.exports = function handler(req, res) {
   const data = {
   "zona": "METROPOLITANA",
-  "planes_rm": [
+  "planes": [
     {
       "nombre": "COLMENA STAR 1264040",
       "pb_uf": 1.19,
@@ -3257,5 +3257,6 @@
   "total": 228,
   "uf_valor": 39724.12
 }
-res.status(200).json(data);
-}
+module.exports = function handler(req, res) {
+  res.status(200).json(data);
+};
