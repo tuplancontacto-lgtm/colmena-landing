@@ -1,4 +1,4 @@
-module.exports = async function handler(req, res) {
+module.exports = function handler(req, res) {
   const data = {
     "zona": "VALPARAISO",
     "planes": [
