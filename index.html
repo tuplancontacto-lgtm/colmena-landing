@@ -1037,7 +1037,7 @@ document.getElementById("btnBuscarClinicaDesdeResultados").addEventListener("cli
   setTimeout(() => { document.getElementById("seccionBusquedaClinica").scrollIntoView({ behavior: "smooth" }); }, 100);
 });
 
-document.getElementById("btnEnviarUsuario").addEventListener("click", function() {
+document.getElementById("btnEnviarUsuario").addEventListener("click", async function() {
   if (!formularioDatos || !formularioDatos.nombre) { alert("Primero completa y envia la cotizacion."); return; }
   const r = ultimoResultado;
   const plan1Nombre = r.plan1 ? r.plan1.nombre : '-';
@@ -1045,7 +1045,7 @@ document.getElementById("btnEnviarUsuario").addEventListener("click", function()
   const plan1Valor = r.plan1 ? `${r.plan1.valorCalculadoUF.toFixed(2)} UF` : '-';
   const plan2Valor = r.plan2 ? `${r.plan2.valorCalculadoUF.toFixed(2)} UF` : '-';
   const mensaje = `Estimado/a ${formularioDatos.nombre}\n\nGracias por tu interes en Colmena Golden Cross\n\nResumen de tu cotizacion:\n- Plan 1: ${plan1Nombre} -> ${plan1Valor}\n- Plan 2: ${plan2Nombre} -> ${plan2Valor}\n- Tu 7%: $${formatearCLP(r.sieteCLP)} (${r.sieteUF.toFixed(2)} UF)\n\nDocumentos para iniciar tu afiliacion:\n1. Ultima liquidacion de sueldo\n2. 12 ultimas cotizaciones AFP\n3. Foto RUT (ambos lados)\n\nPuedes enviarlos por este medio.\n\n${ASESOR_NOMBRE}\nEjecutivo de Ventas - Colmena Golden Cross\nTelefono: ${ASESOR_TELEFONO}`;
-  await enviarLead(msgWA);
+  await enviarLead(mensaje);
   alert("Resumen enviado a tu WhatsApp. Reenvíalo al cliente.");
 });
 
