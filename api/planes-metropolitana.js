@@ -1,4 +1,4 @@
- module.exports = function handler(req, res) {
+ 
   const data = {
   "zona": "METROPOLITANA",
   "planes": [
