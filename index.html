@@ -440,19 +440,6 @@ function cargarUF() {
     });
 }
 
-async function cargarPlanes(zona) {
-  try {
-    const response = await fetch(`/api/planes-${zona.toLowerCase()}`);
-    if (!response.ok) throw new Error('API error');
-    const data = await response.json();
-    PLANES.length = 0;
-    PLANES.push(...data.planes);
-    console.log(`✅ ${data.total} planes cargados para ${zona}`);
-  } catch (e) {
-    console.error('Error cargando planes:', e);
-  }
-}
-
 async function cargarPlanes() {
   try {
     PLANES = [];
@@ -1055,7 +1042,7 @@ document.getElementById("formReferidos").addEventListener("submit", async functi
     f.append(REFERIDOS_FIELDS.asesorid_referidos, asesorKey);
     await fetch(GOOGLE_FORM_REFERIDOS_URL, { method: "POST", body: f, mode: 'no-cors' });
     const msgRef = `NUEVO REFERIDO - ${ASESOR_NOMBRE}\n\nReferido por: ${nombreUsuario}\nNombre: ${nombreReferido}\nTel: ${telefonoReferido}\nCorreo: ${correoReferido}`;
-    await await enviarLead(msgRef);
+    await enviarLead(msgRef);
     document.getElementById("mensajeExitoReferido").style.display = "block";
     document.getElementById("mensajeErrorReferido").style.display = "none";
     setTimeout(() => {
@@ -1134,7 +1121,7 @@ window.addEventListener("DOMContentLoaded", () => {
     //cargarPlanesCodigosJSON();
     cargarRedesClinicas();
     cargarPlanesRedesAcceso();
-    cargarPlanesClinicasRedes();
+    //cargarPlanesClinicasRedes();
     inicializarBusquedaClinica();
   }, 500);
 });
