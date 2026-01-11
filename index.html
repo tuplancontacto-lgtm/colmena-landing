@@ -465,50 +465,18 @@ async function cargarPlanes() {
         if (!Array.isArray(data.planes)) {
           throw new Error(`Respuesta inválida para ${zona}`);
         }
-
         PLANES = PLANES.concat(data.planes);
         console.log(`✅ ${zona}: ${data.planes.length} planes cargados`);
-
       } catch (error) {
         console.error(`❌ Error cargando ${zona}:`, error);
       }
     }
-
     console.log(`✅ TOTAL: ${PLANES.length} planes cargados`);
-
   } catch (error) {
     console.error('Error general en cargarPlanes:', error);
     PLANES = [];
   }
 }
-
-  
-async function cargarRedesClinicas() {
-  try {
-    const response = await fetch('/api/redes-clinicas');
-    if (!response.ok) throw new Error('Error API redes clínicas');
-
-    REDES_CLINICAS = await response.json();
-    console.log('✅ Redes clínicas cargadas desde API');
-  } catch (error) {
-    console.error('❌ Error cargando redes clínicas:', error);
-  }
-}
-
-
-async function cargarPlanesRedesAcceso() {
-  try {
-    const response = await fetch('/api/redes');
-    if (!response.ok) throw new Error('Error API redes');
-
-    PLANES_REDES_ACCESO = await response.json();
-    console.log('✅ Acceso a redes cargado');
-  } catch (error) {
-    console.error('❌ Error cargando acceso a redes:', error);
-  }
-}
-
-
 // =============================================
 // FUNCIONES DE CÁLCULO
 // =============================================
