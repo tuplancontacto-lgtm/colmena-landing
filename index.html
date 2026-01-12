@@ -183,25 +183,25 @@ window.addEventListener('DOMContentLoaded', validarAsesor);
     <input type="number" id="renta" name="renta" placeholder="Renta imponible mensual (CLP)" required />
     <label class="small">Edades de las cargas (separadas por coma, ej: 5, 12, 30)</label>
     <textarea name="cargas" id="cargas" placeholder="Ej: 5, 12, 30" rows="2"></textarea>
-    <select name="region" id="region" required>
-      <option value="">Selecciona tu Region</option>
-      <option value="Arica y Parinacota">Region de Arica y Parinacota</option>
-      <option value="Tarapacá">Region de Tarapaca</option>
-      <option value="Antofagasta">Region de Antofagasta</option>
-      <option value="Atacama">Region de Atacama</option>
-      <option value="Coquimbo">Region de Coquimbo</option>
-      <option value="Valparaíso">Region de Valparaiso</option>
-      <option value="Metropolitana de Santiago">Region Metropolitana</option>
-      <option value="Libertador General Bernardo O'Higgins">Region de O'Higgins</option>
-      <option value="Maule">Region del Maule</option>
-      <option value="Ñuble">Region de Nuble</option>
-      <option value="Biobío">Region del Bio-Bio</option>
-      <option value="La Araucanía">Region de La Araucania</option>
-      <option value="Los Ríos">Region de Los Rios</option>
-      <option value="Los Lagos">Region de Los Lagos</option>
-      <option value="Aysén del General Carlos Ibáñez del Campo">Region de Aysen</option>
-      <option value="Magallanes y de la Antártica Chilena">Region de Magallanes</option>
-    </select>
+   <select name="region" id="region" required>
+  <option value="">Selecciona tu Region</option>
+  <option value="Arica y Parinacota">Region de Arica y Parinacota</option>
+  <option value="Tarapaca">Region de Tarapaca</option>
+  <option value="Antofagasta">Region de Antofagasta</option>
+  <option value="Atacama">Region de Atacama</option>
+  <option value="Coquimbo">Region de Coquimbo</option>
+  <option value="Valparaiso">Region de Valparaiso</option>
+  <option value="Metropolitana">Region Metropolitana</option>
+  <option value="O'Higgins">Region de O'Higgins</option>
+  <option value="Maule">Region del Maule</option>
+  <option value="Nuble">Region de Nuble</option>
+  <option value="Bio-Bio">Region del Bio-Bio</option>
+  <option value="La Araucania">Region de La Araucania</option>
+  <option value="Los Rios">Region de Los Rios</option>
+  <option value="Los Lagos">Region de Los Lagos</option>
+  <option value="Aysen">Region de Aysen</option>
+  <option value="Magallanes">Region de Magallanes</option>
+</select>
     <textarea name="mensaje" id="mensaje" placeholder="Mensaje adicional (opcional)" rows="2"></textarea>
     <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px;">
       <button type="submit" id="submitBtn" style="flex: 1; min-width: 140px;">Cotizar Ahora</button>
@@ -365,7 +365,7 @@ if (document.readyState === 'loading') {
 // =============================================
 // VARIABLES GLOBALES - FORMULARIOS Y PLANES
 // =============================================
-const FORM_BASE_URL ='https://docs.google.com/forms/d/1pxChxmKrBAgnz0qid0JAlmSFmcZBJLBCUgPrzc7TNPs/formResponse';
+const FORM_BASE_URL ='https://docs.google.com/forms/d/e/1FAIpQLSdWN77vgHicHHkyq8w0ogOzP5MHnlhBSLZAObDyVQo-ILw73g/formResponse';
 const FORM_FIELDS = {
   nombre: 'entry.1455181501', rut: 'entry.1514828805', correo: 'entry.1253669566',
   telefono: 'entry.1927631596', edad: 'entry.1515225692', isapre: 'entry.1312575017',
@@ -396,16 +396,16 @@ const REGION_A_ZONA = {
   'Atacama': 'NORTE',
   'Coquimbo': 'NORTE',
   'Valparaiso': 'VALPARAISO',
-  'Metropolitana de Santiago': 'METROPOLITANA',
-  'Libertador General Bernardo O\'Higgins': 'VALPARAISO',
+  "O'Higgins": 'VALPARAISO',
   'Maule': 'SUR',
+  'Metropolitana': 'METROPOLITANA',
   'Nuble': 'SUR',
-  'Biobío': 'SUR',
+  'Bio-Bio': 'SUR',
   'La Araucania': 'SUR',
   'Los Rios': 'SUR',
   'Los Lagos': 'SUR',
-  'Aysén del General Carlos Ibáñez del Campo': 'SUR',
-  'Magallanes y de la Antártica Chilena': 'SUR'
+  'Aysen': 'SUR',
+  'Magallanes': 'SUR'
 };
 
 const URLS_PLANES = {
