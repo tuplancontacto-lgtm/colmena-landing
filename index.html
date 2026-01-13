@@ -738,7 +738,7 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
     if (plan.hospitalizacion) {
       let hospText = plan.hospitalizacion;
       if (nombreClinicaBuscada) {
-        const regex = new RegExp(`(${nombreClinicaBuscada})`, 'gi');
+       const regex = new RegExp(`(${nombreClinicaBuscada})`, 'gi');
         hospText = hospText.replace(regex, '<span style="color: #d4af37; font-weight: bold;">$1</span>');
       }
       hospitalizacionHTML = `<div class="coberturas-texto" style="color: #ccc;">${hospText.replace(/\n/g, '<br>')}</div>`;
