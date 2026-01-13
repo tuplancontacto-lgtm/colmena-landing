@@ -731,12 +731,16 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
   }
   let hospitalizacionHTML = '';
   const gruposYPorcentajes = extraerGruposYPorcentajes(plan.hospitalizacion);
+  console.log('🔍 Plan:', plan.nombre);
+  console.log('🔍 Texto hospitalización:', plan.hospitalizacion);
+  console.log('🔍 Grupos extraídos:', gruposYPorcentajes);
   if (gruposYPorcentajes) {
     hospitalizacionHTML = `<div style="margin-top: 12px;">`;
     const gruposOrdenados = Object.keys(gruposYPorcentajes).sort();
     for (const grupo of gruposOrdenados) {
     const porcentaje = gruposYPorcentajes[grupo];
     const clinicasGrupo = obtenerClinicasDelGrupoYPlan(plan.nombre, grupo);
+    console.log(`🔍 ${grupo}: ${clinicasGrupo.length} clínicas encontradas`);
   if (clinicasGrupo.length > 0) {
     hospitalizacionHTML += generarHTMLGrupoDesplegable(grupo, porcentaje, clinicasGrupo, nombreClinicaBuscada);
   }
