@@ -469,8 +469,16 @@ async function cargarRedesClinicas() {
   try {
     const response = await fetch('/api/redes-clinicas');
     if (!response.ok) throw new Error('Error API redes clínicas');
-    REDES_CLINICAS = await response.json();
+    PLANES_CLINICAS_REDES = await response.json();
     console.log('✅ Redes clínicas cargadas desde API');
+    
+    // AGREGAR ESTAS LÍNEAS PARA DIAGNÓSTICO:
+    console.log('📊 Tipos de planes:', Object.keys(PLANES_CLINICAS_REDES));
+    console.log('📊 MAX SUR grupos:', Object.keys(PLANES_CLINICAS_REDES['COLMENA MAX SUR'] || {}));
+    console.log('📊 MAX grupos:', Object.keys(PLANES_CLINICAS_REDES['COLMENA MAX'] || {}));
+    console.log('📊 Clínicas GS1:', PLANES_CLINICAS_REDES['COLMENA MAX SUR']?.GS1?.length || 0);
+    console.log('📊 Clínicas G41:', PLANES_CLINICAS_REDES['COLMENA MAX']?.G41?.length || 0);
+    
   } catch (error) {
     console.error('❌ Error cargando redes clínicas:', error);
   }
