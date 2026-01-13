@@ -623,6 +623,31 @@ function obtenerClinicasDelPlan(nombrePlan, zona) {
   }
   return clinicas.map(c => c.toLowerCase());
 }
+  function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
+  // Determinar el tipo de plan
+  let tipoPlanKey = null;
+  
+  if (nombrePlan.includes('COLMENA MAX SUR')) {
+    tipoPlanKey = 'COLMENA MAX SUR';
+  } else if (nombrePlan.includes('COLMENA MAX')) {
+    tipoPlanKey = 'COLMENA MAX';
+  } else if (nombrePlan.includes('COLMENA PLUS')) {
+    tipoPlanKey = 'COLMENA PLUS';
+  }
+  
+  if (!tipoPlanKey || !PLANES_CLINICAS_REDES[tipoPlanKey]) {
+    return [];
+  }
+  
+  // Obtener clínicas del grupo específico
+  const clinicas = PLANES_CLINICAS_REDES[tipoPlanKey][grupo];
+  
+  if (!clinicas || !Array.isArray(clinicas)) {
+    return [];
+  }
+  
+  return clinicas;
+}
 
 // =============================================
 // FUNCIONES DE GENERACIÓN HTML
@@ -702,16 +727,12 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
     hospitalizacionHTML = `<div style="margin-top: 12px;">`;
     const gruposOrdenados = Object.keys(gruposYPorcentajes).sort();
     for (const grupo of gruposOrdenados) {
-      const porcentaje = gruposYPorcentajes[grupo];
-      const clinicas = obtenerClinicasDelPlan(plan.nombre, plan.zona);
-      const clinicasGrupo = clinicas.filter(c => 
-        PLANES_CLINICAS_REDES[grupo] && PLANES_CLINICAS_REDES[grupo].length > 0 &&
-        PLANES_CLINICAS_REDES[grupo].some(cg => normalizarTexto(cg.toLowerCase()) === normalizarTexto(c.toLowerCase()))
-      );
-      if (clinicasGrupo.length > 0) {
-        hospitalizacionHTML += generarHTMLGrupoDesplegable(grupo, porcentaje, clinicasGrupo, nombreClinicaBuscada);
-      }
-    }
+    const porcentaje = gruposYPorcentajes[grupo];
+    const clinicasGrupo = obtenerClinicasDelGrupoYPlan(plan.nombre, grupo);
+  if (clinicasGrupo.length > 0) {
+    hospitalizacionHTML += generarHTMLGrupoDesplegable(grupo, porcentaje, clinicasGrupo, nombreClinicaBuscada);
+  }
+}
     hospitalizacionHTML += `</div>`;
   } else {
     if (plan.hospitalizacion) {
