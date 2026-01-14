@@ -804,7 +804,7 @@ function buscarPlanesEnClinica(nombreClinica) {
       const hospNormalizado = normalizarTexto(plan.hospitalizacion);
       if (hospNormalizado.includes(nombreNormalizado)) return true;
     }
-    const clinicasDelPlan = obtenerClinicasDelPlan(plan.nombre, zona);
+    const clinicasDelPlan = obtenerClinicasDelGrupoYPlan(plan.nombre, plan.grupo || plan.grupo_hospitalizacion || plan.hospitalizacion);
     if (clinicasDelPlan.some(c => c.includes(nombreNormalizado))) return true;
     return false;
   });
