@@ -385,7 +385,6 @@ let formularioDatos = {};
 let ultimoResultado = null;
 let PLANES = [];
 let PLANES_CODIGOS = {};
-let PLANES_REDES_ACCESO = {};
 let PLANES_CLINICAS_REDES = {};
 
 const REGION_A_ZONA = {
@@ -595,49 +594,72 @@ function obtenerCodigoPlan(nombrePlan) {
   }
   return '';
 }
-
-function extraerPorcentajeHospitalizacion(hospitalizacionText) {
-  if (!hospitalizacionText) return null;
-  const match = hospitalizacionText.match(/(\d+)%/);
-  return match ? parseInt(match[1]) : null;
-}
-
-function generarHTMLGrupoDesplegable(grupo, porcentaje, clinicas, nombreClinicaBuscada) {
-  const clinicasHTML = clinicas.map(clinica => {
-    const nombreNorm = normalizarTexto(clinica.toLowerCase());
-    const isFavorita = nombreClinicaBuscada && nombreNorm.includes(nombreClinicaBuscada);
-    const color = isFavorita ? '#d4af37' : '#fbbf24';
-    return `<div style="padding: 8px 0; color: ${color}; border-bottom: 1px solid #2a3a4a;">${isFavorita ? '★ ' : ''}${clinica}</div>`;
-  }).join('');
-  return `
-    <div style="margin-bottom: 12px; background: #0d1f2d; border-radius: 8px; overflow: hidden;">
-      <details style="cursor: pointer;">
-        <summary style="padding: 12px; background: #1a2a3a; color: #fbbf24; font-weight: bold; user-select: none;">${grupo}: <span style="color: #fbbf24;">${porcentaje}%</span></summary>
-        <div style="padding: 12px; background: #0d1f2d;">${clinicasHTML}</div>
-      </details>
-    </div>
-  `;
-}
-  
-function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
-  const nombre = nombrePlan.toUpperCase();
-
-  let tipoPlanKey;
-  if (nombre.includes('MAX SUR')) {
-    tipoPlanKey = 'COLMENA MAX SUR';
-  } else if (nombre.includes('MAX')) {
-    tipoPlanKey = 'COLMENA MAX';
-  } else if (nombre.includes('PLUS')) {
-    tipoPlanKey = 'COLMENA PLUS';
-  } else {
-    return [];
+function extraerGruposYPorcentajes(texto) {
+  if (!texto) return null;
+  const resultado = {};
+  const regex = /(GS\d+|GX\d+)\s*=\s*(\d+)%/gi;
+  let match;
+  while ((match = regex.exec(texto)) !== null) {
+    resultado[match[1].toUpperCase()] = parseInt(match[2], 10);
   }
 
-  const redesPlan = PLANES_CLINICAS_REDES[tipoPlanKey];
-  if (!redesPlan) return [];
-
-  return redesPlan[grupo] || [];
+  return Object.keys(resultado).length ? resultado : null;
 }
+ fetch("data/tarifario/planes_clinicas_redes.json")
+  .then(r => r.json())
+  .then(data => {
+    PLANES_CLINICAS_REDES = data;
+    console.log("✅ Clínicas por red cargadas");
+  });
+  
+  // =============================================
+// OBTENER CLÍNICAS SEGÚN PLAN Y GRUPO
+// =============================================
+  function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
+  if (!PLANES_CLINICAS_REDES || !nombrePlan || !grupo) return [];
+
+  let key;
+  const nombre = nombrePlan.toUpperCase();
+
+  if (nombre.includes("MAX SUR")) key = "COLMENA MAX SUR";
+  else if (nombre.includes("MAX")) key = "COLMENA MAX";
+  else if (nombre.includes("PLUS")) key = "COLMENA PLUS";
+  else return [];
+
+  const plan = PLANES_CLINICAS_REDES[key];
+  if (!plan || !Array.isArray(plan[grupo])) return [];
+
+  return plan[grupo];
+}
+  
+function extraerPorcentajeHospitalizacion(texto) {
+  if (!texto) return null;
+  const match = texto.match(/(\d+)%/);
+  return match ? parseInt(match[1], 10) : null;
+}
+
+/ =============================================
+// HTML DESPLEGABLE POR GRUPO
+// =============================================
+function generarHTMLGrupoDesplegable(grupo, porcentaje, clinicas, nombreClinicaBuscada) {
+  const clinicasHTML = clinicas.map(c => {
+    const norm = normalizarTexto(c);
+    const hit = nombreClinicaBuscada && norm.includes(nombreClinicaBuscada);
+    return `
+      <div style="padding:6px 0; color:${hit ? "#d4af37" : "#fbbf24"}">
+        ${hit ? "★ " : ""}${c}
+      </div>`;
+  }).join("");
+
+  return `
+    <details style="margin-bottom:10px">
+      <summary style="cursor:pointer;font-weight:bold">
+        ${grupo}: ${porcentaje}%
+      </summary>
+      ${clinicasHTML}
+    </details>`;
+}
+  
 
 // =============================================
 // FUNCIONES DE GENERACIÓN HTML
@@ -779,19 +801,17 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
     window.PLANES_CLINICAS_REDES = data;
     console.log("✅ Clínicas por red cargadas");
   });
-  function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
-  if (!window.PLANES_CLINICAS_REDES) return [];
+ function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
+  if (!PLANES_CLINICAS_REDES || !nombrePlan || !grupo) return [];
 
-  if (!nombrePlan || !grupo) return [];
+  const nombreNormalizado = normalizar(nombrePlan);
+  const plan = Object.keys(PLANES_CLINICAS_REDES).find(
+    p => normalizar(p) === nombreNormalizado
+  );
 
-  const plan = window.PLANES_CLINICAS_REDES[nombrePlan];
   if (!plan) return [];
-
-  const clinicas = plan[grupo];
-  if (!Array.isArray(clinicas)) return [];
-
-  // normaliza para comparación
-  return clinicas.map(c => normalizarTexto(c));
+  const clinicas = PLANES_CLINICAS_REDES[plan][grupo];
+  return Array.isArray(clinicas) ? clinicas : [];
 }
 
   function buscarPlanesEnClinica(nombreClinica) {
