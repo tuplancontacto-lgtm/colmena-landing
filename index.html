@@ -623,18 +623,23 @@ function generarHTMLGrupoDesplegable(grupo, porcentaje, clinicas, nombreClinicaB
 function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
   const nombre = nombrePlan.toUpperCase();
 
-  let tipoPlanKey = null;
-  if (nombre.includes('COLMENA MAX SUR')) tipoPlanKey = 'COLMENA MAX SUR';
-  else if (nombre.includes('COLMENA MAX')) tipoPlanKey = 'COLMENA MAX';
-  else if (nombre.includes('COLMENA PLUS')) tipoPlanKey = 'COLMENA PLUS';
+  let tipoPlanKey;
+  if (nombre.includes('MAX SUR')) {
+    tipoPlanKey = 'COLMENA MAX SUR';
+  } else if (nombre.includes('MAX')) {
+    tipoPlanKey = 'COLMENA MAX';
+  } else if (nombre.includes('PLUS')) {
+    tipoPlanKey = 'COLMENA PLUS';
+  } else {
+    return [];
+  }
 
-  if (!tipoPlanKey) return [];
-  if (!PLANES_CLINICAS_REDES[tipoPlanKey]) return [];
+  const redesPlan = PLANES_CLINICAS_REDES[tipoPlanKey];
+  if (!redesPlan) return [];
 
-  return PLANES_CLINICAS_REDES[tipoPlanKey][grupo] || [];
+  return redesPlan[grupo] || [];
 }
 
-  
 // =============================================
 // FUNCIONES DE GENERACIÓN HTML
 // =============================================
