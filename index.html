@@ -385,7 +385,6 @@ let formularioDatos = {};
 let ultimoResultado = null;
 let PLANES = [];
 let PLANES_CODIGOS = {};
-let REDES_CLINICAS = {};
 let PLANES_REDES_ACCESO = {};
 let PLANES_CLINICAS_REDES = {};
 
@@ -773,24 +772,26 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
 // =============================================
 // FUNCIÓN DE BÚSQUEDA DE CLÍNICAS
 // =============================================
-   function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
-  if (!window.REDES_CLINICAS || !grupo) return [];
+  
+  fetch("data/tarifario/planes_clinicas_redes.json")
+  .then(r => r.json())
+  .then(data => {
+    window.PLANES_CLINICAS_REDES = data;
+    console.log("✅ Clínicas por red cargadas");
+  });
+  function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
+  if (!window.PLANES_CLINICAS_REDES) return [];
 
-  const grupoLimpio = grupo.toString().trim();
+  if (!nombrePlan || !grupo) return [];
 
-  // MAX SUR
-  if (window.REDES_CLINICAS["COLMENA MAX SUR"]?.[grupoLimpio]) {
-    return window.REDES_CLINICAS["COLMENA MAX SUR"][grupoLimpio]
-      .map(c => normalizarTexto(c.nombre));
-  }
+  const plan = window.PLANES_CLINICAS_REDES[nombrePlan];
+  if (!plan) return [];
 
-  // MAX / PLUS
-  if (window.REDES_CLINICAS["COLMENA MAX"]?.[grupoLimpio]) {
-    return window.REDES_CLINICAS["COLMENA MAX"][grupoLimpio]
-      .map(c => normalizarTexto(c.nombre));
-  }
+  const clinicas = plan[grupo];
+  if (!Array.isArray(clinicas)) return [];
 
-  return [];
+  // normaliza para comparación
+  return clinicas.map(c => normalizarTexto(c));
 }
 
   function buscarPlanesEnClinica(nombreClinica) {
