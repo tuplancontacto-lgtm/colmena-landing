@@ -594,49 +594,6 @@ function obtenerCodigoPlan(nombrePlan) {
   }
   return '';
 }
-function extraerGruposYPorcentajes(texto) {
-  if (!texto) return null;
-  const resultado = {};
-  const regex = /(GS\d+|GX\d+)\s*=\s*(\d+)%/gi;
-  let match;
-  while ((match = regex.exec(texto)) !== null) {
-    resultado[match[1].toUpperCase()] = parseInt(match[2], 10);
-  }
-
-  return Object.keys(resultado).length ? resultado : null;
-}
- fetch("data/tarifario/planes_clinicas_redes.json")
-  .then(r => r.json())
-  .then(data => {
-    PLANES_CLINICAS_REDES = data;
-    console.log("✅ Clínicas por red cargadas");
-  });
-  
-  // =============================================
-// OBTENER CLÍNICAS SEGÚN PLAN Y GRUPO
-// =============================================
-  function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
-  if (!PLANES_CLINICAS_REDES || !nombrePlan || !grupo) return [];
-
-  let key;
-  const nombre = nombrePlan.toUpperCase();
-
-  if (nombre.includes("MAX SUR")) key = "COLMENA MAX SUR";
-  else if (nombre.includes("MAX")) key = "COLMENA MAX";
-  else if (nombre.includes("PLUS")) key = "COLMENA PLUS";
-  else return [];
-
-  const plan = PLANES_CLINICAS_REDES[key];
-  if (!plan || !Array.isArray(plan[grupo])) return [];
-
-  return plan[grupo];
-}
-  
-function extraerPorcentajeHospitalizacion(texto) {
-  if (!texto) return null;
-  const match = texto.match(/(\d+)%/);
-  return match ? parseInt(match[1], 10) : null;
-}
 
 // =============================================
 // HTML DESPLEGABLE POR GRUPO
@@ -795,23 +752,7 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
 // FUNCIÓN DE BÚSQUEDA DE CLÍNICAS
 // =============================================
   
-  fetch("data/tarifario/planes_clinicas_redes.json")
-  .then(r => r.json())
-  .then(data => {
-    window.PLANES_CLINICAS_REDES = data;
-    console.log("✅ Clínicas por red cargadas");
-  });
-  
-  function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
-  if (!PLANES_CLINICAS_REDES || !nombrePlan || !grupo) return [];
-
-  const nombreNormalizado = normalizar(nombrePlan);
-  const plan = Object.keys(PLANES_CLINICAS_REDES).find(
-    p => normalizar(p) === nombreNormalizado
-  );
-
-  if (!plan) return [];
-
+ 
   const clinicas = Object.entries(PLANES_CLINICAS_REDES[plan])
     .filter(([key]) => key.startsWith(grupo))
     .flatMap(([, value]) => value);
