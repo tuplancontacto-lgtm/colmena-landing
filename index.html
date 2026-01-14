@@ -675,6 +675,54 @@ function generarHTMLGrupoDesplegable(grupo, porcentaje, clinicas, nombreClinicaB
     </div>
   `;
 }
+// 1. Cargar redes de clínicas desde la API
+cargarRedesClinicas(); // fetch que llena PLANES_CLINICAS_REDES
+
+// 2. Función correcta para obtener clínicas de un grupo y plan
+function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
+  if (!PLANES_CLINICAS_REDES || !nombrePlan || !grupo) {
+    console.log('❌ Datos faltantes:', { nombrePlan, grupo, tieneRedes: !!PLANES_CLINICAS_REDES });
+    return [];
+  }
+
+  let tipoPlan;
+  const nombre = nombrePlan.toUpperCase();
+
+  if (nombre.includes("MAX SUR")) tipoPlan = "COLMENA MAX SUR";
+  else if (nombre.includes("MAX")) tipoPlan = "COLMENA MAX";
+  else if (nombre.includes("PLUS")) tipoPlan = "COLMENA PLUS";
+  else {
+    console.log('❌ Tipo de plan no identificado:', nombrePlan);
+    return [];
+  }
+
+  if (!PLANES_CLINICAS_REDES[tipoPlan]) {
+    console.log('❌ No existe', tipoPlan);
+    return [];
+  }
+
+  const clinicas = PLANES_CLINICAS_REDES[tipoPlan][grupo];
+
+  if (!clinicas || !Array.isArray(clinicas)) {
+    console.log('❌ No hay clínicas para', grupo);
+    return [];
+  }
+
+  console.log('✅', clinicas.length, 'clínicas para', tipoPlan, grupo);
+  return clinicas;
+}
+
+// 3. Aquí la línea 703 puede usar la función sin problemas
+const clinicas = obtenerClinicasDelGrupoYPlan(plan.nombre, grupo);
+
+if (clinicas.length > 0) {
+  hospitalizacionHTML += generarHTMLGrupoDesplegable(
+    grupo,
+    porcentaje,
+    clinicas,
+    nombreClinicaBuscada
+  );
+}
 
 function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = [], nombreClinicaBuscada = '') {
   if (!plan) return '';
