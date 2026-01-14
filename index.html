@@ -603,56 +603,23 @@ function extraerPorcentajeHospitalizacion(hospitalizacionText) {
   return match ? parseInt(match[1]) : null;
 }
 
-function extraerGruposYPorcentajes(hospitalizacionText) {
-  if (!hospitalizacionText) return null;
-  const grupos = {};
-  
-  // Regex mejorado que captura GS1, GS2, G41, G42, etc.
-  const regex = /(GS\d+|G\d+)\s*=\s*(\d+)%/gi;
-  let match;
-  
-  while ((match = regex.exec(hospitalizacionText)) !== null) {
-    grupos[match[1].toUpperCase()] = parseInt(match[2]);
-  }
-  
-  return Object.keys(grupos).length > 0 ? grupos : null;
-}
-
 function generarHTMLGrupoDesplegable(grupo, porcentaje, clinicas, nombreClinicaBuscada) {
-  // Determinar el tipo de hospitalización
-  const tipoHospitalizacion = grupo.startsWith('GS') 
-    ? 'Hospitalización Libre Elección' 
-    : 'Hospitalización Preferente';
-  
-  if (!clinicas || clinicas.length === 0) {
-    return `
-      <div style="margin-bottom: 12px; background: #0d1f2d; border-radius: 8px; padding: 12px;">
-        <div style="color: #fbbf24; font-weight: bold;">${tipoHospitalizacion} ${grupo}: ${porcentaje}%</div>
-        <div style="color: #999; padding-top: 8px;">Sin clínicas disponibles</div>
-      </div>
-    `;
-  }
-  
   const clinicasHTML = clinicas.map(clinica => {
     const nombreNorm = normalizarTexto(clinica.toLowerCase());
     const isFavorita = nombreClinicaBuscada && nombreNorm.includes(nombreClinicaBuscada);
     const color = isFavorita ? '#d4af37' : '#fbbf24';
     return `<div style="padding: 8px 0; color: ${color}; border-bottom: 1px solid #2a3a4a;">${isFavorita ? '★ ' : ''}${clinica}</div>`;
   }).join('');
-  
   return `
     <div style="margin-bottom: 12px; background: #0d1f2d; border-radius: 8px; overflow: hidden;">
       <details style="cursor: pointer;">
-        <summary style="padding: 12px; background: #1a2a3a; color: #fbbf24; font-weight: bold; user-select: none; list-style: none;">
-          ▶ ${tipoHospitalizacion} ${grupo}: <span style="color: #fbbf24;">${porcentaje}%</span>
-          <span style="color: #999; font-weight: normal; font-size: 0.85em;"> (${clinicas.length} clínicas)</span>
-        </summary>
-        <div style="padding: 12px; background: #0d1f2d; max-height: 300px; overflow-y: auto;">${clinicasHTML}</div>
+        <summary style="padding: 12px; background: #1a2a3a; color: #fbbf24; font-weight: bold; user-select: none;">${grupo}: <span style="color: #fbbf24;">${porcentaje}%</span></summary>
+        <div style="padding: 12px; background: #0d1f2d;">${clinicasHTML}</div>
       </details>
     </div>
   `;
 }
-
+  
 function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
   let tipoPlanKey = null;
   
