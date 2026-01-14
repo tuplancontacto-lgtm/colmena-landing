@@ -801,7 +801,8 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
     window.PLANES_CLINICAS_REDES = data;
     console.log("✅ Clínicas por red cargadas");
   });
- function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
+  
+  function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
   if (!PLANES_CLINICAS_REDES || !nombrePlan || !grupo) return [];
 
   const nombreNormalizado = normalizar(nombrePlan);
@@ -810,7 +811,11 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
   );
 
   if (!plan) return [];
-  const clinicas = PLANES_CLINICAS_REDES[plan][grupo];
+
+  const clinicas = Object.entries(PLANES_CLINICAS_REDES[plan])
+    .filter(([key]) => key.startsWith(grupo))
+    .flatMap(([, value]) => value);
+
   return Array.isArray(clinicas) ? clinicas : [];
 }
 
