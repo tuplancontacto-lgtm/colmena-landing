@@ -9,9 +9,7 @@
       "Clínica Río Blanco",
       "Clínica San Antonio",
       "Clínica Adventista Los Ángeles",
-      "Hospital de las FFAA Cirujano Guzmán",
-      "Clínica Regional de Valdivia",
-      "Hospital Base de Osorno"
+      "Hospital de las FFAA Cirujano Guzmán"
     ],
     "G42": [
       "Clínica Dávila Recoleta",
@@ -46,8 +44,13 @@
       "Clínica Bío Bío",
       "Clínica Andes Salud Concepción",
       "Hospital Clínico del Sur",
-      "Clínica Los Leones",
-      "Hospital Barros Luco Trudeau"
+      "Bupa santiago",
+      "Nueva Clínica Cordillera",
+      "Hopsital Militar de Santiago",
+      "Hopital Clínico U.de Chile (Mod.Institucional)",
+      "Clínica Tarapacá",
+      "Clínica Ciudad Del Mar"
+      
     ],
     "G44": [
       "Clínica RedSalud Vitacura",
@@ -73,19 +76,26 @@
     ],
     "G46": [
       "Clínica Alemana",
-      "Clínica Las Condes"
+      "Clínica Las Condes",
+      "Todos los No incluidos en otros grupos"
     ],
-    "GS1": [
+     "GS1": [
       "Clínica Puerto Varas",
       "Clínica Andes Salud Puerto Montt",
+      "Clínica Puerto Montt",
       "Hospital de las FFAA Cirujano Guzmán",
-      "Clínica Dávila Recoleta"
+      "Clínica Dávila Recoleta",
+      "Clínica Dávila Vespucio",
+      "Clínica Red Salud Santiago",
+      "Clínica Red Salud Providencia",
+      "Hospitales del SNS no incluidos en otros Grupos"
     ],
-    "GS2": [
+     "GS2": [
       "Clínica RedSalud Mayor",
       "Clínica Alemana de Osorno",
       "Clínica Andes Salud Puerto Montt",
-      "Clínica RedSalud Magallanes"
+      "Clínica RedSalud Magallanes",
+      "Clínica Bupa Santiago"
     ],
     "GS3": [
       "Clínica Alemana de Temuco",
@@ -93,8 +103,7 @@
       "Clínica Indisa"
     ],
     "GS4": [
-      "Hospital Base de Osorno",
-      "Clínica Alemana de Temuco"
+      "Todos los No incluidos en otros Grupos"
     ]
   },
   "COLMENA PLUS": {
@@ -175,92 +184,23 @@
     ]
   },
   "COLMENA MAX SUR": {
-    "G41": [
-      "Clínica Juan Pablo II",
-      "Clínica Sierra Bella",
-      "Hospital del Profesor",
-      "Hospital Parroquial San Bernardo",
-      "Clínica Fleming Arica",
-      "Clínica Río Blanco",
-      "Clínica San Antonio",
-      "Clínica Adventista Los Ángeles",
-      "Hospital de las FFAA Cirujano Guzmán",
-      "Clínica Regional de Valdivia",
-      "Hospital Base de Osorno"
-    ],
-    "G42": [
-      "Clínica Dávila Recoleta",
-      "Clínica RedSalud Providencia",
-      "Clínica RedSalud Santiago",
-      "Clínica Dávila Vespucio",
-      "Clínica San José",
-      "Clínica RedSalud Iquique",
-      "Clínica El Loa",
-      "Clínica Portada",
-      "Clínica Cumbres del Norte",
-      "Hospital Militar del Norte",
-      "Clínica RCR Atacama",
-      "Clínica RedSalud Elqui",
-      "Hospital Clínico de Viña del Mar",
-      "Hospital Naval Almirante Nef",
-      "Clínica RedSalud Valparaíso",
-      "Clínica Los Carrera",
-      "Clínica Isamédica",
-      "Hospital Clínico FUSAT",
-      "Clínica Red Salud Rancagua",
-      "Clínica Lircay",
-      "Clínica Las Amapolas",
-      "Clínica RedSalud Mayor",
-      "Clínica Puerto Varas",
-      "Clínica Andes Salud Puerto Montt",
-      "Clínica Puerto Montt"
-    ],
-    "G43": [
-      "Hospital del Niño",
-      "Clínica Chillán",
-      "Clínica Bío Bío",
-      "Clínica Andes Salud Concepción",
-      "Hospital Clínico del Sur",
-      "Clínica Los Leones",
-      "Hospital Barros Luco Trudeau"
-    ],
-    "G44": [
-      "Clínica RedSalud Vitacura",
-      "Hospital Clínico Universidad Católica",
-      "Fundación Arturo López Pérez",
-      "Hospital Clínico de la Fuerza Aérea",
-      "Clínica Indisa",
-      "Clínica Bupa Antofagasta",
-      "Clínica Bupa Reñaca",
-      "Clínica Sanatorio Alemán",
-      "Clínica Los Andes",
-      "Clínica Alemana de Temuco",
-      "Clínica Alemana de Valdivia",
-      "Clínica Alemana de Osorno",
-      "Clínica RedSalud Magallanes"
-    ],
-    "G45": [
-      "Clínica San Carlos Apoquindo",
-      "Clínica Universidad Católica",
-      "Clínica Universidad de los Andes",
-      "Clínica MEDS",
-      "Clínica Santa María"
-    ],
-    "G46": [
-      "Clínica Alemana",
-      "Clínica Las Condes"
-    ],
     "GS1": [
       "Clínica Puerto Varas",
       "Clínica Andes Salud Puerto Montt",
+      "Clínica Puerto Montt",
       "Hospital de las FFAA Cirujano Guzmán",
-      "Clínica Dávila Recoleta"
+      "Clínica Dávila Recoleta",
+      "Clínica Dávila Vespucio",
+      "Clínica Red Salud Santiago",
+      "Clínica Red Salud Providencia",
+      "Hospitales del SNS no incluidos en otros Grupos"
     ],
     "GS2": [
       "Clínica RedSalud Mayor",
       "Clínica Alemana de Osorno",
       "Clínica Andes Salud Puerto Montt",
-      "Clínica RedSalud Magallanes"
+      "Clínica RedSalud Magallanes",
+      "Clínica Bupa Santiago"
     ],
     "GS3": [
       "Clínica Alemana de Temuco",
@@ -268,8 +208,7 @@
       "Clínica Indisa"
     ],
     "GS4": [
-      "Hospital Base de Osorno",
-      "Clínica Alemana de Temuco"
+      "Todos los No incluidos en otros Grupos"
     ]
   }
 }
