@@ -621,26 +621,19 @@ function generarHTMLGrupoDesplegable(grupo, porcentaje, clinicas, nombreClinicaB
 }
   
 function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
+  const nombre = nombrePlan.toUpperCase();
+
   let tipoPlanKey = null;
-  
-  if (nombrePlan.includes('COLMENA MAX SUR')) {
-    tipoPlanKey = 'COLMENA MAX SUR';
-  } else if (nombrePlan.includes('COLMENA MAX')) {
-    tipoPlanKey = 'COLMENA MAX';
-  } else if (nombrePlan.includes('COLMENA PLUS')) {
-    tipoPlanKey = 'COLMENA PLUS';
-  }
-  
-  if (!tipoPlanKey || !PLANES_CLINICAS_REDES[tipoPlanKey]) {
-    return [];
-  }
-  const clinicas = PLANES_CLINICAS_REDES[tipoPlanKey][grupo];
-  
-  if (!clinicas || !Array.isArray(clinicas)) {
-    return [];
-  }
-  return clinicas;
+  if (nombre.includes('COLMENA MAX SUR')) tipoPlanKey = 'COLMENA MAX SUR';
+  else if (nombre.includes('COLMENA MAX')) tipoPlanKey = 'COLMENA MAX';
+  else if (nombre.includes('COLMENA PLUS')) tipoPlanKey = 'COLMENA PLUS';
+
+  if (!tipoPlanKey) return [];
+  if (!PLANES_CLINICAS_REDES[tipoPlanKey]) return [];
+
+  return PLANES_CLINICAS_REDES[tipoPlanKey][grupo] || [];
 }
+
   
 // =============================================
 // FUNCIONES DE GENERACIÓN HTML
@@ -722,14 +715,20 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
   if (gruposYPorcentajes) {
     hospitalizacionHTML = `<div style="margin-top: 12px;">`;
     const gruposOrdenados = Object.keys(gruposYPorcentajes).sort();
-    for (const grupo of gruposOrdenados) {
-    const porcentaje = gruposYPorcentajes[grupo];
-    const clinicasGrupo = obtenerClinicasDelGrupoYPlan(plan.nombre, grupo);
-    console.log(`🔍 ${grupo}: ${clinicasGrupo.length} clínicas encontradas`);
-  if (clinicasGrupo.length > 0) {
-    hospitalizacionHTML += generarHTMLGrupoDesplegable(grupo, porcentaje, clinicasGrupo, nombreClinicaBuscada);
+    for (const grupo of Object.keys(gruposYPorcentajes)) {
+  const porcentaje = gruposYPorcentajes[grupo];
+  const clinicas = obtenerClinicasDelGrupoYPlan(plan.nombre, grupo);
+
+  if (clinicas.length > 0) {
+    hospitalizacionHTML += generarHTMLGrupoDesplegable(
+      grupo,
+      porcentaje,
+      clinicas,
+      nombreClinicaBuscada
+    );
   }
 }
+
     hospitalizacionHTML += `</div>`;
   } else {
     if (plan.hospitalizacion) {
