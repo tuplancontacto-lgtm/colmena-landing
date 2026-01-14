@@ -751,14 +751,6 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
 // =============================================
 // FUNCIÓN DE BÚSQUEDA DE CLÍNICAS
 // =============================================
-  
- 
-  const clinicas = Object.entries(PLANES_CLINICAS_REDES[plan])
-    .filter(([key]) => key.startsWith(grupo))
-    .flatMap(([, value]) => value);
-
-  return Array.isArray(clinicas) ? clinicas : [];
-}
 
   function buscarPlanesEnClinica(nombreClinica) {
   const nombreNormalizado = normalizarTexto(nombreClinica);
