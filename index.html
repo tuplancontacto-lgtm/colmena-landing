@@ -604,17 +604,21 @@ function extraerPorcentajeHospitalizacion(hospitalizacionText) {
 }
 
 function extraerGruposYPorcentajes(hospitalizacionText) {
-  console.log('🔍 Extrayendo de:', hospitalizacionText);
+  console.log('🔍 TEXTO RECIBIDO:', hospitalizacionText);
+  console.log('🔍 TIPO:', typeof hospitalizacionText);
   
   if (!hospitalizacionText) return null;
   const grupos = {};
   const regex = /([GS]\d+)=(\d+)%/g;
   let match;
   while ((match = regex.exec(hospitalizacionText)) !== null) {
+    console.log('🔍 MATCH ENCONTRADO:', match[1], '=', match[2] + '%');
     grupos[match[1]] = parseInt(match[2]);
-  } 
-  console.log('🔍 Grupos encontrados:', grupos);
-  console.log('🔍 ¿Tiene grupos?:', Object.keys(grupos).length > 0);
+  }
+  
+  console.log('🔍 GRUPOS EXTRAÍDOS:', grupos);
+  console.log('🔍 CANTIDAD:', Object.keys(grupos).length);
+  
   return Object.keys(grupos).length > 0 ? grupos : null;
 }
   
