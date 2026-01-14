@@ -604,43 +604,56 @@ function extraerPorcentajeHospitalizacion(hospitalizacionText) {
 }
 
 function extraerGruposYPorcentajes(hospitalizacionText) {
-  console.log('🔍 TEXTO RECIBIDO:', hospitalizacionText);
-  console.log('🔍 TIPO:', typeof hospitalizacionText);
-  
   if (!hospitalizacionText) return null;
   const grupos = {};
-  const regex = /([GS]\d+)=(\d+)%/g;
-  let match;
-  while ((match = regex.exec(hospitalizacionText)) !== null) {
-    console.log('🔍 MATCH ENCONTRADO:', match[1], '=', match[2] + '%');
-    grupos[match[1]] = parseInt(match[2]);
-  }
   
-  console.log('🔍 GRUPOS EXTRAÍDOS:', grupos);
-  console.log('🔍 CANTIDAD:', Object.keys(grupos).length);
+  // Regex mejorado que captura GS1, GS2, G41, G42, etc.
+  const regex = /(GS\d+|G\d+)\s*=\s*(\d+)%/gi;
+  let match;
+  
+  while ((match = regex.exec(hospitalizacionText)) !== null) {
+    grupos[match[1].toUpperCase()] = parseInt(match[2]);
+  }
   
   return Object.keys(grupos).length > 0 ? grupos : null;
 }
+
+function generarHTMLGrupoDesplegable(grupo, porcentaje, clinicas, nombreClinicaBuscada) {
+  // Determinar el tipo de hospitalización
+  const tipoHospitalizacion = grupo.startsWith('GS') 
+    ? 'Hospitalización Libre Elección' 
+    : 'Hospitalización Preferente';
   
-function obtenerClinicasDelGrupo(grupo) {
-  if (!REDES_CLINICAS[grupo] || !REDES_CLINICAS[grupo].clinicas) return [];
-  return REDES_CLINICAS[grupo].clinicas.map(c => c.nombre.toLowerCase());
+  if (!clinicas || clinicas.length === 0) {
+    return `
+      <div style="margin-bottom: 12px; background: #0d1f2d; border-radius: 8px; padding: 12px;">
+        <div style="color: #fbbf24; font-weight: bold;">${tipoHospitalizacion} ${grupo}: ${porcentaje}%</div>
+        <div style="color: #999; padding-top: 8px;">Sin clínicas disponibles</div>
+      </div>
+    `;
+  }
+  
+  const clinicasHTML = clinicas.map(clinica => {
+    const nombreNorm = normalizarTexto(clinica.toLowerCase());
+    const isFavorita = nombreClinicaBuscada && nombreNorm.includes(nombreClinicaBuscada);
+    const color = isFavorita ? '#d4af37' : '#fbbf24';
+    return `<div style="padding: 8px 0; color: ${color}; border-bottom: 1px solid #2a3a4a;">${isFavorita ? '★ ' : ''}${clinica}</div>`;
+  }).join('');
+  
+  return `
+    <div style="margin-bottom: 12px; background: #0d1f2d; border-radius: 8px; overflow: hidden;">
+      <details style="cursor: pointer;">
+        <summary style="padding: 12px; background: #1a2a3a; color: #fbbf24; font-weight: bold; user-select: none; list-style: none;">
+          ▶ ${tipoHospitalizacion} ${grupo}: <span style="color: #fbbf24;">${porcentaje}%</span>
+          <span style="color: #999; font-weight: normal; font-size: 0.85em;"> (${clinicas.length} clínicas)</span>
+        </summary>
+        <div style="padding: 12px; background: #0d1f2d; max-height: 300px; overflow-y: auto;">${clinicasHTML}</div>
+      </details>
+    </div>
+  `;
 }
 
-function obtenerClinicasDelPlan(nombrePlan, zona) {
-  const clinicas = [];
-  for (const [tipoPlan, gruposData] of Object.entries(PLANES_CLINICAS_REDES)) {
-    if (nombrePlan.includes(tipoPlan)) {
-      for (const [grupo, clinicasList] of Object.entries(gruposData)) {
-        clinicas.push(...clinicasList);
-      }
-      break;
-    }
-  }
-  return clinicas.map(c => c.toLowerCase());
-}
-  function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
-  // Determinar el tipo de plan
+function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
   let tipoPlanKey = null;
   
   if (nombrePlan.includes('COLMENA MAX SUR')) {
@@ -654,6 +667,15 @@ function obtenerClinicasDelPlan(nombrePlan, zona) {
   if (!tipoPlanKey || !PLANES_CLINICAS_REDES[tipoPlanKey]) {
     return [];
   }
+  
+  const clinicas = PLANES_CLINICAS_REDES[tipoPlanKey][grupo];
+  
+  if (!clinicas || !Array.isArray(clinicas)) {
+    return [];
+  }
+  
+  return clinicas;
+}
   
   // Obtener clínicas del grupo específico
   const clinicas = PLANES_CLINICAS_REDES[tipoPlanKey][grupo];
