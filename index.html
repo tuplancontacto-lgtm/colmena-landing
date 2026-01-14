@@ -634,26 +634,14 @@ function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
   if (!tipoPlanKey || !PLANES_CLINICAS_REDES[tipoPlanKey]) {
     return [];
   }
-  
   const clinicas = PLANES_CLINICAS_REDES[tipoPlanKey][grupo];
   
   if (!clinicas || !Array.isArray(clinicas)) {
     return [];
   }
-  
   return clinicas;
 }
   
-  // Obtener clínicas del grupo específico
-  const clinicas = PLANES_CLINICAS_REDES[tipoPlanKey][grupo];
-  
-  if (!clinicas || !Array.isArray(clinicas)) {
-    return [];
-  }
-  
-  return clinicas;
-}
-
 // =============================================
 // FUNCIONES DE GENERACIÓN HTML
 // =============================================
