@@ -773,7 +773,27 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
 // =============================================
 // FUNCIÓN DE BÚSQUEDA DE CLÍNICAS
 // =============================================
-function buscarPlanesEnClinica(nombreClinica) {
+   function obtenerClinicasDelGrupoYPlan(nombrePlan, grupo) {
+  if (!window.REDES_CLINICAS || !grupo) return [];
+
+  const grupoLimpio = grupo.toString().trim();
+
+  // MAX SUR
+  if (window.REDES_CLINICAS["COLMENA MAX SUR"]?.[grupoLimpio]) {
+    return window.REDES_CLINICAS["COLMENA MAX SUR"][grupoLimpio]
+      .map(c => normalizarTexto(c.nombre));
+  }
+
+  // MAX / PLUS
+  if (window.REDES_CLINICAS["COLMENA MAX"]?.[grupoLimpio]) {
+    return window.REDES_CLINICAS["COLMENA MAX"][grupoLimpio]
+      .map(c => normalizarTexto(c.nombre));
+  }
+
+  return [];
+}
+
+  function buscarPlanesEnClinica(nombreClinica) {
   const nombreNormalizado = normalizarTexto(nombreClinica);
   const uf = window.__UF_VALOR || 39700;
   let zona, edadTitular, edadesCargas, sieteUF, sieteCLP;
