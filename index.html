@@ -329,10 +329,17 @@ async function cargarAsesores() {
 }
 
 function inicializarAsesor() {
+  // Obtener y limpiar asesorKey
   asesorKey = getQueryParam("asesor") || "jose_mora";
+  
+  // ✅ LIMPIAR: eliminar espacios y guiones al inicio/final
+  if (asesorKey) {
+    asesorKey = asesorKey.trim().replace(/^-+|-+$/g, '');
+  }
+  
+  console.log('🔑 asesorKey limpio:', asesorKey);
+  
   asesor = ASESORES[asesorKey] || ASESORES["jose_mora"];
-  if (!asesor) {
-    console.error('❌ No se encontró ningún asesor');
     return;
   }
   WHATSAPP_ASESORIA = asesor.whatsapp;
@@ -809,6 +816,8 @@ function buscarPlanesEnClinica(nombreClinica) {
 // =============================================
 async function enviarLead(mensaje) {
   try {
+    console.log('📤 Enviando lead al asesor:', asesorKey);
+    
     const response = await fetch('/api/enviar-lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -821,14 +830,28 @@ async function enviarLead(mensaje) {
     const result = await response.json();
 
     if (!response.ok) {
-      console.error('Error API:', result);
-      alert('Error enviando la solicitud');
-      return;
+      console.error('❌ Error API:', result);
+      
+      // Mostrar mensaje específico según el error
+      if (result.error === 'Asesor no encontrado') {
+        console.error(`Asesor '${result.asesorBuscado}' no encontrado.`);
+        console.error('Asesores disponibles:', result.asesoresDisponibles);
+        alert(`Asesor no encontrado. Contacta al administrador.`);
+      } else if (result.error === 'Asesor sin CallMeBot configurado') {
+        alert(`El asesor no tiene WhatsApp configurado correctamente.`);
+      } else {
+        alert('Error enviando la solicitud al asesor');
+      }
+      return false;
     }
 
-    console.log('✅ Lead enviado al asesor');
+    console.log('✅ Lead enviado correctamente al asesor:', result.asesor || ASESOR_NOMBRE);
+    return true;
+    
   } catch (err) {
-    console.error('Error enviando lead:', err);
+    console.error('❌ Error de red enviando lead:', err);
+    alert('Error de conexión. Por favor intenta nuevamente.');
+    return false;
   }
 }
 
@@ -869,7 +892,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
   const zona = REGION_A_ZONA[formularioDatos.region] || 'SANTIAGO';
   const { plan1, plan2 } = seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas);
   ultimoResultado = { sieteCLP, sieteUF, edadesCargas, cargasTexto, zona, plan1, plan2, edadTitular };
-  try {
+ try {
     const plan1Nombre = plan1 ? plan1.nombre : 'Sin plan disponible';
     const plan2Nombre = plan2 ? plan2.nombre : 'Sin plan disponible';
     const params = new URLSearchParams();
@@ -886,6 +909,12 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     params.append(FORM_FIELDS.plan1, plan1Nombre);
     params.append(FORM_FIELDS.plan2, plan2Nombre);
     params.append(FORM_FIELDS.asesorid, asesorKey);
+    console.log('📤 Enviando a Google Forms:', {
+      url: FORM_BASE_URL,
+      asesorKey: asesorKey,
+      totalCampos: Array.from(params.entries()).length
+    });
+    
     fetch(FORM_BASE_URL, { method: "POST", mode: 'no-cors', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: params.toString() }).catch(() => {});
     statusMsg.textContent = "Datos enviados correctamente";
     statusMsg.className = "small success-msg";
