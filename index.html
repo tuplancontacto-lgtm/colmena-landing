@@ -1052,7 +1052,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
   const zona = REGION_A_ZONA[formularioDatos.region] || 'SANTIAGO';
   const { plan1, plan2 } = seleccionarPlanes(sieteUF, zona, edadTitular, edadesCargas);
   ultimoResultado = { sieteCLP, sieteUF, edadesCargas, cargasTexto, zona, plan1, plan2, edadTitular };
- try {
+try {
     const plan1Nombre = plan1 ? plan1.nombre : 'Sin plan disponible';
     const plan2Nombre = plan2 ? plan2.nombre : 'Sin plan disponible';
     const params = new URLSearchParams();
@@ -1069,19 +1069,31 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     params.append(FORM_FIELDS.plan1, plan1Nombre);
     params.append(FORM_FIELDS.plan2, plan2Nombre);
     params.append(FORM_FIELDS.asesorid, asesorKey);
-    console.log('📤 Enviando a Google Forms:', {
-      url: FORM_BASE_URL,
-      asesorKey: asesorKey,
-      totalCampos: Array.from(params.entries()).length
-    });
     
-    fetch(FORM_BASE_URL, { method: "POST", mode: 'no-cors', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: params.toString() }).catch(() => {});
+    console.log('📤 Enviando a Google Forms:');
+    console.log('URL:', FORM_BASE_URL);
+    console.log('Total campos:', Array.from(params.entries()).length);
+    console.log('Datos completos:');
+    for (let [key, value] of params.entries()) {
+      console.log(`  ${key} = "${value}"`);
+    }
+    console.log('Body completo:', params.toString());
+    
+    fetch(FORM_BASE_URL, { 
+      method: "POST", 
+      mode: 'no-cors', 
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}, 
+      body: params.toString() 
+    }).catch(() => {});
+    
     statusMsg.textContent = "Datos enviados correctamente";
     statusMsg.className = "small success-msg";
   } catch (err) {
+    console.error('❌ Error en try/catch:', err);
     statusMsg.textContent = "Error al enviar";
     statusMsg.className = "small error-msg";
   }
+
   const cargasInfo = edadesCargas.length > 0 ? `${edadesCargas.length} (${edadesCargas.join(', ')} anos)` : '0';
   const msgWA = `NUEVA COTIZACION - ${ASESOR_NOMBRE || 'Asesor'}\n\n${formularioDatos.nombre}\nCorreo: ${formularioDatos.correo}\nTelefono: ${formularioDatos.telefono}\nRegion: ${formularioDatos.region} (${zona})\nRenta: $${formatearCLP(renta)}\nCargas: ${cargasInfo}\n\n7%: $${formatearCLP(sieteCLP)} (${sieteUF.toFixed(2)} UF)\n\nPlanes sugeridos:\n1) ${plan1 ? plan1.nombre + ' -> ' + plan1.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}\n2) ${plan2 ? plan2.nombre + ' -> ' + plan2.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}`;
   await enviarLead(msgWA);
