@@ -1092,7 +1092,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
 // =============================================
 // FUNCIÓN RECALCULAR
 // =============================================
-function recalcularConAdicional() {
+async function recalcularConAdicional() {
   try {
     const montoAdicionalInput = document.getElementById("montoAdicional");
     if (!montoAdicionalInput) return;
