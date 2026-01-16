@@ -536,13 +536,53 @@ async function cargarPlanesClinicasRedes() {
   
   return grupos;
 }
-  async function cargarYMostrarRedesClinicas(planNombre, grupoHospitalizacion, grupoLibreEleccion) {
+  // ✅ NUEVA FUNCIÓN: Extraer TODOS los grupos y porcentajes del plan
+function extraerTodosLosGruposYPorcentajes(planNombre) {
+  const grupos = {};
+  
+  // Buscar en el nombre del plan o en la data
+  const plan = PLANES.find(p => p.nombre === planNombre);
+  if (!plan) return grupos;
+  
+  // Extraer de hospitalización
+  if (plan.hospitalizacion) {
+    const texto = plan.hospitalizacion;
+    
+    // Buscar todos los grupos con sus porcentajes
+    // Patrón: GS1=100%, GS2=80%, etc.
+    const regex = /(GS[1-4]|G4[1-6])=(\d+)%/g;
+    let match;
+    
+    while ((match = regex.exec(texto)) !== null) {
+      grupos[match[1]] = match[2]; // match[1] = grupo (ej: GS1), match[2] = porcentaje (ej: 100)
+    }
+  }
+  
+  // Si no encontró ninguno, buscar porcentaje general
+  if (Object.keys(grupos).length === 0 && plan.hospitalizacion) {
+    const matchGeneral = plan.hospitalizacion.match(/(\d+)%/);
+    if (matchGeneral) {
+      // Asignar el mismo porcentaje a todos los grupos disponibles
+      const porcentajeGeneral = matchGeneral[1];
+      
+      // Determinar qué grupos tiene el plan
+      if (planNombre.includes('MAX SUR')) {
+        ['GS1', 'GS2', 'GS3', 'GS4'].forEach(g => grupos[g] = porcentajeGeneral);
+      } else if (planNombre.includes('MAX')) {
+        ['G41', 'G42', 'G43', 'G44', 'G45', 'G46'].forEach(g => grupos[g] = porcentajeGeneral);
+      }
+    }
+  }
+  
+  return grupos;
+}
+
+ async function cargarYMostrarRedesClinicas(planNombre, grupoHospitalizacion, grupoLibreEleccion) {
   try {
     if (!PLANES_CLINICAS_REDES || Object.keys(PLANES_CLINICAS_REDES).length === 0) {
       return '';
     }
     
-    // Determinar qué plan usar (COLMENA MAX o COLMENA MAX SUR)
     let planKey = null;
     const planNormalizado = planNombre.toUpperCase().trim();
     
@@ -557,45 +597,37 @@ async function cargarPlanesClinicasRedes() {
     }
     
     const gruposPlan = PLANES_CLINICAS_REDES[planKey];
+    
+    // ✅ NUEVO: Obtener TODOS los grupos del plan y sus porcentajes
+    const gruposConPorcentajes = extraerTodosLosGruposYPorcentajes(planNombre);
+    
     let htmlRedes = '';
     
-    // Mostrar Hospitalización si tiene grupo específico
-    if (grupoHospitalizacion && 
-        grupoHospitalizacion !== 'TODOS LOS NO INCLUIDOS EN OTROS GRUPOS' &&
-        gruposPlan[grupoHospitalizacion]) {
-      
-      const clinicasHosp = gruposPlan[grupoHospitalizacion];
-      
-      htmlRedes += `
-        <div class="red-clinica-section">
-          <h4>🏥 Hospitalización (${grupoHospitalizacion})</h4>
-          <ul class="lista-clinicas">
-            ${clinicasHosp.map(clinica => `
-              <li>✅ ${clinica}</li>
-            `).join('')}
-          </ul>
-        </div>
-      `;
-    }
-    
-    // Mostrar Libre Elección si es diferente y tiene grupo específico
-    if (grupoLibreEleccion && 
-        grupoLibreEleccion !== grupoHospitalizacion &&
-        grupoLibreEleccion !== 'TODOS LOS NO INCLUIDOS EN OTROS GRUPOS' &&
-        gruposPlan[grupoLibreEleccion]) {
-      
-      const clinicasLE = gruposPlan[grupoLibreEleccion];
-      
-      htmlRedes += `
-        <div class="red-clinica-section" style="margin-top: 20px;">
-          <h4>👨‍⚕️ Libre Elección (${grupoLibreEleccion})</h4>
-          <ul class="lista-clinicas">
-            ${clinicasLE.map(clinica => `
-              <li>✅ ${clinica}</li>
-            `).join('')}
-          </ul>
-        </div>
-      `;
+    // ✅ NUEVO: Mostrar TODOS los grupos disponibles
+    for (const [grupo, clinicas] of Object.entries(gruposPlan)) {
+      if (clinicas && clinicas.length > 0) {
+        // Obtener el porcentaje de este grupo
+        const porcentaje = gruposConPorcentajes[grupo] || '?';
+        
+        // Determinar si es el grupo principal (se abre por defecto)
+        const esGrupoPrincipal = grupo === grupoHospitalizacion;
+        
+        htmlRedes += `
+          <details ${esGrupoPrincipal ? 'open' : ''} style="margin-bottom: 10px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; overflow: hidden;">
+            <summary style="padding: 12px 15px; cursor: pointer; background: rgba(212, 175, 55, 0.1); color: #d4af37; font-weight: 600; user-select: none; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid #d4af37;">
+              <span>🏥 ${grupo} - Cobertura: ${porcentaje}%</span>
+              <span style="color: #888; font-size: 0.85rem;">${clinicas.length} clínicas</span>
+            </summary>
+            <div style="padding: 15px;">
+              <ul class="lista-clinicas">
+                ${clinicas.map(clinica => `
+                  <li>✅ ${clinica}</li>
+                `).join('')}
+              </ul>
+            </div>
+          </details>
+        `;
+      }
     }
     
     return htmlRedes;
