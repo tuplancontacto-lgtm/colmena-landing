@@ -365,9 +365,7 @@ if (document.readyState === 'loading') {
 } else {
   cargarAsesores();
 }
-</script>
 
-<script>
 // =============================================
 // VARIABLES GLOBALES - FORMULARIOS Y PLANES
 // =============================================
@@ -923,7 +921,7 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     statusMsg.className = "small error-msg";
   }
   const cargasInfo = edadesCargas.length > 0 ? `${edadesCargas.length} (${edadesCargas.join(', ')} anos)` : '0';
-  const msgWA = `NUEVA COTIZACION - ${ASESOR_NOMBRE}\n\n${formularioDatos.nombre}\nCorreo: ${formularioDatos.correo}\nTelefono: ${formularioDatos.telefono}\nRegion: ${formularioDatos.region} (${zona})\nRenta: $${formatearCLP(renta)}\nCargas: ${cargasInfo}\n\n7%: $${formatearCLP(sieteCLP)} (${sieteUF.toFixed(2)} UF)\n\nPlanes sugeridos:\n1) ${plan1 ? plan1.nombre + ' -> ' + plan1.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}\n2) ${plan2 ? plan2.nombre + ' -> ' + plan2.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}`;
+  const msgWA = `NUEVA COTIZACION - ${ASESOR_NOMBRE || 'Asesor'}\n\n${formularioDatos.nombre}\nCorreo: ${formularioDatos.correo}\nTelefono: ${formularioDatos.telefono}\nRegion: ${formularioDatos.region} (${zona})\nRenta: $${formatearCLP(renta)}\nCargas: ${cargasInfo}\n\n7%: $${formatearCLP(sieteCLP)} (${sieteUF.toFixed(2)} UF)\n\nPlanes sugeridos:\n1) ${plan1 ? plan1.nombre + ' -> ' + plan1.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}\n2) ${plan2 ? plan2.nombre + ' -> ' + plan2.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}`;
   await enviarLead(msgWA);
   let htmlResultado = `
     <div class="resumen-cotizacion">
