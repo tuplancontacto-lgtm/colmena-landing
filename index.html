@@ -340,8 +340,12 @@ function inicializarAsesor() {
   console.log('🔑 asesorKey limpio:', asesorKey);
   
   asesor = ASESORES[asesorKey] || ASESORES["jose_mora"];
+  
+  if (!asesor) {
+    console.error('❌ No se encontró ningún asesor');
     return;
   }
+  
   WHATSAPP_ASESORIA = asesor.whatsapp;
   CALLMEBOT_PHONE = asesor.whatsapp;
   CALLMEBOT_APIKEY = asesor.callmebot_apikey;
