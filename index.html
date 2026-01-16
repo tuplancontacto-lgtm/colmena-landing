@@ -84,7 +84,18 @@
     .mensaje-exito-referido, .mensaje-error-referido { padding:15px; border-radius:10px; margin-top:20px; display:none; font-weight:600; text-align:center; }
     .mensaje-exito-referido { background:#1a4d2e; color:#4ade80; border:1px solid #4ade80; }
     .mensaje-error-referido { background:#4a1a1a; color:#ff8080; border:1px solid #ff8080; }
-    @media (max-width: 600px) { .plan-nombre { font-size: 1.4rem; } .mejorar-input { width: 100%; } }
+    .redes-clinicas { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 8px; margin-top: 15px; }
+.red-clinica-section { margin-bottom: 15px; }
+.red-clinica-section:last-child { margin-bottom: 0; }
+.red-clinica-section h4 { font-size: 16px; font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; color: #d4af37; }
+.lista-clinicas { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.lista-clinicas li { font-size: 14px; color: #E0E0E0; padding: 8px 12px; background: rgba(255, 255, 255, 0.03); border-radius: 6px; display: flex; align-items: center; transition: all 0.2s ease; }
+.lista-clinicas li:hover { background: rgba(255, 255, 255, 0.08); transform: translateX(5px); }
+    @media (max-width: 600px) { 
+  .plan-nombre { font-size: 1.4rem; } 
+  .mejorar-input { width: 100%; } 
+  .lista-clinicas li { font-size: 13px; padding: 6px 10px; } 
+}
   </style>
 </head>
 <body>
@@ -484,14 +495,114 @@ async function cargarRedesClinicas() {
   }
 }
 
-async function cargarPlanesRedesAcceso() {
+async function cargarPlanesClinicasRedes() {
   try {
-    const response = await fetch('/api/redes');
-    if (!response.ok) throw new Error('Error API redes');
-    PLANES_REDES_ACCESO = await response.json();
-    console.log('✅ Acceso a redes cargado');
+    const response = await fetch('/data/tarifario/planes_clinicas_redes.json');
+    if (!response.ok) {
+      console.warn('⚠️ No se pudo cargar planes_clinicas_redes.json');
+      return;
+    }
+    PLANES_CLINICAS_REDES = await response.json();
+    console.log('✅ Redes clínicas cargadas:', PLANES_CLINICAS_REDES);
   } catch (error) {
-    console.error('❌ Error cargando acceso a redes:', error);
+    console.error('❌ Error cargando planes_clinicas_redes.json:', error);
+    PLANES_CLINICAS_REDES = {};
+  }
+}
+  function extraerGruposDelPlan(planData) {
+  const grupos = {
+    hospitalizacion: null,
+    libreEleccion: null
+  };
+  
+  // Buscar en consulta preferente
+  if (planData.consulta_preferente) {
+    const texto = planData.consulta_preferente;
+    // Buscar GS1-GS4 o G41-G46
+    const matchHosp = texto.match(/GS[1-4]|G4[1-6]/);
+    if (matchHosp) {
+      grupos.hospitalizacion = matchHosp[0];
+    }
+  }
+  
+  // Buscar en hospitalización si no se encontró antes
+  if (!grupos.hospitalizacion && planData.hospitalizacion) {
+    const texto = planData.hospitalizacion;
+    const match = texto.match(/GS[1-4]|G4[1-6]/);
+    if (match) {
+      grupos.hospitalizacion = match[0];
+    }
+  }
+  
+  return grupos;
+}
+  async function cargarYMostrarRedesClinicas(planNombre, grupoHospitalizacion, grupoLibreEleccion) {
+  try {
+    if (!PLANES_CLINICAS_REDES || Object.keys(PLANES_CLINICAS_REDES).length === 0) {
+      return '';
+    }
+    
+    // Determinar qué plan usar (COLMENA MAX o COLMENA MAX SUR)
+    let planKey = null;
+    const planNormalizado = planNombre.toUpperCase().trim();
+    
+    if (planNormalizado.includes('MAX SUR')) {
+      planKey = 'COLMENA MAX SUR';
+    } else if (planNormalizado.includes('MAX')) {
+      planKey = 'COLMENA MAX';
+    }
+    
+    if (!planKey || !PLANES_CLINICAS_REDES[planKey]) {
+      return '';
+    }
+    
+    const gruposPlan = PLANES_CLINICAS_REDES[planKey];
+    let htmlRedes = '';
+    
+    // Mostrar Hospitalización si tiene grupo específico
+    if (grupoHospitalizacion && 
+        grupoHospitalizacion !== 'TODOS LOS NO INCLUIDOS EN OTROS GRUPOS' &&
+        gruposPlan[grupoHospitalizacion]) {
+      
+      const clinicasHosp = gruposPlan[grupoHospitalizacion];
+      
+      htmlRedes += `
+        <div class="red-clinica-section">
+          <h4>🏥 Hospitalización (${grupoHospitalizacion})</h4>
+          <ul class="lista-clinicas">
+            ${clinicasHosp.map(clinica => `
+              <li>✅ ${clinica}</li>
+            `).join('')}
+          </ul>
+        </div>
+      `;
+    }
+    
+    // Mostrar Libre Elección si es diferente y tiene grupo específico
+    if (grupoLibreEleccion && 
+        grupoLibreEleccion !== grupoHospitalizacion &&
+        grupoLibreEleccion !== 'TODOS LOS NO INCLUIDOS EN OTROS GRUPOS' &&
+        gruposPlan[grupoLibreEleccion]) {
+      
+      const clinicasLE = gruposPlan[grupoLibreEleccion];
+      
+      htmlRedes += `
+        <div class="red-clinica-section" style="margin-top: 20px;">
+          <h4>👨‍⚕️ Libre Elección (${grupoLibreEleccion})</h4>
+          <ul class="lista-clinicas">
+            ${clinicasLE.map(clinica => `
+              <li>✅ ${clinica}</li>
+            `).join('')}
+          </ul>
+        </div>
+      `;
+    }
+    
+    return htmlRedes;
+    
+  } catch (error) {
+    console.error('Error al cargar redes clínicas:', error);
+    return '';
   }
 }
   
@@ -635,7 +746,7 @@ function obtenerClinicasDelPlan(nombrePlan, zona) {
 // =============================================
 // FUNCIONES DE GENERACIÓN HTML
 // =============================================
-function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
+async function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   if (!plan) return '';
   const uf = window.__UF_VALOR || 39700;
   const adicionalUF = Math.max(0, plan.valorCalculadoUF - sieteUF - (montoAdicional / uf));
@@ -644,6 +755,7 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   const badgeClass = esPrincipal ? 'principal' : 'secundario';
   const cardClass = esPrincipal ? '' : 'secundario';
   const badgeText = esPrincipal ? 'PLAN RECOMENDADO 1' : 'PLAN RECOMENDADO 2';
+  
   let coberturasHTML = '';
   if (plan.hospitalizacion) {
     coberturasHTML += `<div class="coberturas-section"><div class="coberturas-title">Hospitalizacion</div><div class="coberturas-texto">${plan.hospitalizacion.replace(/\n/g, '<br>')}</div></div>`;
@@ -654,6 +766,15 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   if (plan.tope_consulta_le) {
     coberturasHTML += `<div class="coberturas-section"><div class="coberturas-title">Tope Consulta Libre Eleccion</div><div class="coberturas-texto">${plan.tope_consulta_le.replace(/\n/g, '<br>')}</div></div>`;
   }
+  
+  // ✅ AGREGAR REDES CLÍNICAS
+  const grupos = extraerGruposDelPlan(plan);
+  const redesHTML = await cargarYMostrarRedesClinicas(
+    plan.nombre,
+    grupos.hospitalizacion,
+    grupos.libreEleccion
+  );
+  
   return `
     <div class="plan-card ${cardClass}">
       <span class="plan-badge ${badgeClass}">${badgeText}</span>
@@ -669,10 +790,15 @@ function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
         <div class="plan-info-item"><div class="plan-info-label">Tope anual</div><div class="plan-info-value">${formatearCLP(plan.tope_anual_uf || 7000)} UF</div></div>
       </div>
       ${coberturasHTML}
+      ${redesHTML ? `
+        <div class="coberturas-section redes-clinicas">
+          <div class="coberturas-title">🌐 Redes Clínicas</div>
+          ${redesHTML}
+        </div>
+      ` : ''}
     </div>
   `;
 }
-
 function generarHTMLGrupoDesplegable(grupo, porcentaje, clinicas, nombreClinicaBuscada) {
   const clinicasHTML = clinicas.map(clinica => {
     const nombreNorm = normalizarTexto(clinica.toLowerCase());
@@ -939,9 +1065,9 @@ document.getElementById("mainForm").addEventListener("submit", async function(e)
     <h2 class="gold" style="margin-top:30px;">Planes Recomendados</h2>
     <p class="small">Basado en tu 7% ($${formatearCLP(sieteCLP)}), te sugerimos estos planes:</p>
   `;
-  if (plan1) { htmlResultado += generarHTMLPlan(plan1, 1, sieteUF, sieteCLP, 0); }
+  if (plan1) { htmlResultado += await generarHTMLPlan(plan1, 1, sieteUF, sieteCLP, 0); }
   else { htmlResultado += `<p class="small" style="color:#fbbf24;">No se encontro un plan que cumpla con el criterio para tu 7%. Solicita asesoria personalizada.</p>`; }
-  if (plan2) { htmlResultado += generarHTMLPlan(plan2, 2, sieteUF, sieteCLP, 0); }
+  if (plan2) { htmlResultado += await generarHTMLPlan(plan2, 2, sieteUF, sieteCLP, 0); }
   htmlResultado += `
     <div class="disclaimer">Los valores presentados son referenciales y estan sujetos a verificacion. Un Ejecutivo de Ventas validara esta informacion y te contactara para formalizar tu plan de salud.</div>
     <div class="mejorar-cobertura">
@@ -997,9 +1123,9 @@ function recalcularConAdicional() {
       <h2 class="gold" style="margin-top:30px;">Nuevos Planes con Mayor Cobertura</h2>
       <p class="small">Con tu presupuesto mejorado de $${formatearCLP(nuevoPresupuestoCLP)}, ahora puedes acceder a estos planes:</p>
     `;
-    if (nuevosPlanes.plan1) { htmlResultado += generarHTMLPlan(nuevosPlanes.plan1, 1, nuevoPresupuestoUF, nuevoPresupuestoCLP, montoAdicional); }
+    if (nuevosPlanes.plan1) { htmlResultado += await generarHTMLPlan(nuevosPlanes.plan1, 1, nuevoPresupuestoUF, nuevoPresupuestoCLP, montoAdicional); }
     else { htmlResultado += `<p class="small" style="color:#fbbf24;">No se encontro un plan adicional. Solicita asesoria personalizada.</p>`; }
-    if (nuevosPlanes.plan2) { htmlResultado += generarHTMLPlan(nuevosPlanes.plan2, 2, nuevoPresupuestoUF, nuevoPresupuestoCLP, montoAdicional); }
+    if (nuevosPlanes.plan2) { htmlResultado += await generarHTMLPlan(nuevosPlanes.plan2, 2, nuevoPresupuestoUF, nuevoPresupuestoCLP, montoAdicional); }
     htmlResultado += `<div class="disclaimer">Los valores presentados son referenciales y estan sujetos a verificacion. Un Ejecutivo de Ventas validara esta informacion y te contactara para formalizar tu plan de salud.</div>`;
     if (contadorRecalculos < MAX_RECALCULOS) {
       const recalculosRestantes = MAX_RECALCULOS - contadorRecalculos;
@@ -1174,6 +1300,7 @@ window.addEventListener("DOMContentLoaded", () => {
     //cargarPlanesCodigosJSON();
     cargarRedesClinicas();
     cargarPlanesRedesAcceso();
+    cargarPlanesClinicasRedes();
     //cargarPlanesClinicasRedes();
     inicializarBusquedaClinica();
   }, 500);
