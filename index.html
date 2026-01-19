@@ -682,7 +682,7 @@ function calcularValorPlan(pbUF, edadTitular, edadesCargas) {
 }
 
 function calcularSietePorCiento(rentaMensual, ufValor) {
-  const RTI_UF = 87.8;
+  const RTI_UF = 89.9;
   const rentaEnUF = rentaMensual / ufValor;
   const rentaAUsar = Math.min(rentaEnUF, RTI_UF);
   const sietePorCientoUF = rentaAUsar * 0.07;
