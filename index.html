@@ -132,29 +132,30 @@ async function validarAsesor() {
   }
 
   try {
-    const response = await fetch(`/api/asesores/${slug}`);
-    if (!response.ok) throw new Error('Asesor no válido');
+  const response = await fetch(`/api/asesores/${slug}`);
+  if (!response.ok) throw new Error('Error API');
 
-    const asesor = await response.json();
+  const data = await response.json();
 
-    document.getElementById('success-modal').textContent =
-      `✅ ¡Bienvenido ${asesor.nombre}!`;
-    document.getElementById('success-modal').style.display = 'block';
+  if (!data.valid) {
+    throw new Error('Asesor no válido');
+  }
 
-    sessionStorage.setItem('asesor_slug', slug);
-    sessionStorage.setItem('asesor_nombre', asesor.nombre);
-    sessionStorage.setItem('asesor_valido', 'true');
+  const asesor = data.asesor;
 
+  sessionStorage.setItem('asesor_slug', slug);
+  sessionStorage.setItem('asesor_nombre', asesor.nombre);
+  sessionStorage.setItem('asesor_valido', 'true');
 
-    document.getElementById('modal-validacion').style.background =
-      'rgba(74, 222, 128, 0.15)';
-    document.getElementById('modal-validacion').style.borderColor = '#4ade80';
+  document.getElementById('modal-validacion').style.background =
+    'rgba(74, 222, 128, 0.15)';
+  document.getElementById('modal-validacion').style.borderColor = '#4ade80';
 
-    setTimeout(() => {
-      document.getElementById('modal-validacion').classList.add('oculto');
-    }, 6000);
+  setTimeout(() => {
+    document.getElementById('modal-validacion').classList.add('oculto');
+  }, 6000);
 
-  } catch (error) {
+} catch (error) {
   console.warn('Acceso no válido');
   sessionStorage.setItem('asesor_valido', 'false');
   document.getElementById('modal-validacion').classList.add('oculto');
