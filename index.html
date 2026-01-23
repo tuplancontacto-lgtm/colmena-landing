@@ -980,7 +980,7 @@ function buscarPlanesEnClinica(nombreClinica) {
 async function enviarLead(mensaje) {
 
    if (sessionStorage.getItem('asesor_valido') !== 'true') {
-    alert('⛔ Este enlace de asesor ya no está habilitado');
+    alert('⛔ No es posible cotizar con este enlace');
     return;
   }
   
@@ -1029,6 +1029,11 @@ async function enviarLead(mensaje) {
 // =============================================
 document.getElementById("mainForm").addEventListener("submit", async function(e) {
   e.preventDefault();
+   // 🔒 BLOQUEO DE COTIZACIÓN SI ASESOR NO ES VÁLIDO
+  if (sessionStorage.getItem('asesor_valido') !== 'true') {
+    alert('⛔ Este enlace de asesor está inválido, revocado o expirado');
+    return;
+  }
   const btn = document.getElementById("submitBtn");
   const statusMsg = document.getElementById("statusMsg");
   btn.disabled = true;
