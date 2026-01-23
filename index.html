@@ -132,7 +132,7 @@ async function validarAsesor() {
   }
 
   try {
-    const response = await fetch(`/api/asesores?id=${slug}`);
+    const response = await fetch(`/api/asesores/${slug}`);
     if (!response.ok) throw new Error('Asesor no válido');
 
     const asesor = await response.json();
