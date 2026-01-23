@@ -143,6 +143,8 @@ async function validarAsesor() {
 
     sessionStorage.setItem('asesor_slug', slug);
     sessionStorage.setItem('asesor_nombre', asesor.nombre);
+    sessionStorage.setItem('asesor_valido', 'true');
+
 
     document.getElementById('modal-validacion').style.background =
       'rgba(74, 222, 128, 0.15)';
@@ -153,9 +155,10 @@ async function validarAsesor() {
     }, 6000);
 
   } catch (error) {
-    console.warn('Acceso no válido');
-    document.getElementById('modal-validacion').classList.add('oculto');
-  }
+  console.warn('Acceso no válido');
+  sessionStorage.setItem('asesor_valido', 'false');
+  document.getElementById('modal-validacion').classList.add('oculto');
+}
 }
 
 window.addEventListener('DOMContentLoaded', validarAsesor);
@@ -975,6 +978,12 @@ function buscarPlanesEnClinica(nombreClinica) {
 // FUNCIÓN CALLMEBOT
 // =============================================
 async function enviarLead(mensaje) {
+
+   if (sessionStorage.getItem('asesor_valido') !== 'true') {
+    alert('⛔ Este enlace de asesor ya no está habilitado');
+    return;
+  }
+  
   try {
     console.log('📤 Enviando lead al asesor:', asesorKey);
     
