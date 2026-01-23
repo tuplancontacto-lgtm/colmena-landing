@@ -118,10 +118,10 @@
 
 <script>
 function obtenerSlugDeLaURL() {
-  const path = window.location.pathname;
-  const partes = path.split('/');
-  return partes[partes.length - 1] || null;
+  const params = new URLSearchParams(window.location.search);
+  return params.get('asesor');
 }
+
 
 async function validarAsesor() {
   const slug = obtenerSlugDeLaURL();
