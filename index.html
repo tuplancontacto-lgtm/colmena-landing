@@ -133,7 +133,7 @@ async function validarAsesor() {
 
   try {
   const response = await fetch(
-  `https://colmena-backend-v2-production.up.railway.app/api/asesores/${slug}`
+  `https://colmena-backend-v2-production-5dfa.up.railway.app/api/asesores/${slug}`
 );
 
   if (!response.ok) throw new Error('Error API');
@@ -319,13 +319,16 @@ function getQueryParam(param) {
   return params.get(param);
 }
 
+const API_BASE = "https://colmena-backend-v2-production-5dfa.up.railway.app";
+
 async function cargarAsesores() {
   try {
-    const response = await fetch('https://colmena-backend-v2-production.up.railway.app/api/asesores');
+    const response = await fetch(`${API_BASE}/api/asesores`);
     if (!response.ok) throw new Error('Error al cargar asesores');
     const asesoresArray = await response.json();
-    
+
     // Convertir array a objeto usando url_slug como key
+
     ASESORES = {};
     asesoresArray.forEach(asesor => {
       if (asesor.estado === 'activo') {
