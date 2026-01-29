@@ -132,9 +132,7 @@ async function validarAsesor() {
   }
 
   try {
-  const response = await fetch(
-  `https://colmena-backend-v2-production-5dfa.up.railway.app/api/asesores/${slug}`
-);
+  const response = await fetch(`${API_BASE}/api/asesores/${slug}`);
 
   if (!response.ok) throw new Error('Error API');
 
