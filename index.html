@@ -992,7 +992,7 @@ async function enviarLead(mensaje) {
   try {
     console.log('📤 Enviando lead al asesor:', asesorKey);
     
-    const response = await fetch(`${API_BASE}/api/enviar-lead`, {
+    const response = await fetch('/api/enviar-lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -1115,7 +1115,7 @@ try {
 
   const cargasInfo = edadesCargas.length > 0 ? `${edadesCargas.length} (${edadesCargas.join(', ')} anos)` : '0';
   const msgWA = `NUEVA COTIZACION - ${ASESOR_NOMBRE || 'Asesor'}\n\n${formularioDatos.nombre}\nCorreo: ${formularioDatos.correo}\nTelefono: ${formularioDatos.telefono}\nRegion: ${formularioDatos.region} (${zona})\nRenta: $${formatearCLP(renta)}\nCargas: ${cargasInfo}\n\n7%: $${formatearCLP(sieteCLP)} (${sieteUF.toFixed(2)} UF)\n\nPlanes sugeridos:\n1) ${plan1 ? plan1.nombre + ' -> ' + plan1.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}\n2) ${plan2 ? plan2.nombre + ' -> ' + plan2.valorCalculadoUF.toFixed(2) + ' UF' : 'Sin plan'}`;
-  await fetch(`${API_BASE}/api/asesores/${asesorKey}/registrar-cotizacion`, {
+  await fetch(`/api/asesores/${asesorKey}/registrar-cotizacion`, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
