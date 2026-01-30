@@ -319,7 +319,6 @@ function getQueryParam(param) {
   return params.get(param);
 }
 
-const API_BASE = "https://colmena-backend-v2-production-5dfa.up.railway.app";
 
 async function cargarAsesores() {
   try {
@@ -985,16 +984,16 @@ function buscarPlanesEnClinica(nombreClinica) {
 // FUNCIÓN CALLMEBOT
 // =============================================
 async function enviarLead(mensaje) {
-  // Bloqueo por enlace inválido (esto lo dejamos igual)
-  if (sessionStorage.getItem('asesor_valido') !== 'true') {
+
+   if (sessionStorage.getItem('asesor_valido') !== 'true') {
     alert('⛔ No es posible cotizar con este enlace');
-    return false;
+    return;
   }
-
+  
   try {
-    console.log('📤 Enviando lead al asesor:', asesorKey, 'API_BASE:', API_BASE);
-
-    const response = await fetch(`${API_BASE}/api/enviar-lead`, {
+    console.log('📤 Enviando lead al asesor:', asesorKey);
+    
+    const response = await fetch('/api/enviar-lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -1003,30 +1002,27 @@ async function enviarLead(mensaje) {
       })
     });
 
-    // Por si el backend no manda JSON bien formado
-    let result = {};
-    try {
-      result = await response.json();
-    } catch (_) {
-      result = {};
-    }
+    const result = await response.json();
 
-    if (!response.ok || result.success === false) {
-      console.error('❌ Error API /api/enviar-lead:', result);
-
+    if (!response.ok) {
+      console.error('❌ Error API:', result);
+      
+      // Mostrar mensaje específico según el error
       if (result.error === 'Asesor no encontrado') {
-        alert('Asesor no encontrado. Contacta al administrador.');
-      } else if (result.error === 'ASESOR_SIN_TELEFONO') {
-        alert('El asesor no tiene teléfono configurado correctamente.');
+        console.error(`Asesor '${result.asesorBuscado}' no encontrado.`);
+        console.error('Asesores disponibles:', result.asesoresDisponibles);
+        alert(`Asesor no encontrado. Contacta al administrador.`);
+      } else if (result.error === 'Asesor sin CallMeBot configurado') {
+        alert(`El asesor no tiene WhatsApp configurado correctamente.`);
       } else {
-        alert('Error enviando la solicitud al asesor.');
+        alert('Error enviando la solicitud al asesor');
       }
       return false;
     }
 
-    console.log('✅ Lead enviado correctamente al asesor');
+    console.log('✅ Lead enviado correctamente al asesor:', result.asesor || ASESOR_NOMBRE);
     return true;
-
+    
   } catch (err) {
     console.error('❌ Error de red enviando lead:', err);
     alert('Error de conexión. Por favor intenta nuevamente.');
