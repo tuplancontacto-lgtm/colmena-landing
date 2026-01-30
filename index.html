@@ -992,7 +992,7 @@ async function enviarLead(mensaje) {
   try {
     console.log('📤 Enviando lead al asesor:', asesorKey);
     
-    const response = await fetch('${API_BASE}/api/enviar-lead', {
+    const response = await fetch(`${API_BASE}/api/enviar-lead`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
