@@ -1,3 +1,9 @@
 {
-  "version": 2
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://colmena-backend-v2-production-5dfa.up.railway.app/api/$1"
+    }
+  ]
 }
