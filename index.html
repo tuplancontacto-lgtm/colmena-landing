@@ -117,11 +117,12 @@
 </style>
 
 <script>
+const API_BASE = "https://colmena-backend-v2-production-5dfa.up.railway.app";
+
 function obtenerSlugDeLaURL() {
   const params = new URLSearchParams(window.location.search);
   return params.get('asesor');
 }
-
 
 async function validarAsesor() {
   const slug = obtenerSlugDeLaURL();
@@ -132,39 +133,40 @@ async function validarAsesor() {
   }
 
   try {
-  const response = await fetch(`${API_BASE}/api/asesores/${slug}`);
+    const response = await fetch(`${API_BASE}/api/asesores/${slug}`);
 
-  if (!response.ok) throw new Error('Error API');
+    if (!response.ok) throw new Error('Error API');
 
-  const data = await response.json();
+    const data = await response.json();
 
-  if (!data.valid) {
-    throw new Error('Asesor no válido');
-  }
+    if (!data.valid) {
+      throw new Error('Asesor no válido');
+    }
 
-  const asesor = data.asesor;
+    const asesor = data.asesor;
 
-  sessionStorage.setItem('asesor_slug', slug);
-  sessionStorage.setItem('asesor_nombre', asesor.nombre);
-  sessionStorage.setItem('asesor_valido', 'true');
+    sessionStorage.setItem('asesor_slug', slug);
+    sessionStorage.setItem('asesor_nombre', asesor.nombre);
+    sessionStorage.setItem('asesor_valido', 'true');
 
-  document.getElementById('modal-validacion').style.background =
-    'rgba(74, 222, 128, 0.15)';
-  document.getElementById('modal-validacion').style.borderColor = '#4ade80';
+    document.getElementById('modal-validacion').style.background =
+      'rgba(74, 222, 128, 0.15)';
+    document.getElementById('modal-validacion').style.borderColor = '#4ade80';
 
-  setTimeout(() => {
+    setTimeout(() => {
+      document.getElementById('modal-validacion').classList.add('oculto');
+    }, 6000);
+
+  } catch (error) {
+    console.warn('Acceso no válido');
+    sessionStorage.setItem('asesor_valido', 'false');
     document.getElementById('modal-validacion').classList.add('oculto');
-  }, 6000);
-
-} catch (error) {
-  console.warn('Acceso no válido');
-  sessionStorage.setItem('asesor_valido', 'false');
-  document.getElementById('modal-validacion').classList.add('oculto');
-}
+  }
 }
 
 window.addEventListener('DOMContentLoaded', validarAsesor);
 </script>
+
 
 <header>
   <h1>Asesoria en Planes de Salud Colmena</h1>
