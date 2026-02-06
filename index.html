@@ -220,14 +220,14 @@ window.addEventListener('DOMContentLoaded', validarAsesor);
       <option value="Magallanes y de la Antártica Chilena">Region de Magallanes</option>
     </select>
     <textarea name="mensaje" id="mensaje" placeholder="Mensaje adicional (opcional)" rows="2"></textarea>
-     <!-- 🔹 Autorización uso de datos personales -->
-    <label class="small" style="display:block; margin-top:8px;">
-      <input type="checkbox" id="acepta_datos" required>
-      Autorizo el uso de mis datos personales para que me contacten y gestionen mi cotización de plan de salud.
-    </label>
-    <p class="small" style="color:#555; margin-top:4px;">
-      Tus datos se utilizarán solo para fines de asesoría y cotización en planes de salud.
-    </p>
+
+<!-- 🔹 Aviso de uso de datos personales (solo texto, sin checkbox) -->
+<p class="small" style="margin-top: 10px; text-align: center; color: #ffffff;">
+  Autorizo el uso de mis datos personales para que me contacten y gestionen mi cotización de plan de salud.
+</p>
+<p class="small" style="margin-top: 4px; text-align: center; color: #cccccc;">
+  Tus datos se utilizarán solo para fines de asesoría y cotización en planes de salud.
+</p
     <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px;">
       <button type="submit" id="submitBtn" style="flex: 1; min-width: 140px;">Cotizar Ahora</button>
     </div>
