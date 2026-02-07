@@ -429,7 +429,7 @@ let PLANES = [];
 let PLANES_CODIGOS = {};
 let REDES_CLINICAS = {};
 let PLANES_REDES_ACCESO = {};
-let PLANES_CLINICAS_REDES = {};
+
 
 // 🔹 Solo estos planes mostrarán redes clínicas en "Planes Recomendados"
 const PLANES_CON_RED = ['COLMENA MAX', 'COLMENA MAX SUR', 'COLMENA PLUS'];
@@ -609,14 +609,18 @@ function extraerTodosLosGruposYPorcentajes(planNombre) {
       return '';
     }
     
-    let planKey = null;
+        let planKey = null;
     const planNormalizado = planNombre.toUpperCase().trim();
-    
-    if (planNormalizado.includes('MAX SUR')) {
+
+    // ✅ Coincidencias exactas con las claves de PLANES_CLINICAS_REDES
+    if (planNormalizado === 'COLMENA MAX SUR') {
       planKey = 'COLMENA MAX SUR';
-    } else if (planNormalizado.includes('MAX')) {
+    } else if (planNormalizado === 'COLMENA MAX') {
       planKey = 'COLMENA MAX';
+    } else if (planNormalizado === 'COLMENA PLUS') {
+      planKey = 'COLMENA PLUS';
     }
+
     
     if (!planKey || !PLANES_CLINICAS_REDES[planKey]) {
       return '';
