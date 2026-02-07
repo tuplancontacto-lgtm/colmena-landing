@@ -431,6 +431,9 @@ let REDES_CLINICAS = {};
 let PLANES_REDES_ACCESO = {};
 let PLANES_CLINICAS_REDES = {};
 
+// 🔹 Solo estos planes mostrarán redes clínicas en "Planes Recomendados"
+const PLANES_CON_RED = ['COLMENA MAX', 'COLMENA MAX SUR', 'COLMENA PLUS'];
+  
 const REGION_A_ZONA = {
   'Arica y Parinacota': 'NORTE',
   'Tarapaca': 'NORTE',
@@ -822,13 +825,20 @@ async function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional =
     coberturasHTML += `<div class="coberturas-section"><div class="coberturas-title">Tope Consulta Libre Eleccion</div><div class="coberturas-texto">${plan.tope_consulta_le.replace(/\n/g, '<br>')}</div></div>`;
   }
   
-  // ✅ AGREGAR REDES CLÍNICAS
-  const grupos = extraerGruposDelPlan(plan);
-  const redesHTML = await cargarYMostrarRedesClinicas(
-    plan.nombre,
-    grupos.hospitalizacion,
-    grupos.libreEleccion
-  );
+    // ✅ AGREGAR REDES CLÍNICAS SOLO PARA PLANES CON RED
+  let redesHTML = '';
+  const nombrePlanNormalizado = (plan.nombre || '').toUpperCase().trim();
+  const tieneRed = PLANES_CON_RED.includes(nombrePlanNormalizado);
+
+  if (tieneRed) {
+    const grupos = extraerGruposDelPlan(plan);
+    redesHTML = await cargarYMostrarRedesClinicas(
+      plan.nombre,
+      grupos.hospitalizacion,
+      grupos.libreEleccion
+    );
+  }
+
   
   return `
     <div class="plan-card ${cardClass}">
