@@ -603,70 +603,67 @@ function extraerTodosLosGruposYPorcentajes(planNombre) {
   return grupos;
 }
 
- async function cargarYMostrarRedesClinicas(planNombre, grupoHospitalizacion, grupoLibreEleccion) {
+async function cargarYMostrarRedesClinicas(planNombre, grupoHospitalizacion, grupoLibreEleccion) {
   try {
     if (!PLANES_CLINICAS_REDES || Object.keys(PLANES_CLINICAS_REDES).length === 0) {
       return '';
     }
-    
-        let planKey = null;
-    const planNormalizado = planNombre.toUpperCase().trim();
 
-    // ✅ Coincidencias exactas con las claves de PLANES_CLINICAS_REDES
-    if (planNormalizado === 'COLMENA MAX SUR') {
+    let planKey = null;
+    const n = (planNombre || '').toUpperCase().trim();
+
+    // 🔹 Mapeo solo para los 3 productos que nos interesan
+    if (n.includes('MAX SUR')) {
       planKey = 'COLMENA MAX SUR';
-    } else if (planNormalizado === 'COLMENA MAX') {
+    } else if (n.includes('MAX') && !n.includes('CENTRO') && !n.includes('NORTE')) {
+      // Incluye Colmena Max Metropolitana, nacional, etc., pero NO Centro/Norte
       planKey = 'COLMENA MAX';
-    } else if (planNormalizado === 'COLMENA PLUS') {
+    } else if (n.includes('PLUS')) {
+      // Colmena Plus Metropolitana
       planKey = 'COLMENA PLUS';
     }
 
-    
     if (!planKey || !PLANES_CLINICAS_REDES[planKey]) {
+      // Si el plan no está en el JSON de redes clínicas → no mostramos nada
       return '';
     }
-    
+
     const gruposPlan = PLANES_CLINICAS_REDES[planKey];
-    
-    // ✅ NUEVO: Obtener TODOS los grupos del plan y sus porcentajes
-    const gruposConPorcentajes = extraerTodosLosGruposYPorcentajes(planNombre);
-    
+
+    // ➕ Tomamos los porcentajes de hospitalización para cada grupo
+    const gruposConPorcentajes = extraerTodosLosGruposYPorcentajes(planNombre) || {};
+
     let htmlRedes = '';
-    
-    // ✅ NUEVO: Mostrar TODOS los grupos disponibles
+
     for (const [grupo, clinicas] of Object.entries(gruposPlan)) {
-      if (clinicas && clinicas.length > 0) {
-        // Obtener el porcentaje de este grupo
-        const porcentaje = gruposConPorcentajes[grupo] || '?';
-        
-        // Determinar si es el grupo principal (se abre por defecto)
-        const esGrupoPrincipal = grupo === grupoHospitalizacion;
-        
-        htmlRedes += `
-          <details ${esGrupoPrincipal ? 'open' : ''} style="margin-bottom: 10px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; overflow: hidden;">
-            <summary style="padding: 12px 15px; cursor: pointer; background: rgba(212, 175, 55, 0.1); color: #d4af37; font-weight: 600; user-select: none; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid #d4af37;">
-              <span>🏥 ${grupo} - Cobertura: ${porcentaje}%</span>
-              <span style="color: #888; font-size: 0.85rem;">${clinicas.length} clínicas</span>
-            </summary>
-            <div style="padding: 15px;">
-              <ul class="lista-clinicas">
-                ${clinicas.map(clinica => `
-                  <li>✅ ${clinica}</li>
-                `).join('')}
-              </ul>
-            </div>
-          </details>
-        `;
-      }
+      if (!clinicas || clinicas.length === 0) continue;
+
+      const porcentaje = gruposConPorcentajes[grupo] || '?';
+      const esGrupoPrincipal = grupo === grupoHospitalizacion;
+
+      htmlRedes += `
+        <details ${esGrupoPrincipal ? 'open' : ''} style="margin-bottom: 10px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; overflow: hidden;">
+          <summary style="padding: 12px 15px; cursor: pointer; background: rgba(212, 175, 55, 0.1); color: #d4af37; font-weight: 600; user-select: none; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid #d4af37;">
+            <span>🏥 ${grupo} - Cobertura: ${porcentaje}%</span>
+            <span style="color: #888; font-size: 0.85rem;">${clinicas.length} clínicas</span>
+          </summary>
+          <div style="padding: 15px;">
+            <ul class="lista-clinicas">
+              ${clinicas.map(c => `<li>✅ ${c}</li>`).join('')}
+            </ul>
+          </div>
+        </details>
+      `;
     }
-    
+
     return htmlRedes;
-    
+
   } catch (error) {
     console.error('Error al cargar redes clínicas:', error);
     return '';
   }
 }
+
   
 // =============================================
 // FUNCIONES DE CÁLCULO
@@ -810,31 +807,52 @@ function obtenerClinicasDelPlan(nombrePlan, zona) {
 // =============================================
 async function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   if (!plan) return '';
+
   const uf = window.__UF_VALOR || 39700;
   const adicionalUF = Math.max(0, plan.valorCalculadoUF - sieteUF - (montoAdicional / uf));
   const adicionalCLP = Math.round(adicionalUF * uf);
+
   const esPrincipal = numero === 1;
   const badgeClass = esPrincipal ? 'principal' : 'secundario';
   const cardClass = esPrincipal ? '' : 'secundario';
   const badgeText = esPrincipal ? 'PLAN RECOMENDADO 1' : 'PLAN RECOMENDADO 2';
-  
+
+  // 🔹 Bloques de coberturas (como ya tenías)
   let coberturasHTML = '';
   if (plan.hospitalizacion) {
-    coberturasHTML += `<div class="coberturas-section"><div class="coberturas-title">Hospitalizacion</div><div class="coberturas-texto">${plan.hospitalizacion.replace(/\n/g, '<br>')}</div></div>`;
+    coberturasHTML += `
+      <div class="coberturas-section">
+        <div class="coberturas-title">Hospitalizacion</div>
+        <div class="coberturas-texto">${plan.hospitalizacion.replace(/\n/g, '<br>')}</div>
+      </div>`;
   }
   if (plan.consulta_preferente) {
-    coberturasHTML += `<div class="coberturas-section"><div class="coberturas-title">Consulta Preferente</div><div class="coberturas-texto">${plan.consulta_preferente.replace(/\n/g, '<br>')}</div></div>`;
+    coberturasHTML += `
+      <div class="coberturas-section">
+        <div class="coberturas-title">Consulta Preferente</div>
+        <div class="coberturas-texto">${plan.consulta_preferente.replace(/\n/g, '<br>')}</div>
+      </div>`;
   }
   if (plan.tope_consulta_le) {
-    coberturasHTML += `<div class="coberturas-section"><div class="coberturas-title">Tope Consulta Libre Eleccion</div><div class="coberturas-texto">${plan.tope_consulta_le.replace(/\n/g, '<br>')}</div></div>`;
+    coberturasHTML += `
+      <div class="coberturas-section">
+        <div class="coberturas-title">Tope Consulta Libre Eleccion</div>
+        <div class="coberturas-texto">${plan.tope_consulta_le.replace(/\n/g, '<br>')}</div>
+      </div>`;
   }
-  
-    // ✅ AGREGAR REDES CLÍNICAS SOLO PARA PLANES CON RED
-  let redesHTML = '';
-  const nombrePlanNormalizado = (plan.nombre || '').toUpperCase().trim();
-  const tieneRed = PLANES_CON_RED.includes(nombrePlanNormalizado);
 
-  if (tieneRed) {
+  // 🔹 SOLO mostrar redes clínicas para:
+  //   - Colmena Max (NO Centro/Norte)
+  //   - Colmena Max Sur
+  //   - Colmena Plus (Metropolitana)
+  let redesHTML = '';
+  const n = (plan.nombre || '').toUpperCase();
+
+  const esMaxSur = n.includes('COLMENA MAX SUR');
+  const esMax = n.includes('COLMENA MAX') && !n.includes('CENTRO') && !n.includes('NORTE');
+  const esPlus = n.includes('COLMENA PLUS');
+
+  if (esMax || esMaxSur || esPlus) {
     const grupos = extraerGruposDelPlan(plan);
     redesHTML = await cargarYMostrarRedesClinicas(
       plan.nombre,
@@ -843,22 +861,41 @@ async function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional =
     );
   }
 
-  
   return `
     <div class="plan-card ${cardClass}">
       <span class="plan-badge ${badgeClass}">${badgeText}</span>
+
       <div class="plan-nombre-container">
         <span class="plan-nombre-estrella">*</span>
         <span class="plan-nombre">${plan.nombre}</span>
         <span class="plan-nombre-estrella">*</span>
       </div>
+
       <div class="plan-info">
-        <div class="plan-info-item"><div class="plan-info-label">Valor del Plan</div><div class="plan-info-value amarillo">$${formatearCLP(plan.valorCalculadoCLP)}</div><div class="small">${plan.valorCalculadoUF.toFixed(2)} UF</div></div>
-        <div class="plan-info-item"><div class="plan-info-label">Adicional a pagar</div><div class="plan-info-value ${adicionalCLP <= 0 ? 'verde' : 'amarillo'}">$${formatearCLP(Math.max(0, adicionalCLP))}</div></div>
-        <div class="plan-info-item"><div class="plan-info-label">GES Grupo Familiar</div><div class="plan-info-value verde">${plan.gesUF.toFixed(2)} UF</div><div class="small">Total familia</div></div>
-        <div class="plan-info-item"><div class="plan-info-label">Tope anual</div><div class="plan-info-value">${formatearCLP(plan.tope_anual_uf || 7000)} UF</div></div>
+        <div class="plan-info-item">
+          <div class="plan-info-label">Valor del Plan</div>
+          <div class="plan-info-value amarillo">$${formatearCLP(plan.valorCalculadoCLP)}</div>
+          <div class="small">${plan.valorCalculadoUF.toFixed(2)} UF</div>
+        </div>
+        <div class="plan-info-item">
+          <div class="plan-info-label">Adicional a pagar</div>
+          <div class="plan-info-value ${adicionalCLP <= 0 ? 'verde' : 'amarillo'}">
+            $${formatearCLP(Math.max(0, adicionalCLP))}
+          </div>
+        </div>
+        <div class="plan-info-item">
+          <div class="plan-info-label">GES Grupo Familiar</div>
+          <div class="plan-info-value verde">${plan.gesUF.toFixed(2)} UF</div>
+          <div class="small">Total familia</div>
+        </div>
+        <div class="plan-info-item">
+          <div class="plan-info-label">Tope anual</div>
+          <div class="plan-info-value">${formatearCLP(plan.tope_anual_uf || 7000)} UF</div>
+        </div>
       </div>
+
       ${coberturasHTML}
+
       ${redesHTML ? `
         <div class="coberturas-section redes-clinicas">
           <div class="coberturas-title">🌐 Redes Clínicas</div>
@@ -868,6 +905,7 @@ async function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional =
     </div>
   `;
 }
+
 function generarHTMLGrupoDesplegable(grupo, porcentaje, clinicas, nombreClinicaBuscada) {
   const clinicasHTML = clinicas.map(clinica => {
     const nombreNorm = normalizarTexto(clinica.toLowerCase());
