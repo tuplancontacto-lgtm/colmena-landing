@@ -938,6 +938,7 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
     const match = plan.hospitalizacion.match(/(\d+)%/);
     if (match) porcentajeHosp = parseInt(match[1], 10);
   }
+  const codigoPlan = obtenerCodigoPlan(plan.nombre);
   let hospitalizacionHTML = '';
   const gruposYPorcentajes = extraerGruposYPorcentajes(plan.hospitalizacion);
   if (gruposYPorcentajes) {
@@ -954,25 +955,47 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
         hospitalizacionHTML += generarHTMLGrupoDesplegable(grupo, porcentaje, clinicasGrupo, nombreClinicaBuscada);
       }
     }
- <div class="plan-nombre-container">
-  <span class="plan-nombre-estrella">*</span>
-
-  ${(() => {
-    const codigoDetectado = extraerCodigoDesdeNombre(plan.nombre);
-    return `
-      <span class="plan-nombre">
-        ${plan.nombre.replace(/\b\d{4,8}\b/g, "").trim()}
-        ${codigoDetectado ? `<span style="font-size:1.1rem; opacity:0.8;">(${codigoDetectado})</span>` : ""}
-      </span>
-    `;
-  })()}
-
-  <span class="plan-nombre-estrella">*</span>
-</div>
-
-  `;
+hospitalizacionHTML += `</div>`;
 }
 
+  // === RETURN DEL HTML COMPLETO ===
+  return `
+    <div class="plan-card">
+
+      <div class="plan-nombre-container">
+        <span class="plan-nombre-estrella">*</span>
+        <span class="plan-nombre">${nombreConCodigo}</span>
+        <span class="plan-nombre-estrella">*</span>
+      </div>
+
+      <div class="plan-info">
+        <div class="plan-info-item">
+          <div class="plan-info-label">Valor del Plan</div>
+          <div class="plan-info-value amarillo">$${formatearCLP(plan.valorCalculadoCLP)}</div>
+          <div class="small">${plan.valorCalculadoUF.toFixed(2)} UF</div>
+        </div>
+
+        <div class="plan-info-item">
+          <div class="plan-info-label">Adicional a pagar</div>
+          <div class="plan-info-value">${formatearCLP(valorAdicionalCLP)}</div>
+        </div>
+
+        <div class="plan-info-item">
+          <div class="plan-info-label">GES</div>
+          <div class="plan-info-value verde">${plan.gesUF.toFixed(2)} UF</div>
+        </div>
+
+        <div class="plan-info-item">
+          <div class="plan-info-label">Tope anual</div>
+          <div class="plan-info-value">${plan.tope_anual_uf || 7000} UF</div>
+        </div>
+      </div>
+
+      ${hospitalizacionHTML}
+
+    </div>
+  `;
+}
 // =============================================
 // FUNCIÓN DE BÚSQUEDA DE CLÍNICAS
 // =============================================
