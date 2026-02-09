@@ -866,10 +866,23 @@ async function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional =
       <span class="plan-badge ${badgeClass}">${badgeText}</span>
 
       <div class="plan-nombre-container">
-        <span class="plan-nombre-estrella">*</span>
-        <span class="plan-nombre">${plan.nombre}</span>
-        <span class="plan-nombre-estrella">*</span>
-      </div>
+  <span class="plan-nombre-estrella">*</span>
+
+  ${(() => {
+    const codigo = obtenerCodigoPlan(plan.nombre);
+    if (!codigo) {
+      return `<span class="plan-nombre">${plan.nombre}</span>`;
+    }
+    return `
+      <span class="plan-nombre">
+        ${plan.nombre}
+        <span style="font-size:1.1rem; opacity:0.8;">(${codigo})</span>
+      </span>
+    `;
+  })()}
+
+  <span class="plan-nombre-estrella">*</span>
+</div>
 
       <div class="plan-info">
         <div class="plan-info-item">
