@@ -801,17 +801,6 @@ function obtenerClinicasDelPlan(nombrePlan, zona) {
   }
   return clinicas.map(c => c.toLowerCase());
 }
-// ------------------------------------------
-// EXTRAER CÓDIGO NUMÉRICO DESDE EL NOMBRE DEL PLAN
-// ------------------------------------------
-function extraerCodigoDesdeNombre(nombre) {
-  if (!nombre) return "";
-
-  // Busca cualquier número de 4 a 8 dígitos
-  const match = nombre.match(/\b\d{4,8}\b/);
-
-  return match ? match[0] : "";
-}
 
 // =============================================
 // FUNCIONES DE GENERACIÓN HTML
@@ -879,20 +868,7 @@ async function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional =
 
       <div class="plan-nombre-container">
   <span class="plan-nombre-estrella">*</span>
-
-  ${(() => {
-    const codigo = obtenerCodigoPlan(plan.nombre);
-    if (!codigo) {
-      return `<span class="plan-nombre">${plan.nombre}</span>`;
-    }
-    return `
-      <span class="plan-nombre">
-        ${plan.nombre}
-        <span style="font-size:1.1rem; opacity:0.8;">(${codigo})</span>
-      </span>
-    `;
-  })()}
-
+  <span class="plan-nombre">${plan.nombre}</span>
   <span class="plan-nombre-estrella">*</span>
 </div>
 
