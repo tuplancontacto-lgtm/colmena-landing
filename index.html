@@ -801,10 +801,22 @@ function obtenerClinicasDelPlan(nombrePlan, zona) {
   }
   return clinicas.map(c => c.toLowerCase());
 }
+// ------------------------------------------
+// EXTRAER CÓDIGO NUMÉRICO DESDE EL NOMBRE DEL PLAN
+// ------------------------------------------
+function extraerCodigoDesdeNombre(nombre) {
+  if (!nombre) return "";
+
+  // Busca cualquier número de 4 a 8 dígitos
+  const match = nombre.match(/\b\d{4,8}\b/);
+
+  return match ? match[0] : "";
+}
 
 // =============================================
 // FUNCIONES DE GENERACIÓN HTML
 // =============================================
+  
 async function generarHTMLPlan(plan, numero, sieteUF, sieteCLP, montoAdicional = 0) {
   if (!plan) return '';
 
@@ -966,39 +978,22 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
         hospitalizacionHTML += generarHTMLGrupoDesplegable(grupo, porcentaje, clinicasGrupo, nombreClinicaBuscada);
       }
     }
-    hospitalizacionHTML += `</div>`;
-  } else {
-    if (plan.hospitalizacion) {
-      let hospText = plan.hospitalizacion;
-      if (nombreClinicaBuscada) {
-        const regex = new RegExp(`(${nombreClinicaBuscada})`, 'gi');
-        hospText = hospText.replace(regex, '<span style="color: #d4af37; font-weight: bold;">$1</span>');
-      }
-      hospitalizacionHTML = `<div class="coberturas-texto" style="color: #ccc;">${hospText.replace(/\n/g, '<br>')}</div>`;
-    }
-  }
-  return `
-    <div class="plan-card" style="border-color: #60a5fa; margin-bottom: 25px;">
-      <span class="plan-badge secundario">${tipoLabel}</span>
-      <div class="plan-nombre-container">
-        <span class="plan-nombre-estrella">*</span>
-        <span class="plan-nombre">${nombreConCodigo}</span>
-        <span class="plan-nombre-estrella">*</span>
-      </div>
-      <div class="plan-info">
-        <div class="plan-info-item"><div class="plan-info-label">Valor del Plan</div><div class="plan-info-value amarillo">$${formatearCLP(plan.valorCalculadoCLP)}</div><div class="small">${plan.valorCalculadoUF.toFixed(2)} UF</div></div>
-        <div class="plan-info-item"><div class="plan-info-label">Tu 7%</div><div class="plan-info-value amarillo">$${formatearCLP(sieteCLP)}</div><div class="small">${sieteUF.toFixed(2)} UF</div></div>
-        <div class="plan-info-item"><div class="plan-info-label">Valor Adicional</div><div class="plan-info-value amarillo">$${formatearCLP(valorAdicionalCLP)}</div><div class="small">${valorAdicionalUF.toFixed(2)} UF</div></div>
-        <div class="plan-info-item"><div class="plan-info-label">Cargas</div><div class="plan-info-value">${cargasInfo}</div></div>
-        <div class="plan-info-item"><div class="plan-info-label">Tope anual</div><div class="plan-info-value">${formatearCLP(plan.tope_anual_uf || 7000)} UF</div></div>
-      </div>
-      <div class="coberturas-section">
-        <div class="coberturas-title" style="color: #d4af37;">Hospitalizacion (${porcentajeHosp ? porcentajeHosp + '%' : 'Sin %'})</div>
-        ${hospitalizacionHTML}
-      </div>
-      ${plan.consulta_preferente ? `<div class="coberturas-section"><div class="coberturas-title">Consulta Preferente</div><div class="coberturas-texto">${plan.consulta_preferente.replace(/\n/g, '<br>')}</div></div>` : ''}
-      ${plan.tope_consulta_le ? `<div class="coberturas-section"><div class="coberturas-title">Tope Consulta Libre Elección</div><div class="coberturas-texto">${plan.tope_consulta_le.replace(/\n/g, '<br>')}</div></div>` : ''}
-    </div>
+ <div class="plan-nombre-container">
+  <span class="plan-nombre-estrella">*</span>
+
+  ${(() => {
+    const codigoDetectado = extraerCodigoDesdeNombre(plan.nombre);
+    return `
+      <span class="plan-nombre">
+        ${plan.nombre.replace(/\b\d{4,8}\b/g, "").trim()}
+        ${codigoDetectado ? `<span style="font-size:1.1rem; opacity:0.8;">(${codigoDetectado})</span>` : ""}
+      </span>
+    `;
+  })()}
+
+  <span class="plan-nombre-estrella">*</span>
+</div>
+
   `;
 }
 
