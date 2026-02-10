@@ -932,7 +932,9 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
   const valorAdicionalUF = Math.max(0, plan.valorCalculadoUF - sieteUF);
   const cargasInfo = edadesCargas.length > 0 ? `${edadesCargas.length} (${edadesCargas.join(', ')})` : '0';
   const codigoPlan = obtenerCodigoPlan(plan.nombre);
-  const nombreConCodigo = codigoPlan ? `${plan.nombre} (${codigoPlan})` : plan.nombre;
+  const nombreConCodigo = plan.cod
+  ? `${plan.nombre} <span style="font-size:1.1rem; opacity:0.8;">(${plan.cod})</span>`
+  : plan.nombre;
   let porcentajeHosp = null;
   if (plan.hospitalizacion) {
     const match = plan.hospitalizacion.match(/(\d+)%/);
