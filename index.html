@@ -938,7 +938,7 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
     const match = plan.hospitalizacion.match(/(\d+)%/);
     if (match) porcentajeHosp = parseInt(match[1], 10);
   }
-  const codigoPlan = obtenerCodigoPlan(plan.nombre);
+  
   let hospitalizacionHTML = '';
   const gruposYPorcentajes = extraerGruposYPorcentajes(plan.hospitalizacion);
   if (gruposYPorcentajes) {
@@ -957,45 +957,42 @@ function generarHTMLPlanClinica(plan, numero, sieteUF, sieteCLP, edadesCargas = 
     }
 hospitalizacionHTML += `</div>`;
 }
-
-  // === RETURN DEL HTML COMPLETO ===
+else {
+    if (plan.hospitalizacion) {
+      let hospText = plan.hospitalizacion;
+      if (nombreClinicaBuscada) {
+        const regex = new RegExp(`(${nombreClinicaBuscada})`, 'gi');
+        hospText = hospText.replace(regex, '<span style="color: #d4af37; font-weight: bold;">$1</span>');
+      }
+      hospitalizacionHTML = `<div class="coberturas-texto" style="color: #ccc;">${hospText.replace(/\n/g, '<br>')}</div>`;
+    }
+  }
   return `
-    <div class="plan-card">
-
+    <div class="plan-card" style="border-color: #60a5fa; margin-bottom: 25px;">
+      <span class="plan-badge secundario">${tipoLabel}</span>
       <div class="plan-nombre-container">
         <span class="plan-nombre-estrella">*</span>
         <span class="plan-nombre">${nombreConCodigo}</span>
         <span class="plan-nombre-estrella">*</span>
       </div>
-
       <div class="plan-info">
-        <div class="plan-info-item">
-          <div class="plan-info-label">Valor del Plan</div>
-          <div class="plan-info-value amarillo">$${formatearCLP(plan.valorCalculadoCLP)}</div>
-          <div class="small">${plan.valorCalculadoUF.toFixed(2)} UF</div>
-        </div>
-
-        <div class="plan-info-item">
-          <div class="plan-info-label">Adicional a pagar</div>
-          <div class="plan-info-value">${formatearCLP(valorAdicionalCLP)}</div>
-        </div>
-
-        <div class="plan-info-item">
-          <div class="plan-info-label">GES</div>
-          <div class="plan-info-value verde">${plan.gesUF.toFixed(2)} UF</div>
-        </div>
-
-        <div class="plan-info-item">
-          <div class="plan-info-label">Tope anual</div>
-          <div class="plan-info-value">${plan.tope_anual_uf || 7000} UF</div>
-        </div>
+        <div class="plan-info-item"><div class="plan-info-label">Valor del Plan</div><div class="plan-info-value amarillo">$${formatearCLP(plan.valorCalculadoCLP)}</div><div class="small">${plan.valorCalculadoUF.toFixed(2)} UF</div></div>
+        <div class="plan-info-item"><div class="plan-info-label">Tu 7%</div><div class="plan-info-value amarillo">$${formatearCLP(sieteCLP)}</div><div class="small">${sieteUF.toFixed(2)} UF</div></div>
+        <div class="plan-info-item"><div class="plan-info-label">Valor Adicional</div><div class="plan-info-value amarillo">$${formatearCLP(valorAdicionalCLP)}</div><div class="small">${valorAdicionalUF.toFixed(2)} UF</div></div>
+        <div class="plan-info-item"><div class="plan-info-label">Cargas</div><div class="plan-info-value">${cargasInfo}</div></div>
+        <div class="plan-info-item"><div class="plan-info-label">Tope anual</div><div class="plan-info-value">${formatearCLP(plan.tope_anual_uf || 7000)} UF</div></div>
       </div>
-
-      ${hospitalizacionHTML}
-
+      <div class="coberturas-section">
+        <div class="coberturas-title" style="color: #d4af37;">Hospitalizacion (${porcentajeHosp ? porcentajeHosp + '%' : 'Sin %'})</div>
+        ${hospitalizacionHTML}
+      </div>
+      ${plan.consulta_preferente ? `<div class="coberturas-section"><div class="coberturas-title">Consulta Preferente</div><div class="coberturas-texto">${plan.consulta_preferente.replace(/\n/g, '<br>')}</div></div>` : ''}
+      ${plan.tope_consulta_le ? `<div class="coberturas-section"><div class="coberturas-title">Tope Consulta Libre Elección</div><div class="coberturas-texto">${plan.tope_consulta_le.replace(/\n/g, '<br>')}</div></div>` : ''}
     </div>
   `;
 }
+
+
 // =============================================
 // FUNCIÓN DE BÚSQUEDA DE CLÍNICAS
 // =============================================
